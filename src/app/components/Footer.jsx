@@ -24,19 +24,19 @@ export default function Footer({ footerData }) {
     description: 'OnlineLabs helpt bedrijven groeien met slimme online marketing strategieën sinds 2008.',
     
     services: [
-      { title: 'SEO Optimalisatie', url: '/seo-verbeteren' },
-      { title: 'GEO Optimalisatie', url: '/geo-optimalisatie' },
-      { title: 'Google Ads', url: '/google-ads-bureau' },
-      { title: 'Webdesign', url: '/webdesign-amsterdam' },
-      { title: 'WordPress Development', url: '/wordpress-website-laten-maken' },
+      { title: 'SEO Specialist', url: '/skills/seo-specialist' },
+      { title: 'GEO Optimalisatie', url: '/skills/geo-optimalisatie' },
+      { title: 'Online Adverteren', url: '/skills/online-adverteren' },
+      { title: 'Website Laten Maken', url: '/skills/website-laten-maken' },
+      { title: 'Website Snelheid Optimalisatie', url: '/skills/website-snelheid-optimalisatie' },
+      { title: 'AI Zichtbaarheid (AEO)', url: '/skills/ai-zichtbaarheid-aeo' },
     ],
     
     company: [
-      { title: 'Over OnlineLabs', url: '/online-marketing-bureau-amsterdam' },
-      { title: 'Cases', url: '/cases' },
-      { title: 'Blog', url: '/blog' },
+      { title: 'Over Ons', url: '/over-ons' },
+      { title: 'Ons Werk', url: '/ons-werk' },
+      { title: 'Skills', url: '/skills' },
       { title: 'Contact', url: '/contact' },
-      { title: 'Privacy', url: '/privacy' },
     ],
     
     contact: {
@@ -231,14 +231,14 @@ export default function Footer({ footerData }) {
               © {currentYear} {footer.companyName}. Alle rechten voorbehouden.
             </p>
             <div className="flex gap-6">
-              <Link href="/privacy" className="text-gray-400 hover:text-primary transition-colors duration-200">
-                Privacy Policy
+              <Link href="/privacyverklaring" className="text-gray-400 hover:text-primary transition-colors duration-200">
+                Privacyverklaring
               </Link>
               <Link href="/algemene-voorwaarden" className="text-gray-400 hover:text-primary transition-colors duration-200">
                 Algemene Voorwaarden
               </Link>
-              <Link href="/cookies" className="text-gray-400 hover:text-primary transition-colors duration-200">
-                Cookie Beleid
+              <Link href="/sitemap" className="text-gray-400 hover:text-primary transition-colors duration-200">
+                Sitemap
               </Link>
             </div>
           </div>
