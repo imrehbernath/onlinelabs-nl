@@ -119,6 +119,29 @@ export async function getHomepageSettings() {
               aboutCtaUrl
             }
           }
+          homepageLogos {
+            logoSlider {
+              sliderTitle
+              sliderEnabled
+              sliderSpeed
+              sliderGrayscale
+              logos {
+                logoImage {
+                  node {
+                    sourceUrl
+                    altText
+                    mediaDetails {
+                      width
+                      height
+                    }
+                  }
+                }
+                companyName
+                logoAlt
+                websiteUrl
+              }
+            }
+          }
         }
       }
     `);
@@ -126,11 +149,13 @@ export async function getHomepageSettings() {
     console.log('✅ Homepage data fetched');
     console.log('📦 Hero title:', data?.page?.homepageHero?.heroSection?.heroTitle || 'Not found');
     console.log('📦 About title:', data?.page?.homepageAbout?.aboutSection?.aboutTitle || 'Not found');
+    console.log('📦 Logo slider enabled:', data?.page?.homepageLogos?.logoSlider?.sliderEnabled ? 'Yes' : 'No');
 
     // Transform to expected structure for components
     return {
       heroSection: data?.page?.homepageHero?.heroSection || null,
-      aboutSection: data?.page?.homepageAbout?.aboutSection || null
+      aboutSection: data?.page?.homepageAbout?.aboutSection || null,
+      logoSlider: data?.page?.homepageLogos?.logoSlider || null
     };
   } catch (error) {
     console.error('❌ Failed to fetch homepage data:', error.message);

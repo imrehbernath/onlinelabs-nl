@@ -2,6 +2,8 @@ import Hero from './components/Hero';
 import ServicesSection from './components/ServicesSection';
 import AboutSection from './components/AboutSection';
 import TestimonialsSection from './components/TestimonialsSection';
+import CTASection from './components/CTASection';
+import LogoSlider from './components/LogoSlider';
 import { getHomepageSettings, getAllServices, getTestimonials } from './lib/wordpress';
 
 // SEO Metadata
@@ -64,6 +66,19 @@ export default async function Home() {
     ctaUrl: homepageSettings.aboutSection.aboutCtaUrl || '/over-ons'
   } : null;
 
+  // Extract and transform Logo Slider data
+  const logoSliderData = homepageSettings?.logoSlider && homepageSettings.logoSlider.sliderEnabled ? {
+    title: homepageSettings.logoSlider.sliderTitle || 'Vertrouwd door toonaangevende bedrijven',
+    speed: homepageSettings.logoSlider.sliderSpeed || 'normal',
+    grayscale: homepageSettings.logoSlider.sliderGrayscale !== false,
+    logos: homepageSettings.logoSlider.logos?.map(logo => ({
+      name: logo.companyName,
+      imageUrl: logo.logoImage?.node?.sourceUrl,
+      altText: logo.logoAlt || `${logo.companyName} logo`, // Custom alt or auto-generate
+      url: logo.websiteUrl || null
+    })) || []
+  } : null;
+
   return (
     <main>
       {/* Hero Section - WordPress bewerkbaar */}
@@ -72,15 +87,38 @@ export default async function Home() {
       {/* Services Section - "Onze LABS" met colored bars */}
       <ServicesSection services={services} />
 
+      {/* CTA Section - Call to action na Services */}
+      <CTASection 
+        title="Klaar om jouw online zichtbaarheid te verbeteren?"
+        description="Ontdek hoe OnlineLabs jouw bedrijf helpt groeien met strategische SEO, GEO en webdesign."
+        primaryButton={{ text: "Neem contact op", url: "/contact" }}
+        secondaryButton={{ text: "Bekijk onze skills", url: "/skills" }}
+        variant="primary"
+      />
+
       {/* About Section - "Meer dan een Online Marketing Bureau" */}
       {aboutData && <AboutSection aboutData={aboutData} />}
 
+      {/* Logo Slider - Partners/Clients showcase (WordPress editable) */}
+      {logoSliderData && logoSliderData.logos.length > 0 && (
+        <LogoSlider 
+          title={logoSliderData.title}
+          logos={logoSliderData.logos}
+          speed={logoSliderData.speed}
+          grayscale={logoSliderData.grayscale}
+        />
+      )}
+
       {/* Testimonials Section - 3-column slider met auto-rotate */}
       <TestimonialsSection testimonials={testimonials} />
-      
-      {/* Toekomstige secties komen hier */}
-      {/* <PortfolioSection /> */}
-      {/* <CTASection /> */}
+
+      {/* Final CTA - Strong call to action onderaan */}
+      <CTASection 
+        title="Start vandaag nog met betere online resultaten"
+        description="Laten we samen kijken hoe we jouw bedrijf naar het volgende niveau tillen."
+        primaryButton={{ text: "Plan een gesprek", url: "/contact" }}
+        variant="secondary"
+      />
     </main>
   );
 }
