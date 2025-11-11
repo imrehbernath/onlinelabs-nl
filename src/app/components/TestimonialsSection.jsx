@@ -30,19 +30,11 @@ export default function TestimonialsSection({ testimonials = [] }) {
   const sliderRef = useRef(null);
   const autoPlayRef = useRef(null);
 
-  if (!testimonials || testimonials.length === 0) {
-    return null;
-  }
-
   // Filter out testimonials without required fields
-  const validTestimonials = testimonials.filter(t => 
+  const validTestimonials = testimonials?.filter(t => 
     t?.testimonialDetails?.reviewerName && 
     t?.testimonialDetails?.shortQuote
-  );
-
-  if (validTestimonials.length === 0) {
-    return null;
-  }
+  ) || [];
 
   // Reverse testimonials array - nieuwste eerst
   const reversedTestimonials = [...validTestimonials].reverse();
@@ -123,6 +115,15 @@ export default function TestimonialsSection({ testimonials = [] }) {
       }
     };
   }, [currentIndex, isAutoPlaying, reversedTestimonials.length, visibleSlides, handleNext]);
+
+  // Early returns AFTER all hooks
+  if (!testimonials || testimonials.length === 0) {
+    return null;
+  }
+
+  if (validTestimonials.length === 0) {
+    return null;
+  }
 
   // Helper: Render stars
   const renderStars = (rating) => {
@@ -222,7 +223,7 @@ export default function TestimonialsSection({ testimonials = [] }) {
 
                     {/* Short Quote - Flexible height */}
                     <p className="text-base text-gray-700 leading-relaxed mb-2 flex-grow">
-                      "{shortQuote}"
+                      &ldquo;{shortQuote}&rdquo;
                     </p>
 
                     {/* Subtle "read more" indicator - altijd dezelfde hoogte reserveren */}
