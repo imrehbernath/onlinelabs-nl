@@ -46,7 +46,7 @@ export default function Hero({ data = null }) {
           {/* Left Column - Content - VERTICAAL GECENTREERD */}
           <div className="space-y-6 lg:space-y-8 max-w-2xl flex flex-col justify-center min-h-[550px] lg:min-h-[700px]">
             {/* H1 - Playfair Display */}
-            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] text-gray-900">
+            <h1 className="font-serif font-bold leading-[1.1] text-gray-900 text-[2.7rem] lg:text-[4.0rem]">
               {title}
             </h1>
 

@@ -84,8 +84,8 @@ export default function LogoSlider({
           </div>
         )}
 
-        {/* Dual-Row Logo Scroller */}
-        <div ref={scrollerRef} className="space-y-8">
+        {/* Dual-Row Logo Scroller - COMPACTER SPACING */}
+        <div ref={scrollerRef} className="space-y-4 lg:space-y-6">
           
           {/* Top Row - Scrolls LEFT (← ← ←) */}
           <div 
@@ -94,7 +94,7 @@ export default function LogoSlider({
           >
             <div
               data-scroller-top
-              className="flex gap-16 lg:gap-20"
+              className="flex gap-8 lg:gap-12"
               style={{
                 animation: `scrollLeft ${speeds[speed]}s linear infinite`,
                 width: 'max-content'
@@ -151,7 +151,7 @@ export default function LogoSlider({
           >
             <div
               data-scroller-bottom
-              className="flex gap-16 lg:gap-20"
+              className="flex gap-8 lg:gap-12"
               style={{
                 animation: `scrollRight ${speeds[speed]}s linear infinite`,
                 width: 'max-content'
