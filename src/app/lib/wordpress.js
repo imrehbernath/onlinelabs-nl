@@ -323,9 +323,408 @@ export async function getTestimonialById(id) {
 }
 
 // ==========================================
-// FUTURE: BLOG POSTS, CASES, etc.
+// BLOG POSTS
 // ==========================================
 
-// TODO: Add getBlogPosts()
-// TODO: Add getCases()
-// TODO: Add getTeamMembers()
+/**
+ * Get Blog Posts
+ * Fetches latest blog posts with author, categories, featured image
+ * 
+ * @param {number} limit - Number of posts to fetch (default: 3)
+ * @returns {Array} Array of blog post objects
+ */
+export async function getBlogPosts(limit = 3) {
+  console.log(`📝 Fetching blog posts from WordPress (limit: ${limit})...`);
+  
+  try {
+    const data = await fetchAPI(
+      `
+      query GetBlogPosts($limit: Int!) {
+        posts(first: $limit, where: { orderby: { field: DATE, order: DESC } }) {
+          nodes {
+            id
+            title
+            excerpt
+            slug
+            date
+            modified
+            featuredImage {
+              node {
+                sourceUrl(size: LARGE)
+                altText
+                mediaDetails {
+                  width
+                  height
+                }
+              }
+            }
+            author {
+              node {
+                name
+                avatar {
+                  url
+                }
+                description
+              }
+            }
+            categories {
+              nodes {
+                name
+                slug
+              }
+            }
+            content
+          }
+        }
+      }
+    `,
+      {
+        variables: { limit },
+      }
+    );
+
+    console.log('✅ Blog posts fetched:', data?.posts?.nodes?.length || 0);
+
+    // Calculate reading time for each post
+    const posts = data?.posts?.nodes?.map(post => {
+      const wordCount = post.content ? post.content.replace(/<[^>]*>/g, '').split(/\s+/).length : 0;
+      const readingTime = Math.ceil(wordCount / 200); // Average reading speed: 200 words/min
+
+      return {
+        id: post.id,
+        title: post.title,
+        excerpt: post.excerpt?.replace(/<[^>]*>/g, '').trim() || '',
+        slug: post.slug,
+        date: post.date,
+        modified: post.modified,
+        readingTime: readingTime || 5, // Default to 5 min if can't calculate
+        categories: post.categories.nodes.map(cat => cat.name),
+        author: {
+          name: post.author.node.name,
+          avatar: post.author.node.avatar.url,
+          bio: post.author.node.description
+        },
+        featuredImage: post.featuredImage?.node ? {
+          sourceUrl: post.featuredImage.node.sourceUrl,
+          altText: post.featuredImage.node.altText,
+          width: post.featuredImage.node.mediaDetails?.width,
+          height: post.featuredImage.node.mediaDetails?.height
+        } : null
+      };
+    }) || [];
+
+    return posts;
+
+  } catch (error) {
+    console.error('❌ Failed to fetch blog posts:', error.message);
+    return [];
+  }
+}
+
+/**
+ * Get Single Blog Post by Slug
+ * 
+ * @param {string} slug - Post slug
+ * @returns {Object} Blog post object
+ */
+export async function getBlogPostBySlug(slug) {
+  console.log(`📝 Fetching blog post: ${slug}`);
+  
+  try {
+    const data = await fetchAPI(
+      `
+      query GetBlogPost($slug: String!) {
+        postBy(slug: $slug) {
+          id
+          title
+          content
+          excerpt
+          date
+          modified
+          slug
+          featuredImage {
+            node {
+              sourceUrl(size: LARGE)
+              altText
+              mediaDetails {
+                width
+                height
+              }
+            }
+          }
+          author {
+            node {
+              name
+              description
+              avatar {
+                url
+              }
+            }
+          }
+          categories {
+            nodes {
+              name
+              slug
+            }
+          }
+          tags {
+            nodes {
+              name
+              slug
+            }
+          }
+          seo {
+            title
+            metaDesc
+            focuskw
+            opengraphImage {
+              sourceUrl
+            }
+          }
+        }
+      }
+    `,
+      {
+        variables: { slug },
+      }
+    );
+
+    if (!data?.postBy) {
+      console.log('❌ Blog post not found');
+      return null;
+    }
+
+    const post = data.postBy;
+    const wordCount = post.content ? post.content.replace(/<[^>]*>/g, '').split(/\s+/).length : 0;
+    const readingTime = Math.ceil(wordCount / 200);
+
+    console.log('✅ Blog post fetched:', post.title);
+
+    return {
+      id: post.id,
+      title: post.title,
+      content: post.content,
+      excerpt: post.excerpt?.replace(/<[^>]*>/g, '').trim() || '',
+      slug: post.slug,
+      date: post.date,
+      modified: post.modified,
+      readingTime,
+      categories: post.categories.nodes.map(cat => ({ name: cat.name, slug: cat.slug })),
+      tags: post.tags?.nodes.map(tag => ({ name: tag.name, slug: tag.slug })) || [],
+      author: {
+        name: post.author.node.name,
+        bio: post.author.node.description,
+        avatar: post.author.node.avatar.url
+      },
+      featuredImage: post.featuredImage?.node ? {
+        sourceUrl: post.featuredImage.node.sourceUrl,
+        altText: post.featuredImage.node.altText,
+        width: post.featuredImage.node.mediaDetails?.width,
+        height: post.featuredImage.node.mediaDetails?.height
+      } : null,
+      seo: post.seo || null
+    };
+
+  } catch (error) {
+    console.error('❌ Failed to fetch blog post:', error.message);
+    return null;
+  }
+}
+
+/**
+ * Get All Blog Post Slugs
+ * For static generation of blog pages
+ * 
+ * @returns {Array} Array of slugs
+ */
+export async function getAllBlogPostSlugs() {
+  console.log('📝 Fetching all blog post slugs...');
+  
+  try {
+    const data = await fetchAPI(`
+      query GetAllPostSlugs {
+        posts(first: 1000) {
+          nodes {
+            slug
+          }
+        }
+      }
+    `);
+
+    const slugs = data?.posts?.nodes?.map(post => post.slug) || [];
+    console.log('✅ Blog post slugs fetched:', slugs.length);
+    
+    return slugs;
+
+  } catch (error) {
+    console.error('❌ Failed to fetch post slugs:', error.message);
+    return [];
+  }
+}
+
+// ==========================================
+// CASES
+// ==========================================
+
+/**
+ * Get Featured Cases
+ * Returns cases for homepage display
+ * 
+ * @param {number} limit - Number of cases to fetch (default: 3)
+ * @returns {Array} Array of case objects
+ */
+export async function getCases(limit = 3) {
+  console.log(`💼 Fetching cases from WordPress (limit: ${limit})...`);
+  
+  try {
+    const data = await fetchAPI(
+      `
+      query GetCases($limit: Int!) {
+        cases(first: $limit, where: { orderby: { field: DATE, order: DESC } }) {
+          nodes {
+            id
+            title
+            slug
+            uri
+            caseDetails {
+              clientName
+              clientLogo {
+                node {
+                  sourceUrl
+                  altText
+                  mediaDetails {
+                    width
+                    height
+                  }
+                }
+              }
+              featuredImage {
+                node {
+                  sourceUrl
+                  altText
+                  mediaDetails {
+                    width
+                    height
+                  }
+                }
+              }
+              excerpt
+              metrics
+              servicesUsed
+              ctaText
+              ctaUrl
+              featured
+              projectDate
+            }
+          }
+        }
+      }
+    `,
+      {
+        variables: { limit },
+      }
+    );
+
+    console.log('✅ Cases fetched:', data?.cases?.nodes?.length || 0);
+
+    const cases = data?.cases?.nodes || [];
+    
+    // Transform data
+    return cases.map(caseItem => ({
+      id: caseItem.id,
+      title: caseItem.title,
+      slug: caseItem.slug,
+      uri: caseItem.uri,
+      clientName: caseItem.caseDetails?.clientName || '',
+      clientLogo: caseItem.caseDetails?.clientLogo?.node ? {
+        sourceUrl: caseItem.caseDetails.clientLogo.node.sourceUrl,
+        altText: caseItem.caseDetails.clientLogo.node.altText || caseItem.caseDetails.clientName,
+        width: caseItem.caseDetails.clientLogo.node.mediaDetails?.width || 400,
+        height: caseItem.caseDetails.clientLogo.node.mediaDetails?.height || 100,
+      } : null,
+      featuredImage: caseItem.caseDetails?.featuredImage?.node ? {
+        sourceUrl: caseItem.caseDetails.featuredImage.node.sourceUrl,
+        altText: caseItem.caseDetails.featuredImage.node.altText || caseItem.title,
+        width: caseItem.caseDetails.featuredImage.node.mediaDetails?.width || 1600,
+        height: caseItem.caseDetails.featuredImage.node.mediaDetails?.height || 1000,
+      } : null,
+      excerpt: caseItem.caseDetails?.excerpt || '',
+      metrics: caseItem.caseDetails?.metrics || '',
+      servicesUsed: caseItem.caseDetails?.servicesUsed || [],
+      ctaText: caseItem.caseDetails?.ctaText || `Bekijk de ${caseItem.caseDetails?.clientName || ''} case`,
+      ctaUrl: caseItem.caseDetails?.ctaUrl || `/ons-werk/${caseItem.slug}`,
+      featured: caseItem.caseDetails?.featured || false,
+      projectDate: caseItem.caseDetails?.projectDate || null,
+    }));
+  } catch (error) {
+    console.error('❌ Failed to fetch cases:', error.message);
+    return [];
+  }
+}
+
+/**
+ * Get Single Case by Slug
+ * For case detail pages
+ * 
+ * @param {string} slug - Case slug
+ * @returns {Object} Case object
+ */
+export async function getCaseBySlug(slug) {
+  console.log(`💼 Fetching case: ${slug}`);
+  
+  try {
+    const data = await fetchAPI(
+      `
+      query GetCaseBySlug($slug: ID!) {
+        case(id: $slug, idType: SLUG) {
+          id
+          title
+          slug
+          uri
+          caseDetails {
+            clientName
+            excerpt
+            metrics
+            fullCaseStudy
+          }
+        }
+      }
+    `,
+      {
+        variables: { slug },
+      }
+    );
+
+    return data?.case || null;
+  } catch (error) {
+    console.error('❌ Failed to fetch case:', error.message);
+    return null;
+  }
+}
+
+/**
+ * Get All Case Slugs
+ * For static generation of case detail pages
+ * 
+ * @returns {Array} Array of slugs
+ */
+export async function getAllCaseSlugs() {
+  console.log('💼 Fetching all case slugs...');
+  
+  try {
+    const data = await fetchAPI(`
+      query GetAllCaseSlugs {
+        cases(first: 100) {
+          nodes {
+            slug
+          }
+        }
+      }
+    `);
+
+    return data?.cases?.nodes?.map(node => node.slug) || [];
+  } catch (error) {
+    console.error('❌ Failed to fetch case slugs:', error.message);
+    return [];
+  }
+}

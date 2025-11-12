@@ -4,7 +4,9 @@ import AboutSection from './components/AboutSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import CTASection from './components/CTASection';
 import LogoSlider from './components/LogoSlider';
-import { getHomepageSettings, getAllServices, getTestimonials } from './lib/wordpress';
+import CasesSection from './components/CasesSection';
+import BlogSection from './components/BlogSection';
+import { getHomepageSettings, getAllServices, getTestimonials, getBlogPosts, getCases } from './lib/wordpress';
 
 // SEO Metadata
 export const metadata = {
@@ -41,10 +43,12 @@ export const revalidate = 86400;
 
 export default async function Home() {
   // Fetch data from WordPress (server-side, cached 24u)
-  const [homepageSettings, services, testimonials] = await Promise.all([
+  const [homepageSettings, services, testimonials, blogPosts, cases] = await Promise.all([
     getHomepageSettings(),  // Hero + About sections
     getAllServices(),
     getTestimonials(100),   // Max 100 testimonials
+    getBlogPosts(3),        // Latest 3 blog posts
+    getCases(3),            // Latest 3 cases
   ]);
 
   // Extract Hero data
@@ -106,6 +110,23 @@ export default async function Home() {
           logos={logoSliderData.logos}
           speed={logoSliderData.speed}
           grayscale={logoSliderData.grayscale}
+        />
+      )}
+
+      {/* Cases Section - Featured Projects */}
+      {cases && cases.length > 0 && (
+        <CasesSection 
+          cases={cases}
+          title="Projecten waar we trots op zijn"
+          subtitle="Cases"
+        />
+      )}
+
+      {/* Blog Section - Latest 3 blog posts with featured layout */}
+      {blogPosts && blogPosts.length > 0 && (
+        <BlogSection 
+          posts={blogPosts}
+          title="Laatste Inzichten"
         />
       )}
 
