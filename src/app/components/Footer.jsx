@@ -125,7 +125,7 @@ export default function Footer({ footerData }) {
           {/* Column 2: Services */}
           <div>
             <div className="font-serif text-lg font-bold text-white mb-6">
-              Diensten
+              Skils
             </div>
             <ul className="space-y-3">
               {footer.services.map((service, index) => (
@@ -236,9 +236,6 @@ export default function Footer({ footerData }) {
               </Link>
               <Link href="/algemene-voorwaarden" className="text-gray-400 hover:text-primary transition-colors duration-200">
                 Algemene Voorwaarden
-              </Link>
-              <Link href="/sitemap" className="text-gray-400 hover:text-primary transition-colors duration-200">
-                Sitemap
               </Link>
             </div>
           </div>
