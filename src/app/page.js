@@ -91,7 +91,7 @@ export default async function Home() {
       {/* Services Section - "Onze LABS" met colored bars */}
       <ServicesSection services={services} />
 
-      {/* CTA Section - Call to action na Services */}
+      {/* CTA Section 1 - Call to action na Services (DARK) */}
       <CTASection 
         title="Klaar om jouw online zichtbaarheid te verbeteren?"
         description="Ontdek hoe OnlineLabs jouw bedrijf helpt groeien met strategische SEO, GEO en webdesign."
@@ -122,6 +122,15 @@ export default async function Home() {
         />
       )}
 
+      {/* CTA Section 2 - Light variant tussen Cases en Blog (NIEUW!) */}
+      <CTASection 
+        title="Benieuwd wat we voor jouw bedrijf kunnen betekenen?"
+        description="Plan een vrijblijvend gesprek en ontdek de mogelijkheden voor jouw online groei."
+        primaryButton={{ text: "Plan een gesprek", url: "/contact" }}
+        secondaryButton={{ text: "Bekijk alle cases", url: "/ons-werk" }}
+        variant="light"
+      />
+
       {/* Blog Section - Latest 3 blog posts with featured layout */}
       {blogPosts && blogPosts.length > 0 && (
         <BlogSection 
@@ -133,13 +142,7 @@ export default async function Home() {
       {/* Testimonials Section - 3-column slider met auto-rotate */}
       <TestimonialsSection testimonials={testimonials} />
 
-      {/* Final CTA - Strong call to action onderaan */}
-      <CTASection 
-        title="Start vandaag nog met betere online resultaten"
-        description="Laten we samen kijken hoe we jouw bedrijf naar het volgende niveau tillen."
-        primaryButton={{ text: "Plan een gesprek", url: "/contact" }}
-        variant="secondary"
-      />
+      {/* Footer volgt direct na Testimonials - geen extra CTA meer */}
     </main>
   );
 }
