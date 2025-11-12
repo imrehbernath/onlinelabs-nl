@@ -1,4 +1,3 @@
-
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Header from './components/Header';
@@ -25,6 +24,9 @@ const metropolis = Inter({
   display: 'swap',
 });
 
+// 🔒 CONDITIONAL NOINDEX: alleen production indexeren
+const isProduction = process.env.VERCEL_ENV === 'production';
+
 export const metadata = {
   metadataBase: new URL('https://www.onlinelabs.nl'),
   title: {
@@ -47,12 +49,13 @@ export const metadata = {
     url: 'https://www.onlinelabs.nl',
     siteName: 'OnlineLabs',
   },
+  // 🔒 CONDITIONAL ROBOTS: alleen production indexed
   robots: {
-    index: true,
-    follow: true,
+    index: isProduction,
+    follow: isProduction,
     googleBot: {
-      index: true,
-      follow: true,
+      index: isProduction,
+      follow: isProduction,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
@@ -171,6 +174,11 @@ export default async function RootLayout({ children }) {
         {/* Manifest */}
         <link rel="manifest" href="/manifest.json" />
         
+        {/* 🔒 EXTRA NOINDEX BACKUP voor non-production */}
+        {!isProduction && (
+          <meta name="robots" content="noindex, nofollow" />
+        )}
+        
         {/* Structured Data (JSON-LD) */}
         <script
           type="application/ld+json"
@@ -185,6 +193,13 @@ export default async function RootLayout({ children }) {
           {children}
         </main>
         <Footer />
+        
+        {/* 🔴 VISUAL INDICATOR voor non-production */}
+        {!isProduction && (
+          <div className="fixed bottom-4 right-4 bg-red-500 text-white px-3 py-2 rounded-lg text-xs font-bold z-[9999] shadow-lg">
+            {process.env.VERCEL_ENV || 'development'} - NOINDEX
+          </div>
+        )}
       </body>
     </html>
   );

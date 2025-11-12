@@ -1,8 +1,8 @@
 export default function robots() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://teun.ai';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.onlinelabs.nl';
   
-  // Check if NOT on production (any Vercel preview URL or non-production domain)
-  const isProduction = baseUrl === 'https://teun.ai';
+  // Check if on production using VERCEL_ENV
+  const isProduction = process.env.VERCEL_ENV === 'production';
   
   if (!isProduction) {
     // Preview/Staging: Block everything
