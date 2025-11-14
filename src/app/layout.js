@@ -1,15 +1,18 @@
 import { Inter, Playfair_Display } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { getAllServices } from './lib/wordpress';
 
+// Inter - Google Font (fallback voor Metropolis)
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 });
 
+// Playfair Display - Google Font (serif voor headers)
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
@@ -17,11 +20,33 @@ const playfair = Playfair_Display({
   weight: ['400', '500', '600', '700', '800', '900'],
 });
 
-// Metropolis als fallback (gebruik Inter als Metropolis niet beschikbaar is)
-const metropolis = Inter({
-  subsets: ['latin'],
+// Metropolis - Local Font (primary sans-serif)
+const metropolis = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Metropolis-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Metropolis-Medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Metropolis-SemiBold.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Metropolis-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
   variable: '--font-metropolis',
   display: 'swap',
+  fallback: ['var(--font-inter)', 'system-ui', 'sans-serif'],
 });
 
 // 🔒 CONDITIONAL NOINDEX: alleen production indexeren
@@ -157,7 +182,7 @@ export default async function RootLayout({ children }) {
   };
 
   return (
-    <html lang="nl" className={`${inter.variable} ${playfair.variable} ${metropolis.variable}`}>
+    <html lang="nl" className={`${metropolis.variable} ${inter.variable} ${playfair.variable}`}>
       <head>
         {/* Preconnect to important domains */}
         <link rel="preconnect" href="https://cdn.onlinelabs.nl" />
