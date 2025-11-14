@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowDown } from 'lucide-react';
 
 export default function TextImageSection({ 
@@ -11,7 +12,9 @@ export default function TextImageSection({
   image, 
   video, 
   serviceColor = 'green',
-  background = 'white'  // ✅ NEW: Background prop voor alternating backgrounds
+  background = 'white',
+  imageCaption = null,  // ✅ NEW: Optional caption onder image
+  imageCaptionLink = null  // ✅ NEW: Optional link voor caption
 }) {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -138,30 +141,51 @@ export default function TextImageSection({
 
             {/* Image - VEEL BREDER OP MOBILE + SHINE EFFECT, absolute op desktop */}
             {!video && image && (
-              <div 
-                className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:translate-x-0 rounded-xl overflow-hidden group z-20"
-                style={{
-                  boxShadow: '0 25px 60px rgba(0,0,0,0.35)'
-                }}
-              >
-                {/* Shine effect on hover - EXACT zoals AboutSection */}
+              <>
                 <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"
+                  className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:translate-x-0 rounded-xl overflow-hidden group z-20"
                   style={{
-                    background: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
-                    animation: 'shine 1.5s ease-in-out infinite'
+                    boxShadow: '0 25px 60px rgba(0,0,0,0.35)'
                   }}
-                />
-                
-                <Image
-                  src={image.sourceUrl}
-                  alt={image.altText || title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  priority={false}
-                  sizes="(max-width: 1024px) 85vw, 40vw"
-                />
-              </div>
+                >
+                  {/* Shine effect on hover - EXACT zoals AboutSection */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"
+                    style={{
+                      background: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
+                      animation: 'shine 1.5s ease-in-out infinite'
+                    }}
+                  />
+                  
+                  <Image
+                    src={image.sourceUrl}
+                    alt={image.altText || title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    priority={false}
+                    sizes="(max-width: 1024px) 85vw, 40vw"
+                  />
+                </div>
+
+                {/* Image Caption - onder de foto */}
+                {imageCaption && (
+                  <div className="relative w-[85%] mx-auto mt-4 lg:absolute lg:bottom-[2%] lg:left-[8%] lg:w-[54%] lg:mt-0 text-center lg:text-left z-20">
+                    {imageCaptionLink ? (
+                      <Link 
+                        href={imageCaptionLink}
+                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1 group"
+                      >
+                        <span dangerouslySetInnerHTML={{ __html: imageCaption }} />
+                        <svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    ) : (
+                      <p className="text-sm text-gray-600" dangerouslySetInnerHTML={{ __html: imageCaption }} />
+                    )}
+                  </div>
+                )}
+              </>
             )}
             
           </div>

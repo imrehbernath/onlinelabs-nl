@@ -58,7 +58,36 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
       },
       {
         type: 'text_image',
-        layout: 'image-left',  // Image LINKS voor visuele afwisseling
+        layout: 'image-left',  // Imre's foto LINKS - voor expertise sectie
+        title: 'Traditionele SEO + AI-Zichtbaarheid',
+        content: `
+          <p class="mb-6">Sinds 2008 help ik bedrijven groeien met <strong>SEO die werkt – in zoekmachines én AI-platformen.</strong> Waar anderen kiezen tussen traditionele SEO of AI-optimalisatie, combineer ik beide. Want zonder sterke SEO-fundamenten, geen AI-zichtbaarheid.</p>
+          
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Traditionele SEO vormt de basis</h3>
+          
+          <p class="mb-4">Technische optimalisatie, hoogwaardige content en gezonde autoriteit – dat zijn de pijlers. Google moet je eerst vinden en waarderen. Zonder deze fundamenten heeft AI-optimalisatie geen effect.</p>
+          
+          <h3 class="text-xl font-bold text-gray-900 mb-4 mt-8">AI-Visibility als nieuwe laag</h3>
+          
+          <p class="mb-6">Daarbovenop bouw ik <strong>GEO-optimalisatie</strong> (Generative Engine Optimization): structured data, semantische HTML en content die AI-modellen begrijpen en citeren. Zo verschijn je in ChatGPT, Perplexity en Google AI.</p>
+          
+          <div class="bg-gray-50 border-l-4 p-6 rounded-r-lg" style="border-color: #376eb5;">
+            <p class="text-base font-semibold text-gray-900 mb-2">Gericht op groei en blijvende vindbaarheid</p>
+            <p class="text-gray-700">Traditionele zoekmachines blijven bestaan. AI-platformen groeien explosief. Jij hebt een strategie nodig die in beide werelden werkt – voor nu én de toekomst.</p>
+          </div>
+        `,
+        image: {
+          sourceUrl: 'https://cdn.onlinelabs.nl/wp-content/uploads/2025/04/11093106/Imre-Bernath-eigenaar-OnlineLabs.webp',
+          altText: 'Imre Bernáth - SEO & AI visibility specialist bij OnlineLabs Amsterdam'
+        },
+        imageCaption: 'Imre Bernáth – SEO & AI visibility specialist, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>',
+        imageCaptionLink: '/over-ons/imre-bernath',
+        serviceColor: 'green',
+        background: 'beige'  // ✅ Beige achtergrond voor afwisseling
+      },
+      {
+        type: 'text_image',
+        layout: 'image-right',  // Image RECHTS voor visuele afwisseling (was links, nu rechts)
         title: 'Voor wie is SEO geschikt?',
         content: `
           <p class="mb-4">SEO is niet voor iedereen – maar als je bedrijf online groei ambieert, klanten zoekt via Google, of concurrentie ervaart in je markt, dan is SEO essentieel voor structurele zichtbaarheid.</p>
@@ -177,7 +206,9 @@ export default async function ServiceDetailPage({ params }) {
                 image={section.image}
                 video={section.video}
                 serviceColor={section.serviceColor}
-                background={section.background || 'white'}  // ✅ Background prop
+                background={section.background || 'white'}
+                imageCaption={section.imageCaption}
+                imageCaptionLink={section.imageCaptionLink}
               />
             );
           }

@@ -5,30 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Check } from 'lucide-react';
 
-/**
- * AboutSection Component
- * 
- * Two-column about section met blob background en clean image styling
- * Consistent met TextImageSection design
- * Mobile optimized: geen blob, bredere image
- * 
- * Expected data structure:
- * aboutData = {
- *   title: string,
- *   subtitle: string,
- *   paragraph1: string,
- *   paragraph2: string,
- *   targetAudienceTitle: string,
- *   targetAudienceItems: [string],
- *   image: { sourceUrl: string, altText: string },
- *   ctaText: string,
- *   ctaUrl: string
- * }
- */
-export default function AboutSection({ aboutData }) {
+export default function AboutSection({ aboutData, imageCaption, imageCaptionLink }) {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Intersection Observer voor animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -47,7 +26,6 @@ export default function AboutSection({ aboutData }) {
     };
   }, []);
 
-  // Fallback data
   const data = aboutData || {
     title: "Meer dan een Online Marketing Bureau",
     subtitle: "Jouw partner voor digitale groei en zichtbaarheid",
@@ -78,13 +56,12 @@ export default function AboutSection({ aboutData }) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           
-          {/* Left Column - Image met blob (alleen desktop) */}
-          <div 
-            className={`relative lg:h-[700px] transition-all duration-1000 ${
-              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
-            }`}
-          >
-            {/* Blob - ALLEEN OP DESKTOP */}
+          {/* Left Column - EXACT SAME AS TEXTIIMAGESECTION */}
+          <div className={`relative order-1 lg:h-[760px] lg:order-1 transition-all duration-1000 delay-300 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
+            
+            {/* Blob - EXACT zoals TextImageSection */}
             <div 
               className="hidden lg:block absolute"
               style={{
@@ -98,40 +75,63 @@ export default function AboutSection({ aboutData }) {
               }}
             />
             
-            {/* Main Image - VEEL BREDER OP MOBILE + SHINE */}
-            <div 
-              className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:translate-x-0 rounded-xl overflow-hidden group z-20"
-              style={{
-                boxShadow: '0 25px 60px rgba(0,0,0,0.35)'
-              }}
-            >
-              {/* Shine effect on hover */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"
-                style={{
-                  background: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
-                  animation: 'shine 1.5s ease-in-out infinite'
-                }}
-              />
-              
-              <Image
-                src={data.image.sourceUrl}
-                alt={data.image.altText}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 1024px) 85vw, 40vw"
-                priority={false}
-              />
-            </div>
+            {/* Image + Caption - EXACT zoals TextImageSection */}
+            {!false && data.image && (
+              <>
+                <div 
+                  className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:translate-x-0 rounded-xl overflow-hidden group z-20"
+                  style={{
+                    boxShadow: '0 25px 60px rgba(0,0,0,0.35)'
+                  }}
+                >
+                  {/* Shine effect on hover - EXACT zoals AboutSection */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"
+                    style={{
+                      background: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
+                      animation: 'shine 1.5s ease-in-out infinite'
+                    }}
+                  />
+                  
+                  <Image
+                    src={data.image.sourceUrl}
+                    alt={data.image.altText}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    priority={false}
+                    sizes="(max-width: 1024px) 85vw, 40vw"
+                  />
+                </div>
+
+                {/* Image Caption - onder de foto */}
+                {imageCaption && (
+                  <div className="relative w-[85%] mx-auto mt-4 lg:absolute lg:bottom-[2%] lg:left-[8%] lg:w-[54%] lg:mt-0 text-center lg:text-left z-20">
+                    {imageCaptionLink ? (
+                      <Link 
+                        href={imageCaptionLink}
+                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1 group"
+                      >
+                        <span dangerouslySetInnerHTML={{ __html: imageCaption }} />
+                        <svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    ) : (
+                      <p className="text-sm text-gray-600" dangerouslySetInnerHTML={{ __html: imageCaption }} />
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+            
           </div>
 
           {/* Right Column - Content */}
           <div 
-            className={`transition-all duration-1000 delay-300 ${
-              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
+            className={`order-2 lg:order-2 transition-all duration-1000 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            {/* Title & Subtitle */}
             <div className="mb-8">
               <h2 className="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
                 {data.title}
@@ -141,7 +141,6 @@ export default function AboutSection({ aboutData }) {
               </p>
             </div>
 
-            {/* Body Paragraphs */}
             <div className="space-y-4 mb-8">
               <p className="text-base text-gray-700 leading-relaxed">
                 {data.paragraph1}
@@ -166,16 +165,13 @@ export default function AboutSection({ aboutData }) {
               </p>
             </div>
 
-            {/* Divider */}
             <div className="h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent my-10" />
 
-            {/* Target Audience Section */}
             <div>
               <h3 className="font-serif text-2xl lg:text-3xl font-bold text-gray-900 mb-6">
                 {data.targetAudienceTitle}
               </h3>
               
-              {/* List with staggered animation */}
               <div className="space-y-3">
                 {data.targetAudienceItems.map((item, index) => (
                   <div
@@ -189,9 +185,8 @@ export default function AboutSection({ aboutData }) {
                       transitionDelay: isVisible ? `${600 + index * 100}ms` : '0ms' 
                     }}
                   >
-                    {/* Custom checkmark met accent color */}
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center mt-0.5">
-                      <Check className="w-4 h-4 text-accent" strokeWidth={3} />
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}>
+                      <Check className="w-4 h-4" style={{ color: '#376eb5' }} strokeWidth={3} />
                     </div>
                     <p className="text-base text-gray-700 leading-relaxed flex-1">
                       {item}

@@ -100,8 +100,14 @@ export default async function Home() {
         variant="primary"
       />
 
-      {/* About Section - "Meer dan een Online Marketing Bureau" */}
-      {aboutData && <AboutSection aboutData={aboutData} />}
+      {/* About Section - "Meer dan een Online Marketing Bureau" + Caption */}
+      {aboutData && (
+        <AboutSection 
+          aboutData={aboutData}
+          imageCaption='Sanne Verschoor – Webdesigner & developer, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>'
+          imageCaptionLink="/over-ons/sanne-verschoor"
+        />
+      )}
 
       {/* Logo Slider - Partners/Clients showcase (WordPress editable) */}
       {logoSliderData && logoSliderData.logos.length > 0 && (
