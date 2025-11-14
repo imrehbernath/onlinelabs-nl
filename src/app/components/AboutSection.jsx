@@ -8,7 +8,9 @@ import { Check } from 'lucide-react';
 /**
  * AboutSection Component
  * 
- * Two-column about section met parallax effect en staggered animations
+ * Two-column about section met blob background en clean image styling
+ * Consistent met TextImageSection design
+ * Mobile optimized: geen blob, bredere image
  * 
  * Expected data structure:
  * aboutData = {
@@ -24,18 +26,7 @@ import { Check } from 'lucide-react';
  * }
  */
 export default function AboutSection({ aboutData }) {
-  const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-
-  // Parallax effect op scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Intersection Observer voor animations
   useEffect(() => {
@@ -79,45 +70,60 @@ export default function AboutSection({ aboutData }) {
     ctaUrl: "/over-ons"
   };
 
-  // Bereken parallax offset (subtiel)
-  const parallaxOffset = scrollY * 0.15;
-
   return (
     <section 
       id="about-section"
-      className="py-20 lg:py-32 bg-white overflow-hidden"
+      className="py-12 lg:py-32 bg-white overflow-hidden"
     >
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           
-          {/* Left Column - Image met parallax effect */}
+          {/* Left Column - Image met blob (alleen desktop) */}
           <div 
             className={`relative transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
             }`}
           >
-            {/* Decorative gradient blob achter de foto */}
+            {/* Blob - ALLEEN OP DESKTOP */}
             <div 
-              className="absolute -left-8 -top-8 w-72 h-72 bg-gradient-to-br from-primary/20 to-accent/20 rounded-[3rem] -z-10"
-              style={{ transform: `translateY(${parallaxOffset}px)` }}
+              className="hidden lg:block absolute"
+              style={{
+                background: '#F5F3EE',
+                borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+                transform: 'rotate(-5deg)',
+                top: '5%',
+                left: '5%',
+                right: '5%',
+                bottom: '5%',
+                height: '700px'
+              }}
             />
             
-            {/* Main Image */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5]">
+            {/* Main Image - VEEL BREDER OP MOBILE + SHINE */}
+            <div 
+              className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:mx-0 rounded-xl overflow-hidden group"
+              style={{
+                boxShadow: '0 25px 60px rgba(0,0,0,0.35)'
+              }}
+            >
+              {/* Shine effect on hover */}
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
+                  animation: 'shine 1.5s ease-in-out infinite'
+                }}
+              />
+              
               <Image
                 src={data.image.sourceUrl}
                 alt={data.image.altText}
                 fill
-                className="object-cover hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 1024px) 85vw, 40vw"
+                priority={false}
               />
             </div>
-
-            {/* Floating accent element */}
-            <div 
-              className="absolute -right-6 -bottom-6 w-32 h-32 bg-gradient-to-br from-accent to-accent/80 rounded-3xl opacity-80 -z-10"
-              style={{ transform: `translateY(${-parallaxOffset * 0.5}px) rotate(12deg)` }}
-            />
           </div>
 
           {/* Right Column - Content */}
@@ -195,17 +201,6 @@ export default function AboutSection({ aboutData }) {
                 ))}
               </div>
             </div>
-
-            {/* CTA Button (optioneel, als je een aparte CTA wilt naast de inline link) */}
-            {/* <div className="mt-10">
-              <Link
-                href={data.ctaUrl}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark transition-colors duration-300"
-              >
-                {data.ctaText}
-                <ChevronRight className="w-5 h-5" />
-              </Link>
-            </div> */}
           </div>
 
         </div>
