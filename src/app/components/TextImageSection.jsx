@@ -63,7 +63,7 @@ export default function TextImageSection({
           </div>
 
           {/* Media Column - responsive order based on layout */}
-          <div className={`relative order-1 ${
+          <div className={`relative order-1 lg:h-[760px] ${
             layout === 'image-left' ? 'lg:order-1' : 'lg:order-2'
           }`}>
             
@@ -77,15 +77,14 @@ export default function TextImageSection({
                 top: '5%',
                 left: '5%',
                 right: '5%',
-                bottom: '5%',
-                height: '760px'
+                bottom: '5%'
               }}
             />
             
-            {/* Video - VEEL BREDER OP MOBILE, phone aspect op desktop */}
+            {/* Video - VEEL BREDER OP MOBILE, absolute op desktop */}
             {video?.webm && (
               <div 
-                className="relative w-[85%] mx-auto aspect-[338/601] lg:absolute lg:top-[15%] lg:left-[10%] lg:w-[44%] lg:mx-0 rounded-xl overflow-hidden"
+                className="relative w-[85%] mx-auto aspect-[338/601] lg:absolute lg:top-[15%] lg:left-[10%] lg:w-[44%] lg:translate-x-0 rounded-xl overflow-hidden z-20"
                 style={{
                   boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
                 }}
@@ -107,10 +106,10 @@ export default function TextImageSection({
               </div>
             )}
 
-            {/* Image - VEEL BREDER OP MOBILE + SHINE EFFECT */}
+            {/* Image - VEEL BREDER OP MOBILE + SHINE EFFECT, absolute op desktop */}
             {!video && image && (
               <div 
-                className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:mx-0 rounded-xl overflow-hidden group"
+                className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:translate-x-0 rounded-xl overflow-hidden group z-20"
                 style={{
                   boxShadow: '0 25px 60px rgba(0,0,0,0.35)'
                 }}

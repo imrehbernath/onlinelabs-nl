@@ -80,7 +80,7 @@ export default function AboutSection({ aboutData }) {
           
           {/* Left Column - Image met blob (alleen desktop) */}
           <div 
-            className={`relative transition-all duration-1000 ${
+            className={`relative lg:h-[700px] transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
             }`}
           >
@@ -94,14 +94,13 @@ export default function AboutSection({ aboutData }) {
                 top: '5%',
                 left: '5%',
                 right: '5%',
-                bottom: '5%',
-                height: '700px'
+                bottom: '5%'
               }}
             />
             
             {/* Main Image - VEEL BREDER OP MOBILE + SHINE */}
             <div 
-              className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:mx-0 rounded-xl overflow-hidden group"
+              className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:translate-x-0 rounded-xl overflow-hidden group z-20"
               style={{
                 boxShadow: '0 25px 60px rgba(0,0,0,0.35)'
               }}
