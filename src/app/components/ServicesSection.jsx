@@ -7,15 +7,6 @@ export default function ServicesSection({ services = [] }) {
     return null;
   }
 
-  // Service colors - clean accent bars
-  const serviceColors = {
-    'seo-specialist': 'bg-emerald-500',
-    'geo-optimalisatie': 'bg-primary',
-    'website-laten-maken': 'bg-orange-500',
-    'website-snelheid-optimalisatie': 'bg-blue-500',
-    'online-adverteren': 'bg-red-500',
-  };
-
   // LAB info
   const serviceInfo = {
     'seo-specialist': {
@@ -62,7 +53,6 @@ export default function ServicesSection({ services = [] }) {
           <div className="lg:col-span-7">
             <div className="space-y-8">
               {services.map((service) => {
-                const colorClass = serviceColors[service.slug] || 'bg-gray-400';
                 const info = serviceInfo[service.slug];
                 if (!info) return null;
                 
@@ -73,20 +63,20 @@ export default function ServicesSection({ services = [] }) {
                     className="group block"
                   >
                     <div className="relative">
-                      {/* Colored accent bar - links */}
-                      <div className={`absolute left-0 top-0 bottom-0 w-1 ${colorClass} rounded-full transition-all duration-300 group-hover:w-2`} />
+                      {/* Accent bar - antraciet → OnlineLabs blauw on hover */}
+                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gray-700 group-hover:bg-[#376eb5] rounded-full transition-all duration-300 group-hover:w-2" />
                       
                       <div className="pl-8 transition-all duration-300 group-hover:pl-10">
                         {/* Title - Playfair Display */}
                         <div className="flex items-start justify-between gap-4 mb-3">
-                          <h3 className="font-serif text-2xl lg:text-3xl font-bold text-gray-900 group-hover:text-primary transition-colors duration-300 leading-tight">
+                          <h3 className="font-serif text-2xl lg:text-3xl font-bold text-gray-900 group-hover:text-[#376eb5] transition-colors duration-300 leading-tight">
                             {service.title}
                           </h3>
                           
-                          {/* Spannende arrow - roteert naar beneden op hover */}
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full border-2 border-gray-300 group-hover:border-primary flex items-center justify-center transition-all duration-300 group-hover:rotate-90">
+                          {/* Arrow - roteert naar beneden op hover */}
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full border-2 border-gray-300 group-hover:border-[#376eb5] flex items-center justify-center transition-all duration-300 group-hover:rotate-90">
                             <svg 
-                              className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors duration-300" 
+                              className="w-4 h-4 text-gray-400 group-hover:text-[#376eb5] transition-colors duration-300" 
                               fill="none" 
                               viewBox="0 0 24 24" 
                               stroke="currentColor"
@@ -110,7 +100,7 @@ export default function ServicesSection({ services = [] }) {
 
                         {/* LAB tagline */}
                         <div className="flex items-start gap-2 text-sm text-gray-500">
-                          <span className="text-primary font-bold">→</span>
+                          <span className="text-[#376eb5] font-bold">→</span>
                           <p>
                             <span className="font-semibold text-gray-900">{info.labName}</span> – {info.tagline}
                           </p>
@@ -126,7 +116,7 @@ export default function ServicesSection({ services = [] }) {
             <div className="mt-12 pl-8">
               <Link
                 href="/diensten"
-                className="group inline-flex items-center gap-2 text-primary hover:text-primary-dark font-medium transition-colors duration-300"
+                className="group inline-flex items-center gap-2 text-[#376eb5] hover:text-[#2d5a94] font-medium transition-colors duration-300"
               >
                 Bekijk alle diensten
                 <svg 
