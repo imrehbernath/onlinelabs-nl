@@ -40,23 +40,23 @@ export default function Hero({ data = null }) {
 
   return (
     <section className="relative bg-white overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Left Column - Content - VERTICAAL GECENTREERD */}
           <div className="space-y-6 lg:space-y-8 max-w-2xl flex flex-col justify-center min-h-[550px] lg:min-h-[700px]">
-            {/* H1 - Playfair Display - OPTIMIZED voor Metropolis */}
-            <h1 className="font-serif font-bold leading-[1.1] text-gray-900 text-[3.0rem] lg:text-[4.5rem] xl:text-[5.0rem] tracking-tight">
+            {/* H1 - Playfair Display - SMALLER & balanced */}
+            <h1 className="font-serif font-bold leading-[1.1] text-gray-900 text-[2.5rem] sm:text-[3rem] lg:text-[3.75rem] xl:text-[4.25rem] tracking-tight">
               {title}
             </h1>
 
-            {/* Subtitle - GROTER voor betere leesbaarheid */}
-            <p className="text-xl lg:text-2xl text-gray-700 leading-relaxed">
+            {/* Subtitle - Balanced size */}
+            <p className="text-lg lg:text-xl text-gray-700 leading-relaxed">
               {subtitle}
             </p>
 
-            {/* Description - GROTER */}
-            <p className="text-lg text-gray-600 leading-relaxed">
+            {/* Description */}
+            <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
               {description}
             </p>
           </div>
