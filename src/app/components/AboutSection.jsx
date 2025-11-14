@@ -133,20 +133,20 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
             }`}
           >
             <div className="mb-8">
-              <h2 className="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
+              <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-3 tracking-tight">
                 {data.title}
               </h2>
-              <p className="text-xl text-gray-600 italic">
+              <p className="text-xl lg:text-2xl text-gray-600 italic leading-relaxed">
                 {data.subtitle}
               </p>
             </div>
 
             <div className="space-y-4 mb-8">
-              <p className="text-base text-gray-700 leading-relaxed">
+              <p className="text-lg text-gray-700 leading-relaxed">
                 {data.paragraph1}
               </p>
               {data.paragraph2 && (
-                <p className="text-base text-gray-700 leading-relaxed">
+                <p className="text-lg text-gray-700 leading-relaxed">
                   Wil je meer weten over wie we zijn en wat ons drijft? Bezoek dan onze{' '}
                   <Link 
                     href={data.ctaUrl}
@@ -160,7 +160,7 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
             </div>
 
             <div className="space-y-4 mb-8">
-              <p className="text-base text-gray-700 leading-relaxed">
+              <p className="text-lg text-gray-700 leading-relaxed">
                 {data.paragraph2}
               </p>
             </div>
@@ -168,7 +168,7 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
             <div className="h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent my-10" />
 
             <div>
-              <h3 className="font-serif text-2xl lg:text-3xl font-bold text-gray-900 mb-6">
+              <h3 className="font-serif text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-6 tracking-tight">
                 {data.targetAudienceTitle}
               </h3>
               
@@ -188,7 +188,7 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
                     <div className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}>
                       <Check className="w-4 h-4" style={{ color: '#376eb5' }} strokeWidth={3} />
                     </div>
-                    <p className="text-base text-gray-700 leading-relaxed flex-1">
+                    <p className="text-lg text-gray-700 leading-relaxed flex-1">
                       {item}
                     </p>
                   </div>

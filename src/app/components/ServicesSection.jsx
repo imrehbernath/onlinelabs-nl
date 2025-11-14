@@ -39,11 +39,11 @@ export default function ServicesSection({ services = [] }) {
           {/* LEFT COLUMN - STICKY */}
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-32">
-              {/* Playfair Display heading - zoals hero */}
-              <h2 className="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              {/* Playfair Display heading - GROTER voor Metropolis */}
+              <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
                 De bouwstenen voor jouw online succes
               </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
                 Met onze expertise in SEO, webdesign, online adverteren en conversie-optimalisatie helpen wij bedrijven in heel Nederland groeien. Elk LAB is ontworpen om jouw online zichtbaarheid te vergroten en omzet te verhogen – of je nu een webshop runt, diensten aanbiedt of leads zoekt.
               </p>
             </div>
@@ -67,9 +67,9 @@ export default function ServicesSection({ services = [] }) {
                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-gray-700 group-hover:bg-[#376eb5] rounded-full transition-all duration-300 group-hover:w-2" />
                       
                       <div className="pl-8 transition-all duration-300 group-hover:pl-10">
-                        {/* Title - Playfair Display */}
+                        {/* Title - Playfair Display - GROTER */}
                         <div className="flex items-start justify-between gap-4 mb-3">
-                          <h3 className="font-serif text-2xl lg:text-3xl font-bold text-gray-900 group-hover:text-[#376eb5] transition-colors duration-300 leading-tight">
+                          <h3 className="font-serif text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 group-hover:text-[#376eb5] transition-colors duration-300 leading-tight">
                             {service.title}
                           </h3>
                           
@@ -93,8 +93,8 @@ export default function ServicesSection({ services = [] }) {
                           </p>
                         )}
 
-                        {/* Description */}
-                        <p className="text-base text-gray-600 leading-relaxed mb-4">
+                        {/* Description - GROTER */}
+                        <p className="text-lg text-gray-600 leading-relaxed mb-4">
                           {service.serviceDetails?.description}
                         </p>
 
@@ -116,7 +116,7 @@ export default function ServicesSection({ services = [] }) {
             <div className="mt-12 pl-8">
               <Link
                 href="/diensten"
-                className="group inline-flex items-center gap-2 text-[#376eb5] hover:text-[#2d5a94] font-medium transition-colors duration-300"
+                className="group inline-flex items-center gap-2 text-[#376eb5] hover:text-[#2d5a94] font-medium text-base transition-colors duration-300"
               >
                 Bekijk alle diensten
                 <svg 

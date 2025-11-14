@@ -94,10 +94,12 @@ export default function Footer({ footerData }) {
               <div className="font-serif text-2xl font-bold text-white mb-2">
                 {footer.companyName}
               </div>
-              <p className="text-sm text-primary font-medium mb-4">
+              {/* Tagline - GROTER */}
+              <p className="text-base text-primary font-medium mb-4 leading-relaxed">
                 {footer.tagline}
               </p>
-              <p className="text-sm leading-relaxed">
+              {/* Description - GROTER */}
+              <p className="text-base leading-relaxed">
                 {footer.description}
               </p>
             </div>
@@ -125,7 +127,7 @@ export default function Footer({ footerData }) {
           {/* Column 2: Services */}
           <div>
             <div className="font-serif text-lg font-bold text-white mb-6">
-              Skils
+              Skills
             </div>
             <ul className="space-y-3">
               {footer.services.map((service, index) => (

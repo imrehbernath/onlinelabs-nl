@@ -72,22 +72,22 @@ export default function TextImageSection({
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             
-            {/* Title */}
+            {/* Title - GROTER voor Metropolis */}
             {title && (
-              <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-[1.1] tracking-tight">
+              <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight">
                 {title}
               </h2>
             )}
 
-            {/* Content */}
+            {/* Content - GROTERE BASE FONT voor Metropolis */}
             {processedContent && (
               <div 
                 className="prose prose-lg max-w-none text-gray-600 leading-relaxed
-                  prose-p:mb-4 prose-p:text-gray-600 prose-p:leading-relaxed
+                  prose-p:mb-4 prose-p:text-gray-600 prose-p:leading-relaxed prose-p:text-lg
                   prose-strong:text-gray-900 prose-strong:font-semibold
                   prose-ul:space-y-3 prose-ul:my-6
-                  prose-li:list-none prose-li:pl-0 prose-li:text-gray-700 prose-li:leading-relaxed
-                  prose-h3:text-xl prose-h3:font-bold prose-h3:text-gray-900 prose-h3:mt-8 prose-h3:mb-4"
+                  prose-li:list-none prose-li:pl-0 prose-li:text-gray-700 prose-li:leading-relaxed prose-li:text-lg
+                  prose-h3:text-2xl prose-h3:font-bold prose-h3:text-gray-900 prose-h3:mt-8 prose-h3:mb-4"
                 dangerouslySetInnerHTML={{ __html: processedContent }}
               />
             )}
@@ -167,13 +167,13 @@ export default function TextImageSection({
                   />
                 </div>
 
-                {/* Image Caption - onder de foto */}
+                {/* Image Caption - onder de foto - GROTER */}
                 {imageCaption && (
                   <div className="relative w-[85%] mx-auto mt-4 lg:absolute lg:bottom-[2%] lg:left-[8%] lg:w-[54%] lg:mt-0 text-center lg:text-left z-20">
                     {imageCaptionLink ? (
                       <Link 
                         href={imageCaptionLink}
-                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1 group"
+                        className="text-base text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1 group"
                       >
                         <span dangerouslySetInnerHTML={{ __html: imageCaption }} />
                         <svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,7 +181,7 @@ export default function TextImageSection({
                         </svg>
                       </Link>
                     ) : (
-                      <p className="text-sm text-gray-600" dangerouslySetInnerHTML={{ __html: imageCaption }} />
+                      <p className="text-base text-gray-600" dangerouslySetInnerHTML={{ __html: imageCaption }} />
                     )}
                   </div>
                 )}

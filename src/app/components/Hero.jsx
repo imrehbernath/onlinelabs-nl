@@ -45,18 +45,18 @@ export default function Hero({ data = null }) {
           
           {/* Left Column - Content - VERTICAAL GECENTREERD */}
           <div className="space-y-6 lg:space-y-8 max-w-2xl flex flex-col justify-center min-h-[550px] lg:min-h-[700px]">
-            {/* H1 - Playfair Display */}
-            <h1 className="font-serif font-bold leading-[1.1] text-gray-900 text-[2.7rem] lg:text-[4.0rem]">
+            {/* H1 - Playfair Display - OPTIMIZED voor Metropolis */}
+            <h1 className="font-serif font-bold leading-[1.1] text-gray-900 text-[3.0rem] lg:text-[4.5rem] xl:text-[5.0rem] tracking-tight">
               {title}
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-xl text-gray-700 leading-relaxed">
+            {/* Subtitle - GROTER voor betere leesbaarheid */}
+            <p className="text-xl lg:text-2xl text-gray-700 leading-relaxed">
               {subtitle}
             </p>
 
-            {/* Description */}
-            <p className="text-base text-gray-600 leading-relaxed">
+            {/* Description - GROTER */}
+            <p className="text-lg text-gray-600 leading-relaxed">
               {description}
             </p>
           </div>

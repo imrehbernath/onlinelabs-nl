@@ -91,14 +91,14 @@ export default function CTASection({
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           
-          {/* Title */}
-          <h2 className={`font-serif text-3xl lg:text-4xl xl:text-5xl font-bold ${textColors[variant]} mb-6 leading-tight`}>
+          {/* Title - GROTER voor Metropolis */}
+          <h2 className={`font-serif text-4xl lg:text-5xl xl:text-6xl font-bold ${textColors[variant]} mb-6 leading-tight tracking-tight`}>
             {title}
           </h2>
 
-          {/* Description */}
+          {/* Description - GROTER */}
           {description && (
-            <p className={`text-lg lg:text-xl ${descriptionColors[variant]} mb-10 max-w-2xl mx-auto leading-relaxed`}>
+            <p className={`text-xl lg:text-2xl ${descriptionColors[variant]} mb-10 max-w-2xl mx-auto leading-relaxed`}>
               {description}
             </p>
           )}
@@ -127,9 +127,9 @@ export default function CTASection({
             )}
           </div>
 
-          {/* Trust indicators */}
+          {/* Trust indicators - iets groter */}
           <div className="mt-8 lg:mt-10 flex justify-center">
-            <div className={`inline-flex flex-col lg:flex-row lg:flex-wrap lg:justify-center items-start lg:items-center gap-3 lg:gap-8 text-sm ${trustIndicatorColors[variant]}`}>
+            <div className={`inline-flex flex-col lg:flex-row lg:flex-wrap lg:justify-center items-start lg:items-center gap-3 lg:gap-8 text-base ${trustIndicatorColors[variant]}`}>
               <div className="flex items-center gap-2">
                 <svg className={`w-5 h-5 ${trustIconColors[variant]} flex-shrink-0`} fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
