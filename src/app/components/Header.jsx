@@ -92,15 +92,15 @@ export default function Header({ services = [] }) {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-10">
+          {/* Desktop Navigation - Compact between 1024-1280px, full spacing above */}
+          <div className="hidden lg:flex items-center gap-4 xl:gap-8">
             {/* Mega Menu - Wat we doen */}
             <div
               className="relative"
               onMouseEnter={() => setIsMegaMenuOpen(true)}
               onMouseLeave={() => setIsMegaMenuOpen(false)}
             >
-              <button className="flex items-center gap-1.5 text-primary hover:text-primary-dark font-medium text-base transition-colors duration-200">
+              <button className="flex items-center gap-1.5 text-primary hover:text-primary-dark font-medium text-sm xl:text-base transition-colors duration-200">
                 Wat we doen
                 <ChevronDown
                   className={`w-4 h-4 transition-transform duration-300 ${
@@ -189,51 +189,42 @@ export default function Header({ services = [] }) {
               )}
             </div>
 
-            {/* Regular Menu Items */}
+            {/* Regular Menu Items - Compact text between 1024-1280px */}
             <Link
               href="/ons-werk"
-              className="text-gray-700 hover:text-primary font-medium text-base transition-colors duration-200"
+              className="text-gray-700 hover:text-primary font-medium text-sm xl:text-base transition-colors duration-200"
             >
               Ons werk
             </Link>
             <Link
               href="/blog"
-              className="text-gray-700 hover:text-primary font-medium text-base transition-colors duration-200"
+              className="text-gray-700 hover:text-primary font-medium text-sm xl:text-base transition-colors duration-200"
             >
               Blog
             </Link>
             <Link
               href="/over-ons"
-              className="text-gray-700 hover:text-primary font-medium text-base transition-colors duration-200"
+              className="text-gray-700 hover:text-primary font-medium text-sm xl:text-base transition-colors duration-200"
             >
               Over ons
             </Link>
             <Link
               href="/contact"
-              className="text-gray-700 hover:text-primary font-medium text-base transition-colors duration-200"
+              className="text-gray-700 hover:text-primary font-medium text-sm xl:text-base transition-colors duration-200"
             >
               Contact
             </Link>
 
-            {/* Teun.ai Button */}
+            {/* Teun.ai Button - Compact between 1024-1280px */}
             <a
               href="https://teun.ai"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative border-2 border-primary hover:bg-primary text-primary hover:text-white px-6 py-2.5 rounded-lg font-medium text-base transition-all duration-300 inline-flex items-center gap-2"
+              className="group relative border-2 border-primary hover:bg-primary text-primary hover:text-white px-4 xl:px-6 py-2 xl:py-2.5 rounded-lg font-medium text-sm xl:text-base transition-all duration-300 inline-flex items-center gap-2"
             >
               <span className="relative z-10">Teun.ai</span>
               <ExternalLink className="w-4 h-4 relative z-10 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
             </a>
-
-            {/* Language Switcher */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
-              <span className="text-sm font-semibold text-primary">NL</span>
-              <span className="text-gray-300">|</span>
-              <button className="text-sm font-medium text-gray-400 hover:text-primary transition-colors">
-                EN
-              </button>
-            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -352,15 +343,6 @@ export default function Header({ services = [] }) {
                 Teun.ai
                 <ExternalLink className="w-4 h-4" />
               </a>
-
-              {/* Language Switcher Mobile */}
-              <div className="flex items-center gap-2 justify-center">
-                <span className="text-sm font-semibold text-primary">NL</span>
-                <span className="text-gray-300">|</span>
-                <button className="text-sm font-medium text-gray-400 hover:text-primary transition-colors">
-                  EN
-                </button>
-              </div>
             </div>
           </div>
         )}
