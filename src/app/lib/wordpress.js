@@ -199,7 +199,7 @@ export async function getAllServices() {
   }
 }
 
-// Fetch single service (voor detail pages later)
+// Fetch single service with FULL flexible content (MATCHED TO ACF 2025)
 export async function getServiceBySlug(slug) {
   console.log(`🔍 Fetching service: ${slug}`);
   
@@ -210,13 +210,86 @@ export async function getServiceBySlug(slug) {
         service(id: $slug, idType: SLUG) {
           id
           title
-          content
           slug
           uri
           serviceDetails {
             subtitle
             description
+            showInMenu
             featured
+            heroSection {
+              title
+              subtitle
+              description
+              image {
+                node {
+                  sourceUrl(size: LARGE)
+                  altText
+                  mediaDetails {
+                    width
+                    height
+                  }
+                }
+              }
+              ctaText
+              ctaUrl
+              secondaryCtaText
+              secondaryCtaUrl
+            }
+            pageSections {
+              __typename
+              ... on ServiceDetailsPageSectionsTextImageLayout {
+                layout
+                title
+                content
+                mediaType
+                image {
+                  node {
+                    sourceUrl(size: LARGE)
+                    altText
+                    mediaDetails {
+                      width
+                      height
+                    }
+                  }
+                }
+                videoWebm {
+                  node {
+                    mediaItemUrl
+                  }
+                }
+                videoMp4 {
+                  node {
+                    mediaItemUrl
+                  }
+                }
+                imageCaption
+                imageCaptionLink
+                background
+              }
+              ... on ServiceDetailsPageSectionsProcessSectionLayout {
+                background
+              }
+              ... on ServiceDetailsPageSectionsServicesListLayout {
+                background
+              }
+              ... on ServiceDetailsPageSectionsFaqLayout {
+                title
+                subtitle
+                faqItems {
+                  question
+                  answer
+                }
+                background
+              }
+              ... on ServiceDetailsPageSectionsCtaLayout {
+                title
+                description
+                buttonText
+                buttonUrl
+                variant
+              }
+            }
           }
         }
       }
@@ -227,7 +300,7 @@ export async function getServiceBySlug(slug) {
     );
 
     console.log('✅ Service fetched:', data?.service?.title || 'Not found');
-    return data?.service;
+    return data?.service || null;
   } catch (error) {
     console.error('❌ Failed to fetch service:', error.message);
     return null;

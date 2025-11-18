@@ -13,12 +13,11 @@ export default function TextImageSection({
   video, 
   serviceColor = 'green',
   background = 'white',
-  imageCaption = null,  // ✅ NEW: Optional caption onder image
-  imageCaptionLink = null  // ✅ NEW: Optional link voor caption
+  imageCaption = null,
+  imageCaptionLink = null
 }) {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Intersection Observer voor fade-in animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -29,7 +28,6 @@ export default function TextImageSection({
       { threshold: 0.1 }
     );
 
-    // Gebruik een unieke ID per sectie
     const sectionId = `text-image-section-${title?.replace(/\s+/g, '-').toLowerCase()}`;
     const element = document.getElementById(sectionId);
     if (element) observer.observe(element);
@@ -39,7 +37,6 @@ export default function TextImageSection({
     };
   }, [title]);
   
-  // Background color mapping
   const backgroundClasses = {
     white: 'bg-white',
     gray: 'bg-gray-50',
@@ -47,11 +44,7 @@ export default function TextImageSection({
   };
 
   const bgClass = backgroundClasses[background] || backgroundClasses.white;
-
-  // Scroll arrow styling (grijs zoals ServiceHero)
-  // Geen service colors - altijd gewoon grijs
   
-  // Clean simple bullets
   const processedContent = content
     ? content.replace(/<li>/g, `<li class="flex gap-3 items-start"><span class="text-gray-300 flex-shrink-0 mt-1.5 font-light text-xl">•</span><span>`)
         .replace(/<\/li>/g, '</span></li>')
@@ -65,21 +58,21 @@ export default function TextImageSection({
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           
-          {/* Text Column - responsive order based on layout + fade-in animation */}
+          {/* Text Column */}
           <div className={`space-y-6 lg:space-y-8 max-w-2xl order-2 ${
             layout === 'image-left' ? 'lg:order-2' : 'lg:order-1'
           } transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             
-            {/* Title - GROTER voor Metropolis */}
+            {/* Title */}
             {title && (
-              <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight">
+              <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-[1.1] tracking-tight">
                 {title}
               </h2>
             )}
 
-            {/* Content - GROTERE BASE FONT voor Metropolis */}
+            {/* Content */}
             {processedContent && (
               <div 
                 className="prose prose-lg max-w-none text-gray-600 leading-relaxed
@@ -93,14 +86,14 @@ export default function TextImageSection({
             )}
           </div>
 
-          {/* Media Column - responsive order based on layout + fade-in animation (delayed) */}
+          {/* Media Column */}
           <div className={`relative order-1 lg:h-[760px] ${
             layout === 'image-left' ? 'lg:order-1' : 'lg:order-2'
           } transition-all duration-1000 delay-300 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             
-            {/* Blob - ALLEEN OP DESKTOP */}
+            {/* Blob */}
             <div 
               className="hidden lg:block absolute"
               style={{
@@ -114,7 +107,7 @@ export default function TextImageSection({
               }}
             />
             
-            {/* Video - VEEL BREDER OP MOBILE, absolute op desktop */}
+            {/* Video */}
             {video?.webm && (
               <div 
                 className="relative w-[85%] mx-auto aspect-[338/601] lg:absolute lg:top-[15%] lg:left-[10%] lg:w-[44%] lg:translate-x-0 rounded-xl overflow-hidden z-20"
@@ -139,7 +132,7 @@ export default function TextImageSection({
               </div>
             )}
 
-            {/* Image - VEEL BREDER OP MOBILE + SHINE EFFECT, absolute op desktop */}
+            {/* Image - OPTIMIZED */}
             {!video && image && (
               <>
                 <div 
@@ -148,7 +141,6 @@ export default function TextImageSection({
                     boxShadow: '0 25px 60px rgba(0,0,0,0.35)'
                   }}
                 >
-                  {/* Shine effect on hover - EXACT zoals AboutSection */}
                   <div 
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"
                     style={{
@@ -163,17 +155,18 @@ export default function TextImageSection({
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                     priority={false}
-                    sizes="(max-width: 1024px) 85vw, 40vw"
+                    quality={85}
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 85vw, 40vw"
                   />
                 </div>
 
-                {/* Image Caption - onder de foto - GROTER */}
+                {/* Image Caption - ITALIC */}
                 {imageCaption && (
                   <div className="relative w-[85%] mx-auto mt-4 lg:absolute lg:bottom-[2%] lg:left-[8%] lg:w-[54%] lg:mt-0 text-center lg:text-left z-20">
                     {imageCaptionLink ? (
                       <Link 
                         href={imageCaptionLink}
-                        className="text-base text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1 group"
+                        className="text-sm lg:text-base text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1 group italic"
                       >
                         <span dangerouslySetInnerHTML={{ __html: imageCaption }} />
                         <svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,7 +174,7 @@ export default function TextImageSection({
                         </svg>
                       </Link>
                     ) : (
-                      <p className="text-base text-gray-600" dangerouslySetInnerHTML={{ __html: imageCaption }} />
+                      <p className="text-sm lg:text-base text-gray-600 italic" dangerouslySetInnerHTML={{ __html: imageCaption }} />
                     )}
                   </div>
                 )}
@@ -192,7 +185,7 @@ export default function TextImageSection({
         </div>
       </div>
 
-      {/* Animated Scroll Arrow - Exact zoals ServiceHero + fade-in */}
+      {/* Animated Scroll Arrow */}
       <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex justify-center transition-all duration-1000 delay-500 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}>

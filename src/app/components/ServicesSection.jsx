@@ -7,7 +7,6 @@ export default function ServicesSection({ services = [] }) {
     return null;
   }
 
-  // LAB info
   const serviceInfo = {
     'seo-specialist': {
       labName: 'SEOLab',
@@ -32,14 +31,14 @@ export default function ServicesSection({ services = [] }) {
   };
 
   return (
-    <section className="py-20 lg:py-24 bg-white">
+    <section className="py-20 lg:py-24 bg-[#FAFAF8]">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
           
           {/* LEFT COLUMN - STICKY */}
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-32">
-              {/* Playfair Display heading - GROTER voor Metropolis */}
+              {/* Heading - BLIJFT GROOT (feature section) */}
               <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
                 De bouwstenen voor jouw online succes
               </h2>
@@ -63,17 +62,17 @@ export default function ServicesSection({ services = [] }) {
                     className="group block"
                   >
                     <div className="relative">
-                      {/* Accent bar - antraciet → OnlineLabs blauw on hover */}
+                      {/* Accent bar */}
                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-gray-700 group-hover:bg-[#376eb5] rounded-full transition-all duration-300 group-hover:w-2" />
                       
                       <div className="pl-8 transition-all duration-300 group-hover:pl-10">
-                        {/* Title - Playfair Display - GROTER */}
+                        {/* Title - BLIJFT (is goed zo) */}
                         <div className="flex items-start justify-between gap-4 mb-3">
                           <h3 className="font-serif text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 group-hover:text-[#376eb5] transition-colors duration-300 leading-tight">
                             {service.title}
                           </h3>
                           
-                          {/* Arrow - roteert naar beneden op hover */}
+                          {/* Arrow */}
                           <div className="flex-shrink-0 w-8 h-8 rounded-full border-2 border-gray-300 group-hover:border-[#376eb5] flex items-center justify-center transition-all duration-300 group-hover:rotate-90">
                             <svg 
                               className="w-4 h-4 text-gray-400 group-hover:text-[#376eb5] transition-colors duration-300" 
@@ -86,14 +85,14 @@ export default function ServicesSection({ services = [] }) {
                           </div>
                         </div>
 
-                        {/* Subtitle - klein, grijs */}
+                        {/* Subtitle - UPPERCASE + TRACKING */}
                         {service.serviceDetails?.subtitle && (
-                          <p className="text-sm font-medium text-gray-500 mb-3 tracking-wide uppercase">
+                          <p className="text-sm font-medium text-gray-500 mb-3 tracking-wider uppercase">
                             {service.serviceDetails.subtitle}
                           </p>
                         )}
 
-                        {/* Description - GROTER */}
+                        {/* Description */}
                         <p className="text-lg text-gray-600 leading-relaxed mb-4">
                           {service.serviceDetails?.description}
                         </p>

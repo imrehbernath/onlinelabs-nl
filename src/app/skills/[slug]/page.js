@@ -1,8 +1,14 @@
 import ServiceHero from '@/app/components/ServiceHero';
 import TextImageSection from '@/app/components/TextImageSection';
+import ProcessSection from '@/app/components/ProcessSection';
+import ServicesListSection from '@/app/components/ServicesListSection';
+import LogoSlider from '@/app/components/LogoSlider';
+import CTASection from '@/app/components/CTASection';
+import FAQSection from '@/app/components/FAQSection';
 import { notFound } from 'next/navigation';
+import { getServiceBySlug, getHomepageSettings, getAllServices } from '@/app/lib/wordpress';
 
-// Dummy data
+// Dummy data (BEHOUDEN als fallback)
 const dummyServiceData = {
   'seo-specialist': {
     title: 'SEO specialist – Hoger in Google én zichtbaar in AI',
@@ -29,7 +35,7 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
     pageSections: [
       {
         type: 'text_image',
-        layout: 'image-right',  // Video RECHTS
+        layout: 'image-right',
         title: 'Waarom jouw bedrijf een SEO specialist nodig heeft',
         content: `
           <p class="mb-4"><strong>Google voert jaarlijks 4.000+ updates uit.</strong> AI-platformen zoals ChatGPT veranderen hoe mensen zoeken. En jouw concurrenten investeren al in vindbaarheid – in beide kanalen.</p>
@@ -54,11 +60,11 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
           mp4: 'https://cdn.onlinelabs.nl/wp-content/uploads/2025/01/18075451/organisch-zoekverkeer-seo-video.mp4'
         },
         serviceColor: 'green',
-        background: 'white'  // ✅ Wit achtergrond
+        background: 'white'
       },
       {
         type: 'text_image',
-        layout: 'image-left',  // Imre's foto LINKS - voor expertise sectie
+        layout: 'image-left',
         title: 'Traditionele SEO + AI-Zichtbaarheid',
         content: `
           <p class="mb-6">Sinds 2008 help ik bedrijven groeien met <strong>SEO die werkt – in zoekmachines én AI-platformen.</strong> Waar anderen kiezen tussen traditionele SEO of AI-optimalisatie, combineer ik beide. Want zonder sterke SEO-fundamenten, geen AI-zichtbaarheid.</p>
@@ -83,11 +89,11 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
         imageCaption: 'Imre Bernáth – SEO & AI visibility specialist, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>',
         imageCaptionLink: '/over-ons/imre-bernath',
         serviceColor: 'green',
-        background: 'beige'  // ✅ Beige achtergrond voor afwisseling
+        background: 'beige'
       },
       {
         type: 'text_image',
-        layout: 'image-right',  // Image RECHTS voor visuele afwisseling (was links, nu rechts)
+        layout: 'image-right',
         title: 'Voor wie is SEO geschikt?',
         content: `
           <p class="mb-4">SEO is niet voor iedereen – maar als je bedrijf online groei ambieert, klanten zoekt via Google, of concurrentie ervaart in je markt, dan is SEO essentieel voor structurele zichtbaarheid.</p>
@@ -112,7 +118,7 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
           altText: 'SEO specialist aan het werk bij OnlineLabs Amsterdam'
         },
         serviceColor: 'green',
-        background: 'gray'  // ✅ Grijs achtergrond voor afwisseling
+        background: 'gray'
       }
     ]
   },
@@ -137,20 +143,30 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
 // SEO Metadata
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const service = dummyServiceData[slug];
+  
+  // Try WordPress first
+  const service = await getServiceBySlug(slug);
+  
+  // Fallback to dummy data
+  const fallbackService = dummyServiceData[slug];
+  
+  const serviceData = service || fallbackService;
 
-  if (!service) {
+  if (!serviceData) {
     return {
       title: 'Service niet gevonden - OnlineLabs',
     };
   }
 
+  const title = service?.serviceDetails?.heroSection?.title || service?.title || fallbackService?.title || '';
+  const description = service?.serviceDetails?.heroSection?.description || service?.serviceDetails?.description || fallbackService?.description || '';
+
   return {
-    title: `${service.title} - OnlineLabs`,
-    description: service.description,
+    title: `${title} - OnlineLabs`,
+    description: description,
     openGraph: {
-      title: `${service.title} - OnlineLabs`,
-      description: service.description,
+      title: `${title} - OnlineLabs`,
+      description: description,
     },
   };
 }
@@ -158,8 +174,21 @@ export async function generateMetadata({ params }) {
 // ISR: Revalidate every 24 hours
 export const revalidate = 86400;
 
-// Generate static paths for known services
+// Generate static paths
 export async function generateStaticParams() {
+  try {
+    const services = await getAllServices();
+    
+    if (services && services.length > 0) {
+      return services.map((service) => ({
+        slug: service.slug,
+      }));
+    }
+  } catch (error) {
+    console.error('Failed to generate static params:', error);
+  }
+  
+  // Fallback to known services
   return [
     { slug: 'seo-specialist' },
     { slug: 'geo-optimalisatie' },
@@ -171,13 +200,69 @@ export async function generateStaticParams() {
 
 export default async function ServiceDetailPage({ params }) {
   const { slug } = await params;
-  const service = dummyServiceData[slug];
+  
+  // Try WordPress first, fallback to dummy data
+  let service = null;
+  let useWordPress = false;
+  
+  try {
+    service = await getServiceBySlug(slug);
+    if (service && service.serviceDetails) {
+      useWordPress = true;
+      console.log('✅ Using WordPress data for:', slug);
+    }
+  } catch (error) {
+    console.error('❌ WordPress fetch failed, using dummy data');
+  }
+  
+  // Fallback to dummy data
+  if (!useWordPress) {
+    service = dummyServiceData[slug];
+    console.log('📝 Using dummy data for:', slug);
+  }
 
   if (!service) {
     notFound();
   }
 
-  const heroData = service.heroSection;
+  // Fetch homepage settings for logo slider
+  const homepageSettings = await getHomepageSettings();
+  
+  const logoSliderData = homepageSettings?.logoSlider && homepageSettings.logoSlider.sliderEnabled ? {
+    title: homepageSettings.logoSlider.sliderTitle || 'Vertrouwd door toonaangevende bedrijven',
+    speed: homepageSettings.logoSlider.sliderSpeed || 'normal',
+    grayscale: homepageSettings.logoSlider.sliderGrayscale !== false,
+    logos: homepageSettings.logoSlider.logos?.map(logo => ({
+      name: logo.companyName,
+      imageUrl: logo.logoImage?.node?.sourceUrl,
+      altText: logo.logoAlt || `${logo.companyName} logo`,
+      url: logo.websiteUrl || null
+    })) || []
+  } : null;
+
+  // Extract hero data (WordPress or dummy)
+  let heroData;
+  let pageSections = [];
+  
+  if (useWordPress) {
+    // WordPress data
+    const heroSection = service.serviceDetails.heroSection || {};
+    heroData = {
+      title: heroSection.title || service.title,
+      subtitle: heroSection.subtitle || '',
+      description: heroSection.description || '',
+      ctaText: heroSection.ctaText || 'Neem contact op',
+      ctaUrl: heroSection.ctaUrl || '/contact',
+      secondaryCtaText: heroSection.secondaryCtaText || 'Bekijk ons werk',
+      secondaryCtaUrl: heroSection.secondaryCtaUrl || '/ons-werk',
+      serviceColor: 'green'
+    };
+    pageSections = service.serviceDetails.pageSections || [];
+  } else {
+    // Dummy data
+    heroData = service.heroSection;
+    pageSections = service.pageSections || [];
+  }
 
   return (
     <main>
@@ -193,25 +278,86 @@ export default async function ServiceDetailPage({ params }) {
         serviceColor={heroData.serviceColor || "green"}
       />
 
-      {/* Page Sections met alternating backgrounds */}
-      {service.pageSections && service.pageSections.length > 0 ? (
-        service.pageSections.map((section, index) => {
-          if (section.type === 'text_image') {
+      {/* Flexible Content - Page Sections */}
+      {pageSections && pageSections.length > 0 ? (
+        pageSections.map((section, index) => {
+          // WordPress: Check __typename
+          // Dummy: Check type
+          const sectionType = section.__typename || section.type;
+
+          // Text + Image Section
+          if (sectionType === 'ServiceDetailsPageSectionsTextImageLayout' || sectionType === 'text_image') {
             return (
               <TextImageSection
                 key={index}
-                layout={section.layout}
+                layout={section.layout || 'image-left'}
                 title={section.title}
                 content={section.content}
-                image={section.image}
-                video={section.video}
-                serviceColor={section.serviceColor}
+                image={section.image?.node ? {
+                  sourceUrl: section.image.node.sourceUrl,
+                  altText: section.image.node.altText
+                } : section.image}
+                video={section.videoWebm?.node || section.videoMp4?.node ? {
+                  webm: section.videoWebm?.node?.mediaItemUrl || section.video?.webm,
+                  mp4: section.videoMp4?.node?.mediaItemUrl || section.video?.mp4
+                } : section.video}
+                serviceColor="green"
                 background={section.background || 'white'}
                 imageCaption={section.imageCaption}
                 imageCaptionLink={section.imageCaptionLink}
               />
             );
           }
+
+          // Process Section
+          if (sectionType === 'ServiceDetailsPageSectionsProcessSectionLayout' || sectionType === 'process') {
+            return (
+              <ProcessSection
+                key={index}
+                background={section.background || 'white'}
+              />
+            );
+          }
+
+          // Services List Section
+          if (sectionType === 'ServiceDetailsPageSectionsServicesListLayout' || sectionType === 'services_list') {
+            return (
+              <ServicesListSection
+                key={index}
+                background={section.background || 'beige'}
+              />
+            );
+          }
+
+          // FAQ Section
+          if (sectionType === 'ServiceDetailsPageSectionsFaqLayout' || sectionType === 'faq') {
+            return (
+              <FAQSection
+                key={index}
+                title={section.title || 'Veelgestelde vragen'}
+                subtitle={section.subtitle || 'FAQ'}
+                faqs={section.faqItems || section.faqs || []}
+                background={section.background || 'white'}
+              />
+            );
+          }
+
+          // CTA Section
+          if (sectionType === 'ServiceDetailsPageSectionsCtaLayout' || sectionType === 'cta') {
+            return (
+              <CTASection
+                key={index}
+                title={section.title}
+                description={section.description}
+                primaryButton={{ 
+                  text: section.buttonText || 'Neem contact op', 
+                  url: section.buttonUrl || '/contact' 
+                }}
+                variant={section.variant || 'primary'}
+              />
+            );
+          }
+
           return null;
         })
       ) : (
@@ -222,6 +368,16 @@ export default async function ServiceDetailPage({ params }) {
             </p>
           </div>
         </section>
+      )}
+
+      {/* Logo Slider */}
+      {logoSliderData && logoSliderData.logos.length > 0 && (
+        <LogoSlider 
+          title={logoSliderData.title}
+          logos={logoSliderData.logos}
+          speed={logoSliderData.speed}
+          grayscale={logoSliderData.grayscale}
+        />
       )}
     </main>
   );

@@ -166,8 +166,9 @@ export default function TestimonialsSection({ testimonials = [] }) {
         <div className="container mx-auto px-6 lg:px-8">
           
           {/* Section Header - Playfair Display */}
+          {/* Section Header - VERKLEIND */}
           <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4">
               Wat zeggen klanten over OnlineLabs
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">

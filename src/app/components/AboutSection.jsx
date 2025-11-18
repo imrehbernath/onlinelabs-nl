@@ -56,12 +56,12 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           
-          {/* Left Column - EXACT SAME AS TEXTIIMAGESECTION */}
+          {/* Left Column - Image */}
           <div className={`relative order-1 lg:h-[760px] lg:order-1 transition-all duration-1000 delay-300 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             
-            {/* Blob - EXACT zoals TextImageSection */}
+            {/* Blob */}
             <div 
               className="hidden lg:block absolute"
               style={{
@@ -75,8 +75,8 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
               }}
             />
             
-            {/* Image + Caption - EXACT zoals TextImageSection */}
-            {!false && data.image && (
+            {/* Image + Caption - OPTIMIZED */}
+            {data.image && (
               <>
                 <div 
                   className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:translate-x-0 rounded-xl overflow-hidden group z-20"
@@ -84,7 +84,6 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
                     boxShadow: '0 25px 60px rgba(0,0,0,0.35)'
                   }}
                 >
-                  {/* Shine effect on hover - EXACT zoals AboutSection */}
                   <div 
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"
                     style={{
@@ -99,17 +98,18 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                     priority={false}
-                    sizes="(max-width: 1024px) 85vw, 40vw"
+                    quality={85}
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 85vw, 40vw"
                   />
                 </div>
 
-                {/* Image Caption - onder de foto */}
+                {/* Image Caption - ITALIC */}
                 {imageCaption && (
                   <div className="relative w-[85%] mx-auto mt-4 lg:absolute lg:bottom-[2%] lg:left-[8%] lg:w-[54%] lg:mt-0 text-center lg:text-left z-20">
                     {imageCaptionLink ? (
                       <Link 
                         href={imageCaptionLink}
-                        className="text-sm text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1 group"
+                        className="text-sm lg:text-base text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1 group italic"
                       >
                         <span dangerouslySetInnerHTML={{ __html: imageCaption }} />
                         <svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,7 +117,7 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
                         </svg>
                       </Link>
                     ) : (
-                      <p className="text-sm text-gray-600" dangerouslySetInnerHTML={{ __html: imageCaption }} />
+                      <p className="text-sm lg:text-base text-gray-600 italic" dangerouslySetInnerHTML={{ __html: imageCaption }} />
                     )}
                   </div>
                 )}
@@ -133,6 +133,7 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
             }`}
           >
             <div className="mb-8">
+              {/* H2 - BLIJFT GROOT (is hero van About) */}
               <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-3 tracking-tight">
                 {data.title}
               </h2>
@@ -168,7 +169,8 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
             <div className="h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent my-10" />
 
             <div>
-              <h3 className="font-serif text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-6 tracking-tight">
+              {/* H3 - VERKLEIND */}
+              <h3 className="font-serif text-2xl lg:text-3xl font-bold text-gray-900 mb-6 tracking-tight">
                 {data.targetAudienceTitle}
               </h3>
               

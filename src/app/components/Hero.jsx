@@ -3,7 +3,6 @@
 import Image from 'next/image';
 
 export default function Hero({ data = null }) {
-  // Fallback data als WordPress niet beschikbaar is
   const defaultData = {
     heroTitle: "OnlineLabs: Dé expert in online groei en webdesign",
     heroSubtitle: "Wil je jouw bedrijf laten groeien met slimme zichtbaarheid, overtuigend webdesign en een strategie die werkt?",
@@ -20,7 +19,6 @@ export default function Hero({ data = null }) {
     }
   };
 
-  // Use WordPress data als beschikbaar, anders fallback
   const heroData = data || defaultData;
   
   const title = heroData.heroTitle || defaultData.heroTitle;
@@ -33,7 +31,6 @@ export default function Hero({ data = null }) {
   const videoWebm = heroData.heroVideoWebm?.mediaItemUrl || defaultData.heroVideoWebm.mediaItemUrl;
   const videoMp4 = heroData.heroVideoMp4?.mediaItemUrl || defaultData.heroVideoMp4.mediaItemUrl;
 
-  // Debug log (alleen in development)
   if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
     console.log('🎨 Hero using:', data ? 'WordPress data' : 'Fallback data');
   }
@@ -54,14 +51,14 @@ export default function Hero({ data = null }) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4 sm:py-16 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
-          {/* Left Column - Content - VERTICAAL GECENTREERD */}
+          {/* Left Column - Content */}
           <div className="space-y-6 lg:space-y-8 max-w-2xl flex flex-col justify-center min-h-[550px] md:min-h-[620px] lg:min-h-[700px]">
-            {/* H1 - Playfair Display - SMALLER & balanced */}
+            {/* H1 - Playfair Display */}
             <h1 className="font-serif font-bold leading-[1.1] text-gray-900 text-[2.5rem] sm:text-[3rem] lg:text-[3.75rem] xl:text-[4.25rem] tracking-tight">
               {title}
             </h1>
 
-            {/* Subtitle - Balanced size */}
+            {/* Subtitle */}
             <p className="text-lg lg:text-xl text-gray-700 leading-relaxed">
               {subtitle}
             </p>
@@ -71,34 +68,18 @@ export default function Hero({ data = null }) {
               {description}
             </p>
 
-            {/* USP Badges - ALLEEN MOBIEL/TABLET */}
-            <div className="flex flex-wrap gap-4 pt-4 lg:hidden">
-              <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg">
-                <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-sm font-semibold text-gray-900">Sinds 2008</span>
-              </div>
-              
-              <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg">
-                <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-sm font-semibold text-gray-900">Google Partner</span>
-              </div>
-              
-              <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg">
-                <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-sm font-semibold text-gray-900">Amsterdam</span>
-              </div>
-
-              <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg">
-                <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-sm font-semibold text-gray-900">150+ klanten</span>
+            {/* USP Badges - WITH CLICKABLE GOOGLE REVIEWS */}
+            <div className="pt-4">
+              <div className="text-sm tracking-wider uppercase text-gray-600 text-center lg:text-left">
+                <span>Sinds 2008 • Google Partner • Amsterdam • </span>
+                <a 
+                  href="https://www.google.com/maps/place/?q=place_id:ChIJEVS-szIKxkcRng6UB0W50u0" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-900 transition-colors underline decoration-1 underline-offset-2"
+                >
+                  5★ Google Reviews
+                </a>
               </div>
             </div>
           </div>
