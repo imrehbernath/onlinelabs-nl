@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ChevronDown } from 'lucide-react';
 
 export default function ServicesListSection({ 
   title = "SEO-diensten die we aanbieden",
@@ -102,12 +102,17 @@ export default function ServicesListSection({
   const displayServices = services.length > 0 ? services : defaultServices;
   const [activeService, setActiveService] = useState(displayServices[0]);
   const [hoveredService, setHoveredService] = useState(null);
+  const [expandedAccordion, setExpandedAccordion] = useState(displayServices[0]?.id || null);
+
+  const toggleAccordion = (serviceId) => {
+    setExpandedAccordion(expandedAccordion === serviceId ? null : serviceId);
+  };
 
   return (
     <section className={`py-16 lg:py-24 ${bgClass}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header - VERKLEIND */}
+        {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
             {title}
@@ -119,8 +124,65 @@ export default function ServicesListSection({
           )}
         </div>
 
-        {/* Services Grid */}
-        <div className="grid lg:grid-cols-12 gap-8 max-w-7xl mx-auto">
+        {/* Mobile Accordion (< 1024px) */}
+        <div className="lg:hidden space-y-3 max-w-3xl mx-auto">
+          {displayServices.map((service) => {
+            const isExpanded = expandedAccordion === service.id;
+            
+            return (
+              <div key={service.id} className="bg-white rounded-xl shadow-md overflow-hidden">
+                <button
+                  onClick={() => toggleAccordion(service.id)}
+                  className={`w-full text-left p-5 transition-all duration-300 ${
+                    isExpanded ? 'bg-[#376eb5] text-white' : 'text-gray-900 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="font-semibold text-lg">
+                      {service.title}
+                    </span>
+                    <ChevronDown 
+                      className={`flex-shrink-0 w-5 h-5 transition-transform duration-300 ${
+                        isExpanded ? 'rotate-180 text-white' : 'text-gray-400'
+                      }`}
+                    />
+                  </div>
+                </button>
+                
+                {/* Accordion Content */}
+                <div 
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                    isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  <div className="p-5 pt-0 border-t border-gray-100">
+                    <p className="text-base text-gray-600 leading-relaxed mb-5 pt-5">
+                      {service.description}
+                    </p>
+                    
+                    {service.details && service.details.length > 0 && (
+                      <ul className="space-y-2">
+                        {service.details.map((detail, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <svg className="w-5 h-5 text-[#376eb5] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                            <span className="text-gray-700 text-sm leading-relaxed">
+                              {detail}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop Tabs Layout (≥ 1024px) */}
+        <div className="hidden lg:grid lg:grid-cols-12 gap-8 max-w-7xl mx-auto">
           
           {/* LEFT: Services Tabs */}
           <div className="lg:col-span-5 space-y-3">
@@ -169,7 +231,7 @@ export default function ServicesListSection({
           <div className="lg:col-span-7">
             <div className="bg-[#FAFAF8] border-2 border-gray-200 rounded-2xl p-8 lg:p-10 h-full min-h-[500px] flex flex-col">
               
-              {/* Service Title - VERKLEIND */}
+              {/* Service Title */}
               <h3 className="font-serif text-2xl lg:text-3xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
                 {activeService.title}
               </h3>
