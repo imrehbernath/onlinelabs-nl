@@ -35,11 +35,11 @@ export default function LogoSlider({
 
   const displayLogos = logos.length > 0 ? logos : defaultLogos;
 
-  // Animation speeds in seconds
+  // Animation speeds in seconds - longer for smoother scroll
   const speeds = {
-    slow: 70,
-    normal: 50,
-    fast: 30
+    slow: 120,
+    normal: 80,
+    fast: 50
   };
 
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function LogoSlider({
           </div>
         )}
 
-        {/* Dual-Row Logo Scroller - ULTRA COMPACT */}
+        {/* Dual-Row Logo Scroller */}
         <div ref={scrollerRef} className="space-y-1 lg:space-y-3">
           
           {/* Top Row - Scrolls LEFT (← ← ←) */}
@@ -94,7 +94,7 @@ export default function LogoSlider({
           >
             <div
               data-scroller-top
-              className="flex gap-2 lg:gap-6"
+              className="flex items-center gap-6 md:gap-8 lg:gap-12"
               style={{
                 animation: `scrollLeft ${speeds[speed]}s linear infinite`,
                 width: 'max-content'
@@ -103,7 +103,7 @@ export default function LogoSlider({
               {topRowLogos.map((logo, index) => (
                 <div
                   key={`top-${index}`}
-                  className={`flex items-center justify-center min-w-[220px] lg:min-w-[240px] h-24 lg:h-28 ${
+                  className={`flex-shrink-0 ${
                     grayscale ? 'grayscale opacity-60 hover:grayscale-0 hover:opacity-100' : ''
                   } transition-all duration-300`}
                 >
@@ -120,7 +120,7 @@ export default function LogoSlider({
                           alt={logo.altText || `${logo.name} logo`}
                           width={240}
                           height={120}
-                          className="object-contain max-h-20 lg:max-h-24"
+                          className="h-16 md:h-20 lg:h-24 w-auto"
                           loading="lazy"
                         />
                       </a>
@@ -130,7 +130,7 @@ export default function LogoSlider({
                         alt={logo.altText || `${logo.name} logo`}
                         width={240}
                         height={120}
-                        className="object-contain max-h-20 lg:max-h-24"
+                        className="h-16 md:h-20 lg:h-24 w-auto"
                         loading="lazy"
                       />
                     )
@@ -151,7 +151,7 @@ export default function LogoSlider({
           >
             <div
               data-scroller-bottom
-              className="flex gap-2 lg:gap-6"
+              className="flex items-center gap-6 md:gap-8 lg:gap-12"
               style={{
                 animation: `scrollRight ${speeds[speed]}s linear infinite`,
                 width: 'max-content'
@@ -160,7 +160,7 @@ export default function LogoSlider({
               {bottomRowLogos.map((logo, index) => (
                 <div
                   key={`bottom-${index}`}
-                  className={`flex items-center justify-center min-w-[220px] lg:min-w-[240px] h-24 lg:h-28 ${
+                  className={`flex-shrink-0 ${
                     grayscale ? 'grayscale opacity-60 hover:grayscale-0 hover:opacity-100' : ''
                   } transition-all duration-300`}
                 >
@@ -177,7 +177,7 @@ export default function LogoSlider({
                           alt={logo.altText || `${logo.name} logo`}
                           width={240}
                           height={120}
-                          className="object-contain max-h-20 lg:max-h-24"
+                          className="h-16 md:h-20 lg:h-24 w-auto"
                           loading="lazy"
                         />
                       </a>
@@ -187,7 +187,7 @@ export default function LogoSlider({
                         alt={logo.altText || `${logo.name} logo`}
                         width={240}
                         height={120}
-                        className="object-contain max-h-20 lg:max-h-24"
+                        className="h-16 md:h-20 lg:h-24 w-auto"
                         loading="lazy"
                       />
                     )
