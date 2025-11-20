@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { ExternalLink } from 'lucide-react';
 
 export default function WebsitesGallery({ 
   websites = [], 
@@ -16,7 +15,7 @@ export default function WebsitesGallery({
   }
 
   return (
-    <section className="py-16 lg:py-24 bg-gray-50">
+    <section className="py-16 lg:py-24" style={{ backgroundColor: '#F9FAFB' }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -44,7 +43,7 @@ export default function WebsitesGallery({
                 onMouseEnter={() => setHoveredWebsite(website.id)}
                 onMouseLeave={() => setHoveredWebsite(null)}
               >
-                <article className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500">
+                <article className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500">
                   {/* Image Container - 3:2 aspect ratio */}
                   <div className="relative aspect-[3/2] overflow-hidden">
                     {website.featuredImage?.sourceUrl ? (
@@ -56,7 +55,7 @@ export default function WebsitesGallery({
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                      <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                         <span className="text-gray-400 text-sm">Geen afbeelding</span>
                       </div>
                     )}
@@ -66,7 +65,9 @@ export default function WebsitesGallery({
                       isHovered ? 'opacity-100' : 'opacity-0'
                     }`}>
                       <div className="text-center text-white px-6">
-                        <ExternalLink className="w-8 h-8 mx-auto mb-3" />
+                        <svg className="w-8 h-8 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
                         <span className="text-sm font-medium uppercase tracking-wider">
                           Bekijk website
                         </span>

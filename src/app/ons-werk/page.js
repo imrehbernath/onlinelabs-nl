@@ -119,7 +119,7 @@ export default async function OnsWerkPage() {
 
   return (
     <main>
-      {/* Hero Section - Matching ServiceHero style */}
+      {/* Hero Section - White background */}
       <section className="relative bg-gradient-to-b from-gray-50 to-white pt-24 sm:pt-28 pb-12 sm:pb-16 lg:pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
           
@@ -189,10 +189,7 @@ export default async function OnsWerkPage() {
         </div>
       </section>
 
-      {/* Blue accent bar */}
-      <div className="h-1 bg-gradient-to-r from-[#376eb5] via-[#4A8FDB] to-[#1abc9c]" />
-
-      {/* Cases Grid Section */}
+      {/* Cases Grid Section - White background */}
       <CasesGrid 
         cases={transformedCases}
         title={casesSection.title || 'Impactvolle oplossingen: Webdesign, SEO en optimalisatie'}
@@ -200,7 +197,7 @@ export default async function OnsWerkPage() {
         id="cases"
       />
 
-      {/* Websites Gallery Section */}
+      {/* Websites Gallery Section - Gray background #F9FAFB */}
       <WebsitesGallery 
         websites={transformedWebsites}
         title={websitesSection.title || 'Onze creaties: Websites die werken én inspireren'}

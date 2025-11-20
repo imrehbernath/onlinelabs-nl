@@ -29,29 +29,20 @@ async function getAuthorPosts() {
   `;
 
   try {
-    const res = await fetch(process.env.WORDPRESS_GRAPHQL_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query }),
-      next: { revalidate: 3600 }
-    });
+    const res = await fetch(
+      'https://wordpress-988065-5984089.cloudwaysapps.com/graphql',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query }),
+        next: { revalidate: 3600 }
+      }
+    );
 
     const json = await res.json();
     
-    // Transform WordPress URLs to assets.teun.ai
-    const posts = (json.data?.posts?.nodes || []).map(post => ({
-      ...post,
-      featuredImage: post.featuredImage ? {
-        ...post.featuredImage,
-        node: {
-          ...post.featuredImage.node,
-          sourceUrl: post.featuredImage.node.sourceUrl?.replace(
-            'https://wordpress-988065-5905039.cloudwaysapps.com',
-            'https://assets.teun.ai'
-          )
-        }
-      } : null
-    }));
+    // Keep WordPress URLs for now (CDN not yet configured)
+    const posts = json.data?.posts?.nodes || [];
 
     return posts;
   } catch (error) {
@@ -61,31 +52,31 @@ async function getAuthorPosts() {
 }
 
 export const metadata = {
-  title: 'Imre Bernáth - SEO & AI Visibility Specialist',
-  description: 'Imre Bernáth is SEO- en AI-visibility specialist uit Nederland, oprichter van Teun.ai en eigenaar van OnlineLabs. 15+ jaar ervaring in technische SEO, contentstrategie, structured data en GEO-optimalisatie.',
+  title: 'Imre Bernáth - SEO & AI Visibility Specialist | OnlineLabs',
+  description: 'Imre Bernáth is SEO & AI visibility specialist uit Nederland, eigenaar van OnlineLabs en voormalig oprichter van SEOlab. Meer dan 15 jaar ervaring in online marketing, zoekmachineoptimalisatie en AI-strategieën.',
   alternates: {
-    canonical: '/auteur/imre',
+    canonical: 'https://www.onlinelabs.nl/auteur/imre-bernath',
   },
   openGraph: {
-    title: 'Imre Bernáth - SEO & AI Visibility Specialist | Teun.ai',
-    description: 'Imre Bernáth is SEO- en AI-visibility specialist uit Nederland, oprichter van Teun.ai en eigenaar van OnlineLabs. 15+ jaar ervaring in technische SEO, contentstrategie, structured data en GEO-optimalisatie.',
-    url: 'https://teun.ai/auteur/imre',
-    siteName: 'Teun.ai',
+    title: 'Imre Bernáth - SEO & AI Visibility Specialist | OnlineLabs',
+    description: 'Imre Bernáth is SEO & AI visibility specialist uit Nederland, eigenaar van OnlineLabs. Meer dan 15 jaar ervaring in online marketing, zoekmachineoptimalisatie en AI-strategieën.',
+    url: 'https://www.onlinelabs.nl/auteur/imre-bernath',
+    siteName: 'OnlineLabs',
     locale: 'nl_NL',
     images: [
       {
-        url: 'https://gravatar.com/avatar/35c26275319f1c247e76cd36518ee34a?size=512',
-        width: 512,
-        height: 512,
+        url: 'https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Imre-Bernath.webp',
+        width: 400,
+        height: 600,
         alt: 'Imre Bernáth',
       },
     ],
   },
   twitter: {
     card: 'summary',
-    title: 'Imre Bernáth - SEO & AI Visibility Specialist | Teun.ai',
-    description: 'Imre Bernáth is SEO- en AI-visibility specialist uit Nederland, oprichter van Teun.ai en eigenaar van OnlineLabs. 15+ jaar ervaring in technische SEO, contentstrategie, structured data en GEO-optimalisatie.',
-    images: ['https://gravatar.com/avatar/35c26275319f1c247e76cd36518ee34a?size=512'],
+    title: 'Imre Bernáth - SEO & AI Visibility Specialist | OnlineLabs',
+    description: 'Imre Bernáth is SEO & AI visibility specialist uit Nederland, eigenaar van OnlineLabs. Meer dan 15 jaar ervaring in online marketing, zoekmachineoptimalisatie en AI-strategieën.',
+    images: ['https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Imre-Bernath.webp'],
   },
 };
 
@@ -97,90 +88,107 @@ export default async function AuthorPage() {
     "@graph": [
       {
         "@type": "ProfilePage",
-        "@id": "https://teun.ai/auteur/imre#profilepage",
-        "url": "https://teun.ai/auteur/imre",
+        "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#profilepage",
+        "url": "https://www.onlinelabs.nl/auteur/imre-bernath",
         "name": "Profiel van Imre Bernáth",
-        "mainEntity": { "@id": "https://teun.ai/auteur/imre#person" },
-        "primaryImageOfPage": { "@id": "https://teun.ai/auteur/imre#primaryimage" },
-        "breadcrumb": { "@id": "https://teun.ai/auteur/imre#breadcrumb" },
+        "mainEntity": { "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#person" },
+        "primaryImageOfPage": { "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#primaryimage" },
+        "breadcrumb": { "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#breadcrumb" },
         "inLanguage": "nl-NL",
         "potentialAction": [{
           "@type": "ReadAction",
-          "target": ["https://teun.ai/auteur/imre"]
+          "target": ["https://www.onlinelabs.nl/auteur/imre-bernath"]
         }]
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://teun.ai/auteur/imre#breadcrumb",
+        "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://teun.ai/"
+            "item": "https://www.onlinelabs.nl/"
           },
           {
             "@type": "ListItem",
             "position": 2,
+            "name": "Over ons",
+            "item": "https://www.onlinelabs.nl/over-ons"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
             "name": "Imre Bernáth",
-            "item": "https://teun.ai/auteur/imre"
+            "item": "https://www.onlinelabs.nl/auteur/imre-bernath"
           }
         ]
       },
       {
         "@type": "Person",
-        "@id": "https://teun.ai/auteur/imre#person",
+        "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#person",
         "name": "Imre Bernáth",
-        "url": "https://teun.ai/auteur/imre",
-        "description": "Imre Bernáth is SEO- en AI-visibility specialist uit Nederland, oprichter van Teun.ai en eigenaar van OnlineLabs. 15+ jaar ervaring in technische SEO, contentstrategie, structured data en GEO-optimalisatie.",
+        "url": "https://www.onlinelabs.nl/auteur/imre-bernath",
+        "description": "Imre Bernáth is SEO & AI visibility specialist uit Nederland, eigenaar van OnlineLabs en voormalig oprichter van SEOlab. Meer dan 15 jaar ervaring in online marketing, zoekmachineoptimalisatie en AI-strategieën.",
         "image": {
           "@type": "ImageObject",
-          "@id": "https://teun.ai/auteur/imre#primaryimage",
-          "url": "https://gravatar.com/avatar/35c26275319f1c247e76cd36518ee34a?size=512",
+          "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#primaryimage",
+          "url": "https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Imre-Bernath.webp",
           "caption": "Imre Bernáth"
         },
-        "jobTitle": "SEO & AI Visibility Specialist",
+        "jobTitle": "SEO & AI visibility specialist",
         "sameAs": [
+          "https://gravatar.com/imrebernath",
           "https://nl.linkedin.com/in/imrebernath",
-          "https://www.onlinelabs.nl/",
-          "https://gravatar.com/imrebernath"
+          "https://www.seolab.nl"
         ],
-        "worksFor": [
-          { "@id": "https://teun.ai/#organization" },
-          { "@id": "https://www.onlinelabs.nl/#organization" }
-        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "OnlineLabs",
+          "url": "https://www.onlinelabs.nl/"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Herengracht 221",
+          "addressLocality": "Amsterdam",
+          "postalCode": "1016 BG",
+          "addressCountry": {
+            "@type": "Country",
+            "name": "Nederland"
+          }
+        },
+        "email": "imre@onlinelabs.nl",
+        "telephone": "020 820 20 22",
         "knowsAbout": [
-          "GEO-optimalisatie","SEO","Technische SEO","AI visibility",
-          "Contentstrategie","Structured data","ChatGPT",
-          "Google AI Overviews","Perplexity","WordPress"
+          "SEO",
+          "Technische SEO",
+          "AI visibility",
+          "Contentstrategie",
+          "Structured data",
+          "ChatGPT optimalisatie",
+          "SGE (Search Generative Experience)",
+          "Google Search Console",
+          "On-page SEO",
+          "Linkbuilding",
+          "WordPress Development"
         ],
-        "mainEntityOfPage": { "@id": "https://teun.ai/auteur/imre#profilepage" }
+        "mainEntityOfPage": { "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#profilepage" }
       },
       {
         "@type": "WebSite",
-        "@id": "https://teun.ai/#website",
-        "url": "https://teun.ai/",
-        "name": "Teun.ai",
-        "publisher": { "@id": "https://teun.ai/#organization" },
+        "@id": "https://www.onlinelabs.nl/#website",
+        "url": "https://www.onlinelabs.nl/",
+        "name": "OnlineLabs",
+        "description": "OnlineLabs, voorheen SEOlab, is een Nederlands online marketingbureau gespecialiseerd in strategische SEO, AI visibility en WordPress development.",
+        "publisher": { "@id": "https://www.onlinelabs.nl/#organization" },
         "inLanguage": "nl-NL"
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://teun.ai/#organization",
-        "name": "Teun.ai",
-        "url": "https://teun.ai/",
-        "description": "Teun.ai helpt organisaties met GEO-optimalisatie en AI-visibility: audits, contentstrategie en structured data voor zichtbaarheid in AI-antwoorden.",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://teun.ai/wp-content/uploads/2025/10/Teun-ai-logo-light.png"
-        }
       },
       {
         "@type": "Organization",
         "@id": "https://www.onlinelabs.nl/#organization",
         "name": "OnlineLabs",
         "url": "https://www.onlinelabs.nl/",
-        "description": "OnlineLabs is een Nederlands bureau voor SEO, AI-visibility en WordPress.",
+        "description": "OnlineLabs (voorheen SEOlab) is gespecialiseerd in SEO, AI visibility, webdesign en digitale strategieën.",
         "logo": {
           "@type": "ImageObject",
           "url": "https://cdn.onlinelabs.nl/wp-content/uploads/2024/12/18111213/Onlinelabs-logo.svg"
@@ -190,45 +198,45 @@ export default async function AuthorPage() {
   };
 
   return (
-    <>
+    <main>
       {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* Hero Section */}
-      <section className="relative py-16 lg:py-24 bg-gradient-to-b from-[#001233] via-[#1a0b3d] to-[#2d1654]">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Hero Section - White background */}
+      <section className="relative pt-24 sm:pt-28 pb-16 lg:pb-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-            {/* Author Image */}
+            {/* Author Image - 2:3 aspect ratio */}
             <div className="flex-shrink-0">
               <Image
-                src="https://gravatar.com/avatar/35c26275319f1c247e76cd36518ee34a?size=512"
+                src="https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Imre-Bernath.webp"
                 alt="Imre Bernáth"
                 width={200}
-                height={200}
-                className="rounded-2xl shadow-2xl"
+                height={300}
+                className="rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] object-cover"
                 priority
               />
             </div>
 
             {/* Author Info */}
             <div className="flex-1 text-center md:text-left">
-              <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+              <h1 className="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
                 Imre Bernáth
               </h1>
-              <p className="text-xl text-blue-200 mb-6">
-                Eigenaar van OnlineLabs & oprichter van Teun.ai
+              <p className="text-xl text-[#376eb5] font-medium mb-6">
+                Eigenaar van OnlineLabs & voormalig oprichter van SEOlab
               </p>
               
-              <div className="text-base md:text-lg text-gray-300 leading-relaxed space-y-4">
+              <div className="text-lg text-gray-600 leading-relaxed space-y-4">
                 <p>
-                  Imre Bernáth is een ervaren SEO- en AI-visibility specialist uit Nederland met meer dan 15 jaar bewezen expertise in online marketing, technische SEO en contentstrategie. Hij helpt bedrijven groeien via strategisch advies, duurzame optimalisatie en AI-zichtbaarheid in systemen zoals ChatGPT, Google AI, Gemini en Perplexity.
+                  Imre Bernáth is een ervaren SEO & AI visibility specialist uit Nederland met meer dan 15 jaar bewezen expertise in online marketing, zoekmachineoptimalisatie en AI-strategieën. Hij helpt bedrijven groeien via strategisch advies, duurzame optimalisatie en AI-zichtbaarheid in systemen zoals ChatGPT, Google AI, Gemini en Perplexity.
                 </p>
                 
                 <p>
-                  Als oprichter van <a href="https://www.onlinelabs.nl/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">OnlineLabs</a> en initiatiefnemer van Teun.ai – het eerste Nederlandse platform voor GEO-audits (Generative Engine Optimisation) – ontwikkelt hij strategieën waarmee merken zichtbaar worden in zowel zoekmachines als AI-gegenereerde antwoorden.
+                  Als eigenaar van <a href="https://www.onlinelabs.nl/" className="text-[#376eb5] hover:text-[#2d5a94] font-medium hover:underline">OnlineLabs</a> (voorheen SEOlab) en initiatiefnemer van <a href="https://teun.ai/" target="_blank" rel="noopener noreferrer" className="text-[#376eb5] hover:text-[#2d5a94] font-medium hover:underline">Teun.ai</a> – het eerste Nederlandse platform voor GEO-audits – ontwikkelt hij strategieën waarmee merken zichtbaar worden in zowel zoekmachines als AI-gegenereerde antwoorden.
                 </p>
               </div>
 
@@ -238,7 +246,7 @@ export default async function AuthorPage() {
                   href="https://nl.linkedin.com/in/imrebernath" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#376eb5] hover:bg-[#2d5a94] text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -251,22 +259,32 @@ export default async function AuthorPage() {
         </div>
       </section>
 
-      {/* Expertise Section - VERBETERD met nette uitlijning */}
-      <section className="bg-white py-12 lg:py-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Expertise & Kennis</h2>
+      {/* Expertise Section - Gray background #F9FAFB */}
+      <section className="py-16 lg:py-20" style={{ backgroundColor: '#F9FAFB' }}>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          
+          {/* Section Header */}
+          <div className="mb-10 lg:mb-12">
+            <p className="text-sm font-medium tracking-wider text-[#376eb5] uppercase mb-3">
+              Over mij
+            </p>
+            <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-tight">
+              Expertise & Kennis
+            </h2>
+          </div>
           
           <div className="grid md:grid-cols-2 gap-6">
             {/* Ervaring Card */}
-            <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-6 border-2 border-purple-200">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl">🎯</span>
-                <h3 className="text-xl font-bold text-gray-900">Ervaring</h3>
-              </div>
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">Ervaring</h3>
               
               <ul className="space-y-3">
-                <li className="flex items-start gap-2">
-                  <span className="text-purple-600 font-bold mt-1 flex-shrink-0">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#376eb5] mt-1.5 flex-shrink-0">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                   <div className="flex-1">
                     <span className="font-semibold text-gray-900">GEO-optimalisatie</span>
                     <span className="block text-gray-600 text-sm mt-0.5">
@@ -275,8 +293,12 @@ export default async function AuthorPage() {
                   </div>
                 </li>
                 
-                <li className="flex items-start gap-2">
-                  <span className="text-purple-600 font-bold mt-1 flex-shrink-0">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#376eb5] mt-1.5 flex-shrink-0">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                   <div className="flex-1">
                     <span className="font-semibold text-gray-900">Technische SEO</span>
                     <span className="block text-gray-600 text-sm mt-0.5">
@@ -285,8 +307,12 @@ export default async function AuthorPage() {
                   </div>
                 </li>
                 
-                <li className="flex items-start gap-2">
-                  <span className="text-purple-600 font-bold mt-1 flex-shrink-0">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#376eb5] mt-1.5 flex-shrink-0">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                   <div className="flex-1">
                     <span className="font-semibold text-gray-900">AI visibility</span>
                     <span className="block text-gray-600 text-sm mt-0.5">
@@ -295,8 +321,12 @@ export default async function AuthorPage() {
                   </div>
                 </li>
                 
-                <li className="flex items-start gap-2">
-                  <span className="text-purple-600 font-bold mt-1 flex-shrink-0">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#376eb5] mt-1.5 flex-shrink-0">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                   <div className="flex-1">
                     <span className="font-semibold text-gray-900">Contentstrategie</span>
                     <span className="block text-gray-600 text-sm mt-0.5">
@@ -305,8 +335,12 @@ export default async function AuthorPage() {
                   </div>
                 </li>
                 
-                <li className="flex items-start gap-2">
-                  <span className="text-purple-600 font-bold mt-1 flex-shrink-0">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#376eb5] mt-1.5 flex-shrink-0">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                   <div className="flex-1">
                     <span className="font-semibold text-gray-900">Structured data</span>
                     <span className="block text-gray-600 text-sm mt-0.5">
@@ -318,35 +352,44 @@ export default async function AuthorPage() {
             </div>
 
             {/* Projecten Card */}
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 border-2 border-blue-200">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl">🚀</span>
-                <h3 className="text-xl font-bold text-gray-900">Projecten</h3>
-              </div>
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">Projecten</h3>
               
               <ul className="space-y-3">
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-600 font-bold mt-1 flex-shrink-0">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#1abc9c] mt-1.5 flex-shrink-0">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                   <div className="flex-1">
                     <span className="font-semibold text-gray-900">Teun.ai</span>
                     <span className="block text-gray-600 text-sm mt-0.5">
-                      - Platform voor GEO-audits
+                      Platform voor GEO-audits
                     </span>
                   </div>
                 </li>
                 
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-600 font-bold mt-1 flex-shrink-0">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#1abc9c] mt-1.5 flex-shrink-0">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                   <div className="flex-1">
                     <span className="font-semibold text-gray-900">OnlineLabs</span>
                     <span className="block text-gray-600 text-sm mt-0.5">
-                      - SEO & AI-visibility bureau
+                      SEO & AI-visibility bureau
                     </span>
                   </div>
                 </li>
                 
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-600 font-bold mt-1 flex-shrink-0">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#1abc9c] mt-1.5 flex-shrink-0">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                   <div className="flex-1">
                     <span className="font-semibold text-gray-900">150+ organisaties</span>
                     <span className="block text-gray-600 text-sm mt-0.5">
@@ -355,11 +398,14 @@ export default async function AuthorPage() {
                   </div>
                 </li>
                 
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-600 font-bold mt-1 flex-shrink-0">•</span>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#1abc9c] mt-1.5 flex-shrink-0">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                   <div className="flex-1">
-                    <span className="text-gray-900">Diepgaande kennis van </span>
-                    <span className="font-semibold text-gray-900">WordPress,</span>
+                    <span className="font-semibold text-gray-900">WordPress expertise</span>
                     <span className="block text-gray-600 text-sm mt-0.5">
                       structured data en AI-overviews
                     </span>
@@ -369,12 +415,9 @@ export default async function AuthorPage() {
             </div>
           </div>
           
-          {/* Top Vaardigheden - Extra sectie */}
-          <div className="mt-8 bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-6 border-2 border-gray-200">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="text-2xl">💼</span>
-              <h3 className="text-xl font-bold text-gray-900">Top Vaardigheden</h3>
-            </div>
+          {/* Top Vaardigheden */}
+          <div className="mt-8 bg-white rounded-xl p-6 shadow-lg">
+            <h3 className="font-serif text-xl font-bold text-gray-900 mb-6">Top Vaardigheden</h3>
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {[
@@ -397,9 +440,13 @@ export default async function AuthorPage() {
               ].map((skill, index) => (
                 <div 
                   key={index}
-                  className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all text-sm"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 text-sm"
                 >
-                  <span className="text-purple-600 font-bold text-xs">✓</span>
+                  <span className="text-[#376eb5]">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </span>
                   <span className="text-gray-700 font-medium">{skill}</span>
                 </div>
               ))}
@@ -408,93 +455,81 @@ export default async function AuthorPage() {
         </div>
       </section>
 
-      {/* Articles Section */}
-      <section className="bg-gray-50 py-12 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Artikelen van Imre</h2>
+      {/* Articles Section - Beige background #FAFAF8 */}
+      <section className="py-16 lg:py-20" style={{ backgroundColor: '#FAFAF8' }}>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Section Header */}
+          <div className="mb-10 lg:mb-12">
+            <p className="text-sm font-medium tracking-wider text-[#376eb5] uppercase mb-3">
+              Artikelen
+            </p>
+            <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-tight">
+              Geschreven door Imre
+            </h2>
+          </div>
           
           {posts.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-500 text-lg">Binnenkort verschijnen hier artikelen.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
               {posts.map((post) => (
-                <article
+                <Link
                   key={post.id}
-                  className="group bg-white rounded-2xl overflow-hidden border-2 border-gray-200 hover:border-purple-500 hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+                  href={`/blog/${post.slug}`}
+                  className="group block"
                 >
-                  {/* Featured Image */}
-                  <Link href={`/${post.slug}`} className="block relative h-56 bg-gradient-to-br from-purple-100 to-blue-100 overflow-hidden flex-shrink-0">
-                    {post.featuredImage?.node?.sourceUrl ? (
-                      <Image
-                        src={post.featuredImage.node.sourceUrl}
-                        alt={post.featuredImage.node.altText || post.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <svg className="w-16 h-16 text-purple-300" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
-                        </svg>
-                      </div>
-                    )}
-                    
-                    {/* Category Badge */}
-                    {post.categories?.nodes?.[0] && (
-                      <div className="absolute top-3 left-3">
-                        <span className="inline-block bg-purple-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
-                          {post.categories.nodes[0].name}
-                        </span>
-                      </div>
-                    )}
-                  </Link>
+                  <article className="h-full">
+                    {/* Image */}
+                    <div className="relative aspect-[16/10] rounded-xl overflow-hidden mb-5 shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                      {post.featuredImage?.node?.sourceUrl ? (
+                        <Image
+                          src={post.featuredImage.node.sourceUrl}
+                          alt={post.featuredImage.node.altText || post.title}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                          <span className="text-gray-400 text-sm">Geen afbeelding</span>
+                        </div>
+                      )}
+                    </div>
 
-                  {/* Content */}
-                  <div className="p-6 flex flex-col flex-grow">
-                    {/* Date */}
-                    <time className="text-sm text-gray-500 mb-3 block">
-                      {new Date(post.date).toLocaleDateString('nl-NL', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                      })}
-                    </time>
-
-                    {/* Title */}
-                    <Link href={`/${post.slug}`}>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-purple-600 transition-colors leading-tight">
+                    {/* Content */}
+                    <div className="space-y-3">
+                      {/* Title */}
+                      <h3 className="font-serif text-xl lg:text-2xl font-bold text-gray-900 group-hover:text-[#376eb5] transition-colors duration-300 leading-tight">
                         {post.title}
                       </h3>
-                    </Link>
+                      
+                      {/* Category */}
+                      {post.categories?.nodes?.[0] && (
+                        <p className="text-gray-500 text-sm">
+                          {post.categories.nodes[0].name}
+                        </p>
+                      )}
 
-                    {/* Excerpt */}
-                    <div 
-                      className="text-gray-600 text-base leading-relaxed line-clamp-3 mb-6 flex-grow"
-                      dangerouslySetInnerHTML={{ 
-                        __html: post.excerpt?.replace(/<[^>]*>/g, '') || '' 
-                      }}
-                    />
-
-                    {/* Read More */}
-                    <Link 
-                      href={`/${post.slug}`}
-                      className="inline-flex items-center gap-2 text-purple-600 font-semibold text-sm hover:gap-3 transition-all mt-auto"
-                    >
-                      Lees meer
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
-                  </div>
-                </article>
+                      {/* Date */}
+                      <p className="text-[#376eb5] font-medium text-sm">
+                        {new Date(post.date).toLocaleDateString('nl-NL', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric'
+                        })}
+                      </p>
+                    </div>
+                  </article>
+                </Link>
               ))}
             </div>
           )}
         </div>
       </section>
-    </>
+    </main>
   );
 }
 
