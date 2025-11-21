@@ -8,8 +8,8 @@ const authors = {
   'imre-bernath': {
     name: 'Imre Bernáth',
     slug: 'imre-bernath',
-    title: 'Eigenaar van OnlineLabs & oprichter van Teun.ai',
-    bio: 'Imre Bernáth is een ervaren SEO- en AI-visibility specialist uit Nederland met meer dan 15 jaar bewezen expertise in online marketing, technische SEO en contentstrategie. Hij helpt bedrijven groeien via strategisch advies, duurzame optimalisatie en AI-zichtbaarheid.',
+    title: 'SEO & AI Visibility Specialist',
+    bio: 'Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 is hij actief in de online wereld en richtte in 2008 SEOlab op – een van de eerste gespecialiseerde SEO-bureaus in Nederland. Met meer dan 15 jaar ervaring helpt hij bedrijven groeien via strategische campagnes voor vindbaarheid, content en digitale innovatie. Imre combineert zijn SEO-expertise met een scherpe visie op de rol van AI in moderne marketing.',
     image: 'https://gravatar.com/avatar/35c26275319f1c247e76cd36518ee34a?size=256',
     linkedin: 'https://nl.linkedin.com/in/imrebernath',
   },

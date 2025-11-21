@@ -53,13 +53,13 @@ async function getAuthorPosts() {
 
 export const metadata = {
   title: 'Imre Bernáth - SEO & AI Visibility Specialist | OnlineLabs',
-  description: 'Imre Bernáth is SEO & AI visibility specialist uit Nederland, eigenaar van OnlineLabs en voormalig oprichter van SEOlab. Meer dan 15 jaar ervaring in online marketing, zoekmachineoptimalisatie en AI-strategieën.',
+  description: 'Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 actief in de online wereld en richtte in 2008 SEOlab op – een van de eerste gespecialiseerde SEO-bureaus in Nederland.',
   alternates: {
     canonical: 'https://www.onlinelabs.nl/auteur/imre-bernath',
   },
   openGraph: {
     title: 'Imre Bernáth - SEO & AI Visibility Specialist | OnlineLabs',
-    description: 'Imre Bernáth is SEO & AI visibility specialist uit Nederland, eigenaar van OnlineLabs. Meer dan 15 jaar ervaring in online marketing, zoekmachineoptimalisatie en AI-strategieën.',
+    description: 'Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 actief in de online wereld en richtte in 2008 SEOlab op.',
     url: 'https://www.onlinelabs.nl/auteur/imre-bernath',
     siteName: 'OnlineLabs',
     locale: 'nl_NL',
@@ -75,7 +75,7 @@ export const metadata = {
   twitter: {
     card: 'summary',
     title: 'Imre Bernáth - SEO & AI Visibility Specialist | OnlineLabs',
-    description: 'Imre Bernáth is SEO & AI visibility specialist uit Nederland, eigenaar van OnlineLabs. Meer dan 15 jaar ervaring in online marketing, zoekmachineoptimalisatie en AI-strategieën.',
+    description: 'Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 actief in de online wereld en richtte in 2008 SEOlab op.',
     images: ['https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Imre-Bernath.webp'],
   },
 };
@@ -129,7 +129,7 @@ export default async function AuthorPage() {
         "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#person",
         "name": "Imre Bernáth",
         "url": "https://www.onlinelabs.nl/auteur/imre-bernath",
-        "description": "Imre Bernáth is SEO & AI visibility specialist uit Nederland, eigenaar van OnlineLabs en voormalig oprichter van SEOlab. Meer dan 15 jaar ervaring in online marketing, zoekmachineoptimalisatie en AI-strategieën.",
+        "description": "Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 actief in de online wereld en richtte in 2008 SEOlab op – een van de eerste gespecialiseerde SEO-bureaus in Nederland. Met meer dan 15 jaar ervaring helpt hij bedrijven groeien via strategische campagnes voor vindbaarheid, content en digitale innovatie.",
         "image": {
           "@type": "ImageObject",
           "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#primaryimage",
@@ -227,12 +227,12 @@ export default async function AuthorPage() {
                 Imre Bernáth
               </h1>
               <p className="text-xl text-[#376eb5] font-medium mb-6">
-                Eigenaar van OnlineLabs & voormalig oprichter van SEOlab
+                SEO & AI Visibility Specialist | Oprichter OnlineLabs
               </p>
               
               <div className="text-lg text-gray-600 leading-relaxed space-y-4">
                 <p>
-                  Imre Bernáth is een ervaren SEO & AI visibility specialist uit Nederland met meer dan 15 jaar bewezen expertise in online marketing, zoekmachineoptimalisatie en AI-strategieën. Hij helpt bedrijven groeien via strategisch advies, duurzame optimalisatie en AI-zichtbaarheid in systemen zoals ChatGPT, Google AI, Gemini en Perplexity.
+                  Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 is hij actief in de online wereld en richtte in 2008 SEOlab op – een van de eerste gespecialiseerde SEO-bureaus in Nederland. Met meer dan 15 jaar ervaring helpt hij bedrijven groeien via strategische campagnes voor vindbaarheid, content en digitale innovatie. Imre combineert zijn SEO-expertise met een scherpe visie op de rol van AI in moderne marketing.
                 </p>
                 
                 <p>
