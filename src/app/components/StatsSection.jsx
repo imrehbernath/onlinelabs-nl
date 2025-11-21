@@ -61,7 +61,7 @@ function Counter({ end, duration = 2000, suffix = '' }) {
 
 function StatsSection({ stats }) {
   return (
-    <section className="py-16 lg:py-20 bg-gray-50">
+    <section className="py-16 lg:py-20" style={{ backgroundColor: '#FAFAF8' }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8 lg:gap-12 max-w-5xl mx-auto">
           {stats.map((stat, index) => (

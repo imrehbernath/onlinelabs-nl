@@ -25,7 +25,7 @@ function isDirectVideo(url) {
 
 function TimelineSection({ title, subtitle, items }) {
   return (
-    <section className="py-20 lg:py-28 bg-white relative overflow-hidden">
+    <section className="py-20 lg:py-28 relative overflow-hidden" style={{ backgroundColor: '#FAFAF8' }}>
       {/* Background Gradient Accent */}
       <div 
         className="absolute top-0 left-0 w-full h-96 opacity-5 pointer-events-none"
