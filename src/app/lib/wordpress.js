@@ -548,10 +548,12 @@ export async function getBlogPostBySlug(slug) {
           }
           seo {
             title
-            metaDesc
-            focuskw
-            opengraphImage {
-              sourceUrl
+            description
+            canonicalUrl
+            openGraph {
+              title
+              description
+              image { sourceUrl }
             }
           }
         }
@@ -737,10 +739,11 @@ export async function getCases(limit = 3) {
 
 /**
  * Get Single Case by Slug
- * For case detail pages
+ * For case detail pages - FULL DATA including all ACF fields
+ * Uses Rank Math REST API for SEO (same approach as blog posts)
  * 
  * @param {string} slug - Case slug
- * @returns {Object} Case object
+ * @returns {Object} Case object with all details
  */
 export async function getCaseBySlug(slug) {
   console.log(`💼 Fetching case: ${slug}`);
@@ -751,14 +754,41 @@ export async function getCaseBySlug(slug) {
       query GetCaseBySlug($slug: ID!) {
         case(id: $slug, idType: SLUG) {
           id
+          databaseId
           title
           slug
           uri
           caseDetails {
             clientName
+            clientLogo {
+              node {
+                sourceUrl
+                altText
+                mediaDetails {
+                  width
+                  height
+                }
+              }
+            }
+            featuredImage {
+              node {
+                sourceUrl
+                altText
+                mediaDetails {
+                  width
+                  height
+                }
+              }
+            }
             excerpt
             metrics
             fullCaseStudy
+            servicesUsed
+            websiteUrl
+            ctaText
+            ctaUrl
+            featured
+            projectDate
           }
         }
       }
@@ -768,7 +798,84 @@ export async function getCaseBySlug(slug) {
       }
     );
 
-    return data?.case || null;
+    if (!data?.case) {
+      console.log('❌ Case not found');
+      return null;
+    }
+
+    const caseData = data.case;
+    const details = caseData.caseDetails || {};
+
+    console.log('✅ Case fetched:', caseData.title);
+    console.log('📍 Case URI:', caseData.uri);
+
+    // Build the case object
+    const caseObj = {
+      id: caseData.id,
+      databaseId: caseData.databaseId,
+      title: caseData.title,
+      slug: caseData.slug,
+      uri: caseData.uri,
+      // Flatten caseDetails
+      clientName: details.clientName || '',
+      clientLogo: details.clientLogo?.node ? {
+        sourceUrl: details.clientLogo.node.sourceUrl,
+        altText: details.clientLogo.node.altText || details.clientName,
+        width: details.clientLogo.node.mediaDetails?.width,
+        height: details.clientLogo.node.mediaDetails?.height,
+      } : null,
+      featuredImage: details.featuredImage?.node ? {
+        sourceUrl: details.featuredImage.node.sourceUrl,
+        altText: details.featuredImage.node.altText || caseData.title,
+        width: details.featuredImage.node.mediaDetails?.width,
+        height: details.featuredImage.node.mediaDetails?.height,
+      } : null,
+      excerpt: details.excerpt || '',
+      metrics: details.metrics || '',
+      fullCaseStudy: details.fullCaseStudy || '',
+      servicesUsed: details.servicesUsed || [],
+      websiteUrl: details.websiteUrl || '',
+      results: [],
+      ctaText: details.ctaText || `Bekijk de ${details.clientName || ''} case`,
+      ctaUrl: details.ctaUrl || '',
+      featured: details.featured || false,
+      projectDate: details.projectDate || null,
+      // SEO - will be populated below
+      rankMathHead: null,
+    };
+
+    // Fetch Rank Math SEO data via REST API
+    const wpUrl = 'https://wordpress-988065-5984089.cloudwaysapps.com';
+    
+    // Use WordPress URL for Rank Math (not production URL)
+    const caseUrl = `${wpUrl}${caseData.uri}`;
+    
+    try {
+      console.log('🔍 Fetching Rank Math SEO for:', caseUrl);
+      const rankMathRes = await fetch(
+        `${wpUrl}/wp-json/rankmath/v1/getHead?url=${encodeURIComponent(caseUrl)}`,
+        { next: { revalidate: 3600 } }
+      );
+      
+      // Check if response is JSON before parsing
+      const contentType = rankMathRes.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const rankMathData = await rankMathRes.json();
+        
+        if (rankMathData.success && rankMathData.head) {
+          caseObj.rankMathHead = rankMathData.head;
+          console.log('✅ Rank Math SEO fetched successfully');
+        } else {
+          console.log('⚠️ Rank Math returned no head data');
+        }
+      } else {
+        console.log('⚠️ Rank Math response is not JSON');
+      }
+    } catch (seoError) {
+      console.error('⚠️ Rank Math API Error (non-critical):', seoError.message);
+    }
+
+    return caseObj;
   } catch (error) {
     console.error('❌ Failed to fetch case:', error.message);
     return null;
