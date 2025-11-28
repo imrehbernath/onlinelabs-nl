@@ -165,9 +165,9 @@ export default async function OnsWerkPage() {
             </a>
           </div>
 
-          {/* Trust Indicators */}
+          {/* Trust Indicators - Same as AboutHero */}
           <div className="text-sm tracking-wider uppercase text-gray-600 mb-8">
-            <span>Amsterdam • Sinds 2008 • </span>
+            <span>Amsterdam • Sinds 2008 • Google Partner • </span>
             <a 
               href="https://www.google.com/maps/place/?q=place_id:ChIJEVS-szIKxkcRng6UB0W50u0" 
               target="_blank" 

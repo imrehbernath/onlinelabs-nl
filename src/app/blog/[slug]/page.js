@@ -11,6 +11,9 @@ import SocialShareButtons from './SocialShareButtons';
 import AuthorBio from './AuthorBio';
 import CTASection from '../../components/CTASection';
 
+const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
+const SITE_URL = 'https://www.onlinelabs.nl';
+
 async function getPost(slug) {
   const query = `
     query GetPost($slug: ID!) {
@@ -45,7 +48,7 @@ async function getPost(slug) {
 
   try {
     const res = await fetch(
-      'https://wordpress-988065-5984089.cloudwaysapps.com/graphql',
+      `${WP_URL}/graphql`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -69,19 +72,18 @@ async function getPost(slug) {
     // TODO: Enable CDN transformation when cdn.onlinelabs.nl is set up
     // if (post.featuredImage?.node?.sourceUrl) {
     //   post.featuredImage.node.sourceUrl = post.featuredImage.node.sourceUrl.replace(
-    //     'https://wordpress-988065-5984089.cloudwaysapps.com',
+    //     WP_URL,
     //     'https://cdn.onlinelabs.nl'
     //   );
     // }
     
     // Fetch Rank Math SEO data via REST API
-    const wpUrl = 'https://wordpress-988065-5984089.cloudwaysapps.com';
-    const siteUrl = 'https://www.onlinelabs.nl';
-    const postUrl = `${siteUrl}${post.uri}`;
+    // Use WordPress URL - Rank Math knows posts by their WP URL, not production URL
+    const wpPostUrl = `${WP_URL}${post.uri}`;
     
     try {
       const rankMathRes = await fetch(
-        `${wpUrl}/wp-json/rankmath/v1/getHead?url=${encodeURIComponent(postUrl)}`,
+        `${WP_URL}/wp-json/rankmath/v1/getHead?url=${encodeURIComponent(wpPostUrl)}`,
         { next: { revalidate: 3600 } }
       );
       
@@ -132,7 +134,7 @@ export async function generateMetadata({ params }) {
       ogImage = ogImageMatch[1];
       // TODO: Enable when CDN is configured
       // ogImage = ogImageMatch[1].replace(
-      //   'https://wordpress-988065-5984089.cloudwaysapps.com',
+      //   WP_URL,
       //   'https://cdn.onlinelabs.nl'
       // );
     }
@@ -220,13 +222,14 @@ export default async function BlogPost({ params }) {
   const contentWithIds = post.content.replace(
     /<h([23])[^>]*>(.*?)<\/h\1>/gi,
     (match, level, text) => {
-      const cleanText = text.replace(/<[^>]*>/g, '');
+      const cleanText = text.replace(/<[^>]*>/g, '').trim();
       const id = cleanText
         .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/[^a-z0-9\u00C0-\u017F]+/g, '-') // Support Dutch characters
         .replace(/^-|-$/g, '');
       
-      if (parseInt(level) === 2 && !cleanText.includes('?')) {
+      // Include all H2s in TOC (FAQ questions are handled separately via schema)
+      if (parseInt(level) === 2 && cleanText.length > 0) {
         headings.push({ level: parseInt(level), text: cleanText, id });
       }
       
@@ -234,7 +237,7 @@ export default async function BlogPost({ params }) {
     }
   );
 
-  const cleanExcerpt = post.excerpt?.replace(/<[^>]*>/g, '') || '';
+  const cleanExcerpt = he.decode(post.excerpt?.replace(/<[^>]*>/g, '') || '');
 
   // Keep WordPress URLs in content for now
   const transformedContent = contentWithIds;
@@ -244,24 +247,30 @@ export default async function BlogPost({ params }) {
   //   'https://cdn.onlinelabs.nl'
   // );
 
-  const currentUrl = `https://www.onlinelabs.nl/blog/${resolvedParams.slug}`;
+  const currentUrl = `${SITE_URL}/blog/${resolvedParams.slug}`;
 
   // Author slug and avatar mapping
   const getAuthorSlug = (name) => {
     const map = {
       'Imre Bernáth': 'imre-bernath',
       'Imre Bernath': 'imre-bernath',
+      'Sanne Verschoor': 'sanne-verschoor',
       'Colin Dijkstra': 'colin-dijkstra',
+      'Adrian Enders': 'adrian-enders',
     };
-    return map[name] || 'imre-bernath';
+    return map[name] || null; // null voor onbekende/oud-medewerkers
   };
 
   const getAuthorAvatar = (name) => {
-    // Use our own images for known authors (more reliable than Gravatar)
     const avatars = {
-      'Colin Dijkstra': 'https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp',
+      'Colin Dijkstra': `${WP_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`,
+      'Adrian Enders': `${WP_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`,
+      'Sanne Verschoor': `${WP_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`,
       'Imre Bernáth': 'https://gravatar.com/avatar/35c26275319f1c247e76cd36518ee34a?size=128',
       'Imre Bernath': 'https://gravatar.com/avatar/35c26275319f1c247e76cd36518ee34a?size=128',
+      'Zara Fung': `${WP_URL}/wp-content/uploads/2025/11/Zara-Fung.webp`,
+      'Elsa Heijnen': `${WP_URL}/wp-content/uploads/2025/11/Elsa-Heijnen.webp`,
+      'Nikky de Ridder': `${WP_URL}/wp-content/uploads/2025/11/Nikky-de-Ridder.webp`,
     };
     
     return avatars[name] || 'https://gravatar.com/avatar/35c26275319f1c247e76cd36518ee34a?size=128';
@@ -307,22 +316,36 @@ export default async function BlogPost({ params }) {
           {/* Meta info */}
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-8">
             {post.author?.node && (
-              <Link 
-                href={`/auteur/${authorSlug}`}
-                className="flex items-center gap-2 hover:text-[#376eb5] transition-colors"
-              >
-                <Image
-                  src={authorAvatar}
-                  alt={`Foto van ${post.author.node.name}`}
-                  width={32}
-                  height={32}
-                  className="rounded-full"
-                  loading="lazy"
-                />
-                <span className="font-medium">{post.author.node.name}</span>
-              </Link>
+              authorSlug ? (
+                <Link 
+                  href={`/auteur/${authorSlug}`}
+                  className="flex items-center gap-2 hover:text-[#376eb5] transition-colors"
+                >
+                  <Image
+                    src={authorAvatar}
+                    alt={`Foto van ${post.author.node.name}`}
+                    width={32}
+                    height={32}
+                    className="rounded-full"
+                    loading="lazy"
+                  />
+                  <span className="font-medium">{post.author.node.name}</span>
+                </Link>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={authorAvatar}
+                    alt={`Foto van ${post.author.node.name}`}
+                    width={32}
+                    height={32}
+                    className="rounded-full"
+                    loading="lazy"
+                  />
+                  <span className="font-medium">{post.author.node.name}</span>
+                </div>
+              )
             )}
-            
+                          
             <span className="text-gray-300">•</span>
             
             <time dateTime={post.date}>
@@ -458,11 +481,11 @@ export default async function BlogPost({ params }) {
             '@graph': [
               {
                 '@type': 'Organization',
-                '@id': 'https://www.onlinelabs.nl/#organization',
+                '@id': `${SITE_URL}/#organization`,
                 'name': 'OnlineLabs',
                 'logo': {
                   '@type': 'ImageObject',
-                  '@id': 'https://www.onlinelabs.nl/#logo',
+                  '@id': `${SITE_URL}/#logo`,
                   'url': 'https://cdn.onlinelabs.nl/wp-content/uploads/2024/12/18111213/Onlinelabs-logo.svg',
                   'contentUrl': 'https://cdn.onlinelabs.nl/wp-content/uploads/2024/12/18111213/Onlinelabs-logo.svg',
                   'caption': 'OnlineLabs',
@@ -471,30 +494,30 @@ export default async function BlogPost({ params }) {
               },
               {
                 '@type': 'WebSite',
-                '@id': 'https://www.onlinelabs.nl/#website',
-                'url': 'https://www.onlinelabs.nl',
+                '@id': `${SITE_URL}/#website`,
+                'url': SITE_URL,
                 'name': 'OnlineLabs',
-                'publisher': { '@id': 'https://www.onlinelabs.nl/#organization' },
+                'publisher': { '@id': `${SITE_URL}/#organization` },
                 'inLanguage': 'nl-NL'
               },
               {
                 '@type': 'WebPage',
-                '@id': `https://www.onlinelabs.nl/blog/${resolvedParams.slug}#webpage`,
-                'url': `https://www.onlinelabs.nl/blog/${resolvedParams.slug}`,
+                '@id': `${SITE_URL}/blog/${resolvedParams.slug}#webpage`,
+                'url': `${SITE_URL}/blog/${resolvedParams.slug}`,
                 'name': post.title,
                 'datePublished': new Date(post.date).toISOString(),
                 'dateModified': new Date(post.modified).toISOString(),
-                'isPartOf': { '@id': 'https://www.onlinelabs.nl/#website' },
+                'isPartOf': { '@id': `${SITE_URL}/#website` },
                 'primaryImageOfPage': { '@id': post.featuredImage?.node?.sourceUrl },
                 'inLanguage': 'nl-NL'
               },
               {
                 '@type': 'Person',
-                '@id': 'https://www.onlinelabs.nl/auteur/imre-bernath#person',
+                '@id': `${SITE_URL}/auteur/imre-bernath#person`,
                 'name': 'Imre Bernáth',
-                'url': 'https://www.onlinelabs.nl/auteur/imre-bernath',
+                'url': `${SITE_URL}/auteur/imre-bernath`,
                 'sameAs': ['https://nl.linkedin.com/in/imrebernath'],
-                'worksFor': { '@id': 'https://www.onlinelabs.nl/#organization' }
+                'worksFor': { '@id': `${SITE_URL}/#organization` }
               },
               {
                 '@type': 'BlogPosting',
@@ -502,21 +525,21 @@ export default async function BlogPost({ params }) {
                 'datePublished': new Date(post.date).toISOString(),
                 'dateModified': new Date(post.modified).toISOString(),
                 'author': {
-                  '@id': 'https://www.onlinelabs.nl/auteur/imre-bernath#person',
+                  '@id': `${SITE_URL}/auteur/imre-bernath#person`,
                   'name': 'Imre Bernáth'
                 },
-                'publisher': { '@id': 'https://www.onlinelabs.nl/#organization' },
+                'publisher': { '@id': `${SITE_URL}/#organization` },
                 'description': cleanExcerpt.substring(0, 160),
                 'name': post.title,
-                '@id': `https://www.onlinelabs.nl/blog/${resolvedParams.slug}#article`,
-                'isPartOf': { '@id': `https://www.onlinelabs.nl/blog/${resolvedParams.slug}#webpage` },
+                '@id': `${SITE_URL}/blog/${resolvedParams.slug}#article`,
+                'isPartOf': { '@id': `${SITE_URL}/blog/${resolvedParams.slug}#webpage` },
                 'image': post.featuredImage?.node?.sourceUrl,
                 'inLanguage': 'nl-NL',
-                'mainEntityOfPage': { '@id': `https://www.onlinelabs.nl/blog/${resolvedParams.slug}#webpage` }
+                'mainEntityOfPage': { '@id': `${SITE_URL}/blog/${resolvedParams.slug}#webpage` }
               },
               ...(faqs.length > 0 ? [{
                 '@type': 'FAQPage',
-                '@id': `https://www.onlinelabs.nl/blog/${resolvedParams.slug}#faq`,
+                '@id': `${SITE_URL}/blog/${resolvedParams.slug}#faq`,
                 'mainEntity': faqs.map(faq => ({
                   '@type': 'Question',
                   'name': faq.question,

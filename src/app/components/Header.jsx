@@ -176,7 +176,7 @@ export default function Header({ services = [] }) {
                           Meer weten over onze aanpak en werkwijze?
                         </p>
                         <Link
-                          href="/diensten"
+                          href="/skills"
                           className="group inline-flex items-center gap-2 px-5 py-2.5 bg-primary/5 hover:bg-primary/10 text-primary font-medium rounded-lg transition-all duration-200"
                         >
                           Bekijk alle diensten
@@ -281,7 +281,7 @@ export default function Header({ services = [] }) {
                       </Link>
                     ))}
                     <Link
-                      href="/diensten"
+                      href="/skills"
                       onClick={() => {
                         setIsMobileMenuOpen(false);
                         setIsMobileServicesOpen(false);

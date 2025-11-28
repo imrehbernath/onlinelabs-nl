@@ -851,3 +851,23 @@
 :global(#rank-math-faq) {
   display: none !important;
 }
+/* ============================================
+   FAQ ACCORDION - Override global styles
+   ============================================ */
+
+.faqContainer h2 {
+  font-family: var(--font-playfair), serif !important;
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  margin-bottom: 32px !important;
+  margin-top: 0 !important;
+}
+
+.faqContainer button span {
+  color: #111827 !important;
+}
+
+.faqContainer svg {
+  color: #376eb5 !important;
+}

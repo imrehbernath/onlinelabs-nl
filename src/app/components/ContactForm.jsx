@@ -263,7 +263,7 @@ function ContactForm() {
               
               {/* Info Card */}
               <div className="bg-primary rounded-xl p-8 text-white shadow-lg">
-                <h3 className="font-serif text-2xl font-bold mb-4">
+                <h3 className="font-serif text-2xl font-bold mb-4 text-white">
                   Direct persoonlijk contact
                 </h3>
                 <div className="space-y-3 text-base leading-relaxed">

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-// Author data mapping
+// Author data mapping - alleen actieve medewerkers
 const authors = {
   'imre-bernath': {
     name: 'Imre Bernáth',
@@ -21,24 +21,64 @@ const authors = {
     image: 'https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp',
     linkedin: 'https://nl.linkedin.com/in/colin-dijkstra-830b8823a',
   },
+  'sanne-verschoor': {
+  name: 'Sanne Verschoor',
+  slug: 'sanne-verschoor',
+  title: 'WordPress Developer bij OnlineLabs',
+  bio: 'Sanne Verschoor is WordPress developer bij OnlineLabs. Na een succesvolle carrièreswitch werkt zij met veel plezier en energie aan websites waar klanten trots op kunnen zijn.',
+  image: 'https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp',
+  linkedin: 'https://www.linkedin.com/in/sanne-verschoor-380bab267',
+  },
+  'adrian-enders': {
+    name: 'Adrian Enders',
+    slug: 'adrian-enders',
+    title: 'Allround Online Marketeer bij OnlineLabs',
+    bio: 'Adrian Enders is online marketeer bij OnlineLabs. Van SEO tot social media advertising, van Google Ads tot marketing strategie — hij helpt bedrijven groeien door de juiste mensen op het juiste moment te bereiken. Adrian combineert creativiteit met data om campagnes te bouwen die echt resultaat opleveren.',
+    image: 'https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp',
+    linkedin: 'https://www.linkedin.com/in/adrian-fa-enders',
+  },
 };
 
 // Convert WordPress author name to slug
+// Returns null for former employees (no author page/bio)
 function getAuthorSlug(authorName) {
   if (!authorName) return 'imre-bernath';
   
   const nameMap = {
     'Imre Bernáth': 'imre-bernath',
+    'Imre': 'imre-bernath',
     'Imre Bernath': 'imre-bernath',
     'Colin Dijkstra': 'colin-dijkstra',
+    'Adrian Enders': 'adrian-enders',
+    'Sanne Verschoor': 'sanne-verschoor',
+    // Oud-medewerkers - geen auteurspagina
+    'Zara Fung': null,
+    'Elsa Heijnen': null,
+    'Nikky de Ridder': null,
   };
+
+  // Return null voor onbekende auteurs (oud-medewerkers), niet de fallback
+  if (authorName in nameMap) {
+    return nameMap[authorName];
+  }
   
-  return nameMap[authorName] || 'imre-bernath';
+  return null;
 }
 
 export default function AuthorBio({ authorName }) {
   const authorSlug = getAuthorSlug(authorName);
-  const author = authors[authorSlug] || authors['imre-bernath'];
+  
+  // Geen bio tonen voor oud-medewerkers (Zara, Elsa, Nikky, etc.)
+  if (!authorSlug) {
+    return null;
+  }
+
+  const author = authors[authorSlug];
+  
+  // Extra check: als author data niet bestaat, toon niets
+  if (!author) {
+    return null;
+  }
 
   return (
     <section className="bg-white rounded-xl p-6 lg:p-8 shadow-lg">

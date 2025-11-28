@@ -5,6 +5,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* OnlineLabs Brand Colors */
+  --color-primary: #376eb5;
+  --color-primary-dark: #2d5a94;
+  --color-accent: #1abc9c;
+  --color-text: #111827;
+  --color-text-secondary: #4B5563;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,48 +29,46 @@ body {
 
 /* Base Typography voor Metropolis - Betere leesbaarheid */
 @layer base {
-  /* Base font-size verhoogd voor Metropolis */
   html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Body text iets groter voor betere leesbaarheid */
   body {
     @apply text-base leading-relaxed;
+    color: var(--color-text);
   }
   
-  /* Headings optimized voor Metropolis */
+  /* Headings - alleen sizing, GEEN kleuren (die komen van components) */
   h1 {
-    @apply text-5xl lg:text-6xl font-bold leading-tight;
+    @apply font-bold leading-tight;
     letter-spacing: -0.02em;
   }
   
   h2 {
-    @apply text-4xl lg:text-5xl font-bold leading-tight;
+    @apply font-bold leading-tight;
     letter-spacing: -0.01em;
+    color: var(--color-text);
   }
   
   h3 {
-    @apply text-2xl lg:text-3xl font-bold leading-snug;
+    @apply font-bold leading-snug;
+    color: var(--color-text);
   }
   
   h4 {
-    @apply text-xl lg:text-2xl font-semibold leading-snug;
+    @apply font-semibold leading-snug;
   }
   
-  /* Paragraph spacing */
   p {
     @apply mb-4 leading-relaxed;
   }
   
-  /* Links */
   a {
     @apply transition-colors duration-200;
   }
   
-  /* Buttons - grotere text */
   button {
     @apply text-base font-medium;
   }
@@ -79,7 +84,6 @@ body {
     font-family: var(--font-metropolis), var(--font-inter), system-ui, sans-serif;
   }
   
-  /* Custom text sizes voor Metropolis */
   .text-body {
     @apply text-base lg:text-lg leading-relaxed;
   }
@@ -91,6 +95,15 @@ body {
   .text-display {
     @apply text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight;
     letter-spacing: -0.02em;
+  }
+  
+  /* OnlineLabs brand colors */
+  .text-primary {
+    color: var(--color-primary);
+  }
+  
+  .text-primary-dark {
+    color: var(--color-primary-dark);
   }
 }
 
