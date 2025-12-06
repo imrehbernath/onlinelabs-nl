@@ -14,7 +14,8 @@ export default function TextImageSection({
   serviceColor = 'green',
   background = 'white',
   imageCaption = null,
-  imageCaptionLink = null
+  imageCaptionLink = null,
+  variant = 'photo' // 'photo' | 'infographic'
 }) {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -44,6 +45,11 @@ export default function TextImageSection({
   };
 
   const bgClass = backgroundClasses[background] || backgroundClasses.white;
+  
+  // Auto-detect infographic from variant prop, alt text, or filename
+  const isInfographic = variant === 'infographic' || 
+    image?.altText?.toLowerCase().includes('infographic') ||
+    image?.sourceUrl?.toLowerCase().includes('infographic');
   
   const processedContent = content
     ? content.replace(/<li>/g, `<li class="flex gap-3 items-start"><span class="text-gray-300 flex-shrink-0 mt-1.5 font-light text-xl">•</span><span>`)
@@ -87,25 +93,27 @@ export default function TextImageSection({
           </div>
 
           {/* Media Column */}
-          <div className={`relative order-1 lg:h-[760px] ${
+          <div className={`relative order-1 ${isInfographic ? 'lg:h-auto' : 'lg:h-[760px]'} ${
             layout === 'image-left' ? 'lg:order-1' : 'lg:order-2'
           } transition-all duration-1000 delay-300 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             
-            {/* Blob */}
-            <div 
-              className="hidden lg:block absolute"
-              style={{
-                background: '#F5F3EE',
-                borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-                transform: 'rotate(-5deg)',
-                top: '5%',
-                left: '5%',
-                right: '5%',
-                bottom: '5%'
-              }}
-            />
+            {/* Blob - only for photo variant */}
+            {!isInfographic && (
+              <div 
+                className="hidden lg:block absolute"
+                style={{
+                  background: '#F5F3EE',
+                  borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+                  transform: 'rotate(-5deg)',
+                  top: '5%',
+                  left: '5%',
+                  right: '5%',
+                  bottom: '5%'
+                }}
+              />
+            )}
             
             {/* Video */}
             {video?.webm && (
@@ -132,8 +140,8 @@ export default function TextImageSection({
               </div>
             )}
 
-            {/* Image - OPTIMIZED */}
-            {!video && image && (
+            {/* Image - Photo variant */}
+            {!video && image && !isInfographic && (
               <>
                 <div 
                   className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:translate-x-0 rounded-xl overflow-hidden group z-20"
@@ -160,7 +168,7 @@ export default function TextImageSection({
                   />
                 </div>
 
-                {/* Image Caption - ITALIC */}
+                {/* Image Caption */}
                 {imageCaption && (
                   <div className="relative w-[85%] mx-auto mt-4 lg:absolute lg:bottom-[2%] lg:left-[8%] lg:w-[54%] lg:mt-0 text-center lg:text-left z-20">
                     {imageCaptionLink ? (
@@ -179,6 +187,24 @@ export default function TextImageSection({
                   </div>
                 )}
               </>
+            )}
+
+            {/* Image - Infographic variant */}
+            {!video && image && isInfographic && (
+              <div className="relative w-full flex items-center justify-center">
+                <div className="relative w-[90%] sm:w-[80%] lg:w-full max-w-[520px]">
+                  <Image
+                    src={image.sourceUrl}
+                    alt={image.altText || title}
+                    width={520}
+                    height={520}
+                    className="w-full h-auto"
+                    priority={false}
+                    quality={90}
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 80vw, 520px"
+                  />
+                </div>
+              </div>
             )}
             
           </div>

@@ -267,6 +267,10 @@ export async function getServiceBySlug(slug) {
                 imageCaptionLink
                 background
               }
+
+              ... on ServiceDetailsPageSectionsGeoToolLayout {
+                geoToolBackground: background
+              }
               ... on ServiceDetailsPageSectionsProcessSectionLayout {
                 background
               }

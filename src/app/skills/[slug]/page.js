@@ -5,6 +5,7 @@ import ServicesListSection from '@/app/components/ServicesListSection';
 import LogoSlider from '@/app/components/LogoSlider';
 import CTASection from '@/app/components/CTASection';
 import FAQSection from '@/app/components/FAQSection';
+import GEOToolSection from '@/app/components/GEOToolSection';
 import { notFound } from 'next/navigation';
 import { getServiceBySlug, getHomepageSettings, getAllServices } from '@/app/lib/wordpress';
 
@@ -291,6 +292,7 @@ export default async function ServiceDetailPage({ params }) {
               <TextImageSection
                 key={index}
                 layout={section.layout || 'image-left'}
+                variant={section.variant || section.mediaVariant || 'photo'}
                 title={section.title}
                 content={section.content}
                 image={section.image?.node ? {
@@ -305,6 +307,16 @@ export default async function ServiceDetailPage({ params }) {
                 background={section.background || 'white'}
                 imageCaption={section.imageCaption}
                 imageCaptionLink={section.imageCaptionLink}
+              />
+            );
+          }
+
+          // GEO Tool Section
+          if (sectionType === 'ServiceDetailsPageSectionsGeoToolLayout' || sectionType === 'geo_tool') {
+            return (
+              <GEOToolSection
+                key={index}
+                background={section.geoToolBackground || section.background || 'beige'}
               />
             );
           }
