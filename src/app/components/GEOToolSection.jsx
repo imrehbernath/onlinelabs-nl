@@ -43,7 +43,7 @@ export default function GEOToolSection({ background = 'beige' }) {
   };
 
   return (
-    <section className={`py-16 lg:py-24 ${bgClass}`}>
+    <section id="geo-tool" className={`py-16 lg:py-24 ${bgClass}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
