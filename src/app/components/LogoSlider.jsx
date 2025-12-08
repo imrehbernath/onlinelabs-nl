@@ -13,15 +13,24 @@ import Image from 'next/image';
  * - logos: Array of { name, url, imageUrl }
  * - speed: 'slow' | 'normal' | 'fast' (animation speed)
  * - grayscale: boolean (show logos in grayscale with hover color)
+ * - background: 'white' | 'gray' | 'beige' (section background)
  */
 export default function LogoSlider({ 
   logos = [],
   speed = 'normal',
   grayscale = true,
-  title = "Vertrouwd door toonaangevende bedrijven"
+  title = "Vertrouwd door toonaangevende bedrijven",
+  background = 'gray'
 }) {
   
   const scrollerRef = useRef(null);
+
+  // Background color mapping
+  const bgClasses = {
+    white: 'bg-white',
+    gray: 'bg-gray-50',
+    beige: 'bg-[#FAF9F6]',
+  };
 
   // Default demo logos if none provided
   const defaultLogos = [
@@ -72,7 +81,7 @@ export default function LogoSlider({
   const bottomRowLogos = displayLogos.slice(midPoint);
 
   return (
-    <section className="py-16 lg:py-20 bg-gray-50">
+    <section className={`py-16 lg:py-20 ${bgClasses[background] || bgClasses.gray}`}>
       <div className="container mx-auto px-6 lg:px-8">
         
         {/* Title */}

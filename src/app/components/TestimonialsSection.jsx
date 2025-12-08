@@ -8,27 +8,47 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
  * 
  * Modern testimonials slider with auto-play, manual navigation, and modal view
  * 
- * Expected data structure:
+ * Props:
+ * - testimonials: Array of testimonial objects
+ * - title: Section title (default: "Wat zeggen klanten over OnlineLabs")
+ * - subtitle: Section subtitle (default: "Onze klanten waarderen onze expertise en toewijding")
+ * - background: 'white' | 'gray' | 'beige' (section background)
+ * 
+ * Expected testimonial structure:
  * testimonials = [{
  *   id: string,
- *   rating: number (1-5),
- *   shortQuote: string,
- *   fullReview: string (optional - if exists, shows "Lees meer"),
- *   reviewerName: string,
- *   reviewerRole: string,
- *   reviewerCompany: string (optional),
- *   reviewerPhoto: string (optional - image URL, falls back to gradient avatar with initials),
- *   verified: boolean (shows blue checkmark),
- *   googleReviewUrl: string (optional)
+ *   testimonialDetails: {
+ *     rating: number (1-5),
+ *     shortQuote: string,
+ *     fullReview: string (optional - if exists, shows "Lees meer"),
+ *     reviewerName: string,
+ *     reviewerRole: string,
+ *     reviewerCompany: string (optional),
+ *     reviewerPhoto: { node: { sourceUrl: string } } (optional),
+ *     verified: boolean (shows blue checkmark),
+ *     googleReviewUrl: string (optional)
+ *   }
  * }]
  */
-export default function TestimonialsSection({ testimonials = [] }) {
+export default function TestimonialsSection({ 
+  testimonials = [],
+  title = "Wat zeggen klanten over OnlineLabs",
+  subtitle = "Onze klanten waarderen onze expertise en toewijding",
+  background = 'gray'
+}) {
   const [selectedReview, setSelectedReview] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [visibleSlides, setVisibleSlides] = useState(1); // Start with 1 to match server
   const sliderRef = useRef(null);
   const autoPlayRef = useRef(null);
+
+  // Background color mapping
+  const bgClasses = {
+    white: 'bg-white',
+    gray: 'bg-gray-50',
+    beige: 'bg-[#FAF9F6]',
+  };
 
   // Filter out testimonials without required fields
   const validTestimonials = testimonials?.filter(t => 
@@ -162,18 +182,19 @@ export default function TestimonialsSection({ testimonials = [] }) {
 
   return (
     <>
-      <section className="py-20 lg:py-24 bg-gray-50">
+      <section className={`py-20 lg:py-24 ${bgClasses[background] || bgClasses.gray}`}>
         <div className="container mx-auto px-6 lg:px-8">
           
-          {/* Section Header - Playfair Display */}
-          {/* Section Header - VERKLEIND */}
+          {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4">
-              Wat zeggen klanten over OnlineLabs
+              {title}
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Onze klanten waarderen onze expertise en toewijding
-            </p>
+            {subtitle && (
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                {subtitle}
+              </p>
+            )}
           </div>
 
           {/* Slider Container */}

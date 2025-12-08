@@ -6,8 +6,12 @@ import LogoSlider from '@/app/components/LogoSlider';
 import CTASection from '@/app/components/CTASection';
 import FAQSection from '@/app/components/FAQSection';
 import GEOToolSection from '@/app/components/GEOToolSection';
+import PricingSection from '@/app/components/PricingSection';
+import TechStackSection from '@/app/components/TechStackSection';
+import WebsitesGallery from '@/app/components/WebsitesGallery';
+import TestimonialsSection from '@/app/components/TestimonialsSection';
 import { notFound } from 'next/navigation';
-import { getServiceBySlug, getHomepageSettings, getAllServices } from '@/app/lib/wordpress';
+import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
 // Dummy data (BEHOUDEN als fallback)
 const dummyServiceData = {
@@ -199,6 +203,20 @@ export async function generateStaticParams() {
   ];
 }
 
+// Helper function to extract background value from aliased or regular field
+// Some ACF fields return arrays, some return strings
+function getBackgroundValue(section, aliasName, fallback = 'white') {
+  // Try aliased field first
+  let bg = section[aliasName] || section.background;
+  
+  // If it's an array, take the first value
+  if (Array.isArray(bg)) {
+    bg = bg[0];
+  }
+  
+  return bg || fallback;
+}
+
 export default async function ServiceDetailPage({ params }) {
   const { slug } = await params;
   
@@ -226,11 +244,11 @@ export default async function ServiceDetailPage({ params }) {
     notFound();
   }
 
-  // Fetch homepage settings for logo slider
+  // Fetch homepage settings for logo slider data
   const homepageSettings = await getHomepageSettings();
   
+  // Prepare logo slider data (used when logo_slider section is in pageSections)
   const logoSliderData = homepageSettings?.logoSlider && homepageSettings.logoSlider.sliderEnabled ? {
-    title: homepageSettings.logoSlider.sliderTitle || 'Vertrouwd door toonaangevende bedrijven',
     speed: homepageSettings.logoSlider.sliderSpeed || 'normal',
     grayscale: homepageSettings.logoSlider.sliderGrayscale !== false,
     logos: homepageSettings.logoSlider.logos?.map(logo => ({
@@ -240,6 +258,9 @@ export default async function ServiceDetailPage({ params }) {
       url: logo.websiteUrl || null
     })) || []
   } : null;
+
+  // Fetch testimonials (used when testimonials section is in pageSections)
+  const allTestimonials = await getTestimonials(100);
 
   // Extract hero data (WordPress or dummy)
   let heroData;
@@ -304,7 +325,7 @@ export default async function ServiceDetailPage({ params }) {
                   mp4: section.videoMp4?.node?.mediaItemUrl || section.video?.mp4
                 } : section.video}
                 serviceColor="green"
-                background={section.background || 'white'}
+                background={getBackgroundValue(section, 'background', 'white')}
                 imageCaption={section.imageCaption}
                 imageCaptionLink={section.imageCaptionLink}
               />
@@ -316,7 +337,7 @@ export default async function ServiceDetailPage({ params }) {
             return (
               <GEOToolSection
                 key={index}
-                background={section.geoToolBackground || section.background || 'beige'}
+                background={getBackgroundValue(section, 'geoToolBackground', 'beige')}
               />
             );
           }
@@ -326,7 +347,7 @@ export default async function ServiceDetailPage({ params }) {
             return (
               <ProcessSection
                 key={index}
-                background={section.background || 'white'}
+                background={getBackgroundValue(section, 'processBackground', 'white')}
                 serviceSlug={slug}
               />
             );
@@ -337,7 +358,7 @@ export default async function ServiceDetailPage({ params }) {
             return (
               <ServicesListSection
                 key={index}
-                background={section.background || 'beige'}
+                background={getBackgroundValue(section, 'servicesListBackground', 'beige')}
               />
             );
           }
@@ -350,7 +371,7 @@ export default async function ServiceDetailPage({ params }) {
                 title={section.title || 'Veelgestelde vragen'}
                 subtitle={section.subtitle || 'FAQ'}
                 faqs={section.faqItems || section.faqs || []}
-                background={section.background || 'white'}
+                background={getBackgroundValue(section, 'faqBackground', 'white')}
               />
             );
           }
@@ -371,6 +392,92 @@ export default async function ServiceDetailPage({ params }) {
             );
           }
 
+          // Pricing Section
+          if (sectionType === 'ServiceDetailsPageSectionsPricingLayout' || sectionType === 'pricing') {
+            return (
+              <PricingSection
+                key={index}
+                title={section.title}
+                subtitle={section.subtitle}
+                description={section.description}
+                packages={section.packages}
+                background={getBackgroundValue(section, 'pricingBackground', 'white')}
+              />
+            );
+          }
+
+          // Tech Stack / Vibe Coding Section
+          if (sectionType === 'ServiceDetailsPageSectionsTechStackLayout' || sectionType === 'tech_stack') {
+            return (
+              <TechStackSection
+                key={index}
+                badge={section.badge}
+                title={section.title}
+                description={section.description}
+                features={section.features}
+                background={getBackgroundValue(section, 'techStackBackground', 'beige')}
+                ctaText={section.ctaText}
+                ctaUrl={section.ctaUrl}
+              />
+            );
+          }
+
+          // Websites Gallery Section
+          if (sectionType === 'ServiceDetailsPageSectionsWebsitesGalleryLayout' || sectionType === 'websites_gallery') {
+            return (
+              <WebsitesGallery
+                key={index}
+                title={section.title}
+                subtitle={section.subtitle}
+                websites={section.websites?.map((website, idx) => ({
+                  id: idx + 1,
+                  title: website.title || '',
+                  clientName: website.clientName || '',
+                  featuredImage: website.image?.node || null,
+                  websiteUrl: website.websiteUrl || '',
+                })) || []}
+              />
+            );
+          }
+
+          // Logo Slider Section
+          if (sectionType === 'ServiceDetailsPageSectionsLogoSliderLayout' || sectionType === 'logo_slider') {
+            // Only render if we have logos
+            if (!logoSliderData || logoSliderData.logos.length === 0) {
+              return null;
+            }
+            return (
+              <LogoSlider
+                key={index}
+                title={section.title || 'Vertrouwd door toonaangevende bedrijven'}
+                logos={logoSliderData.logos}
+                speed={logoSliderData.speed}
+                grayscale={logoSliderData.grayscale}
+                background={getBackgroundValue(section, 'logoSliderBackground', 'white')}
+              />
+            );
+          }
+
+          // Testimonials Section
+          if (sectionType === 'ServiceDetailsPageSectionsTestimonialsLayout' || sectionType === 'testimonials') {
+            // Limit testimonials if specified
+            const limit = section.limit || 100;
+            const limitedTestimonials = allTestimonials.slice(0, limit);
+            
+            if (!limitedTestimonials || limitedTestimonials.length === 0) {
+              return null;
+            }
+            return (
+              <TestimonialsSection
+                key={index}
+                testimonials={limitedTestimonials}
+                title={section.title}
+                subtitle={section.subtitle}
+                background={getBackgroundValue(section, 'testimonialsBackground', 'gray')}
+              />
+            );
+          }
+
           return null;
         })
       ) : (
@@ -381,16 +488,6 @@ export default async function ServiceDetailPage({ params }) {
             </p>
           </div>
         </section>
-      )}
-
-      {/* Logo Slider */}
-      {logoSliderData && logoSliderData.logos.length > 0 && (
-        <LogoSlider 
-          title={logoSliderData.title}
-          logos={logoSliderData.logos}
-          speed={logoSliderData.speed}
-          grayscale={logoSliderData.grayscale}
-        />
       )}
     </main>
   );

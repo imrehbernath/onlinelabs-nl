@@ -200,6 +200,7 @@ export async function getAllServices() {
 }
 
 // Fetch single service with FULL flexible content (MATCHED TO ACF 2025)
+// NOTE: Using aliases for background fields to avoid GraphQL type conflicts
 export async function getServiceBySlug(slug) {
   console.log(`🔍 Fetching service: ${slug}`);
   
@@ -267,15 +268,14 @@ export async function getServiceBySlug(slug) {
                 imageCaptionLink
                 background
               }
-
               ... on ServiceDetailsPageSectionsGeoToolLayout {
                 geoToolBackground: background
               }
               ... on ServiceDetailsPageSectionsProcessSectionLayout {
-                background
+                processBackground: background
               }
               ... on ServiceDetailsPageSectionsServicesListLayout {
-                background
+                servicesListBackground: background
               }
               ... on ServiceDetailsPageSectionsFaqLayout {
                 title
@@ -284,7 +284,7 @@ export async function getServiceBySlug(slug) {
                   question
                   answer
                 }
-                background
+                faqBackground: background
               }
               ... on ServiceDetailsPageSectionsCtaLayout {
                 title
@@ -292,6 +292,62 @@ export async function getServiceBySlug(slug) {
                 buttonText
                 buttonUrl
                 variant
+              }
+              ... on ServiceDetailsPageSectionsPricingLayout {
+                title
+                subtitle
+                description
+                pricingBackground: background
+                packages {
+                  name
+                  price
+                  priceNote
+                  description
+                  highlighted
+                  badge
+                  features
+                  cta
+                  ctaUrl
+                  icon
+                }
+              }
+              ... on ServiceDetailsPageSectionsTechStackLayout {
+                badge
+                title
+                description
+                techStackBackground: background
+                ctaText
+                ctaUrl
+                features {
+                  icon
+                  title
+                  description
+                }
+              }
+              ... on ServiceDetailsPageSectionsWebsitesGalleryLayout {
+                title
+                subtitle
+                websites {
+                  title
+                  clientName
+                  websiteUrl
+                  image {
+                    node {
+                      sourceUrl
+                      altText
+                    }
+                  }
+                }
+              }
+              ... on ServiceDetailsPageSectionsLogoSliderLayout {
+                title
+                logoSliderBackground: background
+              }
+              ... on ServiceDetailsPageSectionsTestimonialsLayout {
+                title
+                subtitle
+                limit
+                testimonialsBackground: background
               }
             }
           }
