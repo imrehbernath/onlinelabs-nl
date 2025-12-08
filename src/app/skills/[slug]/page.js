@@ -327,6 +327,7 @@ export default async function ServiceDetailPage({ params }) {
               <ProcessSection
                 key={index}
                 background={section.background || 'white'}
+                serviceSlug={slug}
               />
             );
           }

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ArrowDown } from 'lucide-react';
 
 export default function TextImageSection({ 
-  layout = 'image-left', 
+  layout = 'image-left', // 'image-left' | 'image-right' | 'text-only'
   title, 
   content, 
   image, 
@@ -46,6 +46,9 @@ export default function TextImageSection({
 
   const bgClass = backgroundClasses[background] || backgroundClasses.white;
   
+  // Check if text-only layout
+  const isTextOnly = layout === 'text-only';
+  
   // Auto-detect infographic from variant prop, alt text, or filename
   const isInfographic = variant === 'infographic' || 
     image?.altText?.toLowerCase().includes('infographic') ||
@@ -56,6 +59,52 @@ export default function TextImageSection({
         .replace(/<\/li>/g, '</span></li>')
     : '';
 
+  // Text-only layout
+  if (isTextOnly) {
+    return (
+      <section 
+        id={`text-image-section-${title?.replace(/\s+/g, '-').toLowerCase()}`}
+        className={`relative ${bgClass} py-12 lg:py-20 overflow-hidden`}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className={`max-w-3xl mx-auto transition-all duration-1000 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
+            
+            {/* Card wrapper with subtle accent */}
+            <div className="relative pl-6 lg:pl-8 border-l-4 border-[#376eb5]/30">
+              
+              {/* Decorative dot */}
+              <div className="absolute -left-[10px] top-0 w-4 h-4 rounded-full bg-[#376eb5]/20 border-2 border-[#376eb5]/40" />
+              
+              {/* Title */}
+              {title && (
+                <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
+                  {title}
+                </h2>
+              )}
+
+              {/* Content */}
+              {processedContent && (
+                <div 
+                  className="prose prose-lg max-w-none text-gray-600 leading-relaxed
+                    prose-p:mb-4 prose-p:text-gray-600 prose-p:leading-relaxed prose-p:text-lg
+                    prose-strong:text-gray-900 prose-strong:font-semibold
+                    prose-a:text-[#376eb5] prose-a:font-medium prose-a:no-underline hover:prose-a:underline
+                    prose-ul:space-y-3 prose-ul:my-6
+                    prose-li:list-none prose-li:pl-0 prose-li:text-gray-700 prose-li:leading-relaxed prose-li:text-lg
+                    prose-h3:text-2xl prose-h3:font-bold prose-h3:text-gray-900 prose-h3:mt-8 prose-h3:mb-4"
+                  dangerouslySetInnerHTML={{ __html: processedContent }}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Default two-column layout
   return (
     <section 
       id={`text-image-section-${title?.replace(/\s+/g, '-').toLowerCase()}`}
