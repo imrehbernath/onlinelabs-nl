@@ -71,6 +71,34 @@ const serviceContent = {
         description: 'Na een grondige test gaat je site live. We blijven optimaliseren voor blijvende resultaten in Google én AI.'
       }
     ]
+  },
+
+  // Website snelheid specific content (4 stappen)
+  'website-snelheid-optimalisatie': {
+    title: "Website snelheid optimalisatie in 4 stappen",
+    subtitle: "Van trage website naar groene Core Web Vitals. Onze bewezen aanpak zorgt voor meetbare resultaten en blijvende snelheid.",
+    steps: [
+      {
+        number: '01',
+        title: 'Analyse',
+        description: 'Audit met Lighthouse, PageSpeed Insights en RUM. Compleet inzicht in alle bottlenecks.'
+      },
+      {
+        number: '02',
+        title: 'Strategie',
+        description: 'Geprioriteerde actielijst op basis van impact. Quick wins én structurele verbeteringen in één plan.'
+      },
+      {
+        number: '03',
+        title: 'Optimalisatie',
+        description: 'Implementatie van code tot server. Geen caching plugins, maar duurzame fixes die écht werken.'
+      },
+      {
+        number: '04',
+        title: 'Monitoring',
+        description: 'Continue Core Web Vitals tracking via CoreDash. Maandelijkse rapportages en proactief ingrijpen.'
+      }
+    ]
   }
 };
 
@@ -85,7 +113,7 @@ export default function ProcessSection({
 
   const backgroundClasses = {
     white: 'bg-white',
-    gray: 'bg-gray-50',
+    gray: 'bg-[#F3F4F6]',
     beige: 'bg-[#FAFAF8]'
   };
 
@@ -131,6 +159,12 @@ export default function ProcessSection({
     displaySubtitle = "Met een slimme strategie, technische optimalisatie en continue bijsturing zorgen we dat jouw website scoort in Google én zichtbaar is in AI-antwoorden.";
   }
 
+  // Determine grid columns based on number of steps
+  const stepCount = displaySteps.length;
+  const gridClasses = stepCount === 4 
+    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' 
+    : 'grid-cols-1 md:grid-cols-3';
+
   return (
     <section className={`py-16 lg:py-24 ${bgClass}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -146,7 +180,7 @@ export default function ProcessSection({
           )}
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto">
+        <div className={`grid ${gridClasses} gap-8 lg:gap-12 max-w-6xl mx-auto`}>
           {displaySteps.map((step, index) => (
             <div
               key={index}
@@ -154,6 +188,7 @@ export default function ProcessSection({
               onMouseLeave={() => setHoveredStep(null)}
               className="relative group"
             >
+              {/* Numbered circle with gradient ring */}
               <div className="relative mb-6 inline-flex">
                 <div className={`absolute inset-0 rounded-full bg-gradient-to-br from-primary to-accent transition-all duration-500 ${
                   hoveredStep === index ? 'scale-110 opacity-100' : 'scale-100 opacity-60'
@@ -168,6 +203,7 @@ export default function ProcessSection({
                 </div>
               </div>
 
+              {/* Content */}
               <div>
                 <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-serif">
                   {step.title}
@@ -177,6 +213,7 @@ export default function ProcessSection({
                 </p>
               </div>
 
+              {/* Connector line (hidden on last item and on mobile) */}
               {index < displaySteps.length - 1 && (
                 <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-primary/30 to-transparent -z-10" />
               )}

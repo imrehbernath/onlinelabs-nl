@@ -46,7 +46,7 @@ export default function TestimonialsSection({
   // Background color mapping
   const bgClasses = {
     white: 'bg-white',
-    gray: 'bg-gray-50',
+    gray: 'bg-[#F3F4F6]',
     beige: 'bg-[#FAF9F6]',
   };
 

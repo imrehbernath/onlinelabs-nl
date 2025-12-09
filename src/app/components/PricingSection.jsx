@@ -1,7 +1,77 @@
 'use client';
 
 import Link from 'next/link';
-import { Check, Star, Zap, Crown } from 'lucide-react';
+import { Check, Star, Zap, Crown, Gauge } from 'lucide-react';
+
+// Service-specific pricing content configurations
+const serviceContent = {
+  // Website snelheid optimalisatie pricing
+  'website-snelheid-optimalisatie': {
+    title: "Onze snelheidspakketten",
+    subtitle: "Prijzen",
+    description: "Van quick scan tot complete transformatie",
+    packages: [
+      {
+        name: 'Speed Audit',
+        price: '€399',
+        priceNote: 'eenmalig',
+        description: 'Compleet inzicht in je website performance en concrete verbeterpunten.',
+        highlighted: false,
+        badge: '',
+        features: [
+          'PageSpeed & Core Web Vitals analyse',
+          'Identificatie van bottlenecks',
+          'Prioriteitenlijst met quick wins',
+          'Rapport met aanbevelingen',
+          '30 minuten bespreking'
+        ],
+        cta: 'Audit aanvragen',
+        ctaUrl: '/contact?pakket=speed-audit',
+        icon: 'zap'
+      },
+      {
+        name: 'Speed Optimalisatie',
+        price: '€1.299',
+        priceNote: 'eenmalig',
+        description: 'Complete optimalisatie voor meetbaar snellere laadtijden.',
+        highlighted: true,
+        badge: 'Meest gekozen',
+        features: [
+          'Alles uit Speed Audit',
+          'Afbeelding optimalisatie',
+          'CSS/JS optimalisatie',
+          'Database cleanup',
+          'Caching configuratie',
+          '3 maanden monitoring'
+        ],
+        cta: 'Offerte aanvragen',
+        ctaUrl: '/contact?pakket=speed-optimalisatie',
+        icon: 'gauge'
+      },
+      {
+        name: 'Speed Pro',
+        price: '€2.499',
+        priceNote: 'eenmalig',
+        description: 'Maximale snelheid met garantie en langdurige monitoring.',
+        highlighted: false,
+        badge: '',
+        features: [
+          'Alles uit Speed Optimalisatie',
+          'Server-side optimalisatie',
+          'Critical rendering path',
+          'Third-party script audit',
+          'Core Web Vitals garantie*',
+          '12 maanden monitoring'
+        ],
+        cta: 'Plan een gesprek',
+        ctaUrl: '/contact?pakket=speed-pro',
+        icon: 'crown'
+      }
+    ],
+    includedFeatures: 'Gratis intake gesprek • Vaste prijsafspraak • Geen verborgen kosten • 100% tevredenheidsgarantie',
+    footnote: '* Garantie: groene Core Web Vitals scores binnen 90 dagen of geld terug'
+  }
+};
 
 /**
  * PricingSection Component
@@ -16,6 +86,7 @@ import { Check, Star, Zap, Crown } from 'lucide-react';
  * - packages: Array of package objects
  * - background: 'white' | 'gray' | 'beige'
  * - includedFeatures: String of always-included features (optional)
+ * - serviceSlug: Slug for service-specific content (optional)
  */
 export default function PricingSection({
   title = "Kies het pakket dat bij je past",
@@ -23,12 +94,13 @@ export default function PricingSection({
   description = "",
   packages = [],
   background = 'white',
-  includedFeatures = "Responsive design • SSL-certificaat • Cookiemelding • Google Analytics & Search Console • SEO & AI-optimalisatie • SEO-basis (robots.txt, sitemap, meta's) • WebP afbeeldingen • Persoonlijke begeleiding • 100% eigendom"
+  includedFeatures = "Responsive design • SSL-certificaat • Cookiemelding • Google Analytics & Search Console • SEO & AI-optimalisatie • SEO-basis (robots.txt, sitemap, meta's) • WebP afbeeldingen • Persoonlijke begeleiding • 100% eigendom",
+  serviceSlug = null
 }) {
   // Background color mapping
   const bgClasses = {
     white: 'bg-white',
-    gray: 'bg-gray-50',
+    gray: 'bg-[#F3F4F6]',
     beige: 'bg-[#FAF9F6]',
   };
 
@@ -37,6 +109,7 @@ export default function PricingSection({
     'star': Star,
     'zap': Zap,
     'crown': Crown,
+    'gauge': Gauge,
   };
 
   // Helper: Parse features - handles both string (from ACF textarea) and array
@@ -108,7 +181,37 @@ export default function PricingSection({
     }
   ];
 
-  const displayPackages = packages.length > 0 ? packages : defaultPackages;
+  // Determine content: props > service-specific > defaults
+  let displayTitle = title;
+  let displaySubtitle = subtitle;
+  let displayDescription = description;
+  let displayPackages = packages.length > 0 ? packages : defaultPackages;
+  let displayIncludedFeatures = includedFeatures;
+  let displayFootnote = null;
+
+  // If serviceSlug exists and we have service-specific content, use it
+  // Only override if props are at default values
+  if (serviceSlug && serviceContent[serviceSlug]) {
+    const content = serviceContent[serviceSlug];
+    
+    // Use service-specific content if props are defaults
+    if (title === "Kies het pakket dat bij je past") {
+      displayTitle = content.title;
+    }
+    if (subtitle === "Prijzen") {
+      displaySubtitle = content.subtitle;
+    }
+    if (!description) {
+      displayDescription = content.description;
+    }
+    if (packages.length === 0) {
+      displayPackages = content.packages;
+    }
+    if (includedFeatures.includes("Responsive design")) {
+      displayIncludedFeatures = content.includedFeatures;
+    }
+    displayFootnote = content.footnote;
+  }
 
   return (
     <section className={`py-20 lg:py-24 ${bgClasses[background] || bgClasses.white}`}>
@@ -116,17 +219,17 @@ export default function PricingSection({
         
         {/* Section Header */}
         <div className="text-center mb-16">
-          {subtitle && (
+          {displaySubtitle && (
             <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full mb-4">
-              {subtitle}
+              {displaySubtitle}
             </span>
           )}
           <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4">
-            {title}
+            {displayTitle}
           </h2>
-          {description && (
+          {displayDescription && (
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              {description}
+              {displayDescription}
             </p>
           )}
         </div>
@@ -223,11 +326,20 @@ export default function PricingSection({
         </div>
 
         {/* Always Included Features */}
-        {includedFeatures && (
+        {displayIncludedFeatures && (
           <div className="text-center mt-12 max-w-4xl mx-auto">
             <p className="text-gray-600 text-sm">
               <span className="font-semibold text-gray-900">Altijd inbegrepen:</span>{' '}
-              {includedFeatures}
+              {displayIncludedFeatures}
+            </p>
+          </div>
+        )}
+
+        {/* Footnote (for guarantees etc.) */}
+        {displayFootnote && (
+          <div className="text-center mt-3 max-w-4xl mx-auto">
+            <p className="text-gray-500 text-sm">
+              {displayFootnote}
             </p>
           </div>
         )}

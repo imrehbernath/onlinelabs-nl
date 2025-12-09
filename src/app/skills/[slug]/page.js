@@ -308,6 +308,7 @@ export default async function ServiceDetailPage({ params }) {
           const sectionType = section.__typename || section.type;
 
           // Text + Image Section
+          // FIX: Only pass video if mediaType is explicitly 'video'
           if (sectionType === 'ServiceDetailsPageSectionsTextImageLayout' || sectionType === 'text_image') {
             return (
               <TextImageSection
@@ -320,9 +321,9 @@ export default async function ServiceDetailPage({ params }) {
                   sourceUrl: section.image.node.sourceUrl,
                   altText: section.image.node.altText
                 } : section.image}
-                video={section.videoWebm?.node || section.videoMp4?.node ? {
-                  webm: section.videoWebm?.node?.mediaItemUrl || section.video?.webm,
-                  mp4: section.videoMp4?.node?.mediaItemUrl || section.video?.mp4
+                video={section.mediaType === 'video' ? {
+                  webm: section.videoWebm?.node?.mediaItemUrl,
+                  mp4: section.videoMp4?.node?.mediaItemUrl
                 } : section.video}
                 serviceColor="green"
                 background={getBackgroundValue(section, 'background', 'white')}

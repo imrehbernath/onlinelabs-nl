@@ -40,7 +40,7 @@ export default function TextImageSection({
   
   const backgroundClasses = {
     white: 'bg-white',
-    gray: 'bg-gray-50',
+    gray: 'bg-[#F3F4F6]',
     beige: 'bg-[#FAFAF8]'
   };
 

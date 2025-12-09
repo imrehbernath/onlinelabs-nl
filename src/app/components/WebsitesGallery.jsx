@@ -15,7 +15,7 @@ export default function WebsitesGallery({
   }
 
   return (
-    <section className="py-16 lg:py-24" style={{ backgroundColor: '#F9FAFB' }}>
+    <section className="py-16 lg:py-24" style={{ backgroundColor: '#ffffff' }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
