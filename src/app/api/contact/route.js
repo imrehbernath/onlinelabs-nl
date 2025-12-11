@@ -7,6 +7,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 async function sendSlackNotification(contactData) {
   const webhookUrl = process.env.SLACK_WEBHOOK_URL;
   
+  console.log('🔍 Slack webhook URL:', webhookUrl ? 'Gevonden' : 'NIET GEVONDEN');
+  
   if (!webhookUrl) {
     console.log('⚠️ Slack webhook URL niet geconfigureerd');
     return;
@@ -14,128 +16,22 @@ async function sendSlackNotification(contactData) {
 
   try {
     const { name, email, phone, website, message, interests } = contactData;
+    const interestsList = interests?.length > 0 ? interests.join(', ') : 'Geen specifieke interesse';
 
-    const interestsList = interests && interests.length > 0 
-      ? interests.join(', ') 
-      : 'Geen specifieke interesse';
-
-    const message_blocks = {
-      blocks: [
-        {
-          type: "header",
-          text: {
-            type: "plain_text",
-            text: "📬 Nieuwe contactaanvraag!",
-            emoji: true
-          }
-        },
-        {
-          type: "section",
-          fields: [
-            {
-              type: "mrkdwn",
-              text: `*Naam:*\n${name}`
-            },
-            {
-              type: "mrkdwn",
-              text: `*Email:*\n<mailto:${email}|${email}>`
-            }
-          ]
-        },
-        {
-          type: "section",
-          fields: [
-            {
-              type: "mrkdwn",
-              text: `*Telefoon:*\n${phone || '_Niet ingevuld_'}`
-            },
-            {
-              type: "mrkdwn",
-              text: `*Website:*\n${website ? `<${website}|${website}>` : '_Niet ingevuld_'}`
-            }
-          ]
-        },
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `*Interesse in:*\n${interestsList}`
-          }
-        },
-        ...(message ? [{
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `*Bericht:*\n>${message.replace(/\n/g, '\n>')}`
-          }
-        }] : []),
-        {
-          type: "divider"
-        },
-        {
-          type: "context",
-          elements: [
-            {
-              type: "mrkdwn",
-              text: `🕐 ${new Date().toLocaleString('nl-NL', { 
-                dateStyle: 'full', 
-                timeStyle: 'short',
-                timeZone: 'Europe/Amsterdam' 
-              })} • via onlinelabs.nl`
-            }
-          ]
-        },
-        {
-          type: "actions",
-          elements: [
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: "📧 Beantwoorden",
-                emoji: true
-              },
-              url: `mailto:${email}?subject=Re: Je aanvraag bij OnlineLabs`,
-              action_id: "reply_email"
-            },
-            ...(phone ? [{
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: "📞 Bellen",
-                emoji: true
-              },
-              url: `tel:${phone}`,
-              action_id: "call_phone"
-            }] : []),
-            ...(website ? [{
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: "🌐 Website bekijken",
-                emoji: true
-              },
-              url: website,
-              action_id: "view_website"
-            }] : [])
-          ]
-        }
-      ]
+    // Simpele tekst versie (werkt altijd)
+    const slackMessage = {
+      text: `📬 *Nieuwe contactaanvraag!*\n\n*Naam:* ${name}\n*Email:* ${email}\n*Telefoon:* ${phone || 'Niet ingevuld'}\n*Website:* ${website || 'Niet ingevuld'}\n*Interesse:* ${interestsList}${message ? `\n*Bericht:* ${message}` : ''}`
     };
 
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(message_blocks)
+      body: JSON.stringify(slackMessage)
     });
 
-    if (!response.ok) {
-      console.error('❌ Slack notificatie mislukt:', response.statusText);
-    } else {
-      console.log('✅ Slack notificatie verstuurd');
-    }
+    console.log(response.ok ? '✅ Slack verstuurd' : '❌ Slack mislukt: ' + response.status);
   } catch (error) {
-    console.error('❌ Slack notificatie error:', error);
+    console.error('❌ Slack error:', error);
   }
 }
 
