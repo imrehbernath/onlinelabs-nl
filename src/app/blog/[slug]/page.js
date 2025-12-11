@@ -42,6 +42,21 @@ async function getPost(slug) {
             }
           }
         }
+        seo {
+          title
+          description
+          canonicalUrl
+          openGraph {
+            title
+            description
+            image {
+              url
+            }
+          }
+          jsonLd {
+            raw
+          }
+        }
       }
     }
   `;
@@ -64,47 +79,66 @@ async function getPost(slug) {
       return null;
     }
     
-    const post = json.data?.post;
-    
-    if (!post) return null;
-    
-    // Keep WordPress URLs for now (CDN not yet configured)
-    // TODO: Enable CDN transformation when cdn.onlinelabs.nl is set up
-    // if (post.featuredImage?.node?.sourceUrl) {
-    //   post.featuredImage.node.sourceUrl = post.featuredImage.node.sourceUrl.replace(
-    //     WP_URL,
-    //     'https://cdn.onlinelabs.nl'
-    //   );
-    // }
-    
-    // Fetch Rank Math SEO data via REST API
-    // Use WordPress URL - Rank Math knows posts by their WP URL, not production URL
-    const wpPostUrl = `${WP_URL}${post.uri}`;
-    
-    try {
-      const rankMathRes = await fetch(
-        `${WP_URL}/wp-json/rankmath/v1/getHead?url=${encodeURIComponent(wpPostUrl)}`,
-        { next: { revalidate: 3600 } }
-      );
-      
-      // Check if response is JSON before parsing
-      const contentType = rankMathRes.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
-        const rankMathData = await rankMathRes.json();
-        
-        if (rankMathData.success && rankMathData.head) {
-          post.rankMathHead = rankMathData.head;
-        }
-      }
-    } catch (error) {
-      console.error('Rank Math API Error:', error);
-    }
-    
-    return post;
+    return json.data?.post || null;
   } catch (error) {
     console.error('Fetch Error:', error);
     return null;
   }
+}
+
+// Helper: Replace WordPress URLs with production URLs
+function replaceWpUrls(str) {
+  if (!str) return str;
+  return str.replace(
+    /https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com/g,
+    SITE_URL
+  );
+}
+
+// Helper: Extract FAQs from JSON-LD
+function extractFaqsFromJsonLd(jsonLdRaw) {
+  if (!jsonLdRaw) return [];
+  
+  try {
+    // Remove script tags if present
+    const jsonContent = jsonLdRaw
+      .replace(/<script[^>]*>/gi, '')
+      .replace(/<\/script>/gi, '')
+      .trim();
+    
+    const schema = JSON.parse(jsonContent);
+    
+    if (schema['@graph']) {
+      for (const item of schema['@graph']) {
+        if (item['@type'] === 'FAQPage' && item.mainEntity) {
+          return item.mainEntity.map(q => ({
+            question: q.name,
+            answer: q.acceptedAnswer?.text || ''
+          }));
+        }
+        
+        if (item.subjectOf) {
+          for (const subject of item.subjectOf) {
+            if (subject['@type'] === 'FAQPage' && subject.mainEntity) {
+              return subject.mainEntity.map(q => ({
+                question: q.name,
+                answer: q.acceptedAnswer?.text || ''
+              }));
+            }
+          }
+        }
+      }
+    } else if (schema['@type'] === 'FAQPage' && schema.mainEntity) {
+      return schema.mainEntity.map(q => ({
+        question: q.name,
+        answer: q.acceptedAnswer?.text || ''
+      }));
+    }
+  } catch (e) {
+    console.error('FAQ extraction error:', e.message);
+  }
+  
+  return [];
 }
 
 export async function generateMetadata({ params }) {
@@ -113,32 +147,10 @@ export async function generateMetadata({ params }) {
   
   if (!post) return { title: 'Post niet gevonden' };
 
-  let title = post.title;
-  let description = post.excerpt?.replace(/<[^>]*>/g, '').substring(0, 160) || '';
-  let ogImage = post.featuredImage?.node?.sourceUrl;
-  
-  if (post.rankMathHead) {
-    const titleMatch = post.rankMathHead.match(/<meta property="og:title" content="([^"]*)"/)
-      || post.rankMathHead.match(/<title>([^<]*)<\/title>/);
-    if (titleMatch) {
-      title = he.decode(titleMatch[1]);
-    }
-    
-    const descMatch = post.rankMathHead.match(/<meta name="description" content="([^"]*)"/);
-    if (descMatch) {
-      description = he.decode(descMatch[1]);
-    }
-    
-    const ogImageMatch = post.rankMathHead.match(/<meta property="og:image" content="([^"]*)"/);
-    if (ogImageMatch) {
-      ogImage = ogImageMatch[1];
-      // TODO: Enable when CDN is configured
-      // ogImage = ogImageMatch[1].replace(
-      //   WP_URL,
-      //   'https://cdn.onlinelabs.nl'
-      // );
-    }
-  }
+  // Use SEO data from Rank Math, fallback to post data
+  const title = post.seo?.title || post.title;
+  const description = post.seo?.description || post.excerpt?.replace(/<[^>]*>/g, '').substring(0, 160) || '';
+  const ogImage = post.seo?.openGraph?.image?.url || post.featuredImage?.node?.sourceUrl;
 
   return {
     title: {
@@ -149,8 +161,8 @@ export async function generateMetadata({ params }) {
       canonical: `/blog/${resolvedParams.slug}`,
     },
     openGraph: {
-      title,
-      description,
+      title: post.seo?.openGraph?.title || title,
+      description: post.seo?.openGraph?.description || description,
       images: ogImage ? [ogImage] : [],
     },
   };
@@ -165,58 +177,9 @@ export default async function BlogPost({ params }) {
   }
 
   const headings = [];
-  let faqs = [];
   
-  // Extract FAQs from Rank Math JSON-LD schema
-  if (post.rankMathHead) {
-    const scriptRegex = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
-    const scripts = [...post.rankMathHead.matchAll(scriptRegex)];
-    
-    for (let i = 0; i < scripts.length; i++) {
-      const jsonContent = scripts[i][1].trim();
-      
-      try {
-        const schema = JSON.parse(jsonContent);
-        
-        if (schema['@graph']) {
-          for (const item of schema['@graph']) {
-            if (item['@type'] === 'FAQPage' && item.mainEntity) {
-              faqs = item.mainEntity.map(q => ({
-                question: q.name,
-                answer: q.acceptedAnswer?.text || ''
-              }));
-              break;
-            }
-            
-            if (item.subjectOf) {
-              for (const subject of item.subjectOf) {
-                if (subject['@type'] === 'FAQPage' && subject.mainEntity) {
-                  faqs = subject.mainEntity.map(q => ({
-                    question: q.name,
-                    answer: q.acceptedAnswer?.text || ''
-                  }));
-                  break;
-                }
-              }
-            }
-            
-            if (faqs.length > 0) break;
-          }
-        }
-        else if (schema['@type'] === 'FAQPage' && schema.mainEntity) {
-          faqs = schema.mainEntity.map(q => ({
-            question: q.name,
-            answer: q.acceptedAnswer?.text || ''
-          }));
-        }
-        
-        if (faqs.length > 0) break;
-        
-      } catch (e) {
-        console.log(`JSON parse error in script ${i}:`, e.message);
-      }
-    }
-  }
+  // Extract FAQs from Rank Math JSON-LD
+  const faqs = extractFaqsFromJsonLd(post.seo?.jsonLd?.raw);
   
   // Process content for TOC - only H2 headings
   const contentWithIds = post.content.replace(
@@ -225,10 +188,9 @@ export default async function BlogPost({ params }) {
       const cleanText = text.replace(/<[^>]*>/g, '').trim();
       const id = cleanText
         .toLowerCase()
-        .replace(/[^a-z0-9\u00C0-\u017F]+/g, '-') // Support Dutch characters
+        .replace(/[^a-z0-9\u00C0-\u017F]+/g, '-')
         .replace(/^-|-$/g, '');
       
-      // Include all H2s in TOC (FAQ questions are handled separately via schema)
       if (parseInt(level) === 2 && cleanText.length > 0) {
         headings.push({ level: parseInt(level), text: cleanText, id });
       }
@@ -238,15 +200,6 @@ export default async function BlogPost({ params }) {
   );
 
   const cleanExcerpt = he.decode(post.excerpt?.replace(/<[^>]*>/g, '') || '');
-
-  // Keep WordPress URLs in content for now
-  const transformedContent = contentWithIds;
-  // TODO: Enable when CDN is configured
-  // const transformedContent = contentWithIds.replace(
-  //   /https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com/g,
-  //   'https://cdn.onlinelabs.nl'
-  // );
-
   const currentUrl = `${SITE_URL}/blog/${resolvedParams.slug}`;
 
   // Author slug and avatar mapping
@@ -258,7 +211,7 @@ export default async function BlogPost({ params }) {
       'Colin Dijkstra': 'colin-dijkstra',
       'Adrian Enders': 'adrian-enders',
     };
-    return map[name] || null; // null voor onbekende/oud-medewerkers
+    return map[name] || null;
   };
 
   const getAuthorAvatar = (name) => {
@@ -278,6 +231,14 @@ export default async function BlogPost({ params }) {
 
   const authorSlug = getAuthorSlug(post.author?.node?.name);
   const authorAvatar = getAuthorAvatar(post.author?.node?.name);
+
+  // Process JSON-LD: replace WordPress URLs with production URLs
+  const processedJsonLd = post.seo?.jsonLd?.raw 
+    ? replaceWpUrls(post.seo.jsonLd.raw)
+        .replace(/<script[^>]*>/gi, '')
+        .replace(/<\/script>/gi, '')
+        .trim()
+    : null;
 
   return (
     <main>
@@ -420,7 +381,7 @@ export default async function BlogPost({ params }) {
               <div className="bg-white rounded-xl p-6 lg:p-10 shadow-lg">
                 <div 
                   className={styles.blogContent}
-                  dangerouslySetInnerHTML={{ __html: transformedContent }}
+                  dangerouslySetInnerHTML={{ __html: contentWithIds }}
                 />
               </div>
 
@@ -472,87 +433,13 @@ export default async function BlogPost({ params }) {
         buttonUrl="/contact"
       />
 
-      {/* Schema.org structured data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@graph': [
-              {
-                '@type': 'Organization',
-                '@id': `${SITE_URL}/#organization`,
-                'name': 'OnlineLabs',
-                'logo': {
-                  '@type': 'ImageObject',
-                  '@id': `${SITE_URL}/#logo`,
-                  'url': 'https://cdn.onlinelabs.nl/wp-content/uploads/2024/12/18111213/Onlinelabs-logo.svg',
-                  'contentUrl': 'https://cdn.onlinelabs.nl/wp-content/uploads/2024/12/18111213/Onlinelabs-logo.svg',
-                  'caption': 'OnlineLabs',
-                  'inLanguage': 'nl-NL'
-                }
-              },
-              {
-                '@type': 'WebSite',
-                '@id': `${SITE_URL}/#website`,
-                'url': SITE_URL,
-                'name': 'OnlineLabs',
-                'publisher': { '@id': `${SITE_URL}/#organization` },
-                'inLanguage': 'nl-NL'
-              },
-              {
-                '@type': 'WebPage',
-                '@id': `${SITE_URL}/blog/${resolvedParams.slug}#webpage`,
-                'url': `${SITE_URL}/blog/${resolvedParams.slug}`,
-                'name': post.title,
-                'datePublished': new Date(post.date).toISOString(),
-                'dateModified': new Date(post.modified).toISOString(),
-                'isPartOf': { '@id': `${SITE_URL}/#website` },
-                'primaryImageOfPage': { '@id': post.featuredImage?.node?.sourceUrl },
-                'inLanguage': 'nl-NL'
-              },
-              {
-                '@type': 'Person',
-                '@id': `${SITE_URL}/auteur/imre-bernath#person`,
-                'name': 'Imre Bernáth',
-                'url': `${SITE_URL}/auteur/imre-bernath`,
-                'sameAs': ['https://nl.linkedin.com/in/imrebernath'],
-                'worksFor': { '@id': `${SITE_URL}/#organization` }
-              },
-              {
-                '@type': 'BlogPosting',
-                'headline': post.title,
-                'datePublished': new Date(post.date).toISOString(),
-                'dateModified': new Date(post.modified).toISOString(),
-                'author': {
-                  '@id': `${SITE_URL}/auteur/imre-bernath#person`,
-                  'name': 'Imre Bernáth'
-                },
-                'publisher': { '@id': `${SITE_URL}/#organization` },
-                'description': cleanExcerpt.substring(0, 160),
-                'name': post.title,
-                '@id': `${SITE_URL}/blog/${resolvedParams.slug}#article`,
-                'isPartOf': { '@id': `${SITE_URL}/blog/${resolvedParams.slug}#webpage` },
-                'image': post.featuredImage?.node?.sourceUrl,
-                'inLanguage': 'nl-NL',
-                'mainEntityOfPage': { '@id': `${SITE_URL}/blog/${resolvedParams.slug}#webpage` }
-              },
-              ...(faqs.length > 0 ? [{
-                '@type': 'FAQPage',
-                '@id': `${SITE_URL}/blog/${resolvedParams.slug}#faq`,
-                'mainEntity': faqs.map(faq => ({
-                  '@type': 'Question',
-                  'name': faq.question,
-                  'acceptedAnswer': {
-                    '@type': 'Answer',
-                    'text': faq.answer.replace(/<[^>]*>/g, '')
-                  }
-                }))
-              }] : [])
-            ]
-          })
-        }}
-      />
+      {/* Schema.org structured data from Rank Math */}
+      {processedJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: processedJsonLd }}
+        />
+      )}
     </main>
   );
 }

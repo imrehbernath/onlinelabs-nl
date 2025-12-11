@@ -41,21 +41,22 @@ export default function ServiceHero({
           {description}
         </p>
         
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Link 
-            href={ctaUrl}
-            className="inline-flex items-center justify-center px-8 py-4 text-lg text-white font-semibold rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
-            style={{ backgroundColor: brandBlue }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = brandBlueHover}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = brandBlue}
-          >
-            {ctaText}
-            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-          
+      {/* CTAs */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+        <Link 
+          href={ctaUrl}
+          className="inline-flex items-center justify-center px-8 py-4 text-lg text-white font-semibold rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+          style={{ backgroundColor: brandBlue }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = brandBlueHover}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = brandBlue}
+        >
+          {ctaText}
+          <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </Link>
+        
+        {secondaryCtaText && secondaryCtaUrl && (
           <Link 
             href={secondaryCtaUrl}
             className="inline-flex items-center justify-center px-8 py-4 text-lg bg-white font-semibold rounded-lg border-2 transition-all duration-300"
@@ -71,7 +72,8 @@ export default function ServiceHero({
           >
             {secondaryCtaText}
           </Link>
-        </div>
+        )}
+      </div>
 
         {/* Trust Indicators - WITH CLICKABLE GOOGLE REVIEWS */}
         <div className="text-sm tracking-wider uppercase text-gray-600 mb-8">

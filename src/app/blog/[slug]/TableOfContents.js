@@ -65,7 +65,7 @@ export default function TableOfContents({ headings }) {
 
   return (
     <div className="lg:sticky lg:top-24 bg-white border border-gray-200 rounded-xl p-4 lg:p-7 shadow-sm">
-      <h2 className="toc-heading-underline">Inhoudsopgave</h2>
+      <div className="toc-heading-underline" role="heading" aria-level="2">Inhoudsopgave</div>
       <nav className="space-y-3">
         {headings.map((heading, index) => (
           <a key={index} href={`#${heading.id}`} className={`toc-link block transition-all level-${heading.level} ${heading.level === 2 ? 'font-medium' : ''} ${activeId === heading.id ? 'active' : ''}`} onClick={(e) => handleClick(e, heading.id)}>

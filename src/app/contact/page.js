@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import ContactHero from '../components/ContactHero';
 import ContactForm from '../components/ContactForm';
 import ContactInfo from '../components/ContactInfo';
@@ -20,6 +21,29 @@ export const metadata = {
   },
 };
 
+// Loading fallback for the form
+function ContactFormLoading() {
+  return (
+    <section className="py-20 lg:py-24 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
+          <div className="grid sm:grid-cols-2 gap-3 mb-8">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="h-16 bg-gray-200 rounded-lg"></div>
+            ))}
+          </div>
+          <div className="h-32 bg-gray-200 rounded-lg mb-4"></div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="h-12 bg-gray-200 rounded-lg"></div>
+            <div className="h-12 bg-gray-200 rounded-lg"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default async function ContactPage() {
   // Fetch testimonials for social proof
   const testimonials = await getTestimonials();
@@ -29,8 +53,10 @@ export default async function ContactPage() {
       {/* Hero Section */}
       <ContactHero />
 
-      {/* Contact Form with Sidebar */}
-      <ContactForm />
+      {/* Contact Form with Sidebar - Wrapped in Suspense for useSearchParams */}
+      <Suspense fallback={<ContactFormLoading />}>
+        <ContactForm />
+      </Suspense>
 
       {/* Contact Information Cards */}
       <ContactInfo />

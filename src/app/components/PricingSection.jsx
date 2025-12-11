@@ -1,10 +1,75 @@
 'use client';
 
 import Link from 'next/link';
-import { Check, Star, Zap, Crown, Gauge } from 'lucide-react';
+import { Check, Star, Zap, Crown, Gauge, Target } from 'lucide-react';
 
 // Service-specific pricing content configurations
 const serviceContent = {
+  // Online Adverteren pricing
+  'online-adverteren': {
+    title: "Transparante tarieven voor online adverteren",
+    subtitle: "Tarieven",
+    description: "Van eenmalige setup tot doorlopend beheer",
+    packages: [
+      {
+        name: 'Eenmalige Setup',
+        price: '€500',
+        priceNote: 'per platform',
+        description: 'Google Ads, Meta Ads of LinkedIn Ads professioneel opgezet en klaar om te starten.',
+        highlighted: false,
+        badge: '',
+        features: [
+          'Account structuur & campagne opzet',
+          'Conversie tracking installatie',
+          'Doelgroep targeting',
+          'Eerste advertenties live',
+          'Inclusief 30 min. instructie'
+        ],
+        cta: 'Direct aanvragen',
+        ctaUrl: '/contact?dienst=ads-setup',
+        icon: 'zap'
+      },
+      {
+        name: 'Maandelijks Beheer',
+        price: 'Vanaf €120',
+        priceNote: 'per maand',
+        description: 'Doorlopende optimalisatie voor maximale resultaten uit je advertentiebudget.',
+        highlighted: true,
+        badge: 'Meest gekozen',
+        features: [
+          'Campagne optimalisatie',
+          'A/B testen advertenties',
+          'Doelgroep verfijning',
+          'Maandelijkse rapportage',
+          'Budget monitoring'
+        ],
+        cta: 'Offerte aanvragen',
+        ctaUrl: '/contact?dienst=ads-beheer',
+        icon: 'gauge'
+      },
+      {
+        name: 'Social Media Beheer',
+        price: 'Vanaf €250',
+        priceNote: 'per maand',
+        description: 'Content creatie en community management voor Meta en LinkedIn.',
+        highlighted: false,
+        badge: '',
+        features: [
+          'Content creatie & planning',
+          'Posts op Meta/LinkedIn',
+          'Community management',
+          'Maandelijkse rapportage',
+          'Prijs op basis van frequentie'
+        ],
+        cta: 'Bespreek mogelijkheden',
+        ctaUrl: '/contact?dienst=social-media',
+        icon: 'star'
+      }
+    ],
+    includedFeatures: 'Conversie tracking • Maandelijkse rapportage • Geen langlopend contract • Transparant over kosten',
+    footnote: null
+  },
+
   // Website snelheid optimalisatie pricing
   'website-snelheid-optimalisatie': {
     title: "Onze snelheidspakketten",
@@ -70,6 +135,71 @@ const serviceContent = {
     ],
     includedFeatures: 'Gratis intake gesprek • Vaste prijsafspraak • Geen verborgen kosten • 100% tevredenheidsgarantie',
     footnote: '* Garantie: groene Core Web Vitals scores binnen 90 dagen of geld terug'
+  },
+
+  // Conversie optimalisatie specialist pricing
+  'conversie-optimalisatie-specialist': {
+    title: "Onze CRO-pakketten",
+    subtitle: "Prijzen",
+    description: "Van eenmalige audit tot doorlopende optimalisatie",
+    packages: [
+      {
+        name: 'CRO Audit',
+        price: '€749',
+        priceNote: 'eenmalig',
+        description: 'Compleet inzicht in je conversie-knelpunten met concrete verbeterpunten.',
+        highlighted: false,
+        badge: '',
+        features: [
+          'Heatmap & scroll-analyse',
+          'Funnel-analyse in Google Analytics',
+          'UX-review van belangrijkste pagina\'s',
+          'Rapport met prioriteitenlijst',
+          '45 minuten bespreking'
+        ],
+        cta: 'Audit aanvragen',
+        ctaUrl: '/contact?pakket=cro-audit',
+        icon: 'zap'
+      },
+      {
+        name: 'CRO Traject',
+        price: '€995',
+        priceNote: 'per maand',
+        description: 'Doorlopende optimalisatie met A/B testing voor structurele groei.',
+        highlighted: true,
+        badge: 'Meest gekozen',
+        features: [
+          'Alles uit CRO Audit',
+          'Maandelijkse A/B tests',
+          'Implementatie van winnaars',
+          'Conversie dashboard',
+          'Maandelijkse rapportage & call'
+        ],
+        cta: 'Offerte aanvragen',
+        ctaUrl: '/contact?pakket=cro-traject',
+        icon: 'target'
+      },
+      {
+        name: 'CRO Workshop',
+        price: '€1.495',
+        priceNote: 'eenmalig',
+        description: 'Train je team in conversie optimalisatie met een praktisch actieplan.',
+        highlighted: false,
+        badge: '',
+        features: [
+          'Halve dag workshop op locatie',
+          'CRO-methodiek & tools training',
+          'Analyse van jullie website',
+          'Direct toepasbaar actieplan',
+          'Naslagwerk & templates'
+        ],
+        cta: 'Workshop plannen',
+        ctaUrl: '/contact?pakket=cro-workshop',
+        icon: 'crown'
+      }
+    ],
+    includedFeatures: 'Gratis intake gesprek • Geen langlopend contract • Maandelijkse rapportage • Data-driven aanpak',
+    footnote: null
   }
 };
 
@@ -100,7 +230,7 @@ export default function PricingSection({
   // Background color mapping
   const bgClasses = {
     white: 'bg-white',
-    gray: 'bg-[#F3F4F6]',
+    gray: 'bg-gray-50',
     beige: 'bg-[#FAF9F6]',
   };
 
@@ -110,6 +240,7 @@ export default function PricingSection({
     'zap': Zap,
     'crown': Crown,
     'gauge': Gauge,
+    'target': Target,
   };
 
   // Helper: Parse features - handles both string (from ACF textarea) and array

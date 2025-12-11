@@ -1,8 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+
+// Mapping van URL parameter naar interest ID
+const skillMapping = {
+  'seo': 'seo',
+  'seo-specialist': 'seo',
+  'geo': 'geo',
+  'geo-optimalisatie': 'geo',
+  'cro': 'cro',
+  'conversie-optimalisatie': 'cro',
+  'conversie-optimalisatie-specialist': 'cro',
+  'website': 'webdesign',
+  'website-laten-maken': 'webdesign',
+  'webdesign': 'webdesign',
+  'ads': 'google-ads',
+  'adverteren': 'google-ads',
+  'online-adverteren': 'google-ads',
+  'snelheid': 'cwv',
+  'speed': 'cwv',
+  'website-snelheid': 'cwv',
+  'website-snelheid-optimalisatie': 'cwv',
+  'ai': 'aeo',
+  'aeo': 'aeo'
+};
 
 function ContactForm() {
+  const searchParams = useSearchParams();
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,6 +39,8 @@ function ContactForm() {
   });
 
   const [focusedField, setFocusedField] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
 
   const interests = [
     { id: 'seo', label: 'SEO & vindbaarheid in Google' },
@@ -29,6 +57,20 @@ function ContactForm() {
     { id: 'cro', label: 'Conversie-optimalisatie (CRO)' }
   ];
 
+  // Pre-select interest based on ?skill= or ?dienst= parameter
+  useEffect(() => {
+    const skill = searchParams.get('skill') || searchParams.get('dienst');
+    if (skill) {
+      const mappedInterest = skillMapping[skill.toLowerCase()];
+      if (mappedInterest && !formData.interests.includes(mappedInterest)) {
+        setFormData(prev => ({
+          ...prev,
+          interests: [mappedInterest]
+        }));
+      }
+    }
+  }, [searchParams]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -43,11 +85,83 @@ function ContactForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Implement form submission
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Map interest IDs to labels for email
+      const selectedInterests = formData.interests.map(id => {
+        const interest = interests.find(i => i.id === id);
+        return interest ? interest.label : id;
+      });
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          interests: selectedInterests
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          website: '',
+          message: '',
+          interests: []
+        });
+      } else {
+        setSubmitStatus('error');
+        console.error('Form submission error:', data.error);
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      console.error('Form submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  // Success message
+  if (submitStatus === 'success') {
+    return (
+      <section className="py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="font-serif text-3xl font-bold text-gray-900 mb-4">
+              Bedankt voor je bericht!
+            </h2>
+            <p className="text-lg text-gray-600 mb-8">
+              We hebben je aanvraag ontvangen en nemen binnen 24 uur contact met je op.
+              Check ook je inbox voor een bevestigingsmail.
+            </p>
+            <button
+              onClick={() => setSubmitStatus(null)}
+              className="px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-all duration-200"
+            >
+              Nieuw bericht versturen
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 lg:py-24 bg-white">
@@ -58,6 +172,18 @@ function ContactForm() {
           <div className="lg:col-span-7">
             <form onSubmit={handleSubmit} className="space-y-8">
               
+              {/* Error Message */}
+              {submitStatus === 'error' && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-800">
+                    Er is iets misgegaan bij het versturen. Probeer het opnieuw of mail ons direct op{' '}
+                    <a href="mailto:hallo@onlinelabs.nl" className="underline font-medium">
+                      hallo@onlinelabs.nl
+                    </a>
+                  </p>
+                </div>
+              )}
+
               {/* Interests Section */}
               <div>
                 <label className="block text-lg font-semibold text-gray-900 mb-4">
@@ -246,9 +372,27 @@ function ContactForm() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-dark text-white font-semibold text-lg rounded-lg transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-blue-200"
+                  disabled={isSubmitting}
+                  className={`
+                    w-full sm:w-auto px-8 py-4 bg-primary text-white font-semibold text-lg rounded-lg 
+                    transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-200
+                    ${isSubmitting 
+                      ? 'opacity-70 cursor-not-allowed' 
+                      : 'hover:bg-primary-dark hover:shadow-lg hover:-translate-y-0.5'
+                    }
+                  `}
                 >
-                  Deel je idee met ons
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Versturen...
+                    </span>
+                  ) : (
+                    'Deel je idee met ons'
+                  )}
                 </button>
                 <p className="mt-4 text-sm text-gray-500">
                   We nemen meestal binnen 24 uur contact met je op

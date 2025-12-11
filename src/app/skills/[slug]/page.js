@@ -13,6 +13,18 @@ import TestimonialsSection from '@/app/components/TestimonialsSection';
 import { notFound } from 'next/navigation';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
+const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
+const SITE_URL = 'https://www.onlinelabs.nl';
+
+// Helper: Replace WordPress URLs with production URLs
+function replaceWpUrls(str) {
+  if (!str) return str;
+  return str.replace(
+    /https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com/g,
+    SITE_URL
+  );
+}
+
 // Dummy data (BEHOUDEN als fallback)
 const dummyServiceData = {
   'seo-specialist': {
@@ -33,8 +45,8 @@ Als SEO specialist in Amsterdam helpen wij bedrijven groeien met datagedreven SE
 Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, content en structuur voor maximale zichtbaarheid – in Google, Perplexity en Claude.`,
       ctaText: 'Neem contact op',
       ctaUrl: '/contact',
-      secondaryCtaText: 'Bekijk ons werk',
-      secondaryCtaUrl: '/ons-werk',
+      secondaryCtaText: '',
+      secondaryCtaUrl: '',
       serviceColor: 'green'
     },
     pageSections: [
@@ -137,15 +149,15 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
       description: 'Bereid je voor op de toekomst van zoeken. GEO (Generative Engine Optimization) zorgt ervoor dat jouw bedrijf vindbaar is in ChatGPT, Perplexity, en andere AI-assistenten.',
       ctaText: 'Test je AI visibility',
       ctaUrl: 'https://teun.ai',
-      secondaryCtaText: 'Bekijk ons werk',
-      secondaryCtaUrl: '/ons-werk',
+      secondaryCtaText: 'Neem contact op',
+      secondaryCtaUrl: '/contact',
       serviceColor: 'blue'
     },
     pageSections: []
   }
 };
 
-// SEO Metadata
+// SEO Metadata - Using Rank Math SEO data
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   
@@ -159,16 +171,42 @@ export async function generateMetadata({ params }) {
 
   if (!serviceData) {
     return {
-      title: 'Service niet gevonden - OnlineLabs',
+      title: 'Service niet gevonden',
     };
   }
 
+  // Use Rank Math SEO data if available
+  if (service?.seo) {
+    return {
+      title: {
+        absolute: service.seo.title || service.title
+      },
+      description: service.seo.description || '',
+      alternates: {
+        canonical: `/skills/${slug}`,
+      },
+      openGraph: {
+        title: service.seo.openGraph?.title || service.seo.title || service.title,
+        description: service.seo.openGraph?.description || service.seo.description,
+        images: service.seo.openGraph?.image?.url 
+          ? [service.seo.openGraph.image.url] 
+          : [],
+      },
+    };
+  }
+
+  // Fallback to page data
   const title = service?.serviceDetails?.heroSection?.title || service?.title || fallbackService?.title || '';
   const description = service?.serviceDetails?.heroSection?.description || service?.serviceDetails?.description || fallbackService?.description || '';
 
   return {
-    title: `${title} - OnlineLabs`,
+    title: {
+      absolute: `${title} - OnlineLabs`
+    },
     description: description,
+    alternates: {
+      canonical: `/skills/${slug}`,
+    },
     openGraph: {
       title: `${title} - OnlineLabs`,
       description: description,
@@ -275,8 +313,8 @@ export default async function ServiceDetailPage({ params }) {
       description: heroSection.description || '',
       ctaText: heroSection.ctaText || 'Neem contact op',
       ctaUrl: heroSection.ctaUrl || '/contact',
-      secondaryCtaText: heroSection.secondaryCtaText || 'Bekijk ons werk',
-      secondaryCtaUrl: heroSection.secondaryCtaUrl || '/ons-werk',
+      secondaryCtaText: heroSection.secondaryCtaText || '',
+      secondaryCtaUrl: heroSection.secondaryCtaUrl || '',
       serviceColor: 'green'
     };
     pageSections = service.serviceDetails.pageSections || [];
@@ -285,6 +323,89 @@ export default async function ServiceDetailPage({ params }) {
     heroData = service.heroSection;
     pageSections = service.pageSections || [];
   }
+
+  // Process JSON-LD from Rank Math: replace WordPress URLs with production URLs
+  const processedJsonLd = service?.seo?.jsonLd?.raw 
+    ? replaceWpUrls(service.seo.jsonLd.raw)
+        .replace(/<script[^>]*>/gi, '')
+        .replace(/<\/script>/gi, '')
+        .trim()
+    : null;
+
+  // Extract FAQ section from pageSections for schema
+  const faqSection = pageSections.find(
+    s => s.__typename === 'ServiceDetailsPageSectionsFaqLayout' || s.type === 'faq'
+  );
+
+  // Build FAQ Schema from ACF data
+  const faqSchema = faqSection?.faqItems?.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqSection.faqItems.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer?.replace(/<[^>]*>/g, '') || '' // Strip HTML
+      }
+    }))
+  } : null;
+
+  // Build BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": SITE_URL
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Skills",
+        "item": `${SITE_URL}/skills`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": heroData.title?.split('–')[0]?.trim() || heroData.title,
+        "item": `${SITE_URL}/skills/${slug}`
+      }
+    ]
+  };
+
+  // Build Service Schema
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": heroData.title,
+    "description": heroData.description?.replace(/\n/g, ' ').substring(0, 300) || '',
+    "url": `${SITE_URL}/skills/${slug}`,
+    "provider": {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      "name": "OnlineLabs",
+      "url": SITE_URL,
+      "logo": "https://cdn.onlinelabs.nl/wp-content/uploads/2025/01/18075444/OnlineLabs-logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Herengracht 221",
+        "addressLocality": "Amsterdam",
+        "postalCode": "1016 BG",
+        "addressCountry": "NL"
+      },
+      "telephone": "+31-20-820-2022",
+      "email": "hallo@onlinelabs.nl"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Netherlands"
+    },
+    "serviceType": heroData.title?.split('–')[0]?.trim() || heroData.title
+  };
 
   return (
     <main>
@@ -295,8 +416,8 @@ export default async function ServiceDetailPage({ params }) {
         description={heroData.description}
         ctaText={heroData.ctaText}
         ctaUrl={heroData.ctaUrl}
-        secondaryCtaText={heroData.secondaryCtaText || "Bekijk ons werk"}
-        secondaryCtaUrl={heroData.secondaryCtaUrl || "/ons-werk"}
+        secondaryCtaText={heroData.secondaryCtaText}
+        secondaryCtaUrl={heroData.secondaryCtaUrl}
         serviceColor={heroData.serviceColor || "green"}
       />
 
@@ -314,6 +435,7 @@ export default async function ServiceDetailPage({ params }) {
               <TextImageSection
                 key={index}
                 layout={section.layout || 'image-left'}
+                subheading={section.subheading}
                 variant={section.variant || section.mediaVariant || 'photo'}
                 title={section.title}
                 content={section.content}
@@ -403,6 +525,7 @@ export default async function ServiceDetailPage({ params }) {
                 description={section.description}
                 packages={section.packages}
                 background={getBackgroundValue(section, 'pricingBackground', 'white')}
+                serviceSlug={slug}
               />
             );
           }
@@ -489,6 +612,26 @@ export default async function ServiceDetailPage({ params }) {
             </p>
           </div>
         </section>
+      )}
+
+      {/* BreadcrumbList Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      {/* Service Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+
+      {/* FAQ Schema from ACF */}
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
       )}
     </main>
   );

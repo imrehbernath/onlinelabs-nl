@@ -102,85 +102,6 @@ export default async function RootLayout({ children }) {
     // Fallback naar default services in Header component
   }
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://www.onlinelabs.nl/#organization",
-        "name": "OnlineLabs",
-        "url": "https://www.onlinelabs.nl/",
-        "logo": {
-          "@type": "ImageObject",
-          "@id": "https://www.onlinelabs.nl/#logo",
-          "url": "https://cdn.onlinelabs.nl/wp-content/uploads/2025/01/18075444/OnlineLabs-logo.png",
-          "contentUrl": "https://cdn.onlinelabs.nl/wp-content/uploads/2025/01/18075444/OnlineLabs-logo.png",
-          "caption": "OnlineLabs",
-          "inLanguage": "nl-NL",
-          "width": "432",
-          "height": "432"
-        },
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Herengracht 221",
-          "postalCode": "1016 BG",
-          "addressLocality": "Amsterdam",
-          "addressCountry": "NL"
-        },
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+31-20-820-2022",
-          "contactType": "customer service",
-          "email": "hallo@onlinelabs.nl",
-          "areaServed": "NL",
-          "availableLanguage": ["nl", "en"]
-        },
-        "sameAs": ["https://www.linkedin.com/company/onlinelabs"],
-        "foundingDate": "2008",
-        "description": "OnlineLabs is een online marketing bureau uit Amsterdam, gespecialiseerd in SEO, GEO optimalisatie, WordPress websites en AI-zichtbaarheid."
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.onlinelabs.nl/#website",
-        "url": "https://www.onlinelabs.nl",
-        "name": "OnlineLabs",
-        "publisher": {
-          "@id": "https://www.onlinelabs.nl/#organization"
-        },
-        "inLanguage": "nl-NL"
-      },
-      {
-        "@type": "LocalBusiness",
-        "@id": "https://www.onlinelabs.nl/#localbusiness",
-        "name": "OnlineLabs",
-        "image": "https://cdn.onlinelabs.nl/wp-content/uploads/2025/01/18075444/OnlineLabs-logo.png",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Herengracht 221",
-          "addressLocality": "Amsterdam",
-          "postalCode": "1016 BG",
-          "addressCountry": "NL"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "52.3730796",
-          "longitude": "4.8862259"
-        },
-        "url": "https://www.onlinelabs.nl",
-        "telephone": "+31-20-820-2022",
-        "priceRange": "€€",
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "09:00",
-            "closes": "18:00"
-          }
-        ]
-      }
-    ]
-  };
-
   return (
     <html lang="nl" className={`${metropolis.variable} ${inter.variable} ${playfair.variable}`}>
       <head>
@@ -206,13 +127,7 @@ export default async function RootLayout({ children }) {
           <meta name="robots" content="noindex, nofollow" />
         )}
         
-        {/* Structured Data (JSON-LD) */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData)
-          }}
-        />
+        {/* Structured Data wordt beheerd door Rank Math per pagina */}
       </head>
       <body className={`${metropolis.variable} antialiased`}>
         <Header services={services} />

@@ -184,6 +184,7 @@ export async function getAllServices() {
               subtitle
               description
               featured
+              showInMenu
             }
           }
         }
@@ -213,6 +214,21 @@ export async function getServiceBySlug(slug) {
           title
           slug
           uri
+          seo {
+            title
+            description
+            canonicalUrl
+            openGraph {
+              title
+              description
+              image {
+                url
+              }
+            }
+            jsonLd {
+              raw
+            }
+          }
           serviceDetails {
             subtitle
             description
@@ -241,6 +257,7 @@ export async function getServiceBySlug(slug) {
               __typename
               ... on ServiceDetailsPageSectionsTextImageLayout {
                 layout
+                subheading
                 title
                 content
                 mediaType

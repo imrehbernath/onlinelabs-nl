@@ -99,7 +99,62 @@ const serviceContent = {
         description: 'Continue Core Web Vitals tracking via CoreDash. Maandelijkse rapportages en proactief ingrijpen.'
       }
     ]
-  }
+  },
+
+  // Online Adverteren specific content (4 stappen)
+  'online-adverteren': {
+    title: "Van strategie tot schaalbaarheid in 4 stappen",
+    subtitle: "Onze bewezen aanpak zorgt dat je advertentiebudget maximaal rendeert. Van eerste analyse tot schaalbare groei.",
+    steps: [
+      {
+        number: '01',
+        title: 'Analyse',
+        description: 'Doelgroep, markt en concurrentie in kaart. We bepalen waar jouw kansen liggen en welke kanalen het beste passen.'
+      },
+      {
+        number: '02',
+        title: 'Campagne Setup',
+        description: 'Account structuur, targeting en advertenties. Alles ingericht volgens best practices met focus op conversietracking.'
+      },
+      {
+        number: '03',
+        title: 'Optimalisatie',
+        description: 'Continu A/B testen op ads, doelgroepen en biedstrategieën. We sturen op ROAS en kosten per conversie.'
+      },
+      {
+        number: '04',
+        title: 'Schalen',
+        description: 'Zodra campagnes renderen, verhogen we het budget strategisch. Groei zonder stijgende acquisitiekosten.'
+      }
+    ]
+  },
+
+      'conversie-optimalisatie-specialist': {
+      title: "Conversie optimalisatie in 4 stappen",
+      subtitle: "Van data-analyse tot bewezen resultaten. Onze methodische aanpak zorgt voor meetbare verbetering van je conversieratio.",
+      steps: [
+        {
+          number: '01',
+          title: 'Analyse',
+          description: 'Met heatmaps, session recordings en funnel-analyse ontdekken we waar bezoekers afhaken en waarom ze niet converteren.'
+        },
+        {
+          number: '02',
+          title: 'Strategie',
+          description: 'Op basis van data stellen we een verbeterplan op. We prioriteren op impact zodat je budget maximaal rendeert.'
+        },
+        {
+          number: '03',
+          title: 'A/B Testing',
+          description: 'Elke aanpassing wordt gecontroleerd getest. Zo weten we zeker wat werkt voordat we het definitief doorvoeren.'
+        },
+        {
+          number: '04',
+          title: 'Implementatie',
+          description: 'Winnende varianten worden doorgevoerd. We blijven monitoren en optimaliseren voor continue conversieverbetering.'
+        }
+      ]
+    }
 };
 
 export default function ProcessSection({ 

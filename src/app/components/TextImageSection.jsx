@@ -7,6 +7,7 @@ import { ArrowDown } from 'lucide-react';
 
 export default function TextImageSection({ 
   layout = 'image-left', // 'image-left' | 'image-right' | 'text-only'
+  subheading = null, // Badge text above title
   title, 
   content, 
   image, 
@@ -46,6 +47,14 @@ export default function TextImageSection({
 
   const bgClass = backgroundClasses[background] || backgroundClasses.white;
   
+  // Blob kleur aanpassen op basis van achtergrond
+  const blobColors = {
+    white: '#F5F3EE',   // Beige op wit
+    gray: '#FFFFFF',     // Wit op grijs
+    beige: '#FFFFFF'     // Wit op beige
+  };
+  const blobColor = blobColors[background] || blobColors.white;
+  
   // Check if text-only layout
   const isTextOnly = layout === 'text-only';
   
@@ -76,6 +85,13 @@ export default function TextImageSection({
               
               {/* Decorative dot */}
               <div className="absolute -left-[10px] top-0 w-4 h-4 rounded-full bg-[#376eb5]/20 border-2 border-[#376eb5]/40" />
+              
+              {/* Subheading Badge */}
+              {subheading && (
+                <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full mb-4">
+                  {subheading}
+                </span>
+              )}
               
               {/* Title */}
               {title && (
@@ -120,9 +136,16 @@ export default function TextImageSection({
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             
+            {/* Subheading Badge */}
+            {subheading && (
+              <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full">
+                {subheading}
+              </span>
+            )}
+            
             {/* Title */}
             {title && (
-              <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-[1.1] tracking-tight">
+              <h2 className={`font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-[1.1] tracking-tight ${subheading ? '-mt-2' : ''}`}>
                 {title}
               </h2>
             )}
@@ -148,12 +171,12 @@ export default function TextImageSection({
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             
-            {/* Blob - only for photo variant */}
+            {/* Blob - only for photo variant, kleur afhankelijk van achtergrond */}
             {!isInfographic && (
               <div 
                 className="hidden lg:block absolute"
                 style={{
-                  background: '#F5F3EE',
+                  background: blobColor,
                   borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
                   transform: 'rotate(-5deg)',
                   top: '5%',

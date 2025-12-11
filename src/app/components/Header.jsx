@@ -9,7 +9,7 @@ export default function Header({ services = [] }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
-  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false); // NEW
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,14 +59,17 @@ export default function Header({ services = [] }) {
   ];
 
   // Transform WordPress data naar component format
+  // Filter op showInMenu - alleen tonen als expliciet true
   const displayServices = services.length > 0 
-    ? services.map(service => ({
-        title: service.title,
-        subtitle: service.serviceDetails?.subtitle || '',
-        description: service.serviceDetails?.description || '',
-        uri: service.uri,
-        featured: service.serviceDetails?.featured || false,
-      }))
+    ? services
+        .filter(service => service.serviceDetails?.showInMenu === true)
+        .map(service => ({
+          title: service.title,
+          subtitle: service.serviceDetails?.subtitle || '',
+          description: service.serviceDetails?.description || '',
+          uri: service.uri,
+          featured: service.serviceDetails?.featured || false,
+        }))
     : defaultServices;
 
   return (
@@ -241,7 +244,7 @@ export default function Header({ services = [] }) {
           </button>
         </div>
 
-        {/* Mobile Menu - UPDATED: COLLAPSIBLE */}
+        {/* Mobile Menu - COLLAPSIBLE */}
         {isMobileMenuOpen && (
           <div className="lg:hidden mt-6 pb-6 border-t border-gray-200 pt-6">
             <div className="flex flex-col gap-4">
