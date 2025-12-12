@@ -1,7 +1,22 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 function TeamSection({ title, subtitle, description, teamMembers }) {
+  const router = useRouter();
+
+  const handleCardClick = (detailurl) => {
+    if (!detailurl) return;
+    
+    // Externe URL (begint met http)
+    if (detailurl.startsWith('http')) {
+      window.open(detailurl, '_blank', 'noopener,noreferrer');
+    } else {
+      // Interne URL - gebruik Next.js router
+      router.push(detailurl);
+    }
+  };
+
   return (
     <section className="py-20 lg:py-24 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,19 +44,14 @@ function TeamSection({ title, subtitle, description, teamMembers }) {
         {/* Team Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 max-w-6xl mx-auto">
           {teamMembers.map((member, index) => {
+            // Gebruik lowercase detailurl (zoals WPGraphQL het teruggeeft)
+            const hasLink = member.detailurl;
+            
             return (
               <div 
                 key={index}
-                onClick={() => {
-                  if (member.detailUrl) {
-                    if (member.detailUrl.startsWith('http')) {
-                      window.open(member.detailUrl, '_blank', 'noopener,noreferrer');
-                    } else {
-                      window.location.href = member.detailUrl;
-                    }
-                  }
-                }}
-                className={`text-center ${member.detailUrl ? 'cursor-pointer group' : ''}`}
+                onClick={() => handleCardClick(member.detailurl)}
+                className={`text-center ${hasLink ? 'cursor-pointer group' : ''}`}
               >
                 <div>
                   {/* Photo */}
@@ -118,14 +128,6 @@ function TeamSection({ title, subtitle, description, teamMembers }) {
           })}
         </div>
       </div>
-      
-      {/* Shine animation CSS */}
-      <style jsx>{`
-        @keyframes shine {
-          0%, 100% { transform: translateX(-100%); }
-          50% { transform: translateX(100%); }
-        }
-      `}</style>
     </section>
   );
 }

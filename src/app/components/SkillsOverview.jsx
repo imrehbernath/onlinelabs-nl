@@ -36,7 +36,7 @@ export default function SkillsOverview({ services = [] }) {
     // Traffic generatie
     { 
       slug: 'seo-specialist', 
-      title: 'SEO Specialist',
+      title: 'SEO specialist',
       uri: '/skills/seo-specialist',
       serviceDetails: { 
         subtitle: 'Organisch zoekverkeer voor duurzame groei',
@@ -45,7 +45,7 @@ export default function SkillsOverview({ services = [] }) {
     },
     { 
       slug: 'geo-optimalisatie', 
-      title: 'GEO Optimalisatie',
+      title: 'GEO optimalisatie',
       uri: '/skills/geo-optimalisatie',
       serviceDetails: { 
         subtitle: 'Zichtbaar in AI-antwoorden van ChatGPT & meer',
@@ -54,7 +54,7 @@ export default function SkillsOverview({ services = [] }) {
     },
     { 
       slug: 'online-adverteren', 
-      title: 'Online Adverteren',
+      title: 'Online adverteren',
       uri: '/skills/online-adverteren',
       serviceDetails: { 
         subtitle: 'Google Ads & Social Media campagnes',
@@ -64,7 +64,7 @@ export default function SkillsOverview({ services = [] }) {
     // Website optimalisatie
     { 
       slug: 'website-laten-maken', 
-      title: 'Website Laten Maken',
+      title: 'Website laten maken',
       uri: '/skills/website-laten-maken',
       serviceDetails: { 
         subtitle: 'Unieke websites die inspireren en converteren',
@@ -73,7 +73,7 @@ export default function SkillsOverview({ services = [] }) {
     },
     { 
       slug: 'website-snelheid-optimalisatie', 
-      title: 'Website Snelheid Optimalisatie',
+      title: 'Website snelheid optimalisatie',
       uri: '/skills/website-snelheid-optimalisatie',
       serviceDetails: { 
         subtitle: 'Core Web Vitals & Performance',
@@ -81,9 +81,9 @@ export default function SkillsOverview({ services = [] }) {
       }
     },
     { 
-      slug: 'conversie-optimalisatie', 
-      title: 'Conversie Optimalisatie',
-      uri: '/skills/conversie-optimalisatie',
+      slug: 'conversie-optimalisatie-optimalisatie', 
+      title: 'Conversie optimalisatie',
+      uri: '/skills/conversie-optimalisatie-optimalisatie',
       serviceDetails: { 
         subtitle: 'Meer resultaat uit elke bezoeker',
         description: 'Zet meer bezoekers om in klanten met data-driven CRO. Wij analyseren, testen en optimaliseren voor maximale conversieratio.'

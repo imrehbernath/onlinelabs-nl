@@ -47,7 +47,7 @@ async function getOverOnsData() {
               role
               description
               linkedinUrl
-              detailUrl
+              detailurl
               photo {
                 node {
                   sourceUrl
