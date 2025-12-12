@@ -24,17 +24,17 @@ export default function Footer({ footerData }) {
     description: 'OnlineLabs helpt bedrijven groeien met slimme online marketing strategieën sinds 2008.',
     
     services: [
-      { title: 'SEO Specialist', url: '/skills/seo-specialist' },
-      { title: 'GEO Optimalisatie', url: '/skills/geo-optimalisatie' },
-      { title: 'Online Adverteren', url: '/skills/online-adverteren' },
-      { title: 'Website Laten Maken', url: '/skills/website-laten-maken' },
-      { title: 'Website Snelheid Optimalisatie', url: '/skills/website-snelheid-optimalisatie' },
-      { title: 'AI Zichtbaarheid (AEO)', url: '/skills/ai-zichtbaarheid-aeo' },
+      { title: 'SEO specialist', url: '/skills/seo-specialist' },
+      { title: 'GEO optimalisatie', url: '/skills/geo-optimalisatie' },
+      { title: 'Online adverteren', url: '/skills/online-adverteren' },
+      { title: 'Website laten maken', url: '/skills/website-laten-maken' },
+      { title: 'Website snelheid optimalisatie', url: '/skills/website-snelheid-optimalisatie' },
+      { title: 'Conversie optimalisatie', url: '/skills/conversie-optimalisatie-specialist' },
     ],
     
     company: [
-      { title: 'Over Ons', url: '/over-ons' },
-      { title: 'Ons Werk', url: '/ons-werk' },
+      { title: 'Over ons', url: '/over-ons' },
+      { title: 'Ons werk', url: '/ons-werk' },
       { title: 'Skills', url: '/skills' },
       { title: 'Contact', url: '/contact' },
     ],

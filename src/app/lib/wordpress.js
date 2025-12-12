@@ -249,9 +249,9 @@ export async function getServiceBySlug(slug) {
                 }
               }
               ctaText
-              ctaUrl
+              ctaurl
               secondaryCtaText
-              secondaryCtaUrl
+              secondaryctaurl
             }
             pageSections {
               __typename
@@ -365,6 +365,23 @@ export async function getServiceBySlug(slug) {
                 subtitle
                 limit
                 testimonialsBackground: background
+              }
+              ... on ServiceDetailsPageSectionsAiResultsGalleryLayout {
+                title
+                subtitle
+                intro
+                aiResultsBackground: background
+                aiResults {
+                  title
+                  prompt
+                  chatgpturl
+                  image {
+                    node {
+                      sourceUrl
+                      altText
+                    }
+                  }
+                }
               }
             }
           }

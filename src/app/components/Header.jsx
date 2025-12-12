@@ -20,7 +20,9 @@ export default function Header({ services = [] }) {
   }, []);
 
   // Fallback services als WordPress niet beschikbaar
+  // Rij 1: Traffic generatie | Rij 2: Website optimalisatie
   const defaultServices = [
+    // Rij 1: Hoe krijg je bezoekers
     {
       title: 'SEO & vindbaarheid',
       subtitle: 'SEO specialisten',
@@ -36,6 +38,14 @@ export default function Header({ services = [] }) {
       featured: true,
     },
     {
+      title: 'Online adverteren',
+      subtitle: 'Online Ads experts',
+      description: 'Zichtbaar via Google Ads en social media.',
+      uri: '/skills/online-adverteren',
+      featured: false,
+    },
+    // Rij 2: Wat doe je met bezoekers
+    {
       title: 'Webdesign & UX',
       subtitle: 'Webdesign specialisten',
       description: 'Scoort in Google, AI en overtuigt jouw klant.',
@@ -50,10 +60,10 @@ export default function Header({ services = [] }) {
       featured: false,
     },
     {
-      title: 'Online adverteren',
-      subtitle: 'Online Ads experts',
-      description: 'Zichtbaar via Google Ads en social media.',
-      uri: '/skills/online-adverteren',
+      title: 'Conversie optimalisatie',
+      subtitle: 'CRO specialisten',
+      description: 'Meer resultaat uit elke bezoeker.',
+      uri: '/skills/conversie-optimalisatie',
       featured: false,
     },
   ];
@@ -114,20 +124,20 @@ export default function Header({ services = [] }) {
 
               {/* Mega Menu Dropdown */}
               {isMegaMenuOpen && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-screen max-w-6xl">
+                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-screen max-w-4xl">
                   <div className="bg-white rounded-2xl shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-gray-100 overflow-hidden">
                     
                     {/* Header */}
-                    <div className="relative px-12 pt-10 pb-6 bg-gradient-to-br from-gray-50 via-white to-gray-50/30">
-                      <span className="block text-3xl font-bold text-gray-900 font-serif tracking-tight">
+                    <div className="relative px-10 pt-8 pb-5 bg-gradient-to-br from-gray-50 via-white to-gray-50/30">
+                      <span className="block text-2xl font-bold text-gray-900 font-serif tracking-tight">
                         Wat we doen
                       </span>
-                      <div className="absolute bottom-0 left-12 right-12 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+                      <div className="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
                     </div>
 
-                    {/* Services Grid */}
-                    <div className="px-12 py-10 bg-gradient-to-b from-white via-gray-50/20 to-white">
-                      <div className="grid grid-cols-5 gap-8">
+                    {/* Services Grid - 3 kolommen, 2 rijen */}
+                    <div className="px-10 py-8 bg-gradient-to-b from-white via-gray-50/20 to-white">
+                      <div className="grid grid-cols-3 gap-6">
                         {displayServices.map((service) => (
                           <Link
                             key={service.uri}
@@ -145,14 +155,14 @@ export default function Header({ services = [] }) {
                             
                             <div className="relative">
                               {/* Title with underline */}
-                              <div className={`pb-3 mb-4 border-b-2 transition-all duration-300 ${
+                              <div className={`pb-2 mb-3 border-b-2 transition-all duration-300 ${
                                 service.featured 
                                   ? 'border-primary' 
                                   : 'border-gray-200 group-hover:border-primary'
                               }`}>
                                 <span className={`block leading-tight transition-colors duration-300 ${
                                   service.featured
-                                    ? 'font-extrabold text-primary text-[17px]'
+                                    ? 'font-extrabold text-primary text-base'
                                     : 'font-bold text-gray-900 text-base group-hover:text-primary'
                                 }`}>
                                   {service.title}
@@ -160,12 +170,12 @@ export default function Header({ services = [] }) {
                               </div>
                               
                               {/* Subtitle */}
-                              <p className="text-base text-gray-700 font-semibold mb-3 tracking-tight">
+                              <p className="text-sm text-gray-700 font-semibold mb-2 tracking-tight">
                                 {service.subtitle}
                               </p>
                               
                               {/* Description */}
-                              <p className="text-base text-gray-600 leading-relaxed">
+                              <p className="text-sm text-gray-600 leading-relaxed">
                                 {service.description}
                               </p>
                             </div>
@@ -174,7 +184,7 @@ export default function Header({ services = [] }) {
                       </div>
 
                       {/* Footer Link */}
-                      <div className="mt-10 pt-8 border-t border-gray-100 flex items-center justify-between">
+                      <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
                         <p className="text-sm text-gray-500 font-medium">
                           Meer weten over onze aanpak en werkwijze?
                         </p>

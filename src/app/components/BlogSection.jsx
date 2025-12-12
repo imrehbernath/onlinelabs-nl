@@ -2,16 +2,27 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
+
+const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
+
+// Author avatar mapping
+const authorAvatars = {
+  'Colin Dijkstra': `${WP_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`,
+  'Adrian Enders': `${WP_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`,
+  'Sanne Verschoor': `${WP_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`,
+  'Imre Bernáth': 'https://gravatar.com/avatar/35c26275319f1c247e76cd36518ee34a?size=128',
+  'Imre Bernath': 'https://gravatar.com/avatar/35c26275319f1c247e76cd36518ee34a?size=128',
+  'Zara Fung': `${WP_URL}/wp-content/uploads/2025/11/Zara-Fung.webp`,
+  'Elsa Heijnen': `${WP_URL}/wp-content/uploads/2025/11/Elsa-Heijnen.webp`,
+  'Nikky de Ridder': `${WP_URL}/wp-content/uploads/2025/11/Nikky-de-Ridder.webp`,
+};
 
 /**
  * BlogSection Component - 3 Equal Columns
  * 
  * Clean, symmetrical 3-column blog grid
  * All posts get equal visual weight
- * 
- * Props:
- * - posts: Array of blog post objects from WordPress
- * - title: Section title (default: "Laatste Inzichten")
  */
 export default function BlogSection({ posts = [], title = "Laatste Inzichten" }) {
   
@@ -32,6 +43,44 @@ export default function BlogSection({ posts = [], title = "Laatste Inzichten" })
     if (diffInDays < 7) return `${diffInDays} dagen geleden`;
     if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} ${Math.floor(diffInDays / 7) === 1 ? 'week' : 'weken'} geleden`;
     return date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+  };
+
+  // Get initials from name
+  const getInitials = (name) => {
+    if (!name) return 'OL';
+    return name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+  };
+
+  // Avatar component with fallback
+  const AuthorAvatar = ({ author }) => {
+    const [imageError, setImageError] = useState(false);
+    
+    // Support both data structures: author.name OR author.node.name
+    const authorName = author?.name || author?.node?.name;
+    
+    // Gebruik mapping als beschikbaar, anders fallback naar author.avatar
+    const avatarUrl = authorAvatars[authorName] || author?.avatar || author?.node?.avatar?.url;
+    const hasValidAvatar = avatarUrl && !imageError;
+
+    if (hasValidAvatar) {
+      return (
+        <Image
+          src={avatarUrl}
+          alt={authorName || 'Auteur'}
+          width={40}
+          height={40}
+          className="rounded-full ring-2 ring-gray-100 flex-shrink-0"
+          onError={() => setImageError(true)}
+        />
+      );
+    }
+
+    // Fallback: initialen
+    return (
+      <div className="w-10 h-10 rounded-full ring-2 ring-gray-100 bg-primary/10 text-primary font-bold text-sm flex items-center justify-center flex-shrink-0">
+        {getInitials(authorName)}
+      </div>
+    );
   };
 
   // Blog Card Component - Equal size for all
@@ -81,17 +130,11 @@ export default function BlogSection({ posts = [], title = "Laatste Inzichten" })
 
         {/* Author + Meta */}
         <div className="flex items-center gap-3 pt-4 border-t border-gray-100 mt-auto">
-          {post.author?.avatar && (
-            <Image
-              src={post.author.avatar}
-              alt={post.author.name}
-              width={40}
-              height={40}
-              className="rounded-full ring-2 ring-gray-100"
-            />
-          )}
+          <AuthorAvatar author={post.author} />
           <div className="flex-1 min-w-0">
-            <div className="text-sm font-semibold text-gray-900 truncate">{post.author?.name}</div>
+            <div className="text-sm font-semibold text-gray-900 truncate">
+              {post.author?.name || post.author?.node?.name || 'OnlineLabs'}
+            </div>
             <div className="text-xs text-gray-500">{getRelativeTime(post.date)} • {post.readingTime || 5} min leestijd</div>
           </div>
           

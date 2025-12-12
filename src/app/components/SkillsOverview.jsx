@@ -18,12 +18,8 @@ export default function SkillsOverview({ services = [] }) {
       tagline: 'Websites die converteren sinds 2001'
     },
     'website-snelheid-optimalisatie': {
-      labName: 'WebLab',
+      labName: 'SpeedLab',
       tagline: 'Performance & Core Web Vitals'
-    },
-    'website-optimalisatie': {
-      labName: 'WebLab',
-      tagline: 'Snelheid, UX & techniek'
     },
     'online-adverteren': {
       labName: 'AdLab',
@@ -31,16 +27,13 @@ export default function SkillsOverview({ services = [] }) {
     },
     'conversie-optimalisatie': {
       labName: 'CROLab',
-      tagline: 'Meer conversies, meer omzet'
-    },
-    'ai-zichtbaarheid': {
-      labName: 'AILab',
-      tagline: 'AEO & Answer Engine Optimization'
+      tagline: 'Data-driven conversie experts'
     }
   };
 
-  // TEMP: Force fallback for design phase - remove when WordPress is ready
+  // 6 core services in logische volgorde
   const displayServices = [
+    // Traffic generatie
     { 
       slug: 'seo-specialist', 
       title: 'SEO Specialist',
@@ -52,25 +45,26 @@ export default function SkillsOverview({ services = [] }) {
     },
     { 
       slug: 'geo-optimalisatie', 
-      title: 'GEO-optimalisatie',
+      title: 'GEO Optimalisatie',
       uri: '/skills/geo-optimalisatie',
       serviceDetails: { 
-        subtitle: 'Zichtbaar in AI-resultaten én bronnen',
-        description: 'Wij zorgen dat jouw merk wordt herkend, genoemd én gelinkt in AI-antwoorden van ChatGPT, Gemini en Bing. Voor meer zichtbaarheid – ook zonder zoekopdracht.'
+        subtitle: 'Zichtbaar in AI-antwoorden van ChatGPT & meer',
+        description: 'Wij zorgen dat jouw merk wordt herkend, genoemd én gelinkt in AI-antwoorden van ChatGPT, Perplexity, Gemini en Bing Copilot.'
       }
     },
     { 
-      slug: 'ai-zichtbaarheid', 
-      title: 'AI Zichtbaarheid & AEO',
-      uri: '/skills/ai-zichtbaarheid',
+      slug: 'online-adverteren', 
+      title: 'Online Adverteren',
+      uri: '/skills/online-adverteren',
       serviceDetails: { 
-        subtitle: 'Answer Engine Optimization',
-        description: 'Word zichtbaar in AI-antwoorden van ChatGPT, Perplexity en Gemini. Wij zorgen dat jouw merk herkend en genoemd wordt via gestructureerde content, slimme strategie en technische optimalisatie.'
+        subtitle: 'Google Ads & Social Media campagnes',
+        description: 'Bereik jouw doelgroep met slimme campagnes die scoren. Wij zorgen voor meer zichtbaarheid, meer leads en maximaal rendement.'
       }
     },
+    // Website optimalisatie
     { 
       slug: 'website-laten-maken', 
-      title: 'Website laten maken',
+      title: 'Website Laten Maken',
       uri: '/skills/website-laten-maken',
       serviceDetails: { 
         subtitle: 'Unieke websites die inspireren en converteren',
@@ -78,39 +72,21 @@ export default function SkillsOverview({ services = [] }) {
       }
     },
     { 
-      slug: 'website-optimalisatie', 
-      title: 'Website optimalisatie',
-      uri: '/skills/website-optimalisatie',
-      serviceDetails: { 
-        subtitle: 'Snel, soepel en succesvol',
-        description: 'Haal meer uit je website met een optimale snelheid en gebruiksvriendelijkheid. Wij maken jouw website een krachtig marketingmiddel.'
-      }
-    },
-    { 
       slug: 'website-snelheid-optimalisatie', 
-      title: 'Website snelheid optimalisatie',
+      title: 'Website Snelheid Optimalisatie',
       uri: '/skills/website-snelheid-optimalisatie',
       serviceDetails: { 
         subtitle: 'Core Web Vitals & Performance',
-        description: 'Maak indruk met een razendsnelle website die scoort bij bezoekers én zoekmachines. Wij verbeteren jouw laadtijden en prestaties voor blijvende impact.'
+        description: 'Een snelle website is cruciaal voor gebruikerservaring én Google rankings. Wij optimaliseren eerst de bron, dan caching voor maximale snelheid.'
       }
     },
     { 
       slug: 'conversie-optimalisatie', 
-      title: 'Conversie optimalisatie',
+      title: 'Conversie Optimalisatie',
       uri: '/skills/conversie-optimalisatie',
       serviceDetails: { 
-        subtitle: 'CRO Specialist',
-        description: 'Zet meer bezoekers om in klanten met een website die converteert. Wij optimaliseren jouw site voor maximale impact en rendement.'
-      }
-    },
-    { 
-      slug: 'online-adverteren', 
-      title: 'Online adverteren',
-      uri: '/skills/online-adverteren',
-      serviceDetails: { 
-        subtitle: 'Google Ads met impact',
-        description: 'Bereik jouw doelgroep met slimme campagnes die scoren. Wij zorgen voor meer zichtbaarheid, meer leads en maximaal rendement.'
+        subtitle: 'Meer resultaat uit elke bezoeker',
+        description: 'Zet meer bezoekers om in klanten met data-driven CRO. Wij analyseren, testen en optimaliseren voor maximale conversieratio.'
       }
     }
   ];
@@ -262,23 +238,35 @@ export default function SkillsOverview({ services = [] }) {
                 </div>
               </div>
 
-              {/* CTA Card */}
-              <div className="bg-gray-900 rounded-xl p-8 text-white">
-                <h4 className="font-serif text-xl font-bold mb-3">
-                  Benieuwd wat we kunnen betekenen?
-                </h4>
-                <p className="text-base text-gray-300 mb-6">
-                  Plan een vrijblijvend gesprek en ontdek de mogelijkheden voor jouw online groei.
-                </p>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold text-base hover:bg-gray-100 transition-colors duration-300"
-                >
-                  Neem contact op
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
+              {/* CTA Card - Gradient design */}
+              <div className="relative overflow-hidden rounded-xl p-8 bg-gradient-to-br from-[#376eb5] via-[#2d5a94] to-[#1e3a5f]">
+                {/* Decorative elements */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+                
+                <div className="relative">
+                  <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-sm text-white/90 mb-4">
+                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                    Gratis adviesgesprek
+                  </div>
+                  
+                  <h4 className="font-serif text-xl font-bold text-white mb-3">
+                    Klaar om te groeien?
+                  </h4>
+                  <p className="text-base text-white/80 mb-6 leading-relaxed">
+                    Plan een vrijblijvend gesprek en ontdek welke strategie het beste past bij jouw doelen.
+                  </p>
+                  
+                  <Link
+                    href="/contact"
+                    className="group inline-flex items-center gap-2 bg-white text-[#376eb5] px-6 py-3 rounded-lg font-semibold text-base hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  >
+                    Neem contact op
+                    <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </div>
               </div>
 
             </div>

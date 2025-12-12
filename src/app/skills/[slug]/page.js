@@ -10,6 +10,7 @@ import PricingSection from '@/app/components/PricingSection';
 import TechStackSection from '@/app/components/TechStackSection';
 import WebsitesGallery from '@/app/components/WebsitesGallery';
 import TestimonialsSection from '@/app/components/TestimonialsSection';
+import AIresultsGallery from '@/app/components/AIresultsGallery';
 import { notFound } from 'next/navigation';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
@@ -312,9 +313,9 @@ export default async function ServiceDetailPage({ params }) {
       subtitle: heroSection.subtitle || '',
       description: heroSection.description || '',
       ctaText: heroSection.ctaText || 'Neem contact op',
-      ctaUrl: heroSection.ctaUrl || '/contact',
+      ctaUrl: heroSection.ctaurl || '/contact',
       secondaryCtaText: heroSection.secondaryCtaText || '',
-      secondaryCtaUrl: heroSection.secondaryCtaUrl || '',
+      secondaryCtaUrl: heroSection.secondaryctaurl || '',
       serviceColor: 'green'
     };
     pageSections = service.serviceDetails.pageSections || [];
@@ -598,6 +599,32 @@ export default async function ServiceDetailPage({ params }) {
                 title={section.title}
                 subtitle={section.subtitle}
                 background={getBackgroundValue(section, 'testimonialsBackground', 'gray')}
+              />
+            );
+          }
+
+          // AI Results Gallery Section
+          if (sectionType === 'ServiceDetailsPageSectionsAiResultsGalleryLayout' || sectionType === 'ai_results_gallery') {
+            // Only render if we have results
+            if (!section.aiResults || section.aiResults.length === 0) {
+              return null;
+            }
+            return (
+              <AIresultsGallery
+                key={index}
+                title={section.title || 'Onze klanten in ChatGPT'}
+                subtitle={section.subtitle || 'Resultaten'}
+                intro={section.intro || 'Dit is waar we voor werken: jouw merk als aanbevolen antwoord in AI.'}
+                results={section.aiResults.map((result, idx) => ({
+                  title: result.title || '',
+                  prompt: result.prompt || '',
+                  chatgptUrl: result.chatgpturl || '',
+                  image: result.image?.node ? {
+                    sourceUrl: result.image.node.sourceUrl,
+                    altText: result.image.node.altText || result.title
+                  } : null
+                }))}
+                background={getBackgroundValue(section, 'aiResultsBackground', 'beige')}
               />
             );
           }
