@@ -114,7 +114,7 @@ export default function ServicesSection({ services = [] }) {
             {/* Footer link */}
             <div className="mt-12 pl-8">
               <Link
-                href="/diensten"
+                href="/skills"
                 className="group inline-flex items-center gap-2 text-[#376eb5] hover:text-[#2d5a94] font-medium text-base transition-colors duration-300"
               >
                 Bekijk alle diensten

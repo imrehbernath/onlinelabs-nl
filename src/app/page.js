@@ -105,7 +105,7 @@ export default async function Home() {
         <AboutSection 
           aboutData={aboutData}
           imageCaption='Sanne Verschoor – Webdesigner & developer, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>'
-          imageCaptionLink="/over-ons/sanne-verschoor"
+          imageCaptionLink="/auteur/sanne-verschoor"
         />
       )}
 

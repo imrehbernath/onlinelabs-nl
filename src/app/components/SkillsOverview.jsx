@@ -83,7 +83,7 @@ export default function SkillsOverview({ services = [] }) {
     { 
       slug: 'conversie-optimalisatie-optimalisatie', 
       title: 'Conversie optimalisatie',
-      uri: '/skills/conversie-optimalisatie-optimalisatie',
+      uri: '/skills/conversie-optimalisatie-specialist',
       serviceDetails: { 
         subtitle: 'Meer resultaat uit elke bezoeker',
         description: 'Zet meer bezoekers om in klanten met data-driven CRO. Wij analyseren, testen en optimaliseren voor maximale conversieratio.'

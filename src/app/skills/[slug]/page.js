@@ -105,7 +105,7 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
           altText: 'Imre Bernáth - SEO & AI visibility specialist bij OnlineLabs Amsterdam'
         },
         imageCaption: 'Imre Bernáth – SEO & AI visibility specialist, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>',
-        imageCaptionLink: '/over-ons/imre-bernath',
+        imageCaptionLink: '/auteur/imre-bernath',
         serviceColor: 'green',
         background: 'beige'
       },

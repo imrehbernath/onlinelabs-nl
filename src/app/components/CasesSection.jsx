@@ -125,7 +125,7 @@ export default function CasesSection({ cases, title = "Projecten waar we trots o
         {/* Optional: View All Cases CTA */}
         <div className="text-center mt-16 lg:mt-20">
           <Link
-            href="/cases"
+            href="/ons-werk"
             className="inline-flex items-center gap-2 px-8 py-4 bg-[#376eb5] text-white font-medium rounded-lg hover:bg-[#2d5a94] transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             Bekijk alle projecten
