@@ -80,7 +80,7 @@ export default function GEOToolSection({ background = 'beige' }) {
                         ? 'bg-[#376eb5] text-white'
                         : num <= 2
                         ? 'bg-gray-200 text-gray-600'
-                        : 'bg-gray-100 text-gray-400'
+                        : 'bg-gray-100 text-gray-500'
                     }`}
                   >
                     {num}. {label}

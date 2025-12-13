@@ -278,14 +278,14 @@ export default function ServiceHero({
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center relative">
           
-          {/* Badge */}
+        {/* Badge */}
           {subtitle && (
             <div 
               className={`hero-reveal ${isLoaded ? 'visible' : ''}`}
               style={{ transitionDelay: '0s' }}
             >
               <div 
-                className="badge-glow inline-flex items-center gap-2 px-4 py-2 rounded-full text-primary font-semibold text-sm tracking-widest uppercase mb-8 lg:mb-6"
+                className="badge-glow inline-flex items-center gap-2 px-4 py-2 rounded-full text-[#2d5a94] font-semibold text-sm tracking-widest uppercase mb-8 lg:mb-6"
                 style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
