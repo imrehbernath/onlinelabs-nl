@@ -141,6 +141,36 @@ function extractFaqsFromJsonLd(jsonLdRaw) {
   return [];
 }
 
+// Helper: Clean JSON-LD - remove canonical to avoid duplicate signals
+function cleanJsonLd(jsonLdRaw) {
+  if (!jsonLdRaw) return null;
+  
+  try {
+    const jsonContent = jsonLdRaw
+      .replace(/<script[^>]*>/gi, '')
+      .replace(/<\/script>/gi, '')
+      .trim();
+    
+    const schema = JSON.parse(jsonContent);
+    
+    // Remove canonical URLs from JSON-LD to avoid SF detecting as "outside head"
+    if (schema['@graph']) {
+      schema['@graph'] = schema['@graph'].map(item => {
+        // Remove url/mainEntityOfPage that duplicates canonical
+        if (item['@type'] === 'WebPage') {
+          delete item.url;
+        }
+        return item;
+      });
+    }
+    
+    return JSON.stringify(schema);
+  } catch (e) {
+    console.error('JSON-LD clean error:', e.message);
+    return jsonLdRaw;
+  }
+}
+
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const post = await getPost(resolvedParams.slug);
@@ -232,16 +262,14 @@ export default async function BlogPost({ params }) {
   const authorSlug = getAuthorSlug(post.author?.node?.name);
   const authorAvatar = getAuthorAvatar(post.author?.node?.name);
 
-  // Process JSON-LD: replace WordPress URLs with production URLs
+  // Process JSON-LD: replace WordPress URLs and clean canonical references
   const processedJsonLd = post.seo?.jsonLd?.raw 
-    ? replaceWpUrls(post.seo.jsonLd.raw)
-        .replace(/<script[^>]*>/gi, '')
-        .replace(/<\/script>/gi, '')
-        .trim()
+    ? cleanJsonLd(replaceWpUrls(post.seo.jsonLd.raw))
     : null;
 
+  // Use fragment <> instead of <main> - layout.js already provides <main>
   return (
-    <main>
+    <>
       {/* Reading Progress Bar */}
       <ReadingProgressBar />
 
@@ -440,7 +468,7 @@ export default async function BlogPost({ params }) {
           dangerouslySetInnerHTML={{ __html: processedJsonLd }}
         />
       )}
-    </main>
+    </>
   );
 }
 
