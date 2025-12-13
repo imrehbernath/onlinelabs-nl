@@ -9,7 +9,6 @@ function CaseHero({ caseData }) {
     title,
     featuredImage,
     clientName,
-    clientLogo,
     excerpt,
     metrics,
     servicesUsed = [],
@@ -46,19 +45,6 @@ function CaseHero({ caseData }) {
           
           {/* Left Column - Content */}
           <div className="space-y-6">
-            
-            {/* Client Logo */}
-            {clientLogo?.sourceUrl && (
-              <div className="relative w-32 h-10 lg:w-40 lg:h-12">
-                <Image
-                  src={clientLogo.sourceUrl}
-                  alt={clientName || 'Client logo'}
-                  fill
-                  sizes="160px"
-                  className="object-contain object-left"
-                />
-              </div>
-            )}
 
             {/* Badge */}
             <div 

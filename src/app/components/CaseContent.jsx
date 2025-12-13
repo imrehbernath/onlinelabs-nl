@@ -8,7 +8,6 @@ function CaseContent({ caseData }) {
   const {
     fullCaseStudy,
     clientName,
-    clientLogo,
     servicesUsed = [],
     projectDate,
     websiteUrl,
@@ -171,26 +170,12 @@ function CaseContent({ caseData }) {
                 </p>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center w-full px-6 py-3 bg-white text-[#376eb5] font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                  className="inline-flex items-center justify-center w-full px-6 py-4 bg-white text-[#376eb5] font-semibold rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
                 >
                   Neem contact op
                 </Link>
               </div>
 
-              {/* Client Logo (subtle) */}
-              {clientLogo?.sourceUrl && (
-                <div className="pt-6 border-t border-gray-200">
-                  <div className="relative w-32 h-12 mx-auto opacity-40 grayscale hover:opacity-70 hover:grayscale-0 transition-all duration-300">
-                    <Image
-                      src={clientLogo.sourceUrl}
-                      alt={clientName || 'Client logo'}
-                      fill
-                      sizes="128px"
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-              )}
             </div>
           </div>
 

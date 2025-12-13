@@ -29,7 +29,6 @@ export default function CasesSection({ cases, title = "Projecten waar we trots o
         <div className="space-y-16 lg:space-y-24">
           {cases.map((caseItem, index) => {
             const isEven = index % 2 === 1;
-            const isHovered = hoveredCase === index;
 
             return (
               <div
@@ -64,23 +63,6 @@ export default function CasesSection({ cases, title = "Projecten waar we trots o
 
                   {/* Content Side */}
                   <div className={`${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
-                    {/* Client Logo */}
-                    {caseItem.clientLogo?.sourceUrl && (
-                      <div className="mb-6">
-                        <div className="relative w-32 h-12">
-                          <Image
-                            src={caseItem.clientLogo.sourceUrl}
-                            alt={caseItem.clientName || caseItem.title}
-                            fill
-                            sizes="128px"
-                            className={`object-contain transition-all duration-500 ${
-                              isHovered ? 'grayscale-0 opacity-100' : 'grayscale opacity-60'
-                            }`}
-                          />
-                        </div>
-                      </div>
-                    )}
-
                     {/* Title */}
                     <h3 className="font-serif text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
                       {caseItem.title}
