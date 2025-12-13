@@ -1,0 +1,13 @@
+# Modern browsers only - no legacy polyfills needed
+# Saves ~14KB by removing Array.at, Object.hasOwn, etc.
+
+chrome >= 90
+firefox >= 90
+safari >= 14
+edge >= 90
+ios >= 14
+
+# Explicitly exclude legacy browsers
+not ie 11
+not op_mini all
+not dead

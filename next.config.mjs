@@ -48,7 +48,9 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-
+  experimental: {
+  optimizePackageImports: ['lucide-react'],
+  },
   // Redirect www to non-www
   async redirects() {
     return [
@@ -90,7 +92,7 @@ const nextConfig = {
           },
           {
             key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin'
+            value: 'strict-origin-when-cross-origin'
           },
           {
             key: 'Cache-Control',

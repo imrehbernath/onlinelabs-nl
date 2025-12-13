@@ -92,7 +92,7 @@ export default function Header({ services = [] }) {
     >
       <nav className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo - with priority for LCP */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative w-44 h-11">
               <Image
@@ -101,6 +101,7 @@ export default function Header({ services = [] }) {
                 fill
                 className="object-contain transition-opacity duration-200 group-hover:opacity-80"
                 priority
+                fetchPriority="high"
               />
             </div>
           </Link>
