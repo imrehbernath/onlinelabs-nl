@@ -18,6 +18,7 @@ export default function Footer({ footerData }) {
   const currentYear = new Date().getFullYear();
 
   // Default data if WordPress not configured yet
+  // FIX: Changed conversie-optimalisatie-specialist to conversie-optimalisatie
   const footer = footerData || {
     companyName: 'OnlineLabs',
     tagline: 'Dé expert in online groei en webdesign',
@@ -29,7 +30,7 @@ export default function Footer({ footerData }) {
       { title: 'Online adverteren', url: '/skills/online-adverteren' },
       { title: 'Website laten maken', url: '/skills/website-laten-maken' },
       { title: 'Website snelheid optimalisatie', url: '/skills/website-snelheid-optimalisatie' },
-      { title: 'Conversie optimalisatie', url: '/skills/conversie-optimalisatie-specialist' },
+      { title: 'Conversie optimalisatie', url: '/skills/conversie-optimalisatie' },
     ],
     
     company: [
@@ -94,8 +95,8 @@ export default function Footer({ footerData }) {
               <div className="font-serif text-2xl font-bold text-white mb-2">
                 {footer.companyName}
               </div>
-              {/* Tagline - GROTER */}
-              <p className="text-base text-primary font-medium mb-4 leading-relaxed">
+              {/* FIX: Changed text-primary to text-sky-400 for better contrast on dark bg (4.5:1 ratio) */}
+              <p className="text-base text-sky-400 font-medium mb-4 leading-relaxed">
                 {footer.tagline}
               </p>
               {/* Description - GROTER */}

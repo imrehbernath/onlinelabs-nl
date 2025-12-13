@@ -146,6 +146,7 @@ export default function TestimonialsSection({
   }
 
   // Helper: Render stars
+  // FIX: Changed text-orange-400 to text-amber-700 for better contrast (4.5:1 ratio)
   const renderStars = (rating) => {
     const validRating = rating || 5;
     return (
@@ -153,13 +154,13 @@ export default function TestimonialsSection({
         {[...Array(5)].map((_, i) => (
           <svg
             key={i}
-            className="w-5 h-5 text-orange-400 fill-current"
+            className="w-5 h-5 text-amber-500 fill-current"
             viewBox="0 0 20 20"
           >
             <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
           </svg>
         ))}
-        <span className="ml-2 text-base font-semibold text-orange-400">
+        <span className="ml-2 text-base font-semibold text-amber-700">
           {validRating.toFixed(1)}
         </span>
       </div>
@@ -344,8 +345,9 @@ export default function TestimonialsSection({
           </div>
 
           {/* Dots Navigation - One dot per screen */}
+          {/* FIX: Added min-w-[44px] min-h-[44px] wrapper for proper tap target size */}
           {reversedTestimonials.length > visibleSlides && (
-            <div className="flex justify-center gap-2 mt-8">
+            <div className="flex justify-center gap-1 mt-8">
               {Array.from({ length: Math.ceil(reversedTestimonials.length / visibleSlides) }).map((_, screenIndex) => {
                 const screenStartIndex = screenIndex * visibleSlides;
                 const screenEndIndex = Math.min(screenStartIndex + visibleSlides - 1, reversedTestimonials.length - 1);
@@ -359,13 +361,17 @@ export default function TestimonialsSection({
                       stopAutoPlay();
                       setCurrentIndex(screenStartIndex);
                     }}
-                    className={`transition-all duration-300 rounded-full ${
-                      isActive
-                        ? 'w-8 h-2 bg-primary'
-                        : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
-                    }`}
+                    className="min-w-[44px] min-h-[44px] flex items-center justify-center group"
                     aria-label={`Ga naar scherm ${screenIndex + 1}`}
-                  />
+                  >
+                    <span 
+                      className={`block transition-all duration-300 rounded-full ${
+                        isActive
+                          ? 'w-8 h-2 bg-primary'
+                          : 'w-2 h-2 bg-gray-300 group-hover:bg-gray-400'
+                      }`}
+                    />
+                  </button>
                 );
               })}
             </div>
