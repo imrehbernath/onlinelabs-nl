@@ -50,7 +50,6 @@ const nextConfig = {
   },
   experimental: {
   optimizePackageImports: ['lucide-react'],
-  optimizeCss: true,
   },
   // Redirect www to non-www
   async redirects() {
