@@ -56,7 +56,7 @@ async function fetchAPI(query, { variables = {} } = {}) {
 // HOMEPAGE DATA
 // ==========================================
 
-// Fetch homepage settings (Hero + About sections)
+// Fetch homepage settings (Hero + About sections + SEO)
 export async function getHomepageSettings() {
   console.log('🏠 Fetching homepage data from WordPress...');
   
@@ -66,6 +66,21 @@ export async function getHomepageSettings() {
         page(id: "homepage", idType: URI) {
           id
           title
+          seo {
+            title
+            description
+            canonicalUrl
+            openGraph {
+              title
+              description
+              image {
+                url
+              }
+            }
+            jsonLd {
+              raw
+            }
+          }
           homepageHero {
             heroSection {
               heroTitle
@@ -150,12 +165,14 @@ export async function getHomepageSettings() {
     console.log('📦 Hero title:', data?.page?.homepageHero?.heroSection?.heroTitle || 'Not found');
     console.log('📦 About title:', data?.page?.homepageAbout?.aboutSection?.aboutTitle || 'Not found');
     console.log('📦 Logo slider enabled:', data?.page?.homepageLogos?.logoSlider?.sliderEnabled ? 'Yes' : 'No');
+    console.log('📦 SEO data:', data?.page?.seo ? 'Found' : 'Not found');
 
     // Transform to expected structure for components
     return {
       heroSection: data?.page?.homepageHero?.heroSection || null,
       aboutSection: data?.page?.homepageAbout?.aboutSection || null,
-      logoSlider: data?.page?.homepageLogos?.logoSlider || null
+      logoSlider: data?.page?.homepageLogos?.logoSlider || null,
+      seo: data?.page?.seo || null
     };
   } catch (error) {
     console.error('❌ Failed to fetch homepage data:', error.message);

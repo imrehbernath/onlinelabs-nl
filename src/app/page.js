@@ -8,35 +8,77 @@ import CasesSection from './components/CasesSection';
 import BlogSection from './components/BlogSection';
 import { getHomepageSettings, getAllServices, getTestimonials, getBlogPosts, getCases } from './lib/wordpress';
 
-// SEO Metadata
-export const metadata = {
-  title: "OnlineLabs – Online marketing bureau uit Amsterdam sinds '08",
-  description: 'OnlineLabs helpt bedrijven groeien met SEO, webdesign, Ads en AI-zichtbaarheid. Strategisch online marketing bureau uit Amsterdam – actief in heel Nederland.',
-  keywords: ['Online marketing Amsterdam', 'SEO bureau', 'GEO optimalisatie', 'WordPress specialist', 'AI zichtbaarheid', 'Online marketing', 'Google Ads', 'Webdesign'],
-  alternates: {
-    canonical: 'https://www.onlinelabs.nl',
-  },
-  openGraph: {
-    title: "OnlineLabs – Online marketing bureau uit Amsterdam sinds '08",
-    description: 'OnlineLabs helpt bedrijven groeien met SEO, webdesign, Ads en AI-zichtbaarheid. Strategisch online marketing bureau uit Amsterdam – actief in heel Nederland.',
-    url: 'https://www.onlinelabs.nl',
-    images: [{
-      url: 'https://www.onlinelabs.nl/og-image-onlinelabs.jpg',
-      width: 1200,
-      height: 630,
-      alt: 'OnlineLabs - Online Marketing Bureau Amsterdam',
-    }],
-    type: 'website',
-    locale: 'nl_NL',
-    siteName: 'OnlineLabs',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "OnlineLabs – Online marketing bureau uit Amsterdam sinds '08",
-    description: 'OnlineLabs helpt bedrijven groeien met SEO, webdesign, Ads en AI-zichtbaarheid. Strategisch online marketing bureau uit Amsterdam – actief in heel Nederland.',
-    images: ['https://www.onlinelabs.nl/og-image-onlinelabs.jpg'],
-  },
-};
+const SITE_URL = 'https://www.onlinelabs.nl';
+
+// Helper: Replace WordPress URLs with production URLs
+function replaceWpUrls(str) {
+  if (!str) return str;
+  return str.replace(
+    /https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com/g,
+    SITE_URL
+  );
+}
+
+// SEO Metadata - wordt overschreven door Rank Math data indien beschikbaar
+export async function generateMetadata() {
+  const homepageSettings = await getHomepageSettings();
+  
+  // Gebruik Rank Math SEO data indien beschikbaar
+  if (homepageSettings?.seo) {
+    return {
+      title: {
+        absolute: homepageSettings.seo.title || "OnlineLabs – Online marketing bureau in Amsterdam sinds '08"
+      },
+      description: homepageSettings.seo.description || 'Online marketing bureau in Amsterdam sinds 2008. Wij helpen bedrijven groeien met SEO, AI-zichtbaarheid, snelle websites en online ads door heel Nederland.',
+      alternates: {
+        canonical: '/',
+      },
+      openGraph: {
+        title: homepageSettings.seo.openGraph?.title || homepageSettings.seo.title,
+        description: homepageSettings.seo.openGraph?.description || homepageSettings.seo.description,
+        url: '/',
+        images: homepageSettings.seo.openGraph?.image?.url 
+          ? [homepageSettings.seo.openGraph.image.url] 
+          : ['/og-image-homepage.jpg'],
+        type: 'website',
+        locale: 'nl_NL',
+        siteName: 'OnlineLabs',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: homepageSettings.seo.openGraph?.title || homepageSettings.seo.title,
+        description: homepageSettings.seo.openGraph?.description || homepageSettings.seo.description,
+        images: homepageSettings.seo.openGraph?.image?.url 
+          ? [homepageSettings.seo.openGraph.image.url] 
+          : ['/og-image-homepage.jpg'],
+      },
+    };
+  }
+
+  // Fallback metadata
+  return {
+    title: "OnlineLabs – Online marketing bureau in Amsterdam sinds '08",
+    description: 'Online marketing bureau in Amsterdam sinds 2008. Wij helpen bedrijven groeien met SEO, AI-zichtbaarheid, snelle websites en online ads door heel Nederland.',
+    alternates: {
+      canonical: '/',
+    },
+    openGraph: {
+      title: "OnlineLabs – Online marketing bureau in Amsterdam sinds '08",
+      description: 'Online marketing bureau in Amsterdam sinds 2008. Wij helpen bedrijven groeien met SEO, AI-zichtbaarheid, snelle websites en online ads door heel Nederland.',
+      url: '/',
+      images: ['/og-image-homepage.jpg'],
+      type: 'website',
+      locale: 'nl_NL',
+      siteName: 'OnlineLabs',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: "OnlineLabs – Online marketing bureau in Amsterdam sinds '08",
+      description: 'Online marketing bureau in Amsterdam sinds 2008. Wij helpen bedrijven groeien met SEO, AI-zichtbaarheid, snelle websites en online ads door heel Nederland.',
+      images: ['/og-image-homepage.jpg'],
+    },
+  };
+}
 
 // 🚀 CRITICAL voor Performance: ISR met 24 uur cache
 export const revalidate = 86400;
@@ -44,7 +86,7 @@ export const revalidate = 86400;
 export default async function Home() {
   // Fetch data from WordPress (server-side, cached 24u)
   const [homepageSettings, services, testimonials, blogPosts, cases] = await Promise.all([
-    getHomepageSettings(),  // Hero + About sections
+    getHomepageSettings(),  // Hero + About sections + SEO
     getAllServices(),
     getTestimonials(100),   // Max 100 testimonials
     getBlogPosts(3),        // Latest 3 blog posts
@@ -78,77 +120,95 @@ export default async function Home() {
     logos: homepageSettings.logoSlider.logos?.map(logo => ({
       name: logo.companyName,
       imageUrl: logo.logoImage?.node?.sourceUrl,
-      altText: logo.logoAlt || `${logo.companyName} logo`, // Custom alt or auto-generate
+      altText: logo.logoAlt || `${logo.companyName} logo`,
       url: logo.websiteUrl || null
     })) || []
   } : null;
 
+  // Process JSON-LD from Rank Math: replace WordPress URLs with production URLs
+  const processedJsonLd = homepageSettings?.seo?.jsonLd?.raw 
+    ? replaceWpUrls(homepageSettings.seo.jsonLd.raw)
+        .replace(/<script[^>]*>/gi, '')
+        .replace(/<\/script>/gi, '')
+        .trim()
+    : null;
+
   return (
-    <main>
-      {/* Hero Section - WordPress bewerkbaar */}
-      <Hero data={heroData} />
-
-      {/* Services Section - "Onze LABS" met colored bars */}
-      <ServicesSection services={services} />
-
-      {/* CTA Section 1 - Call to action na Services (DARK) */}
-      <CTASection 
-        title="Klaar om jouw online zichtbaarheid te verbeteren?"
-        description="Ontdek hoe OnlineLabs jouw bedrijf helpt groeien met strategische SEO, GEO en webdesign."
-        primaryButton={{ text: "Neem contact op", url: "/contact" }}
-        secondaryButton={{ text: "Bekijk onze skills", url: "/skills" }}
-        variant="primary"
-      />
-
-      {/* About Section - "Meer dan een Online Marketing Bureau" + Caption */}
-      {aboutData && (
-        <AboutSection 
-          aboutData={aboutData}
-          imageCaption='Sanne Verschoor – Webdesigner & developer, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>'
-          imageCaptionLink="/auteur/sanne-verschoor"
+    <>
+      {/* Rank Math Structured Data (Organization, WebSite, VideoObject, WebPage) */}
+      {processedJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: processedJsonLd }}
         />
       )}
 
-      {/* Logo Slider - Partners/Clients showcase (WordPress editable) */}
-      {logoSliderData && logoSliderData.logos.length > 0 && (
-        <LogoSlider 
-          title={logoSliderData.title}
-          logos={logoSliderData.logos}
-          speed={logoSliderData.speed}
-          grayscale={logoSliderData.grayscale}
+      <main>
+        {/* Hero Section - WordPress bewerkbaar */}
+        <Hero data={heroData} />
+
+        {/* Services Section - "Onze LABS" met colored bars */}
+        <ServicesSection services={services} />
+
+        {/* CTA Section 1 - Call to action na Services (DARK) */}
+        <CTASection 
+          title="Klaar om jouw online zichtbaarheid te verbeteren?"
+          description="Ontdek hoe OnlineLabs jouw bedrijf helpt groeien met strategische SEO, GEO en webdesign."
+          primaryButton={{ text: "Neem contact op", url: "/contact" }}
+          secondaryButton={{ text: "Bekijk onze skills", url: "/skills" }}
+          variant="primary"
         />
-      )}
 
-      {/* Cases Section - Featured Projects */}
-      {cases && cases.length > 0 && (
-        <CasesSection 
-          cases={cases}
-          title="Projecten waar we trots op zijn"
-          subtitle="Cases"
+        {/* About Section - "Meer dan een Online Marketing Bureau" + Caption */}
+        {aboutData && (
+          <AboutSection 
+            aboutData={aboutData}
+            imageCaption='Sanne Verschoor – Webdesigner & developer, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>'
+            imageCaptionLink="/auteur/sanne-verschoor"
+          />
+        )}
+
+        {/* Logo Slider - Partners/Clients showcase (WordPress editable) */}
+        {logoSliderData && logoSliderData.logos.length > 0 && (
+          <LogoSlider 
+            title={logoSliderData.title}
+            logos={logoSliderData.logos}
+            speed={logoSliderData.speed}
+            grayscale={logoSliderData.grayscale}
+          />
+        )}
+
+        {/* Cases Section - Featured Projects */}
+        {cases && cases.length > 0 && (
+          <CasesSection 
+            cases={cases}
+            title="Projecten waar we trots op zijn"
+            subtitle="Cases"
+          />
+        )}
+
+        {/* CTA Section 2 - Light variant tussen Cases en Blog (NIEUW!) */}
+        <CTASection 
+          title="Benieuwd wat we voor jouw bedrijf kunnen betekenen?"
+          description="Plan een vrijblijvend gesprek en ontdek de mogelijkheden voor jouw online groei."
+          primaryButton={{ text: "Plan een gesprek", url: "/contact" }}
+          secondaryButton={{ text: "Bekijk alle cases", url: "/ons-werk" }}
+          variant="light"
         />
-      )}
 
-      {/* CTA Section 2 - Light variant tussen Cases en Blog (NIEUW!) */}
-      <CTASection 
-        title="Benieuwd wat we voor jouw bedrijf kunnen betekenen?"
-        description="Plan een vrijblijvend gesprek en ontdek de mogelijkheden voor jouw online groei."
-        primaryButton={{ text: "Plan een gesprek", url: "/contact" }}
-        secondaryButton={{ text: "Bekijk alle cases", url: "/ons-werk" }}
-        variant="light"
-      />
+        {/* Blog Section - Latest 3 blog posts with featured layout */}
+        {blogPosts && blogPosts.length > 0 && (
+          <BlogSection 
+            posts={blogPosts}
+            title="Laatste Inzichten"
+          />
+        )}
 
-      {/* Blog Section - Latest 3 blog posts with featured layout */}
-      {blogPosts && blogPosts.length > 0 && (
-        <BlogSection 
-          posts={blogPosts}
-          title="Laatste Inzichten"
-        />
-      )}
+        {/* Testimonials Section - 3-column slider met auto-rotate */}
+        <TestimonialsSection testimonials={testimonials} />
 
-      {/* Testimonials Section - 3-column slider met auto-rotate */}
-      <TestimonialsSection testimonials={testimonials} />
-
-      {/* Footer volgt direct na Testimonials - geen extra CTA meer */}
-    </main>
+        {/* Footer volgt direct na Testimonials - geen extra CTA meer */}
+      </main>
+    </>
   );
 }
