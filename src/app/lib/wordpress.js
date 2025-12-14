@@ -3,30 +3,6 @@
 
 const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL || 'https://wordpress-988065-5984089.cloudwaysapps.com/graphql';
 
-// ===========================================
-// IMAGE URL HELPER - Switch naar CDN na live
-// ===========================================
-// Stap 1: Verander WP_MEDIA_URL naar CDN_URL na live zetten
-// Stap 2: Gebruik getImageUrl() overal waar afbeeldingen worden geladen
-
-export const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
-export const CDN_URL = 'https://cdn.onlinelabs.nl';
-
-// SCHAKEL HIER: verander WP_URL naar CDN_URL wanneer CDN live is
-export const WP_MEDIA_URL = WP_URL;
-
-/**
- * Transform WordPress image URL to CDN URL
- * Gebruik deze helper voor alle afbeelding URLs
- * 
- * @param {string} wpUrl - WordPress media URL
- * @returns {string} Transformed URL (CDN of WordPress)
- */
-export function getImageUrl(wpUrl) {
-  if (!wpUrl) return null;
-  return wpUrl.replace(WP_URL, WP_MEDIA_URL);
-}
-
 async function fetchAPI(query, { variables = {} } = {}) {
   const headers = { 'Content-Type': 'application/json' };
 
