@@ -9,14 +9,14 @@ const SITE_URL = 'https://www.onlinelabs.nl';
 export const revalidate = 86400; // 24 hours ISR
 
 export const metadata = {
-  title: 'Skills & diensten – Full-service online marketing bureau',
-  description: 'SEO, GEO-optimalisatie, webdesign, online adverteren en conversie-optimalisatie. 25 jaar ervaring, Amsterdam. Strategieën die resultaat opleveren.',
+  title: 'Skills & diensten – Online groei & AI visibility',
+  description: 'Van SEO en AI-zichtbaarheid tot webdesign en conversie. Strategieën die resultaat opleveren. 25 jaar ervaring, Amsterdam.',
   alternates: {
     canonical: '/skills',
   },
   openGraph: {
     title: 'Skills & diensten | OnlineLabs',
-    description: 'Full-service online marketing bureau met 25 jaar ervaring. SEO, AI-zichtbaarheid, webdesign en conversie-optimalisatie.',
+    description: 'Van SEO en AI-zichtbaarheid tot webdesign en conversie. Strategieën die resultaat opleveren.',
     url: '/skills',
     type: 'website',
     locale: 'nl_NL',
