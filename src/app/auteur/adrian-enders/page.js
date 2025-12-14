@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const SITE_URL = 'https://www.onlinelabs.nl';
-const CDN_URL = 'https://cdn.onlinelabs.nl';
+const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
 
 async function getAuthorPosts() {
   const query = `
@@ -52,7 +52,7 @@ async function getAuthorPosts() {
           ...post.featuredImage.node,
           sourceUrl: post.featuredImage.node.sourceUrl.replace(
             'https://wordpress-988065-5984089.cloudwaysapps.com',
-            CDN_URL
+            WP_URL
           )
         }
       } : null
@@ -80,7 +80,7 @@ export const metadata = {
     type: 'profile',
     images: [
       {
-        url: `${CDN_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`,
+        url: `${WP_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`,
         width: 400,
         height: 600,
         alt: 'Adrian Enders',
@@ -91,7 +91,7 @@ export const metadata = {
     card: 'summary',
     title: 'Adrian Enders – Online advertising & data specialist | OnlineLabs',
     description: 'Adrian Enders is specialist in Google Ads, Meta Ads, GA4 en Google Tag Manager bij OnlineLabs.',
-    images: [`${CDN_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`],
+    images: [`${WP_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`],
   },
 };
 
@@ -145,7 +145,7 @@ export default async function AdrianAuthorPage() {
         "image": {
           "@type": "ImageObject",
           "@id": `${SITE_URL}/auteur/adrian-enders#primaryimage`,
-          "url": `${CDN_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`,
+          "url": `${WP_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`,
           "caption": "Adrian Enders"
         },
         "jobTitle": "Online advertising & data specialist",
@@ -198,7 +198,7 @@ export default async function AdrianAuthorPage() {
             {/* Author Image */}
             <div className="flex-shrink-0">
               <Image
-                src={`${CDN_URL}/wp-content/uploads/2025/11/Adrian-Enders.webp`}
+                src={`${WP_URL}/wp-content/uploads/2025/11/Adrian-Enders.webp`}
                 alt="Adrian Enders"
                 width={200}
                 height={300}

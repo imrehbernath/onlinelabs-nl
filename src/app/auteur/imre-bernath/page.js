@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const SITE_URL = 'https://www.onlinelabs.nl';
-const CDN_URL = 'https://cdn.onlinelabs.nl';
+const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
 
 async function getAuthorPosts() {
   const query = `
@@ -52,7 +52,7 @@ async function getAuthorPosts() {
           ...post.featuredImage.node,
           sourceUrl: post.featuredImage.node.sourceUrl.replace(
             'https://wordpress-988065-5984089.cloudwaysapps.com',
-            CDN_URL
+            WP_URL
           )
         }
       } : null
@@ -80,7 +80,7 @@ export const metadata = {
     type: 'profile',
     images: [
       {
-        url: `${CDN_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`,
+        url: `${WP_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`,
         width: 400,
         height: 600,
         alt: 'Imre Bernáth',
@@ -91,7 +91,7 @@ export const metadata = {
     card: 'summary',
     title: 'Imre Bernáth – SEO & AI visibility specialist | OnlineLabs',
     description: 'Imre Bernáth helpt bedrijven groeien met SEO en AI visibility. 25 jaar online ervaring, oprichter OnlineLabs en Teun.ai.',
-    images: [`${CDN_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`],
+    images: [`${WP_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`],
   },
 };
 
@@ -149,7 +149,7 @@ export default async function AuthorPage() {
         "image": {
           "@type": "ImageObject",
           "@id": `${SITE_URL}/auteur/imre-bernath#primaryimage`,
-          "url": `${CDN_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`,
+          "url": `${WP_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`,
           "caption": "Imre Bernáth"
         },
         "jobTitle": "SEO & AI visibility specialist",
@@ -211,7 +211,7 @@ export default async function AuthorPage() {
             {/* Author Image - 2:3 aspect ratio */}
             <div className="flex-shrink-0">
               <Image
-                src={`${CDN_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`}
+                src={`${WP_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`}
                 alt="Imre Bernáth"
                 width={200}
                 height={300}

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const SITE_URL = 'https://www.onlinelabs.nl';
-const CDN_URL = 'https://cdn.onlinelabs.nl';
+const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
 
 async function getAuthorPosts() {
   const query = `
@@ -52,7 +52,7 @@ async function getAuthorPosts() {
           ...post.featuredImage.node,
           sourceUrl: post.featuredImage.node.sourceUrl.replace(
             'https://wordpress-988065-5984089.cloudwaysapps.com',
-            CDN_URL
+            WP_URL
           )
         }
       } : null
@@ -80,7 +80,7 @@ export const metadata = {
     type: 'profile',
     images: [
       {
-        url: `${CDN_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`,
+        url: `${WP_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`,
         width: 400,
         height: 600,
         alt: 'Sanne Verschoor',
@@ -91,7 +91,7 @@ export const metadata = {
     card: 'summary',
     title: 'Sanne Verschoor – WordPress developer & webdesigner | OnlineLabs',
     description: 'Sanne Verschoor bouwt WordPress websites en WooCommerce webshops bij OnlineLabs.',
-    images: [`${CDN_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`],
+    images: [`${WP_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`],
   },
 };
 
@@ -145,7 +145,7 @@ export default async function SanneAuthorPage() {
         "image": {
           "@type": "ImageObject",
           "@id": `${SITE_URL}/auteur/sanne-verschoor#primaryimage`,
-          "url": `${CDN_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`,
+          "url": `${WP_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`,
           "caption": "Sanne Verschoor"
         },
         "jobTitle": "WordPress developer & webdesigner",
@@ -197,7 +197,7 @@ export default async function SanneAuthorPage() {
             {/* Author Image */}
             <div className="flex-shrink-0">
               <Image
-                src={`${CDN_URL}/wp-content/uploads/2025/11/Sanne-Verschoor.webp`}
+                src={`${WP_URL}/wp-content/uploads/2025/11/Sanne-Verschoor.webp`}
                 alt="Sanne Verschoor"
                 width={200}
                 height={300}

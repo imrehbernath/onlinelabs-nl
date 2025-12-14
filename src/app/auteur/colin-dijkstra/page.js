@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const SITE_URL = 'https://www.onlinelabs.nl';
-const CDN_URL = 'https://cdn.onlinelabs.nl';
+const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
 
 async function getAuthorPosts() {
   const query = `
@@ -52,7 +52,7 @@ async function getAuthorPosts() {
           ...post.featuredImage.node,
           sourceUrl: post.featuredImage.node.sourceUrl.replace(
             'https://wordpress-988065-5984089.cloudwaysapps.com',
-            CDN_URL
+            WP_URL
           )
         }
       } : null
@@ -80,7 +80,7 @@ export const metadata = {
     type: 'profile',
     images: [
       {
-        url: `${CDN_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`,
+        url: `${WP_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`,
         width: 512,
         height: 512,
         alt: 'Colin Dijkstra',
@@ -91,7 +91,7 @@ export const metadata = {
     card: 'summary',
     title: 'Colin Dijkstra – SEO & content specialist | OnlineLabs',
     description: 'Colin Dijkstra is SEO & content specialist bij OnlineLabs. Expert in GEO optimalisatie en AI-ready content.',
-    images: [`${CDN_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`],
+    images: [`${WP_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`],
   },
 };
 
@@ -145,7 +145,7 @@ export default async function ColinAuthorPage() {
         "image": {
           "@type": "ImageObject",
           "@id": `${SITE_URL}/auteur/colin-dijkstra#primaryimage`,
-          "url": `${CDN_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`,
+          "url": `${WP_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`,
           "caption": "Colin Dijkstra"
         },
         "jobTitle": "SEO & content specialist",
@@ -198,7 +198,7 @@ export default async function ColinAuthorPage() {
             {/* Author Image */}
             <div className="flex-shrink-0">
               <Image
-                src={`${CDN_URL}/wp-content/uploads/2025/11/Colin-Dijkstra.webp`}
+                src={`${WP_URL}/wp-content/uploads/2025/11/Colin-Dijkstra.webp`}
                 alt="Colin Dijkstra"
                 width={200}
                 height={300}
