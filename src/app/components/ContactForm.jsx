@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 // Mapping van URL parameter naar interest ID
 const skillMapping = {
@@ -28,6 +28,7 @@ const skillMapping = {
 
 function ContactForm() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -40,7 +41,7 @@ function ContactForm() {
 
   const [focusedField, setFocusedField] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+  const [submitError, setSubmitError] = useState(false);
 
   const interests = [
     { id: 'seo', label: 'SEO & vindbaarheid in Google' },
@@ -88,7 +89,7 @@ function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus(null);
+    setSubmitError(false);
 
     try {
       // Map interest IDs to labels for email
@@ -111,57 +112,19 @@ function ContactForm() {
       const data = await response.json();
 
       if (response.ok) {
-        setSubmitStatus('success');
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          website: '',
-          message: '',
-          interests: []
-        });
+        // Redirect naar bedankt pagina
+        router.push('/bedankt');
       } else {
-        setSubmitStatus('error');
+        setSubmitError(true);
         console.error('Form submission error:', data.error);
       }
     } catch (error) {
-      setSubmitStatus('error');
+      setSubmitError(true);
       console.error('Form submission error:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  // Success message
-  if (submitStatus === 'success') {
-    return (
-      <section className="py-20 lg:py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h2 className="font-serif text-3xl font-bold text-gray-900 mb-4">
-              Bedankt voor je bericht!
-            </h2>
-            <p className="text-lg text-gray-600 mb-8">
-              We hebben je aanvraag ontvangen en nemen binnen 24 uur contact met je op.
-              Check ook je inbox voor een bevestigingsmail.
-            </p>
-            <button
-              onClick={() => setSubmitStatus(null)}
-              className="px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-all duration-200"
-            >
-              Nieuw bericht versturen
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="py-20 lg:py-24 bg-white">
@@ -173,7 +136,7 @@ function ContactForm() {
             <form onSubmit={handleSubmit} className="space-y-8">
               
               {/* Error Message */}
-              {submitStatus === 'error' && (
+              {submitError && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                   <p className="text-red-800">
                     Er is iets misgegaan bij het versturen. Probeer het opnieuw of mail ons direct op{' '}
