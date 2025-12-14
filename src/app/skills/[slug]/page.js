@@ -14,7 +14,7 @@ import AIresultsGallery from '@/app/components/AIresultsGallery';
 import { notFound } from 'next/navigation';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
-const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
+const WP_URL = 'https://cdn.onlinelabs.nl';
 const SITE_URL = 'https://www.onlinelabs.nl';
 
 // Helper: Replace WordPress URLs with production URLs

@@ -108,8 +108,8 @@ export default async function RootLayout({ children }) {
       <head>
         {/* Preconnect to important domains */}
         <link rel="preconnect" href="https://cdn.onlinelabs.nl" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://wordpress-988065-5984089.cloudwaysapps.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://wordpress-988065-5984089.cloudwaysapps.com" />
+        <link rel="preconnect" href="https://cdn.onlinelabs.nl" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn.onlinelabs.nl" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         

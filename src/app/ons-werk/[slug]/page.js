@@ -35,7 +35,7 @@ export async function generateMetadata({ params }) {
   // Replace WordPress URL with CDN URL for OG image
   let ogImage = caseData.featuredImage?.sourceUrl 
     ? caseData.featuredImage.sourceUrl.replace(
-        'https://wordpress-988065-5984089.cloudwaysapps.com',
+        'https://cdn.onlinelabs.nl',
         'https://cdn.onlinelabs.nl'
       )
     : '/og-image-ons-werk.jpg';
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }) {
     const ogImageMatch = caseData.rankMathHead.match(/<meta property="og:image" content="([^"]*)"/);
     if (ogImageMatch) {
       ogImage = ogImageMatch[1].replace(
-        'https://wordpress-988065-5984089.cloudwaysapps.com',
+        'https://cdn.onlinelabs.nl',
         'https://cdn.onlinelabs.nl'
       );
     }
@@ -156,7 +156,7 @@ export default async function CaseDetailPage({ params }) {
     "description": caseData.excerpt,
     "image": caseData.featuredImage?.sourceUrl 
       ? caseData.featuredImage.sourceUrl.replace(
-          'https://wordpress-988065-5984089.cloudwaysapps.com',
+          'https://cdn.onlinelabs.nl',
           'https://cdn.onlinelabs.nl'
         )
       : undefined,

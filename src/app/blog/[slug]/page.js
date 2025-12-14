@@ -11,7 +11,7 @@ import SocialShareButtons from './SocialShareButtons';
 import AuthorBio from './AuthorBio';
 import CTASection from '../../components/CTASection';
 
-const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
+const WP_URL = 'https://cdn.onlinelabs.nl';
 const SITE_URL = 'https://www.onlinelabs.nl';
 
 async function getPost(slug) {

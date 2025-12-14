@@ -7,7 +7,7 @@ import Image from 'next/image';
 const toCdnUrl = (url) => {
   if (!url) return url;
   return url.replace(
-    'wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads',
+    'cdn.onlinelabs.nl/wp-content/uploads',
     'cdn.onlinelabs.nl/wp-content/uploads'
   );
 };

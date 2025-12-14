@@ -956,7 +956,7 @@ export async function getCaseBySlug(slug) {
     };
 
     // Fetch Rank Math SEO data via REST API
-    const wpUrl = 'https://wordpress-988065-5984089.cloudwaysapps.com';
+    const wpUrl = 'https://cdn.onlinelabs.nl';
     
     // Use WordPress URL for Rank Math (not production URL)
     const caseUrl = `${wpUrl}${caseData.uri}`;

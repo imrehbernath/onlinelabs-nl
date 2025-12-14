@@ -54,7 +54,7 @@ function ContactMap() {
             />
             
             <Image
-              src="https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/OnlineLabs-kantoor.webp"
+              src="https://cdn.onlinelabs.nl/wp-content/uploads/2025/11/OnlineLabs-kantoor.webp"
               alt="OnlineLabs kantoor aan de Herengracht in Amsterdam"
               fill
               className="object-cover group-hover:scale-105 transition-transform duration-700"

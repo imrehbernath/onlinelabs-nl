@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const SITE_URL = 'https://www.onlinelabs.nl';
-const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
+const WP_URL = 'https://cdn.onlinelabs.nl';
 
 async function getAuthorPosts() {
   const query = `
@@ -51,7 +51,7 @@ async function getAuthorPosts() {
         node: {
           ...post.featuredImage.node,
           sourceUrl: post.featuredImage.node.sourceUrl.replace(
-            'https://wordpress-988065-5984089.cloudwaysapps.com',
+            'https://cdn.onlinelabs.nl',
             WP_URL
           )
         }

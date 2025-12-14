@@ -14,7 +14,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'wordpress-988065-5984089.cloudwaysapps.com',
+        hostname: 'cdn.onlinelabs.nl',
       },
       {
         protocol: 'https',
