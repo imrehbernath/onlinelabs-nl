@@ -30,7 +30,7 @@ export default function Footer({ footerData }) {
       { title: 'Online adverteren', url: '/skills/online-adverteren' },
       { title: 'Website laten maken', url: '/skills/website-laten-maken' },
       { title: 'Website snelheid optimalisatie', url: '/skills/website-snelheid-optimalisatie' },
-      { title: 'Conversie optimalisatie', url: '/skills/conversie-optimalisatie' },
+      { title: 'Conversie optimalisatie', url: '/skills/conversie-optimalisatie-specialist' },
     ],
     
     company: [

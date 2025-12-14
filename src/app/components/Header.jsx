@@ -63,7 +63,7 @@ export default function Header({ services = [] }) {
       title: 'Conversie optimalisatie',
       subtitle: 'CRO specialisten',
       description: 'Meer resultaat uit elke bezoeker.',
-      uri: '/skills/conversie-optimalisatie',
+      uri: '/skills/conversie-optimalisatie-specialist',
       featured: false,
     },
   ];
