@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+const SITE_URL = 'https://www.onlinelabs.nl';
+const CDN_URL = 'https://cdn.onlinelabs.nl';
+
 async function getAuthorPosts() {
   const query = `
     query GetAuthorPosts {
@@ -40,7 +43,22 @@ async function getAuthorPosts() {
     );
 
     const json = await res.json();
-    return json.data?.posts?.nodes || [];
+    
+    // Transform WordPress URLs to CDN
+    const posts = json.data?.posts?.nodes?.map(post => ({
+      ...post,
+      featuredImage: post.featuredImage?.node ? {
+        node: {
+          ...post.featuredImage.node,
+          sourceUrl: post.featuredImage.node.sourceUrl.replace(
+            'https://wordpress-988065-5984089.cloudwaysapps.com',
+            CDN_URL
+          )
+        }
+      } : null
+    })) || [];
+
+    return posts;
   } catch (error) {
     console.error('Fetch Error:', error);
     return [];
@@ -48,25 +66,32 @@ async function getAuthorPosts() {
 }
 
 export const metadata = {
-  title: 'Colin Dijkstra - Online Marketeer | OnlineLabs',
-  description: 'Colin Dijkstra is online marketeer bij OnlineLabs, gespecialiseerd in SEO & AI visibility. Hij helpt bedrijven gevonden te worden in Google én door AI-assistenten.',
+  title: 'Colin Dijkstra – SEO & content specialist',
+  description: 'Colin Dijkstra is SEO & content specialist bij OnlineLabs. Expert in GEO optimalisatie, AI-ready content en vindbaarheid in Google én AI-assistenten. Amsterdam.',
   alternates: {
-    canonical: 'https://www.onlinelabs.nl/auteur/colin-dijkstra',
+    canonical: '/auteur/colin-dijkstra',
   },
   openGraph: {
-    title: 'Colin Dijkstra - Online Marketeer | OnlineLabs',
-    description: 'Colin Dijkstra is online marketeer bij OnlineLabs, gespecialiseerd in SEO & AI visibility.',
-    url: 'https://www.onlinelabs.nl/auteur/colin-dijkstra',
+    title: 'Colin Dijkstra – SEO & content specialist | OnlineLabs',
+    description: 'Colin Dijkstra is SEO & content specialist bij OnlineLabs. Expert in GEO optimalisatie en AI-ready content.',
+    url: '/auteur/colin-dijkstra',
     siteName: 'OnlineLabs',
     locale: 'nl_NL',
+    type: 'profile',
     images: [
       {
-        url: 'https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp',
+        url: `${CDN_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`,
         width: 512,
         height: 512,
         alt: 'Colin Dijkstra',
       },
     ],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Colin Dijkstra – SEO & content specialist | OnlineLabs',
+    description: 'Colin Dijkstra is SEO & content specialist bij OnlineLabs. Expert in GEO optimalisatie en AI-ready content.',
+    images: [`${CDN_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`],
   },
 };
 
@@ -78,37 +103,82 @@ export default async function ColinAuthorPage() {
     "@graph": [
       {
         "@type": "ProfilePage",
-        "@id": "https://www.onlinelabs.nl/auteur/colin-dijkstra#profilepage",
-        "url": "https://www.onlinelabs.nl/auteur/colin-dijkstra",
+        "@id": `${SITE_URL}/auteur/colin-dijkstra#profilepage`,
+        "url": `${SITE_URL}/auteur/colin-dijkstra`,
         "name": "Profiel van Colin Dijkstra",
-        "mainEntity": { "@id": "https://www.onlinelabs.nl/auteur/colin-dijkstra#person" },
+        "mainEntity": { "@id": `${SITE_URL}/auteur/colin-dijkstra#person` },
+        "primaryImageOfPage": { "@id": `${SITE_URL}/auteur/colin-dijkstra#primaryimage` },
+        "breadcrumb": { "@id": `${SITE_URL}/auteur/colin-dijkstra#breadcrumb` },
+        "isPartOf": { "@id": `${SITE_URL}/#website` },
         "inLanguage": "nl-NL"
       },
       {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/auteur/colin-dijkstra#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Over ons",
+            "item": `${SITE_URL}/over-ons`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Colin Dijkstra",
+            "item": `${SITE_URL}/auteur/colin-dijkstra`
+          }
+        ]
+      },
+      {
         "@type": "Person",
-        "@id": "https://www.onlinelabs.nl/auteur/colin-dijkstra#person",
+        "@id": `${SITE_URL}/auteur/colin-dijkstra#person`,
         "name": "Colin Dijkstra",
-        "url": "https://www.onlinelabs.nl/auteur/colin-dijkstra",
-        "description": "Colin Dijkstra is online marketeer bij OnlineLabs, gespecialiseerd in SEO & AI visibility.",
+        "url": `${SITE_URL}/auteur/colin-dijkstra`,
+        "description": "Colin Dijkstra is SEO & content specialist bij OnlineLabs, gespecialiseerd in GEO optimalisatie, AI-ready content en vindbaarheid in zowel Google als AI-assistenten zoals ChatGPT en Claude.",
         "image": {
           "@type": "ImageObject",
-          "url": "https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp",
+          "@id": `${SITE_URL}/auteur/colin-dijkstra#primaryimage`,
+          "url": `${CDN_URL}/wp-content/uploads/2025/11/Colin-Dijkstra-online-marketeer.webp`,
           "caption": "Colin Dijkstra"
         },
-        "jobTitle": "Allround Online Marketeer",
-        "sameAs": ["https://nl.linkedin.com/in/colin-dijkstra-830b8823a"],
+        "jobTitle": "SEO & content specialist",
+        "sameAs": [
+          "https://nl.linkedin.com/in/colin-dijkstra-830b8823a"
+        ],
         "worksFor": {
           "@type": "Organization",
+          "@id": `${SITE_URL}/#organization`,
           "name": "OnlineLabs",
-          "url": "https://www.onlinelabs.nl/"
+          "url": SITE_URL
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Herengracht 221",
+          "addressLocality": "Amsterdam",
+          "postalCode": "1016 BG",
+          "addressCountry": "NL"
         },
         "knowsAbout": [
           "SEO",
+          "GEO optimalisatie",
           "AI visibility",
           "Content strategie",
+          "AI-ready content",
+          "ChatGPT",
+          "Claude AI",
+          "E-E-A-T",
+          "Structured data",
           "Google Search Console",
-          "Structured data"
-        ]
+          "Schema.org"
+        ],
+        "mainEntityOfPage": { "@id": `${SITE_URL}/auteur/colin-dijkstra#profilepage` }
       }
     ]
   };
@@ -128,7 +198,7 @@ export default async function ColinAuthorPage() {
             {/* Author Image */}
             <div className="flex-shrink-0">
               <Image
-                src="https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Colin-Dijkstra.webp"
+                src={`${CDN_URL}/wp-content/uploads/2025/11/Colin-Dijkstra.webp`}
                 alt="Colin Dijkstra"
                 width={200}
                 height={300}
@@ -143,16 +213,16 @@ export default async function ColinAuthorPage() {
                 Colin Dijkstra
               </h1>
               <p className="text-xl text-[#376eb5] font-medium mb-6">
-                Allround Online Marketeer bij OnlineLabs
+                SEO & content specialist bij OnlineLabs
               </p>
               
               <div className="text-lg text-gray-600 leading-relaxed space-y-4">
                 <p>
-                  Met veel enthousiasme werk ik als online marketeer bij OnlineLabs. Ik zet mijn passie voor digitale strategie, data en creativiteit volop in. Bij OnlineLabs krijg ik de kans om te groeien, impact te maken en mee te bouwen aan innovatieve online campagnes.
+                  Als SEO & content specialist bij OnlineLabs help ik bedrijven gevonden te worden — niet alleen in Google, maar ook door AI-assistenten zoals ChatGPT en Claude. Met een scherpe focus op GEO optimalisatie creëer ik content die zowel zoekmachines als AI begrijpen en waarderen.
                 </p>
                 
                 <p>
-                  In een wereld waar zoekmachines razendsnel evolueren, help ik bedrijven gevonden te worden – niet alleen in Google, maar ook door de nieuwe generatie AI-assistenten. Ik creëer waardevolle, gestructureerde content die klanten van OnlineLabs zichtbaar maakt, nu én in de toekomst.
+                  Mijn kracht ligt in het maken van persoonlijke, authentieke content met behulp van AI-tools. Door geavanceerd te werken met Claude en ChatGPT bereik ik voor klanten meetbare resultaten in zowel traditionele zoekresultaten als AI-gegenereerde antwoorden. Van E-E-A-T optimalisatie tot structured data — ik zorg dat jouw merk zichtbaar is, nu én in de toekomst.
                 </p>
               </div>
 
@@ -167,7 +237,7 @@ export default async function ColinAuthorPage() {
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
-                  Volg Colin op LinkedIn
+                  LinkedIn
                 </a>
               </div>
             </div>
@@ -192,14 +262,14 @@ export default async function ColinAuthorPage() {
           <div className="grid md:grid-cols-2 gap-6">
             {/* SEO & Content */}
             <div className="bg-white rounded-xl p-6 shadow-lg">
-              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">SEO & Content</h3>
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">SEO & content</h3>
               
               <ul className="space-y-3">
                 {[
                   'Zoekwoordenonderzoek',
-                  'Content strategie',
-                  'On-page SEO',
-                  'Technische SEO audits',
+                  'Content strategie & creatie',
+                  'On-page SEO optimalisatie',
+                  'E-E-A-T optimalisatie',
                   'Google Search Console'
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
@@ -214,17 +284,17 @@ export default async function ColinAuthorPage() {
               </ul>
             </div>
 
-            {/* AI Visibility */}
+            {/* GEO & AI visibility */}
             <div className="bg-white rounded-xl p-6 shadow-lg">
-              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">AI Visibility</h3>
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">GEO & AI visibility</h3>
               
               <ul className="space-y-3">
                 {[
-                  'Structured data implementatie',
-                  'GEO-optimalisatie',
-                  'AI-ready content',
-                  'E-E-A-T optimalisatie',
-                  'Schema.org markup'
+                  'GEO optimalisatie',
+                  'AI-ready content creatie',
+                  'ChatGPT & Claude integratie',
+                  'Structured data & Schema.org',
+                  'AI Overviews optimalisatie'
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <span className="text-[#1abc9c] mt-1.5 flex-shrink-0">

@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+const SITE_URL = 'https://www.onlinelabs.nl';
+const CDN_URL = 'https://cdn.onlinelabs.nl';
+
 async function getAuthorPosts() {
   const query = `
     query GetAuthorPosts {
@@ -40,7 +43,22 @@ async function getAuthorPosts() {
     );
 
     const json = await res.json();
-    return json.data?.posts?.nodes || [];
+    
+    // Transform WordPress URLs to CDN
+    const posts = json.data?.posts?.nodes?.map(post => ({
+      ...post,
+      featuredImage: post.featuredImage?.node ? {
+        node: {
+          ...post.featuredImage.node,
+          sourceUrl: post.featuredImage.node.sourceUrl.replace(
+            'https://wordpress-988065-5984089.cloudwaysapps.com',
+            CDN_URL
+          )
+        }
+      } : null
+    })) || [];
+
+    return posts;
   } catch (error) {
     console.error('Fetch Error:', error);
     return [];
@@ -48,25 +66,32 @@ async function getAuthorPosts() {
 }
 
 export const metadata = {
-  title: 'Adrian Enders - Online Marketeer | OnlineLabs',
-  description: 'Adrian Enders is online marketeer bij OnlineLabs, gespecialiseerd in SEO, Google Ads en social media marketing. Van strategie tot uitvoering.',
+  title: 'Adrian Enders – Online advertising & data specialist',
+  description: 'Adrian Enders is specialist in Google Ads, Meta Ads, GA4 en Google Tag Manager bij OnlineLabs. Data-driven campagnes die resultaat opleveren. Amsterdam.',
   alternates: {
-    canonical: 'https://www.onlinelabs.nl/auteur/adrian-enders',
+    canonical: '/auteur/adrian-enders',
   },
   openGraph: {
-    title: 'Adrian Enders - Online Marketeer | OnlineLabs',
-    description: 'Adrian Enders is online marketeer bij OnlineLabs, gespecialiseerd in SEO, Google Ads en social media marketing.',
-    url: 'https://www.onlinelabs.nl/auteur/adrian-enders',
+    title: 'Adrian Enders – Online advertising & data specialist | OnlineLabs',
+    description: 'Adrian Enders is specialist in Google Ads, Meta Ads, GA4 en Google Tag Manager bij OnlineLabs. Data-driven campagnes.',
+    url: '/auteur/adrian-enders',
     siteName: 'OnlineLabs',
     locale: 'nl_NL',
+    type: 'profile',
     images: [
       {
-        url: 'https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp',
-        width: 200,
-        height: 200,
+        url: `${CDN_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`,
+        width: 400,
+        height: 600,
         alt: 'Adrian Enders',
       },
     ],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Adrian Enders – Online advertising & data specialist | OnlineLabs',
+    description: 'Adrian Enders is specialist in Google Ads, Meta Ads, GA4 en Google Tag Manager bij OnlineLabs.',
+    images: [`${CDN_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`],
   },
 };
 
@@ -78,38 +103,82 @@ export default async function AdrianAuthorPage() {
     "@graph": [
       {
         "@type": "ProfilePage",
-        "@id": "https://www.onlinelabs.nl/auteur/adrian-enders#profilepage",
-        "url": "https://www.onlinelabs.nl/auteur/adrian-enders",
+        "@id": `${SITE_URL}/auteur/adrian-enders#profilepage`,
+        "url": `${SITE_URL}/auteur/adrian-enders`,
         "name": "Profiel van Adrian Enders",
-        "mainEntity": { "@id": "https://www.onlinelabs.nl/auteur/adrian-enders#person" },
+        "mainEntity": { "@id": `${SITE_URL}/auteur/adrian-enders#person` },
+        "primaryImageOfPage": { "@id": `${SITE_URL}/auteur/adrian-enders#primaryimage` },
+        "breadcrumb": { "@id": `${SITE_URL}/auteur/adrian-enders#breadcrumb` },
+        "isPartOf": { "@id": `${SITE_URL}/#website` },
         "inLanguage": "nl-NL"
       },
       {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/auteur/adrian-enders#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Over ons",
+            "item": `${SITE_URL}/over-ons`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Adrian Enders",
+            "item": `${SITE_URL}/auteur/adrian-enders`
+          }
+        ]
+      },
+      {
         "@type": "Person",
-        "@id": "https://www.onlinelabs.nl/auteur/adrian-enders#person",
+        "@id": `${SITE_URL}/auteur/adrian-enders#person`,
         "name": "Adrian Enders",
-        "url": "https://www.onlinelabs.nl/auteur/adrian-enders",
-        "description": "Adrian Enders is online marketeer bij OnlineLabs, gespecialiseerd in SEO, Google Ads en social media marketing.",
+        "url": `${SITE_URL}/auteur/adrian-enders`,
+        "description": "Adrian Enders is online advertising en data specialist bij OnlineLabs, met expertise in Google Ads, Meta Ads, GA4, Google Tag Manager en privacy/consent oplossingen.",
         "image": {
           "@type": "ImageObject",
-          "url": "https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp",
+          "@id": `${SITE_URL}/auteur/adrian-enders#primaryimage`,
+          "url": `${CDN_URL}/wp-content/uploads/2025/11/Adrian-Enders-Online-marketeer.webp`,
           "caption": "Adrian Enders"
         },
-        "jobTitle": "Allround Online Marketeer",
-        "sameAs": ["https://www.linkedin.com/in/adrian-fa-enders"],
+        "jobTitle": "Online advertising & data specialist",
+        "sameAs": [
+          "https://www.linkedin.com/in/adrian-fa-enders"
+        ],
         "worksFor": {
           "@type": "Organization",
+          "@id": `${SITE_URL}/#organization`,
           "name": "OnlineLabs",
-          "url": "https://www.onlinelabs.nl/"
+          "url": SITE_URL
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Herengracht 221",
+          "addressLocality": "Amsterdam",
+          "postalCode": "1016 BG",
+          "addressCountry": "NL"
         },
         "knowsAbout": [
-          "SEO",
           "Google Ads",
-          "Social media marketing",
-          "Google Analytics",
+          "Meta Ads",
           "LinkedIn Advertising",
-          "Marketing strategie"
-        ]
+          "Google Analytics 4",
+          "Google Tag Manager",
+          "Cookie consent",
+          "CMP implementatie",
+          "SEO",
+          "Social media marketing",
+          "Data analyse",
+          "Conversion tracking"
+        ],
+        "mainEntityOfPage": { "@id": `${SITE_URL}/auteur/adrian-enders#profilepage` }
       }
     ]
   };
@@ -129,7 +198,7 @@ export default async function AdrianAuthorPage() {
             {/* Author Image */}
             <div className="flex-shrink-0">
               <Image
-                src="https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Adrian-Enders.webp"
+                src={`${CDN_URL}/wp-content/uploads/2025/11/Adrian-Enders.webp`}
                 alt="Adrian Enders"
                 width={200}
                 height={300}
@@ -144,16 +213,16 @@ export default async function AdrianAuthorPage() {
                 Adrian Enders
               </h1>
               <p className="text-xl text-[#376eb5] font-medium mb-6">
-                Allround Online Marketeer bij OnlineLabs
+                Online advertising & data specialist bij OnlineLabs
               </p>
               
               <div className="text-lg text-gray-600 leading-relaxed space-y-4">
                 <p>
-                  Mijn avontuur van Groningen naar het bruisende Amsterdam heeft een nieuwe wending genomen met een sprankelende carrièreswitch. Met volle moed en grenzeloze passie voor online marketing heb ik de stap gezet naar een nieuwe toekomst als Allround Online Marketeer bij OnlineLabs.
+                  Na een succesvolle carrièreswitch van Groningen naar Amsterdam werk ik inmiddels drie jaar met veel plezier bij OnlineLabs. Als online advertising en data specialist help ik bedrijven groeien met campagnes die écht resultaat opleveren.
                 </p>
                 
                 <p>
-                  Van SEO tot social media advertising, van Google Ads tot marketing strategie — ik help bedrijven groeien door de juiste mensen op het juiste moment te bereiken. Bij OnlineLabs combineer ik creativiteit met data om campagnes te bouwen die echt resultaat opleveren.
+                  Mijn expertise ligt in Google Ads, Meta Ads en LinkedIn Advertising, gecombineerd met een sterke focus op data. Van GA4-implementaties en Google Tag Manager tot cookie consent en privacy-compliant tracking — ik zorg dat elke euro advertentiebudget meetbaar is en maximaal rendeert.
                 </p>
               </div>
 
@@ -168,7 +237,7 @@ export default async function AdrianAuthorPage() {
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
-                  Volg Adrian op LinkedIn
+                  LinkedIn
                 </a>
               </div>
             </div>
@@ -191,17 +260,17 @@ export default async function AdrianAuthorPage() {
           </div>
           
           <div className="grid md:grid-cols-2 gap-6">
-            {/* SEO & Analytics */}
+            {/* Online advertising */}
             <div className="bg-white rounded-xl p-6 shadow-lg">
-              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">SEO & Analytics</h3>
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">Online advertising</h3>
               
               <ul className="space-y-3">
                 {[
-                  'Search Engine Optimization (SEO)',
-                  'Google Analytics',
-                  'Marketing strategie',
-                  'Web design',
-                  'Content optimalisatie'
+                  'Google Ads (Search, Display, Shopping)',
+                  'Meta Ads (Facebook & Instagram)',
+                  'LinkedIn Advertising',
+                  'Remarketing & retargeting',
+                  'Campagne optimalisatie'
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <span className="text-[#376eb5] mt-1.5 flex-shrink-0">
@@ -215,17 +284,17 @@ export default async function AdrianAuthorPage() {
               </ul>
             </div>
 
-            {/* Advertising & Social */}
+            {/* Data & tracking */}
             <div className="bg-white rounded-xl p-6 shadow-lg">
-              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">Advertising & Social</h3>
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">Data & tracking</h3>
               
               <ul className="space-y-3">
                 {[
-                  'Google Ads',
-                  'LinkedIn Advertising',
-                  'Facebook & Instagram Marketing',
-                  'Social media marketing',
-                  'Search advertising (SEA)'
+                  'Google Analytics 4 (GA4)',
+                  'Google Tag Manager',
+                  'Cookie consent & CMP',
+                  'Conversion tracking',
+                  'Data analyse & rapportage'
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <span className="text-[#1abc9c] mt-1.5 flex-shrink-0">

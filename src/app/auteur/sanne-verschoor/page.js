@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+const SITE_URL = 'https://www.onlinelabs.nl';
+const CDN_URL = 'https://cdn.onlinelabs.nl';
+
 async function getAuthorPosts() {
   const query = `
     query GetAuthorPosts {
@@ -40,7 +43,22 @@ async function getAuthorPosts() {
     );
 
     const json = await res.json();
-    return json.data?.posts?.nodes || [];
+    
+    // Transform WordPress URLs to CDN
+    const posts = json.data?.posts?.nodes?.map(post => ({
+      ...post,
+      featuredImage: post.featuredImage?.node ? {
+        node: {
+          ...post.featuredImage.node,
+          sourceUrl: post.featuredImage.node.sourceUrl.replace(
+            'https://wordpress-988065-5984089.cloudwaysapps.com',
+            CDN_URL
+          )
+        }
+      } : null
+    })) || [];
+
+    return posts;
   } catch (error) {
     console.error('Fetch Error:', error);
     return [];
@@ -48,25 +66,32 @@ async function getAuthorPosts() {
 }
 
 export const metadata = {
-  title: 'Sanne Verschoor - WordPress Developer | OnlineLabs',
-  description: 'Sanne Verschoor is WordPress developer bij OnlineLabs. Met passie en energie bouwt zij websites waar klanten trots op kunnen zijn.',
+  title: 'Sanne Verschoor – WordPress developer & webdesigner',
+  description: 'Sanne Verschoor bouwt WordPress websites en WooCommerce webshops bij OnlineLabs. Van custom themes tot responsive design. Amsterdam.',
   alternates: {
-    canonical: 'https://www.onlinelabs.nl/auteur/sanne-verschoor',
+    canonical: '/auteur/sanne-verschoor',
   },
   openGraph: {
-    title: 'Sanne Verschoor - WordPress Developer | OnlineLabs',
-    description: 'Sanne Verschoor is WordPress developer bij OnlineLabs. Met passie en energie bouwt zij websites waar klanten trots op kunnen zijn.',
-    url: 'https://www.onlinelabs.nl/auteur/sanne-verschoor',
+    title: 'Sanne Verschoor – WordPress developer & webdesigner | OnlineLabs',
+    description: 'Sanne Verschoor bouwt WordPress websites en WooCommerce webshops bij OnlineLabs. Van custom themes tot responsive design.',
+    url: '/auteur/sanne-verschoor',
     siteName: 'OnlineLabs',
     locale: 'nl_NL',
+    type: 'profile',
     images: [
       {
-        url: 'https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp',
-        width: 200,
-        height: 200,
+        url: `${CDN_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`,
+        width: 400,
+        height: 600,
         alt: 'Sanne Verschoor',
       },
     ],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Sanne Verschoor – WordPress developer & webdesigner | OnlineLabs',
+    description: 'Sanne Verschoor bouwt WordPress websites en WooCommerce webshops bij OnlineLabs.',
+    images: [`${CDN_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`],
   },
 };
 
@@ -78,38 +103,81 @@ export default async function SanneAuthorPage() {
     "@graph": [
       {
         "@type": "ProfilePage",
-        "@id": "https://www.onlinelabs.nl/auteur/sanne-verschoor#profilepage",
-        "url": "https://www.onlinelabs.nl/auteur/sanne-verschoor",
+        "@id": `${SITE_URL}/auteur/sanne-verschoor#profilepage`,
+        "url": `${SITE_URL}/auteur/sanne-verschoor`,
         "name": "Profiel van Sanne Verschoor",
-        "mainEntity": { "@id": "https://www.onlinelabs.nl/auteur/sanne-verschoor#person" },
+        "mainEntity": { "@id": `${SITE_URL}/auteur/sanne-verschoor#person` },
+        "primaryImageOfPage": { "@id": `${SITE_URL}/auteur/sanne-verschoor#primaryimage` },
+        "breadcrumb": { "@id": `${SITE_URL}/auteur/sanne-verschoor#breadcrumb` },
+        "isPartOf": { "@id": `${SITE_URL}/#website` },
         "inLanguage": "nl-NL"
       },
       {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/auteur/sanne-verschoor#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Over ons",
+            "item": `${SITE_URL}/over-ons`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Sanne Verschoor",
+            "item": `${SITE_URL}/auteur/sanne-verschoor`
+          }
+        ]
+      },
+      {
         "@type": "Person",
-        "@id": "https://www.onlinelabs.nl/auteur/sanne-verschoor#person",
+        "@id": `${SITE_URL}/auteur/sanne-verschoor#person`,
         "name": "Sanne Verschoor",
-        "url": "https://www.onlinelabs.nl/auteur/sanne-verschoor",
-        "description": "Sanne Verschoor is WordPress developer bij OnlineLabs. Met passie en energie bouwt zij websites waar klanten trots op kunnen zijn.",
+        "url": `${SITE_URL}/auteur/sanne-verschoor`,
+        "description": "Sanne Verschoor is WordPress developer en webdesigner bij OnlineLabs. Met passie en energie bouwt zij websites en webshops waar klanten trots op kunnen zijn.",
         "image": {
           "@type": "ImageObject",
-          "url": "https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp",
+          "@id": `${SITE_URL}/auteur/sanne-verschoor#primaryimage`,
+          "url": `${CDN_URL}/wp-content/uploads/2025/11/Sanne-Verschoor-Webdesigner.webp`,
           "caption": "Sanne Verschoor"
         },
-        "jobTitle": "WordPress Developer",
-        "sameAs": ["https://www.linkedin.com/in/sanne-verschoor-380bab267"],
+        "jobTitle": "WordPress developer & webdesigner",
+        "sameAs": [
+          "https://www.linkedin.com/in/sanne-verschoor-380bab267"
+        ],
         "worksFor": {
           "@type": "Organization",
+          "@id": `${SITE_URL}/#organization`,
           "name": "OnlineLabs",
-          "url": "https://www.onlinelabs.nl/"
+          "url": SITE_URL
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Herengracht 221",
+          "addressLocality": "Amsterdam",
+          "postalCode": "1016 BG",
+          "addressCountry": "NL"
         },
         "knowsAbout": [
           "WordPress",
           "Webdesign",
           "WooCommerce",
           "PHP",
+          "CSS",
           "Responsive design",
-          "UX/UI"
-        ]
+          "UX/UI",
+          "WCAG toegankelijkheid",
+          "Custom themes",
+          "Performance optimalisatie"
+        ],
+        "mainEntityOfPage": { "@id": `${SITE_URL}/auteur/sanne-verschoor#profilepage` }
       }
     ]
   };
@@ -129,7 +197,7 @@ export default async function SanneAuthorPage() {
             {/* Author Image */}
             <div className="flex-shrink-0">
               <Image
-                src="https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Sanne-Verschoor.webp"
+                src={`${CDN_URL}/wp-content/uploads/2025/11/Sanne-Verschoor.webp`}
                 alt="Sanne Verschoor"
                 width={200}
                 height={300}
@@ -144,7 +212,7 @@ export default async function SanneAuthorPage() {
                 Sanne Verschoor
               </h1>
               <p className="text-xl text-[#376eb5] font-medium mb-6">
-                WordPress Developer bij OnlineLabs
+                WordPress developer & webdesigner bij OnlineLabs
               </p>
               
               <div className="text-lg text-gray-600 leading-relaxed space-y-4">
@@ -168,7 +236,7 @@ export default async function SanneAuthorPage() {
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
-                  Volg Sanne op LinkedIn
+                  LinkedIn
                 </a>
               </div>
             </div>
@@ -193,7 +261,7 @@ export default async function SanneAuthorPage() {
           <div className="grid md:grid-cols-2 gap-6">
             {/* WordPress Development */}
             <div className="bg-white rounded-xl p-6 shadow-lg">
-              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">WordPress Development</h3>
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">WordPress development</h3>
               
               <ul className="space-y-3">
                 {[

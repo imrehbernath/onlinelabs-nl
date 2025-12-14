@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+const SITE_URL = 'https://www.onlinelabs.nl';
+const CDN_URL = 'https://cdn.onlinelabs.nl';
+
 async function getAuthorPosts() {
   const query = `
     query GetAuthorPosts {
@@ -41,8 +44,19 @@ async function getAuthorPosts() {
 
     const json = await res.json();
     
-    // Keep WordPress URLs for now (CDN not yet configured)
-    const posts = json.data?.posts?.nodes || [];
+    // Transform WordPress URLs to CDN
+    const posts = json.data?.posts?.nodes?.map(post => ({
+      ...post,
+      featuredImage: post.featuredImage?.node ? {
+        node: {
+          ...post.featuredImage.node,
+          sourceUrl: post.featuredImage.node.sourceUrl.replace(
+            'https://wordpress-988065-5984089.cloudwaysapps.com',
+            CDN_URL
+          )
+        }
+      } : null
+    })) || [];
 
     return posts;
   } catch (error) {
@@ -52,20 +66,21 @@ async function getAuthorPosts() {
 }
 
 export const metadata = {
-  title: 'Imre Bernáth - SEO & AI Visibility Specialist | OnlineLabs',
-  description: 'Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 actief in de online wereld en richtte in 2008 SEOlab op – een van de eerste gespecialiseerde SEO-bureaus in Nederland.',
+  title: 'Imre Bernáth – SEO & AI visibility specialist',
+  description: 'Imre Bernáth helpt bedrijven groeien met SEO en AI visibility. 25 jaar online ervaring, oprichter OnlineLabs en Teun.ai. Amsterdam.',
   alternates: {
-    canonical: 'https://www.onlinelabs.nl/auteur/imre-bernath',
+    canonical: '/auteur/imre-bernath',
   },
   openGraph: {
-    title: 'Imre Bernáth - SEO & AI Visibility Specialist | OnlineLabs',
-    description: 'Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 actief in de online wereld en richtte in 2008 SEOlab op.',
-    url: 'https://www.onlinelabs.nl/auteur/imre-bernath',
+    title: 'Imre Bernáth – SEO & AI visibility specialist | OnlineLabs',
+    description: 'Imre Bernáth helpt bedrijven groeien met SEO en AI visibility. 25 jaar online ervaring, oprichter OnlineLabs en Teun.ai.',
+    url: '/auteur/imre-bernath',
     siteName: 'OnlineLabs',
     locale: 'nl_NL',
+    type: 'profile',
     images: [
       {
-        url: 'https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Imre-Bernath.webp',
+        url: `${CDN_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`,
         width: 400,
         height: 600,
         alt: 'Imre Bernáth',
@@ -74,9 +89,9 @@ export const metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'Imre Bernáth - SEO & AI Visibility Specialist | OnlineLabs',
-    description: 'Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 actief in de online wereld en richtte in 2008 SEOlab op.',
-    images: ['https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Imre-Bernath.webp'],
+    title: 'Imre Bernáth – SEO & AI visibility specialist | OnlineLabs',
+    description: 'Imre Bernáth helpt bedrijven groeien met SEO en AI visibility. 25 jaar online ervaring, oprichter OnlineLabs en Teun.ai.',
+    images: [`${CDN_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`],
   },
 };
 
@@ -88,111 +103,95 @@ export default async function AuthorPage() {
     "@graph": [
       {
         "@type": "ProfilePage",
-        "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#profilepage",
-        "url": "https://www.onlinelabs.nl/auteur/imre-bernath",
+        "@id": `${SITE_URL}/auteur/imre-bernath#profilepage`,
+        "url": `${SITE_URL}/auteur/imre-bernath`,
         "name": "Profiel van Imre Bernáth",
-        "mainEntity": { "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#person" },
-        "primaryImageOfPage": { "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#primaryimage" },
-        "breadcrumb": { "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#breadcrumb" },
+        "mainEntity": { "@id": `${SITE_URL}/auteur/imre-bernath#person` },
+        "primaryImageOfPage": { "@id": `${SITE_URL}/auteur/imre-bernath#primaryimage` },
+        "breadcrumb": { "@id": `${SITE_URL}/auteur/imre-bernath#breadcrumb` },
+        "isPartOf": { "@id": `${SITE_URL}/#website` },
         "inLanguage": "nl-NL",
         "potentialAction": [{
           "@type": "ReadAction",
-          "target": ["https://www.onlinelabs.nl/auteur/imre-bernath"]
+          "target": [`${SITE_URL}/auteur/imre-bernath`]
         }]
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#breadcrumb",
+        "@id": `${SITE_URL}/auteur/imre-bernath#breadcrumb`,
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://www.onlinelabs.nl/"
+            "item": SITE_URL
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Over ons",
-            "item": "https://www.onlinelabs.nl/over-ons"
+            "item": `${SITE_URL}/over-ons`
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "Imre Bernáth",
-            "item": "https://www.onlinelabs.nl/auteur/imre-bernath"
+            "item": `${SITE_URL}/auteur/imre-bernath`
           }
         ]
       },
       {
         "@type": "Person",
-        "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#person",
+        "@id": `${SITE_URL}/auteur/imre-bernath#person`,
         "name": "Imre Bernáth",
-        "url": "https://www.onlinelabs.nl/auteur/imre-bernath",
+        "url": `${SITE_URL}/auteur/imre-bernath`,
         "description": "Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 actief in de online wereld en richtte in 2008 SEOlab op – een van de eerste gespecialiseerde SEO-bureaus in Nederland. Met meer dan 15 jaar ervaring helpt hij bedrijven groeien via strategische campagnes voor vindbaarheid, content en digitale innovatie.",
         "image": {
           "@type": "ImageObject",
-          "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#primaryimage",
-          "url": "https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Imre-Bernath.webp",
+          "@id": `${SITE_URL}/auteur/imre-bernath#primaryimage`,
+          "url": `${CDN_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`,
           "caption": "Imre Bernáth"
         },
         "jobTitle": "SEO & AI visibility specialist",
         "sameAs": [
           "https://gravatar.com/imrebernath",
           "https://nl.linkedin.com/in/imrebernath",
+          "https://github.com/imrehbernath",
+          "https://teun.ai/auteur/imre",
           "https://www.seolab.nl"
         ],
         "worksFor": {
           "@type": "Organization",
+          "@id": `${SITE_URL}/#organization`,
           "name": "OnlineLabs",
-          "url": "https://www.onlinelabs.nl/"
+          "url": SITE_URL
         },
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Herengracht 221",
           "addressLocality": "Amsterdam",
           "postalCode": "1016 BG",
-          "addressCountry": {
-            "@type": "Country",
-            "name": "Nederland"
-          }
+          "addressCountry": "NL"
         },
         "email": "imre@onlinelabs.nl",
-        "telephone": "020 820 20 22",
+        "telephone": "+31-20-820-20-22",
         "knowsAbout": [
           "SEO",
           "Technische SEO",
           "AI visibility",
+          "GEO optimalisatie",
           "Contentstrategie",
           "Structured data",
           "ChatGPT optimalisatie",
+          "Claude AI",
           "SGE (Search Generative Experience)",
           "Google Search Console",
           "On-page SEO",
           "Linkbuilding",
-          "WordPress Development"
+          "WordPress Development",
+          "Next.js"
         ],
-        "mainEntityOfPage": { "@id": "https://www.onlinelabs.nl/auteur/imre-bernath#profilepage" }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.onlinelabs.nl/#website",
-        "url": "https://www.onlinelabs.nl/",
-        "name": "OnlineLabs",
-        "description": "OnlineLabs, voorheen SEOlab, is een Nederlands online marketingbureau gespecialiseerd in strategische SEO, AI visibility en WordPress development.",
-        "publisher": { "@id": "https://www.onlinelabs.nl/#organization" },
-        "inLanguage": "nl-NL"
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://www.onlinelabs.nl/#organization",
-        "name": "OnlineLabs",
-        "url": "https://www.onlinelabs.nl/",
-        "description": "OnlineLabs (voorheen SEOlab) is gespecialiseerd in SEO, AI visibility, webdesign en digitale strategieën.",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://cdn.onlinelabs.nl/wp-content/uploads/2024/12/18111213/Onlinelabs-logo.svg"
-        }
+        "mainEntityOfPage": { "@id": `${SITE_URL}/auteur/imre-bernath#profilepage` }
       }
     ]
   };
@@ -212,7 +211,7 @@ export default async function AuthorPage() {
             {/* Author Image - 2:3 aspect ratio */}
             <div className="flex-shrink-0">
               <Image
-                src="https://wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads/2025/11/Imre-Bernath.webp"
+                src={`${CDN_URL}/wp-content/uploads/2025/11/Imre-Bernath.webp`}
                 alt="Imre Bernáth"
                 width={200}
                 height={300}
@@ -227,12 +226,12 @@ export default async function AuthorPage() {
                 Imre Bernáth
               </h1>
               <p className="text-xl text-[#376eb5] font-medium mb-6">
-                SEO & AI Visibility Specialist | Oprichter OnlineLabs
+                SEO & AI visibility specialist | Oprichter OnlineLabs
               </p>
               
               <div className="text-lg text-gray-600 leading-relaxed space-y-4">
                 <p>
-                  Imre Bernáth is SEO & AI Visibility Specialist en oprichter van OnlineLabs. Sinds 2000 is hij actief in de online wereld en richtte in 2008 SEOlab op – een van de eerste gespecialiseerde SEO-bureaus in Nederland. Met meer dan 15 jaar ervaring helpt hij bedrijven groeien via strategische campagnes voor vindbaarheid, content en digitale innovatie. Imre combineert zijn SEO-expertise met een scherpe visie op de rol van AI in moderne marketing.
+                  Imre Bernáth is SEO & AI visibility specialist en oprichter van OnlineLabs. Sinds 2000 is hij actief in de online wereld en richtte in 2008 SEOlab op – een van de eerste gespecialiseerde SEO-bureaus in Nederland. Met meer dan 15 jaar ervaring helpt hij bedrijven groeien via strategische campagnes voor vindbaarheid, content en digitale innovatie. Imre combineert zijn SEO-expertise met een scherpe visie op de rol van AI in moderne marketing.
                 </p>
                 
                 <p>
@@ -269,7 +268,7 @@ export default async function AuthorPage() {
               Over mij
             </p>
             <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-tight">
-              Expertise & Kennis
+              Expertise & kennis
             </h2>
           </div>
           
@@ -316,7 +315,7 @@ export default async function AuthorPage() {
                   <div className="flex-1">
                     <span className="font-semibold text-gray-900">AI visibility</span>
                     <span className="block text-gray-600 text-sm mt-0.5">
-                      in ChatGPT, Gemini & Perplexity
+                      in ChatGPT, Claude, Gemini & Perplexity
                     </span>
                   </div>
                 </li>
@@ -415,9 +414,9 @@ export default async function AuthorPage() {
             </div>
           </div>
           
-          {/* Top Vaardigheden */}
+          {/* Top vaardigheden */}
           <div className="mt-8 bg-white rounded-xl p-6 shadow-lg">
-            <h3 className="font-serif text-xl font-bold text-gray-900 mb-6">Top Vaardigheden</h3>
+            <h3 className="font-serif text-xl font-bold text-gray-900 mb-6">Top vaardigheden</h3>
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {[
@@ -426,7 +425,7 @@ export default async function AuthorPage() {
                 'AI visibility',
                 'Structured data',
                 'Google Search Console',
-                'ChatGPT',
+                'ChatGPT / Claude',
                 'Google Tag Manager',
                 'SEO-audits',
                 'WordPress',
