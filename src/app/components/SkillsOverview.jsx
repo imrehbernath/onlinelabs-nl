@@ -238,37 +238,6 @@ export default function SkillsOverview({ services = [] }) {
                 </div>
               </div>
 
-              {/* CTA Card - Gradient design */}
-              <div className="relative overflow-hidden rounded-xl p-8 bg-gradient-to-br from-[#376eb5] via-[#2d5a94] to-[#1e3a5f]">
-                {/* Decorative elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
-                
-                <div className="relative">
-                  <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-sm text-white/90 mb-4">
-                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    Gratis adviesgesprek
-                  </div>
-                  
-                  <h4 className="font-serif text-xl font-bold text-white mb-3">
-                    Klaar om te groeien?
-                  </h4>
-                  <p className="text-base text-white/80 mb-6 leading-relaxed">
-                    Plan een vrijblijvend gesprek en ontdek welke strategie het beste past bij jouw doelen.
-                  </p>
-                  
-                  <Link
-                    href="/contact"
-                    className="group inline-flex items-center gap-2 bg-white text-[#376eb5] px-6 py-3 rounded-lg font-semibold text-base hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl"
-                  >
-                    Neem contact op
-                    <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-
             </div>
           </div>
 
