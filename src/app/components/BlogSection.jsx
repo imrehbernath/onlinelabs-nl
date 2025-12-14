@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 
-const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
+const WP_URL = 'https://cdn.onlinelabs.nl';
 
 // Author avatar mapping
 const authorAvatars = {

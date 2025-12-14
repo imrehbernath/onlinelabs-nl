@@ -13,7 +13,7 @@ export const WP_URL = 'https://wordpress-988065-5984089.cloudwaysapps.com';
 export const CDN_URL = 'https://cdn.onlinelabs.nl';
 
 // SCHAKEL HIER: verander WP_URL naar CDN_URL wanneer CDN live is
-export const WP_MEDIA_URL = WP_URL;
+export const WP_MEDIA_URL = CDN_URL;
 
 /**
  * Transform WordPress image URL to CDN URL
@@ -25,6 +25,38 @@ export const WP_MEDIA_URL = WP_URL;
 export function getImageUrl(wpUrl) {
   if (!wpUrl) return null;
   return wpUrl.replace(WP_URL, WP_MEDIA_URL);
+}
+
+/**
+ * Transform ALL WordPress URLs to CDN URLs in any data structure
+ * Recursively processes objects and arrays
+ * 
+ * @param {any} data - Data from WordPress GraphQL
+ * @returns {any} Data with transformed URLs
+ */
+function transformAllUrls(data) {
+  if (!data) return data;
+  
+  if (typeof data === 'string') {
+    return data.replace(
+      /https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com\/wp-content\/uploads/g,
+      'https://cdn.onlinelabs.nl/wp-content/uploads'
+    );
+  }
+  
+  if (Array.isArray(data)) {
+    return data.map(item => transformAllUrls(item));
+  }
+  
+  if (typeof data === 'object') {
+    const transformed = {};
+    for (const key in data) {
+      transformed[key] = transformAllUrls(data[key]);
+    }
+    return transformed;
+  }
+  
+  return data;
 }
 
 async function fetchAPI(query, { variables = {} } = {}) {
@@ -69,7 +101,8 @@ async function fetchAPI(query, { variables = {} } = {}) {
       throw new Error('Failed to fetch API');
     }
 
-    return json.data;
+    // Transform all WordPress URLs to CDN
+    return transformAllUrls(json.data);
   } catch (error) {
     console.error('❌ WordPress API Error:', error);
     throw error;
