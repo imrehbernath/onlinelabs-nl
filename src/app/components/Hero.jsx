@@ -21,10 +21,10 @@ export default function Hero({ data = null }) {
       altText: "Online marketeer aan het werk bij OnlineLabs kantoor Amsterdam"
     },
     heroVideoWebm: {
-      mediaItemUrl: "https://cdn.onlinelabs.nl/wp-content/uploads/2025/01/18075455/Onlinelabs.webm"
+      mediaItemUrl: "https://cdn.onlinelabs.nl/wp-content/uploads/2025/12/Onlinelabs.webm"
     },
     heroVideoMp4: {
-      mediaItemUrl: "https://cdn.onlinelabs.nl/wp-content/uploads/2025/01/18075455/Onlinelabs.mp4"
+      mediaItemUrl: "https://cdn.onlinelabs.nl/wp-content/uploads/2025/12/Onlinelabs.mp4"
     }
   };
 
