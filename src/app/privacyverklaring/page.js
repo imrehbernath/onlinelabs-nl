@@ -1,457 +1,264 @@
-/* eslint-disable react/no-unescaped-entities */
-import styles from '@/styles/legal-page.module.css';
+const SITE_URL = 'https://www.onlinelabs.nl';
+
+export const revalidate = 86400; // 24 hours ISR
 
 export const metadata = {
-  title: 'Privacyverklaring - GEO Tool voor AI Zichtbaarheid',
-  description: 'Privacy policy van Teun.ai, dé GEO tool voor AI zichtbaarheid. Lees hoe we je data beschermen en welke rechten je hebt.',
-  openGraph: {
-    title: 'Privacyverklaring - GEO Tool voor AI Zichtbaarheid | Teun.ai',
-    description: 'Privacy policy van Teun.ai, dé GEO tool voor AI zichtbaarheid. Lees hoe we je data beschermen en welke rechten je hebt.',
-    url: 'https://teun.ai/privacyverklaring',
-    siteName: 'Teun.ai',
-    locale: 'nl_NL',
-    type: 'website',
+  title: 'Privacyverklaring – Cookies & privacy',
+  description: 'Privacyverklaring van OnlineLabs. Lees hoe wij omgaan met je persoonsgegevens, cookies en welke rechten je hebt. AVG-compliant.',
+  alternates: {
+    canonical: '/privacyverklaring',
   },
-  twitter: {
-    card: 'summary',
-    title: 'Privacyverklaring - GEO Tool voor AI Zichtbaarheid | Teun.ai',
-    description: 'Privacy policy van Teun.ai, dé GEO tool voor AI zichtbaarheid. Lees hoe we je data beschermen en welke rechten je hebt.',
+  openGraph: {
+    title: 'Privacyverklaring | OnlineLabs',
+    description: 'Privacyverklaring van OnlineLabs. Lees hoe wij omgaan met je persoonsgegevens en cookies.',
+    url: '/privacyverklaring',
+    type: 'website',
+    locale: 'nl_NL',
+    siteName: 'OnlineLabs',
   },
   robots: {
     index: true,
     follow: true,
   },
-  alternates: {
-    canonical: 'https://teun.ai/privacyverklaring',
-  },
 };
 
-export default function PrivacyPolicyPage() {
+const privacySchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/privacyverklaring/#webpage`,
+      "url": `${SITE_URL}/privacyverklaring`,
+      "name": "Privacyverklaring – OnlineLabs",
+      "description": "Privacyverklaring van OnlineLabs. Lees hoe wij omgaan met je persoonsgegevens en cookies.",
+      "isPartOf": {
+        "@id": `${SITE_URL}/#website`
+      },
+      "inLanguage": "nl-NL",
+      "datePublished": "2024-01-01",
+      "dateModified": "2025-01-01"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${SITE_URL}/privacyverklaring/#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": SITE_URL
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Privacyverklaring",
+          "item": `${SITE_URL}/privacyverklaring`
+        }
+      ]
+    }
+  ]
+};
+
+export default function PrivacyverklaringPage() {
   return (
-    <div className="container mx-auto px-4 py-16 max-w-4xl">
-      <header className="mb-12">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[#1A7DFF] to-[#6C3FF2] bg-clip-text text-transparent">
-          Privacyverklaring
-        </h1>
-        <p className="text-gray-600">
-          Laatst bijgewerkt: 27 oktober 2025
-        </p>
-      </header>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(privacySchema) }}
+      />
 
-      <article className={styles.legalContent}>
-        <p>
-          Teun.ai (onderdeel van OnlineLabs) respecteert je privacy en gaat zorgvuldig om met je persoonsgegevens. 
-          In deze privacyverklaring leggen we uit welke gegevens we verzamelen, waarom we dat doen en wat je rechten zijn.
-        </p>
+      <main className="pt-24 sm:pt-28 pb-16 lg:pb-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          
+          {/* Header */}
+          <header className="mb-12">
+            <h1 className="font-serif text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              Privacyverklaring
+            </h1>
+            <p className="text-lg text-gray-600">
+              Om je zo goed mogelijk van dienst te zijn, slaan we zowel online als offline gegevens van je op. We respecteren je privacy en gaan vertrouwelijk met je gegevens om.
+            </p>
+          </header>
 
-        <h2>1. Wie zijn wij?</h2>
-        <p>
-          <strong>OnlineLabs</strong><br />
-          Herengracht 221<br />
-          1016 BG Amsterdam<br />
-          <br />
-          <strong>KvK nummer:</strong> 34368510<br />
-          <strong>E-mail:</strong> <a href="mailto:hallo@onlinelabs.nl">hallo@onlinelabs.nl</a><br />
-          <strong>Telefoon:</strong> <a href="tel:+31208202022">020 820 20 22</a><br />
-          <strong>Contactpersoon:</strong> Imre Bernáth
-        </p>
-        <p>
-          Wij zijn verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze privacyverklaring.
-        </p>
+          {/* Content */}
+          <div className="prose prose-lg prose-gray max-w-none">
+            
+            {/* Overeenkomsten & Formulieren */}
+            <section className="mb-10">
+              <h2 className="font-serif text-2xl font-bold text-gray-900 mb-4">Overeenkomsten & formulieren</h2>
+              <p className="text-gray-700 mb-4">
+                Wanneer je een formulier via onze website invult, hebben we gegevens nodig om contact met je op te nemen. We verwerken en gebruiken deze gegevens alleen voor zakelijk gebruik, zodat we goed kunnen samenwerken.
+              </p>
+              <p className="text-gray-700 mb-4">
+                Als we contact met je hebben – of dat nu voor een offerte, een sollicitatie of via e-mail is – bewaren we je gegevens zolang dat nodig is voor de volledige beantwoording en afhandeling.
+              </p>
+              <p className="text-gray-700 mb-6">
+                Als je contact met ons opneemt via de website, verzamelen we de data die je in het formulier hebt ingevuld. Daarnaast slaan we je IP-adres en de browser-gebruikersagentstring op, om spam op te sporen.
+              </p>
+              
+              {/* Bewaartermijnen tabel */}
+              <div className="overflow-x-auto">
+                <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Type gegevens</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Bewaartermijn</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    <tr>
+                      <td className="px-6 py-4 text-gray-700">Contactformulier</td>
+                      <td className="px-6 py-4 text-gray-700">Max. 2 jaar</td>
+                    </tr>
+                    <tr className="bg-gray-50">
+                      <td className="px-6 py-4 text-gray-700">Offerteformulier</td>
+                      <td className="px-6 py-4 text-gray-700">Max. 2 jaar</td>
+                    </tr>
+                    <tr>
+                      <td className="px-6 py-4 text-gray-700">Aanvraag via e-mail</td>
+                      <td className="px-6 py-4 text-gray-700">Max. 4 jaar</td>
+                    </tr>
+                    <tr className="bg-gray-50">
+                      <td className="px-6 py-4 text-gray-700">Klantgegevens</td>
+                      <td className="px-6 py-4 text-gray-700">Max. 4 jaar</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
-        <h2>2. Welke gegevens verzamelen we?</h2>
+            {/* Verwerkersovereenkomst */}
+            <section className="mb-10">
+              <h2 className="font-serif text-2xl font-bold text-gray-900 mb-4">Verwerkersovereenkomst</h2>
+              <p className="text-gray-700">
+                We kunnen een verwerkersovereenkomst met je opstellen, waarin wordt afgesproken welke persoonsgegevens verwerkt mogen worden en hoe deze worden opgeslagen. We behandelen al je gegevens vertrouwelijk en delen ze niet met derden.
+              </p>
+            </section>
 
-        <h3>2.1 Contactformulieren & Early Access Aanmeldingen</h3>
-        <p>Wanneer je een formulier invult op onze website, verzamelen we:</p>
-        <ul>
-          <li>Naam</li>
-          <li>E-mailadres</li>
-          <li>Telefoonnummer (indien opgegeven)</li>
-          <li>Bedrijfsnaam (indien opgegeven)</li>
-          <li>Je bericht of vraag</li>
-          <li>IP-adres (voor spam-detectie)</li>
-          <li>Datum en tijd van het verzoek</li>
-        </ul>
-        <p><strong>Doel:</strong> Om contact met je op te nemen en je vraag te beantwoorden.</p>
+            {/* Beveiliging */}
+            <section className="mb-10">
+              <h2 className="font-serif text-2xl font-bold text-gray-900 mb-4">Beveiliging</h2>
+              <p className="text-gray-700">
+                Onze website is beveiligd met een SSL-certificaat. Dit betekent dat alle gegevens die je via onze website verstuurt, versleuteld worden met SSL-beveiliging op basis van het HTTPS-protocol. Gegevens die je via een formulier invult, worden opgeslagen in WordPress.
+              </p>
+            </section>
 
-        <h3>2.2 Online Scans & Tests</h3>
-        <p>Wanneer je een online scan of test invult, verzamelen we:</p>
-        <ul>
-          <li>De antwoorden die je geeft in de scan</li>
-          <li>Je e-mailadres (indien je resultaten wilt ontvangen)</li>
-          <li>Datum en tijd van de scan</li>
-        </ul>
-        <p><strong>Doel:</strong> Om je de resultaten van de scan te kunnen tonen en te e-mailen.</p>
+            {/* Cookies */}
+            <section className="mb-10">
+              <h2 className="font-serif text-2xl font-bold text-gray-900 mb-4">Cookies</h2>
+              <p className="text-gray-700 mb-6">
+                OnlineLabs gebruikt cookies om content en advertenties te personaliseren, functies voor social media aan te bieden en ons websiteverkeer te analyseren. We delen informatie over je gebruik van onze site met onze partners voor social media, adverteren en analyse.
+              </p>
+              
+              {/* Cookies tabel */}
+              <div className="overflow-x-auto">
+                <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden text-sm">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left font-semibold text-gray-900">Categorie</th>
+                      <th className="px-4 py-3 text-left font-semibold text-gray-900">Cookie</th>
+                      <th className="px-4 py-3 text-left font-semibold text-gray-900">Looptijd</th>
+                      <th className="px-4 py-3 text-left font-semibold text-gray-900">Beschrijving</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    <tr>
+                      <td className="px-4 py-3 text-gray-700">Analytics</td>
+                      <td className="px-4 py-3 text-gray-700 font-mono text-xs">_gcl_au</td>
+                      <td className="px-4 py-3 text-gray-700">3 maanden</td>
+                      <td className="px-4 py-3 text-gray-700">Google Tag Manager cookie voor advertentie-efficiëntie</td>
+                    </tr>
+                    <tr className="bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700">Analytics</td>
+                      <td className="px-4 py-3 text-gray-700 font-mono text-xs">_ga</td>
+                      <td className="px-4 py-3 text-gray-700">1 jaar</td>
+                      <td className="px-4 py-3 text-gray-700">Google Analytics voor bezoekers- en sessiegegevens</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-gray-700">Analytics</td>
+                      <td className="px-4 py-3 text-gray-700 font-mono text-xs">_gid</td>
+                      <td className="px-4 py-3 text-gray-700">1 dag</td>
+                      <td className="px-4 py-3 text-gray-700">Google Analytics voor websitegebruik en analyserapport</td>
+                    </tr>
+                    <tr className="bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700">Advertentie</td>
+                      <td className="px-4 py-3 text-gray-700 font-mono text-xs">YSC</td>
+                      <td className="px-4 py-3 text-gray-700">Sessie</td>
+                      <td className="px-4 py-3 text-gray-700">YouTube cookie voor video weergaven</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-gray-700">Advertentie</td>
+                      <td className="px-4 py-3 text-gray-700 font-mono text-xs">VISITOR_INFO1_LIVE</td>
+                      <td className="px-4 py-3 text-gray-700">6 maanden</td>
+                      <td className="px-4 py-3 text-gray-700">YouTube cookie voor bandbreedte en spelerinterface</td>
+                    </tr>
+                    <tr className="bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700">Advertentie</td>
+                      <td className="px-4 py-3 text-gray-700 font-mono text-xs">IDE</td>
+                      <td className="px-4 py-3 text-gray-700">1 jaar</td>
+                      <td className="px-4 py-3 text-gray-700">Google DoubleClick voor relevante advertenties</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <p className="text-gray-700 mt-6">
+                Als je onze website blijft gebruiken, ga je akkoord met onze cookies. Wil je liever geen cookies gebruiken? Je kunt je voorkeuren aanpassen in het instellingenpaneel van de cookie consent banner.
+              </p>
+            </section>
 
-        <h3>2.3 Website Analytics (Google Analytics)</h3>
-        <p>We gebruiken Google Analytics om te begrijpen hoe bezoekers onze website gebruiken. We verzamelen:</p>
-        <ul>
-          <li>Pagina&apos;s die je bezoekt</li>
-          <li>Hoe lang je op pagina&apos;s blijft</li>
-          <li>Hoe je op onze site bent gekomen (bijvoorbeeld via Google)</li>
-          <li>Anonieme locatiedata (land/stad niveau)</li>
-          <li>Type apparaat en browser</li>
-          <li>Geanonimiseerd IP-adres (laatste cijfers worden verwijderd)</li>
-        </ul>
-        <p>
-          <strong>Doel:</strong> Om onze website te verbeteren en te begrijpen welke content het meest waardevol is.<br />
-          <strong>Bewaartermijn:</strong> 14 maanden<br />
-          <strong>Opt-out:</strong> Je kunt analytische cookies weigeren via onze cookie banner.
-        </p>
+            {/* Analytics */}
+            <section className="mb-10">
+              <h2 className="font-serif text-2xl font-bold text-gray-900 mb-4">Analytics</h2>
+              <p className="text-gray-700 mb-4">
+                We gebruiken Google Analytics om het bezoekersgedrag en het verkeer op onze website te analyseren. Zo kunnen we zien hoeveel bezoekers we per periode hebben, hoeveel daarvan terugkerend zijn, en welk percentage via mobiele apparaten of desktop komt.
+              </p>
+              <p className="text-gray-700">
+                Deze gegevens zijn puur statistisch en gericht op groepen gebruikers, niet op individuen. IP-adressen zijn geanonimiseerd, zodat we jouw gegevens nooit kunnen herleiden naar jou als individu.
+              </p>
+            </section>
 
-        <h3>2.4 Chrome Extension Scans</h3>
-        <p>Wanneer je onze Chrome extensie gebruikt, verzamelen we:</p>
-        <ul>
-          <li>ChatGPT scan resultaten (welke prompts jouw bedrijf noemen)</li>
-          <li>Positie van vermeldingen in ChatGPT antwoorden</li>
-          <li>Text snippets van relevante antwoorden</li>
-          <li>Timestamp en gebruikers-ID van de scan</li>
-          <li>Je inloggegevens (Supabase authenticatie token - alleen lokaal opgeslagen)</li>
-        </ul>
-        <p>
-          <strong>Doel:</strong> Om jouw AI visibility te meten en te tonen in je dashboard.<br />
-          <strong>Bewaartermijn:</strong> Onbeperkt (tenzij je verwijdering aanvraagt)<br />
-          <strong>Lokale opslag:</strong> Login tokens worden alleen op jouw computer opgeslagen, niet op onze servers.
-        </p>
+            {/* Ingesloten inhoud */}
+            <section className="mb-10">
+              <h2 className="font-serif text-2xl font-bold text-gray-900 mb-4">Ingesloten inhoud van andere websites</h2>
+              <p className="text-gray-700">
+                Berichten op onze site kunnen ingesloten (embedded) inhoud tonen, zoals video's, afbeeldingen of berichten. Ingesloten inhoud van andere websites gedraagt zich exact hetzelfde alsof je die andere website rechtstreeks bezoekt. Deze websites kunnen data over jou verzamelen, cookies gebruiken, tracking van derde partijen insluiten en je interactie met de ingesloten inhoud monitoren.
+              </p>
+            </section>
 
-        <h2>3. Bewaartermijnen</h2>
-        <p>We bewaren je gegevens niet langer dan nodig:</p>
+            {/* Gegevens inzien */}
+            <section className="mt-12 p-6 bg-gray-50 rounded-xl">
+              <h2 className="font-serif text-xl font-bold text-gray-900 mb-4">Je gegevens inzien & verwijdering</h2>
+              <p className="text-gray-700 mb-4">
+                Wil je weten welke gegevens we van je hebben bewaard? Of wil je gegevens laten wijzigen of verwijderen? Neem dan contact met ons op:
+              </p>
+              <p className="text-gray-700 mb-2">
+                <strong>E-mail:</strong>{' '}
+                <a href="mailto:hallo@onlinelabs.nl" className="text-[#376eb5] hover:underline">
+                  hallo@onlinelabs.nl
+                </a>
+              </p>
+              <p className="text-gray-700 mb-2">
+                <strong>Telefoon:</strong>{' '}
+                <a href="tel:0208202022" className="text-[#376eb5] hover:underline">
+                  020 820 20 22
+                </a>
+              </p>
+              <p className="text-gray-700 mb-4">
+                <strong>Contactpersoon:</strong> Imre Bernáth
+              </p>
+              <p className="text-gray-700">
+                Je kan hier onze{' '}
+                <a href="/algemene-voorwaarden" className="text-[#376eb5] hover:underline">
+                  algemene voorwaarden
+                </a>{' '}
+                lezen.
+              </p>
+            </section>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Type gegevens</th>
-              <th>Bewaartermijn</th>
-              <th>Reden</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Contactformulier</td>
-              <td>Max. 2 jaar</td>
-              <td>Voor follow-up en mogelijke samenwerking</td>
-            </tr>
-            <tr>
-              <td>Early Access aanmelding</td>
-              <td>Tot product launch + 6 maanden</td>
-              <td>Om je op de hoogte te houden</td>
-            </tr>
-            <tr>
-              <td>Online scan resultaten</td>
-              <td>Max. 1 jaar</td>
-              <td>Voor je eigen referentie</td>
-            </tr>
-            <tr>
-              <td>Chrome extensie scans</td>
-              <td>Onbeperkt</td>
-              <td>Voor historische data & trends (verwijderbaar op aanvraag)</td>
-            </tr>
-            <tr>
-              <td>Offerteaanvragen</td>
-              <td>Max. 2 jaar</td>
-              <td>Voor zakelijke administratie</td>
-            </tr>
-            <tr>
-              <td>E-mail correspondentie</td>
-              <td>Max. 4 jaar</td>
-              <td>Voor zakelijke administratie</td>
-            </tr>
-            <tr>
-              <td>Klantgegevens</td>
-              <td>7 jaar</td>
-              <td>Wettelijke verplichting (belastingdienst)</td>
-            </tr>
-            <tr>
-              <td>Website analytics</td>
-              <td>14 maanden</td>
-              <td>Google Analytics standaard</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2>4. Met wie delen we je gegevens?</h2>
-        <p>We delen je gegevens alleen met:</p>
-
-        <h3>4.1 Google Analytics</h3>
-        <p>
-          Voor website statistieken. Google verwerkt deze data in overeenstemming met hun Privacy Policy. 
-          We hebben een verwerkersovereenkomst met Google en IP-anonimisering staat aan.
-        </p>
-
-        <h3>4.2 Hostingpartner</h3>
-        <p>
-          Onze website wordt gehost op betrouwbare servers. De hostingpartner heeft toegang tot serverdata 
-          maar verwerkt geen persoonsgegevens actief.
-        </p>
-
-        <h3>4.3 OpenAI (ChatGPT)</h3>
-        <p>
-          De Chrome extensie communiceert met ChatGPT.com om prompts te testen. We delen:
-        </p>
-        <ul className="checklist">
-          <li>De commercial prompts die je wilt testen</li>
-          <li><strong>GEEN</strong> persoonlijke gegevens</li>
-          <li><strong>GEEN</strong> andere ChatGPT gesprekken</li>
-        </ul>
-        <p>
-          Deze communicatie gebeurt via je eigen browser en ChatGPT account. We hebben geen toegang tot je ChatGPT gesprekken.
-        </p>
-
-        <p><strong>We delen je gegevens NIET met:</strong></p>
-        <ul className="fail">
-          <li>Advertentienetwerken</li>
-          <li>Social media platforms (tenzij jij dat zelf doet)</li>
-          <li>Datamakelaars of andere derde partijen</li>
-        </ul>
-
-        <h2>5. Beveiliging</h2>
-        <p>We nemen passende maatregelen om je gegevens te beschermen:</p>
-        <ul className="checklist">
-          <li><strong>SSL/TLS versleuteling</strong> - Al het verkeer naar onze website is versleuteld (HTTPS)</li>
-          <li><strong>Beveiligde opslag</strong> - Formulierdata wordt veilig opgeslagen</li>
-          <li><strong>Toegangscontrole</strong> - Alleen geautoriseerd personeel heeft toegang</li>
-          <li><strong>Regular updates</strong> - We houden onze systemen up-to-date</li>
-          <li><strong>Spam detectie</strong> - We gebruiken IP-adressen om spam te voorkomen</li>
-          <li><strong>Lokale token opslag</strong> - Chrome extensie login tokens worden alleen op jouw computer bewaard</li>
-        </ul>
-
-        <h2>6. Cookies & Tracking</h2>
-        <p>Deze website gebruikt alleen functionele en analytische cookies.</p>
-
-        <h3>6.1 Functionele cookies (altijd actief)</h3>
-        <p>Deze cookies zijn noodzakelijk voor de werking van de website:</p>
-        <ul>
-          <li><strong>Cookiebot consent</strong> - Onthoudt je cookie voorkeuren (1 jaar)</li>
-        </ul>
-
-        <h3>6.2 Analytische cookies (optioneel - vereist toestemming)</h3>
-        <ul>
-          <li><strong>Google Analytics</strong> - Meet websitegebruik (14 maanden)</li>
-          <li><strong>_ga</strong> - Onderscheidt gebruikers (2 jaar)</li>
-          <li><strong>_ga_*</strong> - Houdt sessie status bij (2 jaar)</li>
-          <li><strong>_gid</strong> - Onderscheidt gebruikers (24 uur)</li>
-        </ul>
-
-        <p>
-          <strong>IP-anonimisering:</strong> We hebben IP-anonimisering geactiveerd, waardoor je volledige IP-adres niet wordt opgeslagen.
-        </p>
-
-        <p>
-          <strong>Geen marketing cookies</strong> - We plaatsen geen tracking cookies voor advertenties of retargeting.
-        </p>
-
-        <p><strong>Je kunt cookies beheren via:</strong></p>
-        <ul>
-          <li>Onze cookie banner bij je eerste bezoek</li>
-          <li>Je browser instellingen</li>
-          <li><a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a></li>
-        </ul>
-
-        <h2>7. Jouw rechten</h2>
-        <p>Volgens de AVG (Algemene Verordening Gegevensbescherming) heb je de volgende rechten:</p>
-
-        <ol className="emojiOnly">
-          <li>
-            <strong>Recht op inzage</strong><br />
-            Je mag weten welke gegevens we van je hebben
-          </li>
-          <li>
-            <strong>Recht op correctie</strong><br />
-            Je mag onjuiste gegevens laten corrigeren
-          </li>
-          <li>
-            <strong>Recht op verwijdering</strong><br />
-            Je mag vragen je gegevens te verwijderen
-          </li>
-          <li>
-            <strong>Recht op dataportabiliteit</strong><br />
-            Je mag je gegevens in een leesbaar formaat ontvangen
-          </li>
-          <li>
-            <strong>Recht op bezwaar</strong><br />
-            Je mag bezwaar maken tegen bepaalde verwerkingen
-          </li>
-          <li>
-            <strong>Recht op beperking</strong><br />
-            Je mag vragen de verwerking te beperken
-          </li>
-        </ol>
-
-        <p><strong>Een verzoek indienen?</strong></p>
-        <p>
-          <strong>E-mail:</strong> <a href="mailto:hallo@onlinelabs.nl">hallo@onlinelabs.nl</a><br />
-          <strong>Telefoon:</strong> <a href="tel:+31208202022">020 820 20 22</a><br />
-          <strong>Contactpersoon:</strong> Imre Bernáth
-        </p>
-        <p>We reageren binnen 1 maand op je verzoek.</p>
-
-        <h2>8. Klachten</h2>
-        <p>
-          Ben je niet tevreden over hoe we met je gegevens omgaan? Je hebt het recht een klacht in te dienen bij de toezichthouder:
-        </p>
-        <p>
-          <strong>Autoriteit Persoonsgegevens</strong><br />
-          Postbus 93374<br />
-          2509 AJ Den Haag<br />
-          <strong>Telefoon:</strong> <a href="tel:+31708888500">(+31) - (0)70 - 888 85 00</a><br />
-          <strong>Website:</strong> <a href="https://autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener noreferrer">autoriteitpersoonsgegevens.nl</a>
-        </p>
-        <p>
-          We horen het natuurlijk liever eerst rechtstreeks van je, zodat we samen naar een oplossing kunnen zoeken.
-        </p>
-
-        <h2>9. Wijzigingen in deze privacyverklaring</h2>
-        <p>
-          We kunnen deze privacyverklaring aanpassen wanneer dit nodig is. De meest recente versie vind je altijd op deze pagina. 
-          Bij belangrijke wijzigingen informeren we je via e-mail (als we je e-mailadres hebben).
-        </p>
-        <p><strong>Laatst bijgewerkt:</strong> 27 oktober 2025</p>
-
-        <h2>10. Vragen?</h2>
-        <p>Heb je vragen over deze privacyverklaring of over hoe we met je gegevens omgaan?</p>
-        <p>
-          <strong>📧 E-mail:</strong> <a href="mailto:hallo@onlinelabs.nl">hallo@onlinelabs.nl</a><br />
-          <strong>📞 Telefoon:</strong> <a href="tel:+31208202022">020 820 20 22</a><br />
-          <strong>🌐 Website:</strong> <a href="https://teun.ai">teun.ai</a><br />
-          <strong>👤 Contactpersoon:</strong> Imre Bernáth
-        </p>
-        <p>We helpen je graag verder!</p>
-
-        <h2>11. Chrome Extension - ChatGPT Visibility Scanner</h2>
-        <p>
-          Onze Chrome extensie helpt je om jouw AI visibility in ChatGPT te meten.
-        </p>
-
-        <h3>11.1 Welke gegevens verzamelt de extensie?</h3>
-        
-        <p><strong>Lokale opslag (alleen op jouw computer):</strong></p>
-        <ul>
-          <li>Je inloggegevens (Supabase authenticatie token)</li>
-          <li>De commercial prompts die je wilt testen</li>
-          <li>Tijdelijke scan resultaten</li>
-        </ul>
-
-        <p><strong>Naar onze servers verzonden:</strong></p>
-        <ul>
-          <li>ChatGPT scan resultaten (welke prompts jouw bedrijf vermelden)</li>
-          <li>Positie van vermeldingen in ChatGPT antwoorden</li>
-          <li>Text snippets van ChatGPT antwoorden</li>
-          <li>Timestamp van scans</li>
-        </ul>
-
-        <p><strong>NIET verzameld:</strong></p>
-        <ul className="fail">
-          <li>Je ChatGPT gesprekken</li>
-          <li>Persoonlijke ChatGPT data</li>
-          <li>Andere websites die je bezoekt</li>
-          <li>Toetsaanslagen of wachtwoorden</li>
-        </ul>
-
-        <h3>11.2 Permissions uitleg</h3>
-        <p>De extensie vraagt de volgende Chrome permissions:</p>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Permission</th>
-              <th>Waarom nodig?</th>
-              <th>Wat doen we ermee?</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>storage</code></td>
-              <td>Om je login te onthouden</td>
-              <td>Lokale opslag van auth token</td>
-            </tr>
-            <tr>
-              <td><code>activeTab</code></td>
-              <td>Om ChatGPT te lezen</td>
-              <td>Alleen wanneer je op &quot;Scan&quot; klikt</td>
-            </tr>
-            <tr>
-              <td><code>tabs</code></td>
-              <td>Om ChatGPT pagina te openen</td>
-              <td>Alleen voor scan functionaliteit</td>
-            </tr>
-            <tr>
-              <td><code>host_permissions</code></td>
-              <td>Toegang tot teun.ai en chatgpt.com</td>
-              <td>Communicatie met dashboard</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3>11.3 Hoe werkt de extensie?</h3>
-        <ol>
-          <li>Je logt in via onze website (teun.ai/dashboard)</li>
-          <li>Extensie haalt jouw commercial prompts op van het dashboard</li>
-          <li>Je klikt op &quot;Start Scan&quot; in de extensie</li>
-          <li>Extensie opent ChatGPT en voert prompts uit</li>
-          <li>Resultaten worden opgeslagen in je dashboard</li>
-          <li>Je kunt resultaten bekijken op teun.ai/dashboard</li>
-        </ol>
-
-        <h3>11.4 Beveiliging</h3>
-        <ul className="checklist">
-          <li><strong>End-to-end versleuteling:</strong> Communicatie tussen extensie en dashboard is versleuteld (HTTPS)</li>
-          <li><strong>Lokale opslag:</strong> Je login token wordt alleen lokaal opgeslagen, niet gedeeld</li>
-          <li><strong>Geen tracking:</strong> We tracken niet wat je buiten de scan functie doet</li>
-          <li><strong>Transparant:</strong> De extensie code is transparant en controleerbaar</li>
-        </ul>
-
-        <h3>11.5 Verwijderen van data</h3>
-        <p>Je kunt je extensie data verwijderen door:</p>
-        <ol>
-          <li>De extensie te deïnstalleren via Chrome</li>
-          <li>Je account te verwijderen op teun.ai/dashboard</li>
-          <li>Een verzoek te sturen naar <a href="mailto:hallo@onlinelabs.nl">hallo@onlinelabs.nl</a></li>
-        </ol>
-
-        <h3>11.6 Updates</h3>
-        <p>
-          De extensie update automatisch via de Chrome Web Store. Bij grote wijzigingen informeren we je via:
-        </p>
-        <ul>
-          <li>Update notificatie in de extensie</li>
-          <li>E-mail (indien geregistreerd)</li>
-          <li>Changelog op teun.ai/changelog (binnenkort)</li>
-        </ul>
-
-        <blockquote>
-          <strong>Vragen over de extensie?</strong><br />
-          📧 E-mail: <a href="mailto:hallo@onlinelabs.nl">hallo@onlinelabs.nl</a><br />
-          📞 Telefoon: <a href="tel:+31208202022">020 820 20 22</a>
-        </blockquote>
-
-        <h2>Specifiek voor Early Access & Online Scans</h2>
-
-        <h3>Early Access Programma</h3>
-        <p>Als je je aanmeldt voor early access:</p>
-        <ul>
-          <li>Gebruiken we je e-mail alleen om je op de hoogte te houden van de product launch</li>
-          <li>Krijg je maximaal 1x per maand een update (geen spam)</li>
-          <li>Kun je je op elk moment afmelden via de link in de e-mail</li>
-          <li>Bewaren we je gegevens tot 6 maanden na de product launch</li>
-          <li>Delen we je gegevens nooit met derden</li>
-        </ul>
-
-        <h3>Online Scans</h3>
-        <p>Als je een online scan of test invult:</p>
-        <ul>
-          <li>Zijn de resultaten alleen voor jou zichtbaar</li>
-          <li>Slaan we je antwoorden op voor max. 1 jaar</li>
-          <li>Gebruiken we geanonimiseerde data om onze scans te verbeteren</li>
-          <li>Kun je je resultaten per e-mail ontvangen (optioneel)</li>
-          <li>Kun je verwijdering van je scan resultaten aanvragen</li>
-        </ul>
-
-        <blockquote>
-          <strong>Nog vragen?</strong> Neem gerust contact op via{' '}
-          <a href="mailto:hallo@onlinelabs.nl">hallo@onlinelabs.nl</a> of bel{' '}
-          <a href="tel:+31208202022">020 820 20 22</a>
-        </blockquote>
-      </article>
-    </div>
+          </div>
+        </div>
+      </main>
+    </>
   );
 }
