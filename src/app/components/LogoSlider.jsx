@@ -3,6 +3,15 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 
+// Helper: Cloudways → CDN
+const toCdnUrl = (url) => {
+  if (!url) return url;
+  return url.replace(
+    'wordpress-988065-5984089.cloudwaysapps.com/wp-content/uploads',
+    'cdn.onlinelabs.nl/wp-content/uploads'
+  );
+};
+
 /**
  * LogoSlider Component
  * 
@@ -128,7 +137,7 @@ export default function LogoSlider({
                         aria-label={`Bezoek ${logo.name} website`}
                       >
                         <Image
-                          src={logo.imageUrl}
+                          src={toCdnUrl(logo.imageUrl)}
                           alt={logo.altText || `${logo.name} logo`}
                           width={240}
                           height={120}
@@ -138,7 +147,7 @@ export default function LogoSlider({
                       </a>
                     ) : (
                       <Image
-                        src={logo.imageUrl}
+                        src={toCdnUrl(logo.imageUrl)}
                         alt={logo.altText || `${logo.name} logo`}
                         width={240}
                         height={120}
@@ -185,7 +194,7 @@ export default function LogoSlider({
                         aria-label={`Bezoek ${logo.name} website`}
                       >
                         <Image
-                          src={logo.imageUrl}
+                          src={toCdnUrl(logo.imageUrl)}
                           alt={logo.altText || `${logo.name} logo`}
                           width={240}
                           height={120}
@@ -195,7 +204,7 @@ export default function LogoSlider({
                       </a>
                     ) : (
                       <Image
-                        src={logo.imageUrl}
+                        src={toCdnUrl(logo.imageUrl)}
                         alt={logo.altText || `${logo.name} logo`}
                         width={240}
                         height={120}
