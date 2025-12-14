@@ -7,6 +7,8 @@ import CTASection from '../../components/CTASection';
 import LogoSlider from '../../components/LogoSlider';
 import { getCaseBySlug, getCases, getAllCaseSlugs, getHomepageSettings } from '../../lib/wordpress';
 
+const SITE_URL = 'https://www.onlinelabs.nl';
+
 // 🚀 ISR: Revalidate every 24 hours
 export const revalidate = 86400;
 
@@ -23,14 +25,14 @@ export async function generateMetadata({ params }) {
 
   if (!caseData) {
     return {
-      title: 'Case niet gevonden | OnlineLabs',
+      title: 'Case niet gevonden',
     };
   }
 
   // Default values from case content
   let title = caseData.title;
   let description = caseData.excerpt || '';
-  let ogImage = caseData.featuredImage?.sourceUrl;
+  let ogImage = caseData.featuredImage?.sourceUrl || '/og-image-ons-werk.jpg';
 
   // Parse Rank Math HEAD for SEO data (same approach as blog posts)
   if (caseData.rankMathHead) {
@@ -65,7 +67,8 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title,
       description,
-      images: ogImage ? [ogImage] : [],
+      url: `/ons-werk/${resolvedParams.slug}`,
+      images: ogImage ? [ogImage] : ['/og-image-ons-werk.jpg'],
       type: 'article',
       locale: 'nl_NL',
       siteName: 'OnlineLabs',
@@ -74,7 +77,7 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       title,
       description,
-      images: ogImage ? [ogImage] : [],
+      images: ogImage ? [ogImage] : ['/og-image-ons-werk.jpg'],
     },
   };
 }
@@ -107,45 +110,85 @@ export default async function CaseDetailPage({ params }) {
     })) || []
   } : null;
 
-  const currentUrl = `https://www.onlinelabs.nl/ons-werk/${resolvedParams.slug}`;
+  const currentUrl = `${SITE_URL}/ons-werk/${resolvedParams.slug}`;
 
-  // JSON-LD Schema for Case Study
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: caseData.title,
-    description: caseData.excerpt,
-    image: caseData.featuredImage?.sourceUrl,
-    datePublished: caseData.projectDate,
-    author: {
-      '@type': 'Organization',
-      name: 'OnlineLabs',
-      url: 'https://www.onlinelabs.nl'
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": SITE_URL
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Ons werk",
+        "item": `${SITE_URL}/ons-werk`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": caseData.clientName || caseData.title,
+        "item": currentUrl
+      }
+    ]
+  };
+
+  // Case Study Schema (Article subtype voor case studies)
+  const caseStudySchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${currentUrl}/#article`,
+    "headline": caseData.title,
+    "description": caseData.excerpt,
+    "image": caseData.featuredImage?.sourceUrl,
+    "datePublished": caseData.projectDate || "2025-01-01",
+    "dateModified": caseData.projectDate || "2025-01-01",
+    "author": {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      "name": "OnlineLabs",
+      "url": SITE_URL
     },
-    publisher: {
-      '@type': 'Organization',
-      name: 'OnlineLabs',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://cdn.onlinelabs.nl/wp-content/uploads/2024/12/18111213/Onlinelabs-logo.svg'
+    "publisher": {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      "name": "OnlineLabs",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://cdn.onlinelabs.nl/wp-content/uploads/2025/01/18075444/OnlineLabs-logo.png"
       }
     },
-    about: {
-      '@type': 'Organization',
-      name: caseData.clientName
+    "about": {
+      "@type": "Organization",
+      "name": caseData.clientName
     },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': currentUrl
-    }
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": currentUrl
+    },
+    "isPartOf": {
+      "@id": `${SITE_URL}/#website`
+    },
+    "inLanguage": "nl-NL"
   };
 
   return (
     <>
-      {/* JSON-LD Structured Data */}
+      {/* BreadcrumbList Schema */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      {/* Case Study Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudySchema) }}
       />
 
       <main>
