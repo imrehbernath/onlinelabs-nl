@@ -157,7 +157,7 @@ async function getOnsWerkData() {
 
   try {
     const res = await fetch(
-      `https://wordpress-988065-5984089.cloudwaysapps.com/graphql`,
+      `https://cdn.onlinelabs.nl/graphql`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

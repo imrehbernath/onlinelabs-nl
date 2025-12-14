@@ -1,7 +1,7 @@
 // WordPress GraphQL API Client
 // Fetches data from headless WordPress with ISR caching
 
-const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL || 'https://wordpress-988065-5984089.cloudwaysapps.com/graphql';
+const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL || 'https://cdn.onlinelabs.nl/graphql';
 
 async function fetchAPI(query, { variables = {} } = {}) {
   const headers = { 'Content-Type': 'application/json' };

@@ -10,7 +10,7 @@ const query = `
   }
 `;
 
-fetch('https://wordpress-988065-5984089.cloudwaysapps.com/graphql', {
+fetch('https://cdn.onlinelabs.nl/graphql', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
