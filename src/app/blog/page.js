@@ -72,7 +72,7 @@ export const metadata = {
     canonical: '/blog',
   },
   openGraph: {
-    title: 'Blog | OnlineLabs',
+    title: 'Blog – SEO, AI visibility & online marketing | OnlineLabs',
     description: 'Artikelen over SEO, GEO, webdesign en conversie-optimalisatie. Praktische tips en trends van experts.',
     url: '/blog',
     type: 'website',
