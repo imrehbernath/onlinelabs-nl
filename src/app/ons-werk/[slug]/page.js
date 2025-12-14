@@ -32,7 +32,13 @@ export async function generateMetadata({ params }) {
   // Default values from case content
   let title = caseData.title;
   let description = caseData.excerpt || '';
-  let ogImage = caseData.featuredImage?.sourceUrl || '/og-image-ons-werk.jpg';
+  // Replace WordPress URL with CDN URL for OG image
+  let ogImage = caseData.featuredImage?.sourceUrl 
+    ? caseData.featuredImage.sourceUrl.replace(
+        'https://wordpress-988065-5984089.cloudwaysapps.com',
+        'https://cdn.onlinelabs.nl'
+      )
+    : '/og-image-ons-werk.jpg';
 
   // Parse Rank Math HEAD for SEO data (same approach as blog posts)
   if (caseData.rankMathHead) {
@@ -52,7 +58,10 @@ export async function generateMetadata({ params }) {
     // Extract OG image
     const ogImageMatch = caseData.rankMathHead.match(/<meta property="og:image" content="([^"]*)"/);
     if (ogImageMatch) {
-      ogImage = ogImageMatch[1];
+      ogImage = ogImageMatch[1].replace(
+        'https://wordpress-988065-5984089.cloudwaysapps.com',
+        'https://cdn.onlinelabs.nl'
+      );
     }
   }
 
@@ -145,9 +154,14 @@ export default async function CaseDetailPage({ params }) {
     "@id": `${currentUrl}/#article`,
     "headline": caseData.title,
     "description": caseData.excerpt,
-    "image": caseData.featuredImage?.sourceUrl,
-    "datePublished": caseData.projectDate || "2025-01-01",
-    "dateModified": caseData.projectDate || "2025-01-01",
+    "image": caseData.featuredImage?.sourceUrl 
+      ? caseData.featuredImage.sourceUrl.replace(
+          'https://wordpress-988065-5984089.cloudwaysapps.com',
+          'https://cdn.onlinelabs.nl'
+        )
+      : undefined,
+    "datePublished": caseData.projectDate ? `${caseData.projectDate}T00:00:00+01:00` : undefined,
+    "dateModified": caseData.projectDate ? `${caseData.projectDate}T00:00:00+01:00` : undefined,
     "author": {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
