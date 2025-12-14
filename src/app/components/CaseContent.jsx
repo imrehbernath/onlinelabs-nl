@@ -160,22 +160,6 @@ function CaseContent({ caseData }) {
                 </div>
               </div>
 
-              {/* CTA Card */}
-              <div className="bg-[#376eb5] rounded-xl p-6 lg:p-8 text-white">
-                <h3 className="font-serif text-xl font-bold mb-3">
-                  Vergelijkbaar project?
-                </h3>
-                <p className="text-white/90 text-base leading-relaxed mb-6">
-                  Wil je ook zo'n resultaat behalen? Laten we samen kijken naar de mogelijkheden voor jouw organisatie.
-                </p>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 bg-white text-[#376eb5] font-semibold rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-                >
-                  Neem contact op
-                </Link>
-              </div>
-
             </div>
           </div>
 
