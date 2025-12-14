@@ -86,13 +86,18 @@ async function getPost(slug) {
   }
 }
 
-// Helper: Replace WordPress URLs with production URLs
+// Helper: Replace WordPress URLs with production URLs in schema
+// IMPORTANT: Keep image URLs on CDN, only replace schema/website URLs
 function replaceWpUrls(str) {
   if (!str) return str;
-  return str.replace(
-    /https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com/g,
-    SITE_URL
-  );
+  
+  return str
+    // Replace old Cloudways URL
+    .replace(/https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com/g, SITE_URL)
+    // Replace cdn.onlinelabs.nl with www EXCEPT for /wp-content/ paths (images)
+    .replace(/https:\/\/cdn\.onlinelabs\.nl(?!\/wp-content\/)/g, SITE_URL)
+    // Replace bare cdn.onlinelabs.nl in name/organization fields
+    .replace(/"cdn\.onlinelabs\.nl"/g, '"www.onlinelabs.nl"');
 }
 
 // Helper: Extract FAQs from JSON-LD
