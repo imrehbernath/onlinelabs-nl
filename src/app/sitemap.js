@@ -1,30 +1,19 @@
+import { getAllBlogSlugs, getAllCaseSlugs, getAllServices } from './lib/wordpress';
+
 export default async function sitemap() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://teun.ai';
+  const siteUrl = 'https://www.onlinelabs.nl';
 
-  // Fetch all blog posts from WordPress
-  const query = `
-    query GetAllPosts {
-      posts(first: 1000, where: { orderby: { field: DATE, order: DESC } }) {
-        nodes {
-          slug
-          modified
-        }
-      }
-    }
-  `;
-
-  let posts = [];
+  // Fetch all dynamic content in parallel
+  let blogSlugs = [];
+  let caseSlugs = [];
+  let services = [];
 
   try {
-    const res = await fetch(process.env.WORDPRESS_GRAPHQL_URL || 'https://assets.teun.ai/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query }),
-      next: { revalidate: 3600 }
-    });
-
-    const json = await res.json();
-    posts = json.data?.posts?.nodes || [];
+    [blogSlugs, caseSlugs, services] = await Promise.all([
+      getAllBlogSlugs(),
+      getAllCaseSlugs(),
+      getAllServices(),
+    ]);
   } catch (error) {
     console.error('Sitemap fetch error:', error);
   }
@@ -38,26 +27,60 @@ export default async function sitemap() {
       priority: 1.0,
     },
     {
+      url: `${siteUrl}/skills`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${siteUrl}/ons-werk`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${siteUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
     },
     {
-      url: `${siteUrl}/auteur/imre`,
+      url: `${siteUrl}/over-ons`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.7,
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
   ];
 
-  // Dynamic blog post pages
-  const blogPages = posts.map((post) => ({
-    url: `${siteUrl}/${post.slug}`,
-    lastModified: new Date(post.modified),
+  // Dynamic blog post pages (/blog/[slug])
+  const blogPages = blogSlugs.map((slug) => ({
+    url: `${siteUrl}/blog/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }));
+
+  // Dynamic service/skill pages (/skills/[slug])
+  const servicePages = services.map((service) => ({
+    url: `${siteUrl}/skills/${service.slug}`,
+    lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.8,
   }));
 
-  return [...staticPages, ...blogPages];
+  // Dynamic case pages (/ons-werk/[slug])
+  const casePages = caseSlugs.map((slug) => ({
+    url: `${siteUrl}/ons-werk/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...servicePages, ...casePages, ...blogPages];
 }
