@@ -5,8 +5,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Check } from 'lucide-react';
 
-export default function AboutSection({ aboutData, imageCaption, imageCaptionLink }) {
+export default function AboutSection({ aboutData, imageCaption, imageCaptionLink, background = 'white' }) {
   const [isVisible, setIsVisible] = useState(false);
+
+  // Background color mapping
+  const bgStyles = {
+    white: { backgroundColor: '#ffffff' },
+    gray: { backgroundColor: '#F3F4F6' },
+    beige: { backgroundColor: '#FAFAF8' },
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,7 +58,8 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
   return (
     <section 
       id="about-section"
-      className="py-12 lg:py-32 bg-white overflow-hidden"
+      className="py-12 lg:py-32 overflow-hidden"
+      style={bgStyles[background] || bgStyles.white}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">

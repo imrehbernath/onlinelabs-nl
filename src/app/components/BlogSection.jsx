@@ -150,7 +150,7 @@ export default function BlogSection({ posts = [], title = "Laatste Inzichten" })
   );
 
   return (
-    <section className="py-20 lg:py-28 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-20 lg:py-28" style={{ backgroundColor: '#F3F4F6' }}>
       <div className="container mx-auto px-6 lg:px-8">
         
         {/* Section Header */}

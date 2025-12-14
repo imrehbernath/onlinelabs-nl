@@ -13,22 +13,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
  * - title: Section title (default: "Wat zeggen klanten over OnlineLabs")
  * - subtitle: Section subtitle (default: "Onze klanten waarderen onze expertise en toewijding")
  * - background: 'white' | 'gray' | 'beige' (section background)
- * 
- * Expected testimonial structure:
- * testimonials = [{
- *   id: string,
- *   testimonialDetails: {
- *     rating: number (1-5),
- *     shortQuote: string,
- *     fullReview: string (optional - if exists, shows "Lees meer"),
- *     reviewerName: string,
- *     reviewerRole: string,
- *     reviewerCompany: string (optional),
- *     reviewerPhoto: { node: { sourceUrl: string } } (optional),
- *     verified: boolean (shows blue checkmark),
- *     googleReviewUrl: string (optional)
- *   }
- * }]
  */
 export default function TestimonialsSection({ 
   testimonials = [],
@@ -43,11 +27,17 @@ export default function TestimonialsSection({
   const sliderRef = useRef(null);
   const autoPlayRef = useRef(null);
 
-  // Background color mapping
+  // Background color mapping - gebruik inline style voor beige (geen Tailwind class)
+  const bgStyles = {
+    white: {},
+    gray: {},
+    beige: { backgroundColor: '#FAFAF8' },
+  };
+  
   const bgClasses = {
     white: 'bg-white',
     gray: 'bg-[#F3F4F6]',
-    beige: 'bg-[#FAF9F6]',
+    beige: '', // Beige via inline style
   };
 
   // Filter out testimonials without required fields
@@ -183,7 +173,10 @@ export default function TestimonialsSection({
 
   return (
     <>
-      <section className={`py-20 lg:py-24 ${bgClasses[background] || bgClasses.gray}`}>
+      <section 
+        className={`py-20 lg:py-24 ${bgClasses[background] || bgClasses.gray}`}
+        style={bgStyles[background] || {}}
+      >
         <div className="container mx-auto px-6 lg:px-8">
           
           {/* Section Header */}

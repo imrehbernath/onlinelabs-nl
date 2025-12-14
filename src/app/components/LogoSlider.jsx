@@ -25,11 +25,11 @@ export default function LogoSlider({
   
   const scrollerRef = useRef(null);
 
-  // Background color mapping
-  const bgClasses = {
-    white: 'bg-white',
-    gray: 'bg-gray-50',
-    beige: 'bg-[#FAF9F6]',
+  // Background color mapping - inline styles voor consistentie
+  const bgStyles = {
+    white: { backgroundColor: '#ffffff' },
+    gray: { backgroundColor: '#F3F4F6' },
+    beige: { backgroundColor: '#FAFAF8' },
   };
 
   // Default demo logos if none provided
@@ -81,7 +81,10 @@ export default function LogoSlider({
   const bottomRowLogos = displayLogos.slice(midPoint);
 
   return (
-    <section className={`py-16 lg:py-20 ${bgClasses[background] || bgClasses.gray}`}>
+    <section 
+      className="py-16 lg:py-20"
+      style={bgStyles[background] || bgStyles.gray}
+    >
       <div className="container mx-auto px-6 lg:px-8">
         
         {/* Title */}

@@ -150,7 +150,7 @@ export default async function Home() {
         {/* Services Section - "Onze LABS" met colored bars */}
         <ServicesSection services={services} />
 
-        {/* CTA Section 1 - Call to action na Services (DARK) */}
+        {/* CTA Section - Call to action na Services */}
         <CTASection 
           title="Klaar om jouw online zichtbaarheid te verbeteren?"
           description="Ontdek hoe OnlineLabs jouw bedrijf helpt groeien met strategische SEO, GEO en webdesign."
@@ -165,6 +165,7 @@ export default async function Home() {
             aboutData={aboutData}
             imageCaption='Sanne Verschoor – Webdesigner & developer, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>'
             imageCaptionLink="/auteur/sanne-verschoor"
+            background="beige"
           />
         )}
 
@@ -175,6 +176,7 @@ export default async function Home() {
             logos={logoSliderData.logos}
             speed={logoSliderData.speed}
             grayscale={logoSliderData.grayscale}
+            background="gray"
           />
         )}
 
@@ -182,19 +184,10 @@ export default async function Home() {
         {cases && cases.length > 0 && (
           <CasesSection 
             cases={cases}
-            title="Projecten waar we trots op zijn"
+            title="Uitgelichte cases"
             subtitle="Cases"
           />
         )}
-
-        {/* CTA Section 2 - Light variant tussen Cases en Blog (NIEUW!) */}
-        <CTASection 
-          title="Benieuwd wat we voor jouw bedrijf kunnen betekenen?"
-          description="Plan een vrijblijvend gesprek en ontdek de mogelijkheden voor jouw online groei."
-          primaryButton={{ text: "Plan een gesprek", url: "/contact" }}
-          secondaryButton={{ text: "Bekijk alle cases", url: "/ons-werk" }}
-          variant="light"
-        />
 
         {/* Blog Section - Latest 3 blog posts with featured layout */}
         {blogPosts && blogPosts.length > 0 && (
@@ -205,7 +198,10 @@ export default async function Home() {
         )}
 
         {/* Testimonials Section - 3-column slider met auto-rotate */}
-        <TestimonialsSection testimonials={testimonials} />
+        <TestimonialsSection 
+          testimonials={testimonials} 
+          background="beige"
+        />
 
         {/* Footer volgt direct na Testimonials - geen extra CTA meer */}
       </main>
