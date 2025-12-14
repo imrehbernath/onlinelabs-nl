@@ -1,4 +1,4 @@
-import { getAllBlogSlugs, getAllCaseSlugs, getAllServices } from './lib/wordpress';
+import { getAllBlogPostSlugs, getAllCaseSlugs, getAllServices } from './lib/wordpress';
 
 export default async function sitemap() {
   const siteUrl = 'https://www.onlinelabs.nl';
@@ -10,7 +10,7 @@ export default async function sitemap() {
 
   try {
     [blogSlugs, caseSlugs, services] = await Promise.all([
-      getAllBlogSlugs(),
+      getAllBlogPostSlugs(),
       getAllCaseSlugs(),
       getAllServices(),
     ]);
