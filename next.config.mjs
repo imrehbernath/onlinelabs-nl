@@ -14,10 +14,6 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cdn.onlinelabs.nl',
-      },
-      {
-        protocol: 'https',
         hostname: 'gravatar.com',
       },
       {

@@ -3,6 +3,12 @@
 
 const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL || 'https://cdn.onlinelabs.nl/graphql';
 
+// API endpoint voor REST calls (Rank Math etc.)
+const WP_API_URL = 'https://cdn.onlinelabs.nl';
+
+// Canonical site URL voor SEO (Rank Math URL parameters)
+const SITE_URL = 'https://www.onlinelabs.nl';
+
 async function fetchAPI(query, { variables = {} } = {}) {
   const headers = { 'Content-Type': 'application/json' };
 
@@ -956,15 +962,13 @@ export async function getCaseBySlug(slug) {
     };
 
     // Fetch Rank Math SEO data via REST API
-    const wpUrl = 'https://cdn.onlinelabs.nl';
-    
-    // Use WordPress URL for Rank Math (not production URL)
-    const caseUrl = `${wpUrl}${caseData.uri}`;
+    // API endpoint is cdn.onlinelabs.nl, but URL parameter must be www.onlinelabs.nl for correct canonical
+    const caseUrl = `${SITE_URL}${caseData.uri}`;
     
     try {
       console.log('🔍 Fetching Rank Math SEO for:', caseUrl);
       const rankMathRes = await fetch(
-        `${wpUrl}/wp-json/rankmath/v1/getHead?url=${encodeURIComponent(caseUrl)}`,
+        `${WP_API_URL}/wp-json/rankmath/v1/getHead?url=${encodeURIComponent(caseUrl)}`,
         { next: { revalidate: 3600 } }
       );
       
