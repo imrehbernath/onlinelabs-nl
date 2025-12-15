@@ -9,13 +9,23 @@ import BlogSection from './components/BlogSection';
 import { getHomepageSettings, getAllServices, getTestimonials, getBlogPosts, getCases } from './lib/wordpress';
 
 const SITE_URL = 'https://www.onlinelabs.nl';
+const CDN_URL = 'https://cdn.onlinelabs.nl';
 
-// Helper: Replace WordPress URLs with production URLs
+// Helper: Replace WordPress URLs with production URLs (for canonical, JSON-LD)
 function replaceWpUrls(str) {
   if (!str) return str;
   return str.replace(
     /https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com/g,
     SITE_URL
+  );
+}
+
+// Helper: Replace WordPress URLs with CDN URLs (for images/media - better Core Web Vitals)
+function replaceWpUrlsToCdn(str) {
+  if (!str) return str;
+  return str.replace(
+    /https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com/g,
+    CDN_URL
   );
 }
 
@@ -38,7 +48,7 @@ export async function generateMetadata() {
         description: homepageSettings.seo.openGraph?.description || homepageSettings.seo.description,
         url: '/',
         images: homepageSettings.seo.openGraph?.image?.url 
-          ? [homepageSettings.seo.openGraph.image.url] 
+          ? [replaceWpUrlsToCdn(homepageSettings.seo.openGraph.image.url)] 
           : ['/og-image-homepage.jpg'],
         type: 'website',
         locale: 'nl_NL',
@@ -49,7 +59,7 @@ export async function generateMetadata() {
         title: homepageSettings.seo.openGraph?.title || homepageSettings.seo.title,
         description: homepageSettings.seo.openGraph?.description || homepageSettings.seo.description,
         images: homepageSettings.seo.openGraph?.image?.url 
-          ? [homepageSettings.seo.openGraph.image.url] 
+          ? [replaceWpUrlsToCdn(homepageSettings.seo.openGraph.image.url)] 
           : ['/og-image-homepage.jpg'],
       },
     };
@@ -93,10 +103,26 @@ export default async function Home() {
     getCases(3),            // Latest 3 cases
   ]);
 
-  // Extract Hero data
-  const heroData = homepageSettings?.heroSection;
+  // Extract Hero data with CDN URLs for images
+  const heroData = homepageSettings?.heroSection ? {
+    ...homepageSettings.heroSection,
+    heroImage: homepageSettings.heroSection.heroImage?.node ? {
+      node: {
+        ...homepageSettings.heroSection.heroImage.node,
+        sourceUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroImage.node.sourceUrl)
+      }
+    } : null,
+    heroImage2: homepageSettings.heroSection.heroImage2?.node ? {
+      node: {
+        ...homepageSettings.heroSection.heroImage2.node,
+        sourceUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroImage2.node.sourceUrl)
+      }
+    } : null,
+    heroVideoWebm: replaceWpUrlsToCdn(homepageSettings.heroSection.heroVideoWebm),
+    heroVideoMp4: replaceWpUrlsToCdn(homepageSettings.heroSection.heroVideoMp4),
+  } : null;
 
-  // Extract and transform About section data
+  // Extract and transform About section data with CDN URLs
   const aboutData = homepageSettings?.aboutSection ? {
     title: homepageSettings.aboutSection.aboutTitle,
     subtitle: homepageSettings.aboutSection.aboutSubtitle,
@@ -105,27 +131,27 @@ export default async function Home() {
     targetAudienceTitle: homepageSettings.aboutSection.aboutTargetTitle,
     targetAudienceItems: homepageSettings.aboutSection.aboutTargetItems?.map(item => item.item) || [],
     image: {
-      sourceUrl: homepageSettings.aboutSection.aboutImage?.node?.sourceUrl || '/images/workspace-onlinelabs.jpg',
+      sourceUrl: replaceWpUrlsToCdn(homepageSettings.aboutSection.aboutImage?.node?.sourceUrl) || '/images/workspace-onlinelabs.jpg',
       altText: homepageSettings.aboutSection.aboutImage?.node?.altText || 'OnlineLabs workspace in Amsterdam'
     },
     ctaText: homepageSettings.aboutSection.aboutCtaText || 'over ons',
     ctaUrl: homepageSettings.aboutSection.aboutCtaUrl || '/over-ons'
   } : null;
 
-  // Extract and transform Logo Slider data
+  // Extract and transform Logo Slider data with CDN URLs
   const logoSliderData = homepageSettings?.logoSlider && homepageSettings.logoSlider.sliderEnabled ? {
     title: homepageSettings.logoSlider.sliderTitle || 'Vertrouwd door toonaangevende bedrijven',
     speed: homepageSettings.logoSlider.sliderSpeed || 'normal',
     grayscale: homepageSettings.logoSlider.sliderGrayscale !== false,
     logos: homepageSettings.logoSlider.logos?.map(logo => ({
       name: logo.companyName,
-      imageUrl: logo.logoImage?.node?.sourceUrl,
+      imageUrl: replaceWpUrlsToCdn(logo.logoImage?.node?.sourceUrl),
       altText: logo.logoAlt || `${logo.companyName} logo`,
       url: logo.websiteUrl || null
     })) || []
   } : null;
 
-  // Process JSON-LD from Rank Math: replace WordPress URLs with production URLs
+  // Process JSON-LD from Rank Math: replace WordPress URLs with production URLs (NOT CDN for SEO)
   const processedJsonLd = homepageSettings?.seo?.jsonLd?.raw 
     ? replaceWpUrls(homepageSettings.seo.jsonLd.raw)
         .replace(/<script[^>]*>/gi, '')
