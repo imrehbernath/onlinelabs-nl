@@ -13,7 +13,7 @@ const CDN_URL = 'https://cdn.onlinelabs.nl';
 
 // Helper: Replace WordPress URLs with production URLs (for canonical, JSON-LD)
 function replaceWpUrls(str) {
-  if (!str) return str;
+  if (!str || typeof str !== 'string') return str;
   return str.replace(
     /https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com/g,
     SITE_URL
@@ -22,7 +22,7 @@ function replaceWpUrls(str) {
 
 // Helper: Replace WordPress URLs with CDN URLs (for images/media - better Core Web Vitals)
 function replaceWpUrlsToCdn(str) {
-  if (!str) return str;
+  if (!str || typeof str !== 'string') return str;
   return str.replace(
     /https:\/\/wordpress-988065-5984089\.cloudwaysapps\.com/g,
     CDN_URL
