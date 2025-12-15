@@ -103,23 +103,23 @@ export default async function Home() {
     getCases(3),            // Latest 3 cases
   ]);
 
-  // Extract Hero data with CDN URLs for images
+  // Extract Hero data with CDN URLs for images (flattened structure for Hero.jsx)
   const heroData = homepageSettings?.heroSection ? {
     ...homepageSettings.heroSection,
     heroImage: homepageSettings.heroSection.heroImage?.node ? {
-      node: {
-        ...homepageSettings.heroSection.heroImage.node,
-        sourceUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroImage.node.sourceUrl)
-      }
+      sourceUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroImage.node.sourceUrl),
+      altText: homepageSettings.heroSection.heroImage.node.altText
     } : null,
     heroImage2: homepageSettings.heroSection.heroImage2?.node ? {
-      node: {
-        ...homepageSettings.heroSection.heroImage2.node,
-        sourceUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroImage2.node.sourceUrl)
-      }
+      sourceUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroImage2.node.sourceUrl),
+      altText: homepageSettings.heroSection.heroImage2.node.altText
     } : null,
-    heroVideoWebm: replaceWpUrlsToCdn(homepageSettings.heroSection.heroVideoWebm),
-    heroVideoMp4: replaceWpUrlsToCdn(homepageSettings.heroSection.heroVideoMp4),
+    heroVideoWebm: homepageSettings.heroSection.heroVideoWebm?.mediaItemUrl ? {
+      mediaItemUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroVideoWebm.mediaItemUrl)
+    } : null,
+    heroVideoMp4: homepageSettings.heroSection.heroVideoMp4?.mediaItemUrl ? {
+      mediaItemUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroVideoMp4.mediaItemUrl)
+    } : null,
   } : null;
 
   // Extract and transform About section data with CDN URLs
