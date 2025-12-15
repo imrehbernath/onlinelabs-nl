@@ -1,6 +1,13 @@
 'use client';
 
-import { Facebook, Twitter, Mail, MessageCircle } from 'lucide-react';
+import { Facebook, Mail, MessageCircle } from 'lucide-react';
+
+// Custom X (Twitter) icon - officiële X logo
+const XIcon = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 
 export default function SocialShareButtons({ title, url }) {
   const encodedUrl = encodeURIComponent(url);
@@ -8,7 +15,7 @@ export default function SocialShareButtons({ title, url }) {
 
   const shareLinks = {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+    x: `https://x.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
     whatsapp: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
     email: `mailto:?subject=${encodedTitle}&body=Ik vond dit interessant: ${encodedUrl}`
   };
@@ -44,13 +51,13 @@ export default function SocialShareButtons({ title, url }) {
         <Facebook className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" />
       </button>
 
-      {/* Twitter/X */}
+      {/* X (formerly Twitter) */}
       <button
-        onClick={() => handleShare('twitter', shareLinks.twitter)}
+        onClick={() => handleShare('x', shareLinks.x)}
         className="group flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-black transition-all duration-200"
-        aria-label="Deel op X (Twitter)"
+        aria-label="Deel op X"
       >
-        <Twitter className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" />
+        <XIcon className="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" />
       </button>
 
       {/* WhatsApp */}

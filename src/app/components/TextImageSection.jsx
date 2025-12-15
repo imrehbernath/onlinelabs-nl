@@ -258,6 +258,8 @@ export default function TextImageSection({
           }
           .blob-morph {
             animation: none;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            transform: rotate(-5deg);
           }
           .media-card-enhanced:hover {
             transform: none;
@@ -311,20 +313,24 @@ export default function TextImageSection({
             } ${isVisible ? 'visible' : ''}`}>
               
               {/* Morphing Blob - only for photo variant */}
+              {/* Wrapper handles parallax, inner div handles morph animation */}
               {!isInfographic && (
                 <div 
-                  className="blob-morph hidden lg:block absolute"
+                  className="hidden lg:block absolute"
                   style={{
-                    background: blobColor,
                     top: '5%',
                     left: '5%',
                     right: '5%',
                     bottom: '5%',
-                    // Subtle parallax via scroll progress
-                    transform: `rotate(-5deg) translateY(${scrollProgress * -15}px)`,
+                    transform: `translateY(${scrollProgress * -15}px)`,
                     transition: 'transform 0.1s linear'
                   }}
-                />
+                >
+                  <div 
+                    className="blob-morph absolute inset-0"
+                    style={{ background: blobColor }}
+                  />
+                </div>
               )}
               
               {/* Video */}

@@ -35,7 +35,7 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
     };
   }, []);
 
-  // Parallax scroll effect voor blob
+  // Subtle parallax for blob (CSS variable based - no JS animation loop)
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
@@ -44,12 +44,14 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
       const rect = sectionRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
+      // Calculate progress (0 to 1) when section is in view
       if (rect.top < windowHeight && rect.bottom > 0) {
         const progress = 1 - (rect.top / windowHeight);
         setScrollProgress(Math.max(0, Math.min(1, progress)));
       }
     };
 
+    // Use passive listener for performance
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     
@@ -81,7 +83,7 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
   return (
     <>
       <style>{`
-        /* Morphing blob animation - matching TextImageSection */
+        /* Morphing blob animation */
         @keyframes blob-morph {
           0%, 100% {
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
@@ -101,7 +103,7 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
           }
         }
 
-        .blob-morph-about {
+        .blob-morph {
           animation: blob-morph 20s ease-in-out infinite;
           will-change: border-radius, transform;
         }
@@ -114,8 +116,10 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
 
         /* Respect reduced motion */
         @media (prefers-reduced-motion: reduce) {
-          .blob-morph-about {
+          .blob-morph {
             animation: none;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            transform: rotate(-5deg);
           }
         }
       `}</style>
@@ -133,19 +137,24 @@ export default function AboutSection({ aboutData, imageCaption, imageCaptionLink
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}>
               
-              {/* Morphing Blob met parallax */}
+              {/* Parallax Wrapper - handles scroll movement */}
               <div 
-                className="blob-morph-about hidden lg:block absolute"
+                className="hidden lg:block absolute"
                 style={{
-                  background: '#F5F3EE',
                   top: '5%',
                   left: '5%',
                   right: '5%',
                   bottom: '5%',
-                  transform: `rotate(-5deg) translateY(${scrollProgress * -15}px)`,
+                  transform: `translateY(${scrollProgress * -15}px)`,
                   transition: 'transform 0.1s linear'
                 }}
-              />
+              >
+                {/* Morphing Blob - handles shape animation */}
+                <div 
+                  className="blob-morph absolute inset-0"
+                  style={{ background: '#F5F3EE' }}
+                />
+              </div>
               
               {/* Image + Caption */}
               {data.image && (
