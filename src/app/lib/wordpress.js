@@ -857,7 +857,7 @@ export async function getCases(limit = 3) {
 /**
  * Get Single Case by Slug
  * For case detail pages - FULL DATA including all ACF fields
- * Uses Rank Math REST API for SEO (same approach as blog posts)
+ * Uses Rank Math GraphQL SEO object (same approach as services/blog)
  * 
  * @param {string} slug - Case slug
  * @returns {Object} Case object with all details
@@ -875,6 +875,21 @@ export async function getCaseBySlug(slug) {
           title
           slug
           uri
+          seo {
+            title
+            description
+            canonicalUrl
+            openGraph {
+              title
+              description
+              image {
+                url
+              }
+            }
+            jsonLd {
+              raw
+            }
+          }
           caseDetails {
             clientName
             clientLogo {
@@ -925,6 +940,7 @@ export async function getCaseBySlug(slug) {
 
     console.log('✅ Case fetched:', caseData.title);
     console.log('📍 Case URI:', caseData.uri);
+    console.log('📦 SEO data:', caseData.seo ? 'Found' : 'Not found');
 
     // Build the case object
     const caseObj = {
@@ -933,6 +949,8 @@ export async function getCaseBySlug(slug) {
       title: caseData.title,
       slug: caseData.slug,
       uri: caseData.uri,
+      // SEO from Rank Math GraphQL
+      seo: caseData.seo || null,
       // Flatten caseDetails
       clientName: details.clientName || '',
       clientLogo: details.clientLogo?.node ? {
@@ -957,38 +975,9 @@ export async function getCaseBySlug(slug) {
       ctaUrl: details.ctaUrl || '',
       featured: details.featured || false,
       projectDate: details.projectDate || null,
-      // SEO - will be populated below
+      // Legacy field - kept for backwards compatibility
       rankMathHead: null,
     };
-
-    // Fetch Rank Math SEO data via REST API
-    // API endpoint is cdn.onlinelabs.nl, but URL parameter must be www.onlinelabs.nl for correct canonical
-    const caseUrl = `${SITE_URL}${caseData.uri}`;
-    
-    try {
-      console.log('🔍 Fetching Rank Math SEO for:', caseUrl);
-      const rankMathRes = await fetch(
-        `${WP_API_URL}/wp-json/rankmath/v1/getHead?url=${encodeURIComponent(caseUrl)}`,
-        { next: { revalidate: 3600 } }
-      );
-      
-      // Check if response is JSON before parsing
-      const contentType = rankMathRes.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
-        const rankMathData = await rankMathRes.json();
-        
-        if (rankMathData.success && rankMathData.head) {
-          caseObj.rankMathHead = rankMathData.head;
-          console.log('✅ Rank Math SEO fetched successfully');
-        } else {
-          console.log('⚠️ Rank Math returned no head data');
-        }
-      } else {
-        console.log('⚠️ Rank Math response is not JSON');
-      }
-    } catch (seoError) {
-      console.error('⚠️ Rank Math API Error (non-critical):', seoError.message);
-    }
 
     return caseObj;
   } catch (error) {

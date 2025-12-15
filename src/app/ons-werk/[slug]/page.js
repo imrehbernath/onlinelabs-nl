@@ -29,64 +29,69 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  // Default values from case content
-  let title = caseData.title;
-  let description = caseData.excerpt || '';
-  // Replace WordPress URL with CDN URL for OG image
-  let ogImage = caseData.featuredImage?.sourceUrl 
-    ? caseData.featuredImage.sourceUrl.replace(
-        'https://cdn.onlinelabs.nl',
-        'https://cdn.onlinelabs.nl'
-      )
-    : '/og-image-ons-werk.jpg';
-
-  // Parse Rank Math HEAD for SEO data (same approach as blog posts)
-  if (caseData.rankMathHead) {
-    // Extract title from og:title or <title> tag
-    const titleMatch = caseData.rankMathHead.match(/<meta property="og:title" content="([^"]*)"/)
-      || caseData.rankMathHead.match(/<title>([^<]*)<\/title>/);
-    if (titleMatch) {
-      title = he.decode(titleMatch[1]);
-    }
-    
-    // Extract description
-    const descMatch = caseData.rankMathHead.match(/<meta name="description" content="([^"]*)"/);
-    if (descMatch) {
-      description = he.decode(descMatch[1]);
-    }
-    
-    // Extract OG image
-    const ogImageMatch = caseData.rankMathHead.match(/<meta property="og:image" content="([^"]*)"/);
-    if (ogImageMatch) {
-      ogImage = ogImageMatch[1].replace(
-        'https://cdn.onlinelabs.nl',
-        'https://cdn.onlinelabs.nl'
-      );
-    }
+  // Use Rank Math SEO data if available (same approach as skills)
+  if (caseData.seo) {
+    return {
+      title: {
+        absolute: caseData.seo.title || caseData.title
+      },
+      description: caseData.seo.description || '',
+      alternates: {
+        canonical: `/ons-werk/${resolvedParams.slug}`,
+      },
+      openGraph: {
+        title: caseData.seo.openGraph?.title || caseData.seo.title || caseData.title,
+        description: caseData.seo.openGraph?.description || caseData.seo.description,
+        url: `/ons-werk/${resolvedParams.slug}`,
+        images: caseData.seo.openGraph?.image?.url 
+          ? [caseData.seo.openGraph.image.url]
+          : caseData.featuredImage?.sourceUrl 
+            ? [caseData.featuredImage.sourceUrl]
+            : ['/og-image-ons-werk.jpg'],
+        type: 'article',
+        locale: 'nl_NL',
+        siteName: 'OnlineLabs',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: caseData.seo.openGraph?.title || caseData.seo.title || caseData.title,
+        description: caseData.seo.openGraph?.description || caseData.seo.description,
+        images: caseData.seo.openGraph?.image?.url 
+          ? [caseData.seo.openGraph.image.url]
+          : caseData.featuredImage?.sourceUrl 
+            ? [caseData.featuredImage.sourceUrl]
+            : ['/og-image-ons-werk.jpg'],
+      },
+    };
   }
+
+  // Fallback to case content (no Rank Math data)
+  const title = caseData.title;
+  const description = caseData.excerpt || '';
+  const ogImage = caseData.featuredImage?.sourceUrl || '/og-image-ons-werk.jpg';
 
   return {
     title: {
-      absolute: title
+      absolute: `${title} | OnlineLabs`
     },
     description,
     alternates: {
       canonical: `/ons-werk/${resolvedParams.slug}`,
     },
     openGraph: {
-      title,
+      title: `${title} | OnlineLabs`,
       description,
       url: `/ons-werk/${resolvedParams.slug}`,
-      images: ogImage ? [ogImage] : ['/og-image-ons-werk.jpg'],
+      images: [ogImage],
       type: 'article',
       locale: 'nl_NL',
       siteName: 'OnlineLabs',
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: `${title} | OnlineLabs`,
       description,
-      images: ogImage ? [ogImage] : ['/og-image-ons-werk.jpg'],
+      images: [ogImage],
     },
   };
 }
@@ -154,12 +159,7 @@ export default async function CaseDetailPage({ params }) {
     "@id": `${currentUrl}/#article`,
     "headline": caseData.title,
     "description": caseData.excerpt,
-    "image": caseData.featuredImage?.sourceUrl 
-      ? caseData.featuredImage.sourceUrl.replace(
-          'https://cdn.onlinelabs.nl',
-          'https://cdn.onlinelabs.nl'
-        )
-      : undefined,
+    "image": caseData.featuredImage?.sourceUrl || undefined,
     "datePublished": caseData.projectDate ? `${caseData.projectDate}T00:00:00+01:00` : undefined,
     "dateModified": caseData.projectDate ? `${caseData.projectDate}T00:00:00+01:00` : undefined,
     "author": {
