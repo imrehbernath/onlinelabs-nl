@@ -233,7 +233,7 @@ export default function Footer({ footerData }) {
             <p className="text-gray-400">
               © {currentYear} {footer.companyName}. Alle rechten voorbehouden.
             </p>
-            <div className="flex gap-6">
+            <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2">
               <Link href="/privacyverklaring" className="text-gray-400 hover:text-primary transition-colors duration-200">
                 Privacyverklaring
               </Link>
