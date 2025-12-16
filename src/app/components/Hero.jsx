@@ -203,7 +203,7 @@ export default function Hero({ data = null }) {
                 style={{ transitionDelay: '0.4s' }}
               >
                 <div className="text-sm tracking-wider uppercase text-gray-600 text-center lg:text-left">
-                  <span>Sinds 2008 • Google Partner • Amsterdam • </span>
+                  <span>Amsterdam • Google Partner • Sinds 2008 • </span>
                   <a 
                     href="https://www.google.com/maps/place/?q=place_id:ChIJEVS-szIKxkcRng6UB0W50u0" 
                     target="_blank" 
