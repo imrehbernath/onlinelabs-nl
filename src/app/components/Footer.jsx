@@ -241,8 +241,8 @@ export default function Footer({ footerData }) {
                 Algemene Voorwaarden
               </Link>
               <button 
-                onClick={() => window.Cookiebot?.renew()}
-                className="text-gray-400 hover:text-primary transition-colors duration-200"
+                onClick={() => window.CookiebotWidget?.show()}
+                className="font-sans text-sm text-gray-400 hover:text-primary transition-colors duration-200 bg-transparent border-none cursor-pointer"
               >
                 Cookie-instellingen
               </button>
