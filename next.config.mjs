@@ -320,6 +320,11 @@ const nextConfig = {
         destination: '/skills/conversie-optimalisatie-specialist',
         permanent: true,
       },
+      {
+        source: '/ai-tools',
+        destination: '/skills/geo-optimalisatie',
+        permanent: true,
+      },
 
     ];
   },
