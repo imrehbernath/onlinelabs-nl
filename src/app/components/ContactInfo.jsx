@@ -119,7 +119,7 @@ function ContactInfo() {
               </svg>
             </a>
             <a
-              href="https://twitter.com/onlinelabsnl"
+              href="https://x.com/onlinelabs_nl"
               target="_blank"
               rel="noopener noreferrer"
               className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-600 hover:text-primary hover:bg-blue-50 transition-all duration-200 shadow-sm hover:shadow-md"
