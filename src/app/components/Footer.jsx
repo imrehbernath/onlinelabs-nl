@@ -240,6 +240,12 @@ export default function Footer({ footerData }) {
               <Link href="/algemene-voorwaarden" className="text-gray-400 hover:text-primary transition-colors duration-200">
                 Algemene Voorwaarden
               </Link>
+              <button 
+                onClick={() => window.Cookiebot?.renew()}
+                className="text-gray-400 hover:text-primary transition-colors duration-200"
+              >
+                Cookie-instellingen
+              </button>
             </div>
           </div>
         </div>
