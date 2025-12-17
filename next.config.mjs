@@ -62,6 +62,63 @@ const nextConfig = {
       },
 
       // ============================================
+      // TECHNICAL REDIRECTS
+      // ============================================
+      {
+        source: '/sitemap_index.xml',
+        destination: '/sitemap.xml',
+        permanent: true,
+      },
+
+      // ============================================
+      // VACATURE REDIRECTS
+      // ============================================
+      {
+        source: '/allround-online-marketeer-vacature',
+        destination: '/contact',
+        permanent: true,
+      },
+
+      // ============================================
+      // AUTEUR / TEAM REDIRECTS
+      // ============================================
+      {
+        source: '/over-ons/imre-bernath',
+        destination: '/auteur/imre-bernath',
+        permanent: true,
+      },
+      {
+        source: '/over-ons/sanne-verschoor',
+        destination: '/auteur/sanne-verschoor',
+        permanent: true,
+      },
+      {
+        source: '/over-ons/adrian-enders',
+        destination: '/auteur/adrian-enders',
+        permanent: true,
+      },
+      {
+        source: '/over-ons/elsa-heijnen',
+        destination: '/over-ons',
+        permanent: true,
+      },
+      {
+        source: '/team/imre-bernath',
+        destination: '/auteur/imre-bernath',
+        permanent: true,
+      },
+      {
+        source: '/auteur/elsa-heijnen',
+        destination: '/over-ons',
+        permanent: true,
+      },
+      {
+        source: '/author/colin-dijkstra',
+        destination: '/auteur/colin-dijkstra',
+        permanent: true,
+      },
+
+      // ============================================
       // SKILLS - Service page redirects
       // ============================================
       {
@@ -80,8 +137,27 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/skills/ai-zichtbaarheid-chatgpt-seo',
+        destination: '/skills/geo-optimalisatie',
+        permanent: true,
+      },
+      {
         source: '/skills/google-analytics-4-instellen',
         destination: '/skills/conversie-optimalisatie-specialist',
+        permanent: true,
+      },
+      {
+        source: '/website-optimalisatie',
+        destination: '/skills/website-snelheid-optimalisatie',
+        permanent: true,
+      },
+
+      // ============================================
+      // MISC REDIRECTS
+      // ============================================
+      {
+        source: '/ai-tools',
+        destination: '/skills/geo-optimalisatie',
         permanent: true,
       },
 
@@ -320,14 +396,525 @@ const nextConfig = {
         destination: '/skills/conversie-optimalisatie-specialist',
         permanent: true,
       },
+
+      // ============================================
+      // ENGLISH URLS - Specific redirects
+      // ============================================
       {
-        source: '/ai-tools',
+        source: '/en',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/en/about-us',
+        destination: '/over-ons',
+        permanent: true,
+      },
+      {
+        source: '/en/contact',
+        destination: '/contact',
+        permanent: true,
+      },
+      {
+        source: '/en/blog',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/en/skills',
+        destination: '/skills',
+        permanent: true,
+      },
+      {
+        source: '/en/our-work',
+        destination: '/ons-werk',
+        permanent: true,
+      },
+      {
+        source: '/en/sitemap',
+        destination: '/sitemap.xml',
+        permanent: true,
+      },
+      {
+        source: '/en/privacy-statement',
+        destination: '/privacyverklaring',
+        permanent: true,
+      },
+      {
+        source: '/en/general-conditions',
+        destination: '/algemene-voorwaarden',
+        permanent: true,
+      },
+      {
+        source: '/en/vacancy-online-marketer',
+        destination: '/contact',
+        permanent: true,
+      },
+
+      // English skills pages
+      {
+        source: '/en/skills/seo-specialist',
+        destination: '/skills/seo-specialist',
+        permanent: true,
+      },
+      {
+        source: '/en/skills/seo-specialist-2',
+        destination: '/skills/seo-specialist',
+        permanent: true,
+      },
+      {
+        source: '/en/skills/get-a-website-made',
+        destination: '/skills/website-laten-maken',
+        permanent: true,
+      },
+      {
+        source: '/en/skills/ai-visibility-aeo-specialist',
         destination: '/skills/geo-optimalisatie',
         permanent: true,
       },
       {
-        source: '/author/colin-dijkstra',
-        destination: '/auteur/colin-dijkstra',
+        source: '/en/skills/ai-visibility-aeo',
+        destination: '/skills/geo-optimalisatie',
+        permanent: true,
+      },
+      {
+        source: '/en/skills/website-speed-optimization',
+        destination: '/skills/website-snelheid-optimalisatie',
+        permanent: true,
+      },
+      {
+        source: '/en/skills/online-advertising',
+        destination: '/skills/online-adverteren',
+        permanent: true,
+      },
+      {
+        source: '/en/skills/website-optimization',
+        destination: '/skills/website-snelheid-optimalisatie',
+        permanent: true,
+      },
+      {
+        source: '/en/skills/setting-up-google-analytics-4',
+        destination: '/skills/conversie-optimalisatie-specialist',
+        permanent: true,
+      },
+      {
+        source: '/en/skills/conversion-optimization-specialist',
+        destination: '/skills/conversie-optimalisatie-specialist',
+        permanent: true,
+      },
+
+      // English our-work pages
+      {
+        source: '/en/our-work/contactcare',
+        destination: '/ons-werk',
+        permanent: true,
+      },
+      {
+        source: '/en/our-work/fort-island-pampus',
+        destination: '/ons-werk/forteiland-pampus',
+        permanent: true,
+      },
+      {
+        source: '/en/our-work/hvana',
+        destination: '/ons-werk/hvana',
+        permanent: true,
+      },
+      {
+        source: '/en/our-work/tubble',
+        destination: '/ons-werk',
+        permanent: true,
+      },
+      {
+        source: '/en/our-work/asn-auto-damage',
+        destination: '/ons-werk',
+        permanent: true,
+      },
+      {
+        source: '/en/our-work/sec-employment-lawyers',
+        destination: '/ons-werk',
+        permanent: true,
+      },
+      {
+        source: '/en/our-work/evert-groot',
+        destination: '/ons-werk/evert-groot',
+        permanent: true,
+      },
+      {
+        source: '/en/our-work/the-taste-of-italy',
+        destination: '/ons-werk/de-smaak-van-italie',
+        permanent: true,
+      },
+      {
+        source: '/en/our-work/signhost',
+        destination: '/ons-werk',
+        permanent: true,
+      },
+      {
+        source: '/en/our-work/galliano',
+        destination: '/ons-werk',
+        permanent: true,
+      },
+
+      // English auteur pages
+      {
+        source: '/en/auteur/imre-bernath',
+        destination: '/auteur/imre-bernath',
+        permanent: true,
+      },
+      {
+        source: '/en/auteur/elsa-heijnen',
+        destination: '/over-ons',
+        permanent: true,
+      },
+      {
+        source: '/en/auteur/adrian-enders',
+        destination: '/auteur/adrian-enders',
+        permanent: true,
+      },
+      {
+        source: '/en/auteur/sanne-verschoor',
+        destination: '/auteur/sanne-verschoor',
+        permanent: true,
+      },
+      {
+        source: '/en/about-us/imre-bernath',
+        destination: '/auteur/imre-bernath',
+        permanent: true,
+      },
+      {
+        source: '/en/about-us/elsa-heijnen',
+        destination: '/over-ons',
+        permanent: true,
+      },
+      {
+        source: '/en/about-us/adrian-enders',
+        destination: '/auteur/adrian-enders',
+        permanent: true,
+      },
+      {
+        source: '/en/about-us/sanne-verschoor',
+        destination: '/auteur/sanne-verschoor',
+        permanent: true,
+      },
+
+      // English blog pages - redirect to Dutch equivalents
+      {
+        source: '/en/blog-en/getting-visible-in-chatgpt-new-ranking-factors-for-ai-replies',
+        destination: '/blog/zichtbaar-worden-in-chatgpt',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/local-seo-for-businesses-10-essential-strategies',
+        destination: '/blog/lokale-seo-voor-bedrijven-10-essentiele-strategieen',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/5-best-wordpress-seo-plugins-of-2025',
+        destination: '/blog/5-beste-wordpress-seo-plugins',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/website-migration-checklist',
+        destination: '/blog/website-migratie-checklist',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/how-to-improve-your-seo-10-practical-tips-and-strategies-for-2025',
+        destination: '/blog/10-manieren-om-jouw-seo-te-verbeteren',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/stay-ahead-with-these-marketing-trends-for-2025',
+        destination: '/blog/seo-trends-2026',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/the-key-web-design-trends-of-2025-innovation-and-inspiration',
+        destination: '/blog/de-belangrijkste-webdesign-trends-van-2026-tips',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/what-does-it-cost-to-build-a-website-price-examples-and-tips',
+        destination: '/blog/wat-kost-een-website-laten-bouwen',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/complete-roadmap-for-putting-your-website-live-in-2025',
+        destination: '/blog/stappenplan-voor-het-live-zetten-van-een-website',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/web-design-trends-2025-valuable-dos-and-donts',
+        destination: '/blog/de-belangrijkste-webdesign-trends-van-2026-tips',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/my-top-4-seo-trends-of-2025-tips',
+        destination: '/blog/mijn-top-4-seo-trends-van-2026-tips',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/using-artificial-intelligence-for-seo-heres-what-to-look-out-for',
+        destination: '/blog/kunstmatige-intelligentie-voor-seo',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/5-digital-marketing-tips-for-local-and-small-businesses',
+        destination: '/blog/lokale-online-marketing-tips',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/seo-trends-2025-revolutionary-strategies-for-online-success',
+        destination: '/blog/seo-trends-2026',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/link-building-ensures-seo-success',
+        destination: '/blog/linkbuilding-zorgt-voor-seo-succes',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/10-signs-you-may-need-a-new-website',
+        destination: '/blog/10-signalen-dat-je-nieuwe-website-nodig-hebt',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/can-an-seo-company-guarantee-page-one',
+        destination: '/blog/seo-uitbesteden-waar-moet-ik-op-letten',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/the-best-seo-tools-for-2025-optimize-your-online-success',
+        destination: '/blog/de-meest-effectieve-seo-tools',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/10-neuromarketing-hacks-for-more-effective-marketing',
+        destination: '/blog/10-neuromarketing-hacks',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/making-wordpress-website-faster',
+        destination: '/blog/core-web-vitals',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/seo-outsourcing-your-guide-to-successful-online-findability',
+        destination: '/blog/seo-uitbesteden-waar-moet-ik-op-letten',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/4-reasons-why-mobile-optimization-is-important-for-your-website',
+        destination: '/blog/core-web-vitals',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/how-do-you-get-and-deal-with-online-reviews',
+        destination: '/blog/hoe-krijg-je-online-reviews-en-hoe-ga-je-ermee-om',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/seo-vs-sea-which-is-the-best-investment-for-your-online-success',
+        destination: '/blog/investeren-in-seo-of-in-sea',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/31-donts-that-ruin-your-website',
+        destination: '/blog/10-manieren-om-jouw-seo-te-verbeteren',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/boost-your-page-with-key-on-page-seo-factors',
+        destination: '/blog/on-page-seo-factoren',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/the-differences-between-google-analytics-ga4-and-universal-analytics',
+        destination: '/skills/conversie-optimalisatie-specialist',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/analyze-with-screaming-frog',
+        destination: '/blog/de-meest-effectieve-seo-tools',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/chatgpt-vs-semrush-keywords-and-metas-in-the-world-of-seo',
+        destination: '/blog/kunstmatige-intelligentie-voor-seo',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/how-do-you-do-good-keyword-research',
+        destination: '/blog/hoe-doe-je-een-goed-zoekwoorden-onderzoek',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/simple-ways-to-collect-customer-feedback',
+        destination: '/blog/hoe-krijg-je-online-reviews-en-hoe-ga-je-ermee-om',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/the-5-most-common-ux-mistakes-that-cost-online-stores-conversions',
+        destination: '/blog/15-manieren-om-conversies-te-verhogen',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/the-page-indexing-tab-the-key-to-findability',
+        destination: '/blog/het-tabblad-pagina-indexering',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/ultimate-seo-guide-for-bloggers-proven-tips-for-increased-traffic-and-growth',
+        destination: '/blog/ultieme-seo-gids-voor-bloggers',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/video-marketing-and-seo-how-video-strengthens-your-online-strategy',
+        destination: '/blog/videomarketing-zo-zet-je-video-in-voor-seo-en-conversies',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/why-a-good-404-page-is-essential-for-user-experience',
+        destination: '/blog/het-tabblad-pagina-indexering',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/4-seo-tips-to-consider',
+        destination: '/blog/10-manieren-om-jouw-seo-te-verbeteren',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/basic-content-optimization-tips-to-boost-your-seo',
+        destination: '/blog/on-page-seo-factoren',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/can-my-website-become-findable',
+        destination: '/blog/kan-mijn-website-vindbaar-worden',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/bad-online-marketing-strategy-4-examples',
+        destination: '/blog/10-manieren-om-jouw-seo-te-verbeteren',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/benefits-of-backlinks-from-high-authority-blogs',
+        destination: '/blog/linkbuilding-zorgt-voor-seo-succes',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/how-do-you-create-a-successful-converting-website',
+        destination: '/blog/hoe-maak-je-een-succesvolle-converterende-website',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/improve-your-websites-user-experience-with-these-4-essential-tips',
+        destination: '/blog/15-manieren-om-conversies-te-verhogen',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/website-analysis-tele2-by-a-specialist',
+        destination: '/blog/de-meest-effectieve-seo-tools',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/15-ways-to-increase-conversions-on-your-website',
+        destination: '/blog/15-manieren-om-conversies-te-verhogen',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/5-seo-steps-for-quick-results',
+        destination: '/blog/10-manieren-om-jouw-seo-te-verbeteren',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/increase-conversions-on-mobile-and-desktop-devices',
+        destination: '/blog/conversies-verhogen-op-mobiel-en-desktop-tips',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/the-power-of-google-discover-for-your-seo-strategy',
+        destination: '/blog/seo-trends-2026',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/what-is-the-importance-of-customer-reviews',
+        destination: '/blog/hoe-krijg-je-online-reviews-en-hoe-ga-je-ermee-om',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/3-tips-to-improve-your-online-reputation',
+        destination: '/blog/hoe-krijg-je-online-reviews-en-hoe-ga-je-ermee-om',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/7-reasons-to-choose-wordpress',
+        destination: '/blog/wordpress-website-laten-maken',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/8-key-technical-seo-mistakes-to-avoid',
+        destination: '/blog/10-manieren-om-jouw-seo-te-verbeteren',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/how-an-optimal-user-experience-improves-your-google-rankings',
+        destination: '/blog/15-manieren-om-conversies-te-verhogen',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/improve-your-findability-with-good-website-maintenance-checklist',
+        destination: '/blog/verbeter-je-vindbaarheid-met-goed-website-onderhoud-checklist',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/search-traffic-drops-after-launching-new-website-website-redesign-seo-guide',
+        destination: '/blog/website-migratie-checklist',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/what-makes-content-good-tips-for-valuable-and-findable-content',
+        destination: '/blog/on-page-seo-factoren',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/14-web-design-tricks-you-need-to-know',
+        destination: '/blog/wat-kost-een-website-laten-bouwen',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/5-benefits-of-online-marketing',
+        destination: '/blog/10-manieren-om-jouw-seo-te-verbeteren',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/7-ways-to-speed-up-your-wordpress-site',
+        destination: '/blog/core-web-vitals',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/voice-search-hey-google-i-want-to-order-a-pizza',
+        destination: '/blog/zichtbaar-worden-in-chatgpt',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/why-good-web-hosting-is-important-for-your-online-success',
+        destination: '/blog/core-web-vitals',
+        permanent: true,
+      },
+      {
+        source: '/en/blog-en/secure-your-wordpress-website-essential-tips-against-hackers',
+        destination: '/blog/wordpress-website-beveiligen',
+        permanent: true,
+      },
+
+      // ============================================
+      // ENGLISH CATCH-ALL (must be LAST)
+      // ============================================
+      {
+        source: '/en/:path*',
+        destination: '/',
         permanent: true,
       },
     ];
