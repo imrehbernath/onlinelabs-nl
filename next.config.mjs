@@ -325,7 +325,11 @@ const nextConfig = {
         destination: '/skills/geo-optimalisatie',
         permanent: true,
       },
-
+      {
+        source: '/author/colin-dijkstra',
+        destination: '/auteur/colin-dijkstra',
+        permanent: true,
+      },
     ];
   },
 
