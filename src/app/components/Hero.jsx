@@ -1,16 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 export default function Hero({ data = null }) {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    // Trigger animations after hydration
-    const timer = setTimeout(() => setIsLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
+  // REMOVED: useState + useEffect voor hydration-based reveal
+  // Animaties zijn nu pure CSS - start direct bij page load
 
   const defaultData = {
     heroTitle: "OnlineLabs: Dé expert in online groei en webdesign",
@@ -47,6 +41,30 @@ export default function Hero({ data = null }) {
   return (
     <>
       <style>{`
+        /* ===== CSS-ONLY REVEAL ANIMATIES (geen JS/hydration nodig) ===== */
+        @keyframes hero-fade-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Staggered reveal - direct bij page load */
+        .hero-reveal {
+          opacity: 0;
+          animation: hero-fade-up 0.6s ease-out forwards;
+        }
+        
+        .hero-reveal-1 { animation-delay: 0.1s; }
+        .hero-reveal-2 { animation-delay: 0.2s; }
+        .hero-reveal-3 { animation-delay: 0.3s; }
+        .hero-reveal-4 { animation-delay: 0.4s; }
+        .hero-reveal-media { animation-delay: 0.3s; }
+
         /* Animated gradient orbs - GPU only (transform + opacity) */
         @keyframes float-orb-1 {
           0%, 100% { transform: translate(0, 0) scale(1); }
@@ -69,18 +87,6 @@ export default function Hero({ data = null }) {
         @keyframes gentle-float-delayed {
           0%, 100% { transform: translateY(0) scaleX(1.08) scaleY(1.08) translateX(8px); }
           50% { transform: translateY(-10px) scaleX(1.08) scaleY(1.08) translateX(8px); }
-        }
-
-        /* Stagger reveal for text */
-        .hero-reveal {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .hero-reveal.revealed {
-          opacity: 1;
-          transform: translateY(0);
         }
 
         /* Media card hover depth */
@@ -106,8 +112,8 @@ export default function Hero({ data = null }) {
         @media (prefers-reduced-motion: reduce) {
           .hero-reveal {
             opacity: 1;
+            animation: none;
             transform: none;
-            transition: none;
           }
           
           .orb-animate, .float-animate, .float-animate-delayed {
@@ -171,36 +177,32 @@ export default function Hero({ data = null }) {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4 sm:py-16 lg:py-20 relative">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
-            {/* Left Column - Content with staggered reveal */}
+            {/* Left Column - Content with CSS-only staggered reveal */}
             <div className="space-y-6 lg:space-y-8 max-w-2xl flex flex-col justify-center min-h-[550px] md:min-h-[620px] lg:min-h-[700px]">
-              {/* H1 - Playfair Display */}
+              {/* H1 - Playfair Display - NOW VISIBLE IMMEDIATELY */}
               <h1 
-                className={`hero-reveal font-serif font-bold leading-[1.1] text-gray-900 text-[2.5rem] sm:text-[3rem] lg:text-[3.75rem] xl:text-[4.25rem] tracking-tight ${isLoaded ? 'revealed' : ''}`}
-                style={{ transitionDelay: '0.1s' }}
+                className="hero-reveal hero-reveal-1 font-serif font-bold leading-[1.1] text-gray-900 text-[2.5rem] sm:text-[3rem] lg:text-[3.75rem] xl:text-[4.25rem] tracking-tight"
               >
                 {title}
               </h1>
 
               {/* Subtitle */}
               <p 
-                className={`hero-reveal text-lg lg:text-xl text-gray-700 leading-relaxed ${isLoaded ? 'revealed' : ''}`}
-                style={{ transitionDelay: '0.2s' }}
+                className="hero-reveal hero-reveal-2 text-lg lg:text-xl text-gray-700 leading-relaxed"
               >
                 {subtitle}
               </p>
 
               {/* Description */}
               <p 
-                className={`hero-reveal text-base lg:text-lg text-gray-600 leading-relaxed ${isLoaded ? 'revealed' : ''}`}
-                style={{ transitionDelay: '0.3s' }}
+                className="hero-reveal hero-reveal-3 text-base lg:text-lg text-gray-600 leading-relaxed"
               >
                 {description}
               </p>
 
               {/* USP Badges - WITH CLICKABLE GOOGLE REVIEWS */}
               <div 
-                className={`hero-reveal pt-4 ${isLoaded ? 'revealed' : ''}`}
-                style={{ transitionDelay: '0.4s' }}
+                className="hero-reveal hero-reveal-4 pt-4"
               >
                 <div className="text-sm tracking-wider uppercase text-gray-600 text-center lg:text-left">
                   <span>Amsterdam • Google Partner • Sinds 2008 • </span>
@@ -218,8 +220,7 @@ export default function Hero({ data = null }) {
 
             {/* Right Column - Overlapping Media with floating effect */}
             <div 
-              className={`hero-reveal relative h-[550px] md:h-[620px] lg:h-[700px] ${isLoaded ? 'revealed' : ''}`}
-              style={{ transitionDelay: '0.3s' }}
+              className="hero-reveal hero-reveal-media relative h-[550px] md:h-[620px] lg:h-[700px]"
             >
               
               {/* Blue gradient block */}
@@ -241,6 +242,7 @@ export default function Hero({ data = null }) {
                   fill
                   className="object-cover"
                   priority
+                  fetchPriority="high"
                   sizes="(max-width: 1024px) 56vw, 32vw"
                 />
                 {/* Subtle shine overlay on hover */}

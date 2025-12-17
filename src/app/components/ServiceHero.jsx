@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function ServiceHero({ 
@@ -13,12 +12,8 @@ export default function ServiceHero({
   secondaryCtaUrl,
   serviceColor = 'green'
 }) {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 150);
-    return () => clearTimeout(timer);
-  }, []);
+  // REMOVED: useState + useEffect voor hydration-based reveal
+  // Animaties zijn nu pure CSS - start direct bij page load
 
   const brandBlue = '#376eb5';
   const brandBlueHover = '#2d5a94';
@@ -130,6 +125,52 @@ export default function ServiceHero({
   return (
     <>
       <style>{`
+        /* ===== CSS-ONLY REVEAL ANIMATIES (geen JS/hydration nodig) ===== */
+        @keyframes service-hero-fade-up {
+          from {
+            opacity: 0;
+            transform: translateY(25px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Staggered reveal - direct bij page load */
+        .service-hero-reveal {
+          opacity: 0;
+          animation: service-hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .service-hero-reveal-0 { animation-delay: 0s; }
+        .service-hero-reveal-1 { animation-delay: 0.1s; }
+        .service-hero-reveal-2 { animation-delay: 0.2s; }
+        .service-hero-reveal-3 { animation-delay: 0.3s; }
+        .service-hero-reveal-4 { animation-delay: 0.4s; }
+
+        /* Decorative circles fade in */
+        @keyframes deco-fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        .deco-circles {
+          opacity: 0;
+          animation: deco-fade-in 1s ease-out 0.5s forwards;
+        }
+
+        /* Scroll arrow fade in */
+        .scroll-arrow {
+          opacity: 0;
+          animation: deco-fade-in 0.5s ease-out 0.8s forwards;
+        }
+        
+        .scroll-arrow-bounce {
+          animation: scroll-bounce 2s ease-in-out infinite;
+          animation-delay: 1.3s;
+        }
+
         /* Floating orbs */
         @keyframes float-orb-slow {
           0%, 100% { transform: translate(0, 0) scale(1); }
@@ -145,18 +186,6 @@ export default function ServiceHero({
         .orb-1 { animation: float-orb-slow 22s ease-in-out infinite; }
         .orb-2 { animation: float-orb-medium 18s ease-in-out infinite; animation-delay: -4s; }
         .orb-3 { animation: float-orb-slow 26s ease-in-out infinite reverse; animation-delay: -8s; }
-
-        /* Staggered reveal */
-        .hero-reveal {
-          opacity: 0;
-          transform: translateY(25px);
-          transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
-                      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .hero-reveal.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
 
         /* Badge glow */
         @keyframes badge-glow {
@@ -184,36 +213,18 @@ export default function ServiceHero({
         .circle-float-3 { animation: circle-float-3 6s ease-in-out infinite; animation-delay: -3s; }
         .circle-float-4 { animation: circle-float-1 8s ease-in-out infinite; animation-delay: -1s; }
 
-        /* Circles container fade in */
-        .deco-circles {
-          opacity: 0;
-          transition: opacity 1s ease-out;
-          transition-delay: 0.5s;
-        }
-        .deco-circles.visible { opacity: 1; }
-
         /* Scroll arrow */
         @keyframes scroll-bounce {
           0%, 100% { transform: translateY(0); opacity: 0.6; }
           50% { transform: translateY(8px); opacity: 1; }
         }
-        .scroll-arrow {
-          opacity: 0;
-          transition: opacity 0.5s ease-out;
-          transition-delay: 0.8s;
-        }
-        .scroll-arrow.visible {
-          opacity: 1;
-          animation: scroll-bounce 2s ease-in-out infinite;
-          animation-delay: 1s;
-        }
 
         /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
-          .hero-reveal {
+          .service-hero-reveal {
             opacity: 1;
+            animation: none;
             transform: none;
-            transition: none;
           }
           .orb-1, .orb-2, .orb-3,
           .circle-float-1, .circle-float-2, .circle-float-3, .circle-float-4 {
@@ -222,11 +233,13 @@ export default function ServiceHero({
           .badge-glow { animation: none; }
           .deco-circles {
             opacity: 1;
-            transition: none;
+            animation: none;
           }
           .scroll-arrow {
             opacity: 0.6;
-            transition: none;
+            animation: none;
+          }
+          .scroll-arrow-bounce {
             animation: none;
           }
         }
@@ -262,7 +275,7 @@ export default function ServiceHero({
         </div>
 
         {/* Decorative floating circles - left side */}
-        <div className={`deco-circles absolute left-[8%] lg:left-[10%] top-[25%] hidden lg:block pointer-events-none ${isLoaded ? 'visible' : ''}`}>
+        <div className="deco-circles absolute left-[8%] lg:left-[10%] top-[25%] hidden lg:block pointer-events-none">
           <div className="circle-float-1 absolute w-16 h-16 rounded-full border-2 border-[#376eb5]/12" />
           <div className="circle-float-2 absolute top-20 left-12 w-8 h-8 rounded-full bg-[#4A8FDB]/8" />
           <div className="circle-float-3 absolute top-8 left-20 w-3 h-3 rounded-full bg-[#376eb5]/20" />
@@ -270,7 +283,7 @@ export default function ServiceHero({
         </div>
 
         {/* Decorative floating circles - right side */}
-        <div className={`deco-circles absolute right-[8%] lg:right-[10%] bottom-[30%] hidden lg:block pointer-events-none ${isLoaded ? 'visible' : ''}`}>
+        <div className="deco-circles absolute right-[8%] lg:right-[10%] bottom-[30%] hidden lg:block pointer-events-none">
           <div className="circle-float-2 absolute w-20 h-20 rounded-full border border-[#376eb5]/10" />
           <div className="circle-float-3 absolute -top-6 -left-8 w-6 h-6 rounded-full bg-[#4A8FDB]/10" />
           <div className="circle-float-1 absolute top-16 left-16 w-4 h-4 rounded-full bg-[#376eb5]/15" />
@@ -278,12 +291,9 @@ export default function ServiceHero({
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center relative">
           
-        {/* Badge */}
+          {/* Badge */}
           {subtitle && (
-            <div 
-              className={`hero-reveal ${isLoaded ? 'visible' : ''}`}
-              style={{ transitionDelay: '0s' }}
-            >
+            <div className="service-hero-reveal service-hero-reveal-0">
               <div 
                 className="badge-glow inline-flex items-center gap-2 px-4 py-2 rounded-full text-[#2d5a94] font-semibold text-sm tracking-widest uppercase mb-8 lg:mb-6"
                 style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}
@@ -297,35 +307,23 @@ export default function ServiceHero({
           )}
           
           {/* Title */}
-          <h1 
-            className={`hero-reveal font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight tracking-tight mb-6 ${isLoaded ? 'visible' : ''}`}
-            style={{ transitionDelay: '0.1s' }}
-          >
+          <h1 className="service-hero-reveal service-hero-reveal-1 font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight tracking-tight mb-6">
             {title}
           </h1>
           
           {/* Description */}
-          <p 
-            className={`hero-reveal text-lg lg:text-xl text-gray-600 leading-relaxed mb-10 whitespace-pre-line ${isLoaded ? 'visible' : ''}`}
-            style={{ transitionDelay: '0.2s' }}
-          >
+          <p className="service-hero-reveal service-hero-reveal-2 text-lg lg:text-xl text-gray-600 leading-relaxed mb-10 whitespace-pre-line">
             {description}
           </p>
           
           {/* CTAs */}
-          <div 
-            className={`hero-reveal flex flex-col sm:flex-row gap-4 justify-center mb-12 ${isLoaded ? 'visible' : ''}`}
-            style={{ transitionDelay: '0.3s' }}
-          >
+          <div className="service-hero-reveal service-hero-reveal-3 flex flex-col sm:flex-row gap-4 justify-center mb-12">
             {renderLink(ctaUrl, ctaText, true)}
             {secondaryCtaText && secondaryCtaUrl && renderLink(secondaryCtaUrl, secondaryCtaText, false)}
           </div>
 
           {/* Trust Indicators */}
-          <div 
-            className={`hero-reveal text-sm tracking-wider uppercase text-gray-600 mb-8 ${isLoaded ? 'visible' : ''}`}
-            style={{ transitionDelay: '0.4s' }}
-          >
+          <div className="service-hero-reveal service-hero-reveal-4 text-sm tracking-wider uppercase text-gray-600 mb-8">
             <span>Amsterdam • Sinds 2008 • Google Partner • </span>
             <a 
               href="https://www.google.com/maps/place/?q=place_id:ChIJEVS-szIKxkcRng6UB0W50u0" 
@@ -337,9 +335,9 @@ export default function ServiceHero({
             </a>
           </div>
 
-          {/* Scroll Indicator - improved animation */}
+          {/* Scroll Indicator */}
           <div className="flex justify-center">
-            <div className={`scroll-arrow ${isLoaded ? 'visible' : ''}`}>
+            <div className="scroll-arrow scroll-arrow-bounce">
               <svg className="w-6 h-6 text-[#376eb5]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
