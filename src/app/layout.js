@@ -1,4 +1,4 @@
-import { Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import Header from './components/Header';
@@ -6,25 +6,32 @@ import Footer from './components/Footer';
 import GoogleTagManager from './components/GoogleTagManager';
 import { getAllServices } from './lib/wordpress';
 
-// REMOVED: Inter font - niet nodig, Metropolis is primary
-// const inter = Inter({ ... });
+// Inter - Google Font (fallback voor Metropolis)
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 // Playfair Display - Google Font (serif voor headers)
-// OPTIMIZED: Alleen weights die daadwerkelijk gebruikt worden
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
-  weight: ['700'], // Alleen bold - dat is wat we gebruiken voor headings
+  weight: ['400', '500', '600', '700', '800', '900'],
 });
 
 // Metropolis - Local Font (primary sans-serif)
-// OPTIMIZED: Alleen 3 weights ipv 4 (Medium wordt nauwelijks gebruikt)
 const metropolis = localFont({
   src: [
     {
       path: '../../public/fonts/Metropolis-Regular.woff2',
       weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Metropolis-Medium.woff2',
+      weight: '500',
       style: 'normal',
     },
     {
@@ -40,7 +47,7 @@ const metropolis = localFont({
   ],
   variable: '--font-metropolis',
   display: 'swap',
-  fallback: ['system-ui', 'sans-serif'],
+  fallback: ['var(--font-inter)', 'system-ui', 'sans-serif'],
 });
 
 // 🔒 CONDITIONAL NOINDEX: alleen production indexeren
@@ -97,13 +104,14 @@ export default async function RootLayout({ children }) {
   }
 
   return (
-    <html lang="nl" className={`${metropolis.variable} ${playfair.variable}`}>
+    <html lang="nl" className={`${metropolis.variable} ${inter.variable} ${playfair.variable}`}>
       <head>
         {/* 
           OPTIMIZED PRECONNECTS:
-          - Removed: fonts.googleapis.com (niet gebruikt - we laden Playfair via next/font)
-          - Removed: fonts.gstatic.com (niet gebruikt)
+          - Removed: fonts.googleapis.com (niet gebruikt - we laden fonts via next/font)
+          - Removed: fonts.gstatic.com (niet gebruikt - next/font regelt dit)
           - Fixed: cdn.onlinelabs.nl zonder crossOrigin (CORS mismatch fix)
+          - Removed: duplicate cdn.onlinelabs.nl preconnect
         */}
         <link rel="preconnect" href="https://cdn.onlinelabs.nl" />
         <link rel="dns-prefetch" href="https://cdn.onlinelabs.nl" />
