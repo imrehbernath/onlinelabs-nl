@@ -526,7 +526,7 @@ const nextConfig = {
       },
       {
         source: '/en/our-work/asn-auto-damage',
-        destination: '/ons-werk',
+        destination: '/ons-werk/asn-autoschade',
         permanent: true,
       },
       {
