@@ -349,7 +349,7 @@ export default function Header({ services = [] }) {
 
               {/* Telefoonnummer */}
               <a
-                href="tel:0208202022"
+                href="tel:+31208202022"
                 className="flex items-center gap-2 text-gray-900 hover:text-primary font-medium text-base transition-colors duration-200"
               >
                 <Phone className="w-5 h-5 text-primary flex-shrink-0" />
