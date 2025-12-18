@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronDown, ExternalLink, Menu, X } from 'lucide-react';
+import { ChevronDown, ExternalLink, Menu, X, Phone } from 'lucide-react';
 
 export default function Header({ services = [] }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -346,6 +346,15 @@ export default function Header({ services = [] }) {
 
               {/* Divider */}
               <div className="border-t border-gray-200 my-2" />
+
+              {/* Telefoonnummer */}
+              <a
+                href="tel:0208202022"
+                className="flex items-center gap-2 text-gray-900 hover:text-primary font-medium text-base transition-colors duration-200"
+              >
+                <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                020 - 820 20 22
+              </a>
 
               {/* Teun.ai CTA */}
               <a
