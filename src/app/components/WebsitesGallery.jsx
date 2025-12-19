@@ -106,7 +106,7 @@ export default function WebsitesGallery({
 
         {/* Mobile: Revealed Grid */}
         {showAll && (
-          <div className="mt-6 px-4 grid grid-cols-2 gap-4 animate-fadeIn">
+          <div className="mt-6 px-4 pb-4 grid grid-cols-2 gap-4 animate-fadeIn">
             {websites.slice(mobileInitialCount).map((website) => (
               <a
                 key={website.id}
@@ -144,7 +144,7 @@ export default function WebsitesGallery({
       </div>
 
       {/* Desktop: Grid Layout */}
-      <div className="hidden lg:block container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="hidden lg:block container mx-auto px-4 sm:px-6 lg:px-8 pb-4">
         <div className="grid grid-cols-3 gap-6 lg:gap-8">
           {desktopWebsites.map((website) => {
             const isHovered = hoveredWebsite === website.id;
@@ -222,7 +222,7 @@ export default function WebsitesGallery({
 
         {/* Desktop: Revealed Extra Items */}
         {showAll && websites.length > desktopInitialCount && (
-          <div className="mt-8 grid grid-cols-3 gap-6 lg:gap-8 animate-fadeIn">
+          <div className="mt-8 pb-4 grid grid-cols-3 gap-6 lg:gap-8 animate-fadeIn">
             {websites.slice(desktopInitialCount).map((website) => {
               const isHovered = hoveredWebsite === website.id;
 
