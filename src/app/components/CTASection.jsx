@@ -14,15 +14,29 @@ import Link from 'next/link';
  * - primaryButton: { text, url }
  * - secondaryButton: { text, url } (optional)
  * - variant: 'primary' | 'secondary' | 'light' (gradient style)
+ * - skill: 'seo' | 'geo' | 'ads' | 'website' | 'snelheid' | 'cro' (optional, adds ?skill= to contact URL)
  */
 export default function CTASection({ 
   title = "Klaar om jouw online zichtbaarheid te verbeteren?",
   description = "Ontdek hoe OnlineLabs jouw bedrijf helpt groeien met strategische SEO, GEO en webdesign.",
   primaryButton = { text: "Neem contact op", url: "/contact" },
   secondaryButton = null,
-  variant = 'primary'
+  variant = 'primary',
+  skill = null
 }) {
   
+  // Add skill parameter to URL if provided and URL is /contact
+  const getPrimaryButtonUrl = () => {
+    if (skill && primaryButton.url === '/contact') {
+      return `/contact?skill=${skill}`;
+    }
+    if (skill && primaryButton.url.startsWith('/contact') && !primaryButton.url.includes('skill=')) {
+      const separator = primaryButton.url.includes('?') ? '&' : '?';
+      return `${primaryButton.url}${separator}skill=${skill}`;
+    }
+    return primaryButton.url;
+  };
+
   const gradients = {
     primary: 'bg-gradient-to-r from-primary via-primary-dark to-indigo-700',
     secondary: 'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900',
@@ -107,7 +121,7 @@ export default function CTASection({
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             {/* Primary Button */}
             <Link
-              href={primaryButton.url}
+              href={getPrimaryButtonUrl()}
               className={`inline-flex items-center justify-center px-8 py-4 ${buttonStyles[variant].main} font-semibold text-lg rounded-xl hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl min-w-[200px]`}
             >
               {primaryButton.text}
