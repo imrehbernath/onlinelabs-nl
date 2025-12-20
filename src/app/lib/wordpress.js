@@ -780,16 +780,7 @@ export async function getCases(limit = 3) {
             uri
             caseDetails {
               clientName
-              clientLogo {
-                node {
-                  sourceUrl
-                  altText
-                  mediaDetails {
-                    width
-                    height
-                  }
-                }
-              }
+              clientTagline
               featuredImage {
                 node {
                   sourceUrl
@@ -828,12 +819,7 @@ export async function getCases(limit = 3) {
       slug: caseItem.slug,
       uri: caseItem.uri,
       clientName: caseItem.caseDetails?.clientName || '',
-      clientLogo: caseItem.caseDetails?.clientLogo?.node ? {
-        sourceUrl: caseItem.caseDetails.clientLogo.node.sourceUrl,
-        altText: caseItem.caseDetails.clientLogo.node.altText || caseItem.caseDetails.clientName,
-        width: caseItem.caseDetails.clientLogo.node.mediaDetails?.width || 400,
-        height: caseItem.caseDetails.clientLogo.node.mediaDetails?.height || 100,
-      } : null,
+      clientTagline: caseItem.caseDetails?.clientTagline || '',
       featuredImage: caseItem.caseDetails?.featuredImage?.node ? {
         sourceUrl: caseItem.caseDetails.featuredImage.node.sourceUrl,
         altText: caseItem.caseDetails.featuredImage.node.altText || caseItem.title,
@@ -892,16 +878,7 @@ export async function getCaseBySlug(slug) {
           }
           caseDetails {
             clientName
-            clientLogo {
-              node {
-                sourceUrl
-                altText
-                mediaDetails {
-                  width
-                  height
-                }
-              }
-            }
+            clientTagline
             featuredImage {
               node {
                 sourceUrl
@@ -953,12 +930,7 @@ export async function getCaseBySlug(slug) {
       seo: caseData.seo || null,
       // Flatten caseDetails
       clientName: details.clientName || '',
-      clientLogo: details.clientLogo?.node ? {
-        sourceUrl: details.clientLogo.node.sourceUrl,
-        altText: details.clientLogo.node.altText || details.clientName,
-        width: details.clientLogo.node.mediaDetails?.width,
-        height: details.clientLogo.node.mediaDetails?.height,
-      } : null,
+      clientTagline: details.clientTagline || '',
       featuredImage: details.featuredImage?.node ? {
         sourceUrl: details.featuredImage.node.sourceUrl,
         altText: details.featuredImage.node.altText || caseData.title,

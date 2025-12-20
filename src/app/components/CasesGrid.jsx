@@ -115,10 +115,10 @@ export default function CasesGrid({
                       <h3 className="font-serif text-xl lg:text-2xl font-bold text-gray-900 group-hover:text-[#376eb5] transition-colors duration-300 leading-tight">
                         {caseItem.title}
                       </h3>
-                      {caseItem.clientName && (
-                        <p className="text-gray-500 text-sm mt-1">
-                          {caseItem.clientName}
-                        </p>
+                      {caseItem.clientTagline && (
+                      <p className="text-gray-500 text-sm mt-1">
+                      {caseItem.clientTagline}
+                      </p>
                       )}
                     </div>
                   </div>

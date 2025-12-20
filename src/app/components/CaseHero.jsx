@@ -9,6 +9,7 @@ function CaseHero({ caseData }) {
     title,
     featuredImage,
     clientName,
+    clientTagline,
     excerpt,
     metrics,
     servicesUsed = [],
@@ -58,6 +59,13 @@ function CaseHero({ caseData }) {
             <h1 className="font-serif font-bold leading-[1.1] text-gray-900 text-[2.25rem] sm:text-[2.75rem] lg:text-[3.25rem] xl:text-[3.75rem] tracking-tight">
               {title}
             </h1>
+
+            {/* Client Tagline */}
+            {clientTagline && (
+              <p className="text-lg text-gray-500 -mt-3">
+                {clientTagline}
+              </p>
+            )}
 
             {/* Excerpt */}
             {excerpt && (
