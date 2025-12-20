@@ -546,7 +546,12 @@ const nextConfig = {
       },
       {
         source: '/en/our-work/signhost',
-        destination: '/ons-werk',
+        destination: '/ons-werk/signhost-entrust',
+        permanent: true,
+      },
+      {
+        source: '/ons-werk/signhost',
+        destination: '/ons-werk/signhost-entrust',
         permanent: true,
       },
       {
