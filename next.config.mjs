@@ -531,7 +531,7 @@ const nextConfig = {
       },
       {
         source: '/en/our-work/sec-employment-lawyers',
-        destination: '/ons-werk',
+        destination: '/ons-werk/sec-arbeidsrecht-advocaten',
         permanent: true,
       },
       {
