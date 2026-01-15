@@ -373,7 +373,7 @@ export default function TestimonialsSection({
           {/* All Reviews Link */}
           <div className="text-center mt-12">
             <a
-              href="https://www.google.com/maps/place/OnlineLabs"
+              href="https://www.google.com/maps/place/?q=place_id:ChIJEVS-szIKxkcRng6UB0W50u0"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-medium transition-colors duration-200"
