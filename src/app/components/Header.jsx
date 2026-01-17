@@ -336,7 +336,7 @@ export default function Header({ services = [] }) {
                     </Link>
 
                     {/* Trainingen */}
-                    <span className="text-base font-bold text-primary font-serif">Trainingen</span>
+                    <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wider pt-3 mt-2 border-t border-gray-100">Trainingen</span>
                     <Link
                       href="/trainingen/ai-visibility-website-optimalisatie"
                       onClick={() => {

@@ -26,20 +26,20 @@ const skillMapping = {
   'aeo': 'aeo'
 };
 
-// Mapping van training URL parameter naar training ID
+// Mapping van training URL parameter naar training info
 const trainingMapping = {
   // AI Visibility trainingen
-  'ai-visibility-online': 'training-ai-online',
-  'ai-visibility-dag': 'training-ai-dag',
-  'ai-visibility-1op1': 'training-ai-1op1',
+  'ai-visibility-online': { id: 'training-ai-online', label: 'Training AI Visibility — Online (€399)' },
+  'ai-visibility-dag': { id: 'training-ai-dag', label: 'Training AI Visibility — Dagtraining (€749)' },
+  'ai-visibility-1op1': { id: 'training-ai-1op1', label: 'Training AI Visibility — 1-op-1 Intensief (€1.499)' },
   // WordPress trainingen
-  'wordpress-online': 'training-wordpress-online',
-  'wordpress-dag': 'training-wordpress-dag',
-  'wordpress-1op1': 'training-wordpress-1op1',
+  'wordpress-online': { id: 'training-wordpress-online', label: 'Training WordPress & AI — Online (€299)' },
+  'wordpress-dag': { id: 'training-wordpress-dag', label: 'Training WordPress & AI — Dagtraining (€599)' },
+  'wordpress-1op1': { id: 'training-wordpress-1op1', label: 'Training WordPress & AI — 1-op-1 Intensief (€1.199)' },
   // Ads & Analytics trainingen
-  'ads-analytics-online': 'training-ads-online',
-  'ads-analytics-dag': 'training-ads-dag',
-  'ads-analytics-1op1': 'training-ads-1op1',
+  'ads-analytics-online': { id: 'training-ads-online', label: 'Training Ads & Analytics — Online (€349)' },
+  'ads-analytics-dag': { id: 'training-ads-dag', label: 'Training Ads & Analytics — Dagtraining (€699)' },
+  'ads-analytics-1op1': { id: 'training-ads-1op1', label: 'Training Ads & Analytics — 1-op-1 Intensief (€1.399)' },
 };
 
 function ContactForm() {
@@ -75,19 +75,6 @@ function ContactForm() {
     { id: 'cro', label: 'Conversie-optimalisatie (CRO)' }
   ];
 
-  // Specifieke training opties met prijs (voor ?training= links vanuit training pagina's)
-  const specificTrainingInterests = [
-    { id: 'training-ai-online', label: 'Training AI Visibility — Online (€399)' },
-    { id: 'training-ai-dag', label: 'Training AI Visibility — Dagtraining (€749)' },
-    { id: 'training-ai-1op1', label: 'Training AI Visibility — 1-op-1 Intensief (€1.499)' },
-    { id: 'training-wordpress-online', label: 'Training WordPress & AI — Online (€299)' },
-    { id: 'training-wordpress-dag', label: 'Training WordPress & AI — Dagtraining (€599)' },
-    { id: 'training-wordpress-1op1', label: 'Training WordPress & AI — 1-op-1 Intensief (€1.199)' },
-    { id: 'training-ads-online', label: 'Training Ads & Analytics — Online (€349)' },
-    { id: 'training-ads-dag', label: 'Training Ads & Analytics — Dagtraining (€699)' },
-    { id: 'training-ads-1op1', label: 'Training Ads & Analytics — 1-op-1 Intensief (€1.399)' },
-  ];
-
   // Algemene training opties zonder prijs (voor normale contact pagina)
   const generalTrainingInterests = [
     { id: 'training-ai', label: 'Training AI Visibility & Website Optimalisatie' },
@@ -95,12 +82,16 @@ function ContactForm() {
     { id: 'training-ads', label: 'Training Online Ads & Analytics' },
   ];
 
-  // Alle interests voor form submission (label lookup)
-  const allInterests = [...serviceInterests, ...specificTrainingInterests, ...generalTrainingInterests];
-
-  // Check if came from training page (via ?training= param)
+  // Get selected training from URL param
   const trainingParam = searchParams.get('training');
-  const hasTrainingParam = !!trainingParam;
+  const selectedTraining = trainingParam ? trainingMapping[trainingParam.toLowerCase()] : null;
+
+  // Alle interests voor form submission (label lookup)
+  const allInterests = [
+    ...serviceInterests, 
+    ...generalTrainingInterests,
+    ...Object.values(trainingMapping)
+  ];
 
   // Pre-select interest based on URL parameters
   useEffect(() => {
@@ -116,17 +107,14 @@ function ContactForm() {
       }
     }
 
-    // Check for training parameter
-    if (trainingParam) {
-      const mappedTraining = trainingMapping[trainingParam.toLowerCase()];
-      if (mappedTraining && !formData.interests.includes(mappedTraining)) {
-        setFormData(prev => ({
-          ...prev,
-          interests: [mappedTraining]
-        }));
-      }
+    // Check for training parameter - auto-select the training
+    if (selectedTraining && !formData.interests.includes(selectedTraining.id)) {
+      setFormData(prev => ({
+        ...prev,
+        interests: [selectedTraining.id]
+      }));
     }
-  }, [searchParams, trainingParam]);
+  }, [searchParams, selectedTraining]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -181,10 +169,6 @@ function ContactForm() {
     }
   };
 
-  // Determine which trainings to show
-  const trainingsToShow = hasTrainingParam ? specificTrainingInterests : generalTrainingInterests;
-  const trainingSectionTitle = hasTrainingParam ? 'Gekozen training' : 'Interesse in een training?';
-
   return (
     <section className="py-20 lg:py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -206,10 +190,55 @@ function ContactForm() {
                 </div>
               )}
 
+              {/* GEKOZEN TRAINING - Alleen tonen als via ?training= param (BOVENAAN) */}
+              {selectedTraining && (
+                <div>
+                  <label className="block text-lg font-semibold text-gray-900 mb-4">
+                    Gekozen training
+                  </label>
+                  <label
+                    className={`
+                      relative flex items-start p-4 rounded-lg border-2 cursor-pointer transition-all duration-200
+                      ${formData.interests.includes(selectedTraining.id)
+                        ? 'border-primary bg-blue-50'
+                        : 'border-gray-200 hover:border-gray-300 bg-white'
+                      }
+                    `}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.interests.includes(selectedTraining.id)}
+                      onChange={() => handleInterestToggle(selectedTraining.id)}
+                      className="sr-only"
+                    />
+                    <div className="flex items-start gap-3 w-full">
+                      <div 
+                        className={`
+                          flex-shrink-0 w-5 h-5 mt-0.5 rounded border-2 flex items-center justify-center transition-all duration-200
+                          ${formData.interests.includes(selectedTraining.id)
+                            ? 'bg-primary border-primary'
+                            : 'bg-white border-gray-300'
+                          }
+                        `}
+                      >
+                        {formData.interests.includes(selectedTraining.id) && (
+                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 12 12">
+                            <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                          </svg>
+                        )}
+                      </div>
+                      <span className="text-base text-gray-700 leading-tight flex-1 font-medium">
+                        {selectedTraining.label}
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              )}
+
               {/* Diensten Interests Section */}
               <div>
                 <label className="block text-lg font-semibold text-gray-900 mb-4">
-                  Interesse in
+                  {selectedTraining ? 'Of interesse in onze diensten?' : 'Interesse in'}
                 </label>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {serviceInterests.map((interest) => (
@@ -254,53 +283,55 @@ function ContactForm() {
                 </div>
               </div>
 
-              {/* Trainingen Section */}
-              <div>
-                <label className="block text-lg font-semibold text-gray-900 mb-4">
-                  {trainingSectionTitle}
-                </label>
-                <div className={`grid gap-3 ${hasTrainingParam ? '' : 'sm:grid-cols-3'}`}>
-                  {trainingsToShow.map((training) => (
-                    <label
-                      key={training.id}
-                      className={`
-                        relative flex items-start p-4 rounded-lg border-2 cursor-pointer transition-all duration-200
-                        ${formData.interests.includes(training.id)
-                          ? 'border-primary bg-blue-50'
-                          : 'border-gray-200 hover:border-gray-300 bg-white'
-                        }
-                      `}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.interests.includes(training.id)}
-                        onChange={() => handleInterestToggle(training.id)}
-                        className="sr-only"
-                      />
-                      <div className="flex items-start gap-3 w-full">
-                        <div 
-                          className={`
-                            flex-shrink-0 w-5 h-5 mt-0.5 rounded border-2 flex items-center justify-center transition-all duration-200
-                            ${formData.interests.includes(training.id)
-                              ? 'bg-primary border-primary'
-                              : 'bg-white border-gray-300'
-                            }
-                          `}
-                        >
-                          {formData.interests.includes(training.id) && (
-                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 12 12">
-                              <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
-                            </svg>
-                          )}
+              {/* Trainingen Section - Alleen tonen als NIET via ?training= param */}
+              {!selectedTraining && (
+                <div>
+                  <label className="block text-lg font-semibold text-gray-900 mb-4">
+                    Interesse in een training?
+                  </label>
+                  <div className="grid sm:grid-cols-3 gap-3">
+                    {generalTrainingInterests.map((training) => (
+                      <label
+                        key={training.id}
+                        className={`
+                          relative flex items-start p-4 rounded-lg border-2 cursor-pointer transition-all duration-200
+                          ${formData.interests.includes(training.id)
+                            ? 'border-primary bg-blue-50'
+                            : 'border-gray-200 hover:border-gray-300 bg-white'
+                          }
+                        `}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={formData.interests.includes(training.id)}
+                          onChange={() => handleInterestToggle(training.id)}
+                          className="sr-only"
+                        />
+                        <div className="flex items-start gap-3 w-full">
+                          <div 
+                            className={`
+                              flex-shrink-0 w-5 h-5 mt-0.5 rounded border-2 flex items-center justify-center transition-all duration-200
+                              ${formData.interests.includes(training.id)
+                                ? 'bg-primary border-primary'
+                                : 'bg-white border-gray-300'
+                              }
+                            `}
+                          >
+                            {formData.interests.includes(training.id) && (
+                              <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 12 12">
+                                <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                              </svg>
+                            )}
+                          </div>
+                          <span className="text-base text-gray-700 leading-tight flex-1">
+                            {training.label}
+                          </span>
                         </div>
-                        <span className="text-base text-gray-700 leading-tight flex-1">
-                          {training.label}
-                        </span>
-                      </div>
-                    </label>
-                  ))}
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Message Field */}
               <div>
