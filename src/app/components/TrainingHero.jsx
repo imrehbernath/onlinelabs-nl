@@ -1,0 +1,338 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+
+// Icon mapping for USPs
+const iconMap = {
+  location: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+  ),
+  users: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+  ),
+  coffee: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+      <line x1="6" y1="1" x2="6" y2="4"/>
+      <line x1="10" y1="1" x2="10" y2="4"/>
+      <line x1="14" y1="1" x2="14" y2="4"/>
+    </svg>
+  ),
+  clock: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 6v6l4 2"/>
+    </svg>
+  ),
+  check: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+      <polyline points="22,4 12,14.01 9,11.01"/>
+    </svg>
+  ),
+  book: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+    </svg>
+  ),
+  certificate: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="6"/>
+      <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+    </svg>
+  ),
+};
+
+export default function TrainingHero({ 
+  badge = 'TRAINING',
+  title,
+  description,
+  ctaText = 'Bekijk trainingsopties',
+  ctaLink = '#pricing',
+  usps = [],
+  slug
+}) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 150);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <style>{`
+        /* Floating orbs - OnlineLabs blue only */
+        @keyframes float-orb-slow {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(40px, -30px) scale(1.1); }
+          66% { transform: translate(-30px, 20px) scale(0.9); }
+        }
+        
+        @keyframes float-orb-medium {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-50px, 40px) scale(1.15); }
+        }
+
+        .orb-1 {
+          animation: float-orb-slow 25s ease-in-out infinite;
+        }
+        .orb-2 {
+          animation: float-orb-medium 20s ease-in-out infinite;
+          animation-delay: -5s;
+        }
+        .orb-3 {
+          animation: float-orb-slow 30s ease-in-out infinite reverse;
+          animation-delay: -10s;
+        }
+
+        /* Staggered reveal */
+        .training-reveal {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+                      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .training-reveal.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* Badge pulse glow */
+        @keyframes badge-glow {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(55, 110, 181, 0.2); }
+          50% { box-shadow: 0 0 20px 5px rgba(55, 110, 181, 0.15); }
+        }
+        .badge-glow {
+          animation: badge-glow 3s ease-in-out infinite;
+        }
+
+        /* Line expand */
+        @keyframes line-expand {
+          0% { transform: scaleX(0); }
+          100% { transform: scaleX(1); }
+        }
+        .line-animate {
+          transform-origin: left;
+          transform: scaleX(0);
+        }
+        .line-animate.visible {
+          animation: line-expand 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* USP items */
+        .usp-item {
+          opacity: 0;
+          transform: translateY(10px);
+          transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .usp-item.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* Floating circles */
+        @keyframes circle-float-1 {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-12px); }
+        }
+        @keyframes circle-float-2 {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-18px) scale(1.05); }
+        }
+
+        .circle-float-1 {
+          animation: circle-float-1 5s ease-in-out infinite;
+        }
+        .circle-float-2 {
+          animation: circle-float-2 7s ease-in-out infinite;
+          animation-delay: -2s;
+        }
+
+        .deco-circles {
+          opacity: 0;
+          transition: opacity 1s ease-out;
+          transition-delay: 0.6s;
+        }
+        .deco-circles.visible {
+          opacity: 1;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+          .training-reveal, .usp-item {
+            opacity: 1;
+            transform: none;
+            transition: none;
+          }
+          .orb-1, .orb-2, .orb-3, .circle-float-1, .circle-float-2 {
+            animation: none;
+          }
+          .badge-glow {
+            animation: none;
+          }
+          .line-animate {
+            transform: scaleX(1);
+          }
+          .line-animate.visible {
+            animation: none;
+          }
+          .deco-circles {
+            opacity: 1;
+            transition: none;
+          }
+        }
+      `}</style>
+
+      <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-20 bg-white overflow-hidden">
+        
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div 
+            className="orb-1 absolute -top-20 -right-20 lg:top-0 lg:right-[10%] w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(55, 110, 181, 0.12) 0%, rgba(55, 110, 181, 0.04) 40%, transparent 70%)',
+            }}
+          />
+          <div 
+            className="orb-2 absolute -bottom-32 -left-32 lg:bottom-[-20%] lg:left-[-5%] w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(74, 143, 219, 0.15) 0%, rgba(74, 143, 219, 0.05) 40%, transparent 70%)',
+            }}
+          />
+          <div 
+            className="orb-3 absolute top-[40%] right-[25%] w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] rounded-full hidden lg:block"
+            style={{
+              background: 'radial-gradient(circle, rgba(55, 110, 181, 0.08) 0%, transparent 60%)',
+            }}
+          />
+        </div>
+
+        {/* Decorative floating circles */}
+        <div className={`deco-circles absolute right-[15%] lg:right-[12%] xl:right-[15%] top-[30%] hidden lg:block pointer-events-none ${isLoaded ? 'visible' : ''}`}>
+          <div className="circle-float-1 absolute w-20 h-20 rounded-full border-2 border-[#376eb5]/15" />
+          <div className="circle-float-2 absolute top-28 -left-6 w-10 h-10 rounded-full bg-[#4A8FDB]/10" />
+          <div className="circle-float-1 absolute top-16 left-16 w-4 h-4 rounded-full bg-[#376eb5]/25" />
+          <div className="circle-float-2 absolute -top-8 -left-12 w-32 h-32 rounded-full border border-[#376eb5]/8" style={{ animationDelay: '-3s' }} />
+        </div>
+
+        {/* Subtle grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23376eb5' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="max-w-4xl mx-auto text-center">
+            
+            {/* Breadcrumb */}
+            <nav 
+              className={`training-reveal flex items-center justify-center gap-2 text-sm text-gray-500 mb-8 ${isLoaded ? 'visible' : ''}`}
+              style={{ transitionDelay: '0s' }}
+            >
+              <Link href="/" className="hover:text-[#376eb5] transition-colors">
+                Home
+              </Link>
+              <span>/</span>
+              <Link href="/trainingen" className="hover:text-[#376eb5] transition-colors">
+                Trainingen
+              </Link>
+              <span>/</span>
+              <span className="text-gray-900 font-medium truncate max-w-[200px]">{title}</span>
+            </nav>
+
+            {/* Badge with glow */}
+            <div 
+              className={`training-reveal ${isLoaded ? 'visible' : ''}`}
+              style={{ transitionDelay: '0.1s' }}
+            >
+              <div 
+                className="badge-glow inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+                style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}
+              >
+                <span className="w-2 h-2 rounded-full bg-[#376eb5]" />
+                <span className="text-sm font-semibold text-[#376eb5] tracking-wide uppercase">
+                  {badge}
+                </span>
+              </div>
+            </div>
+
+            {/* Heading */}
+            <div className="relative inline-block">
+              <h1 
+                className={`training-reveal font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-6 leading-[1.1] tracking-tight ${isLoaded ? 'visible' : ''}`}
+                style={{ transitionDelay: '0.2s' }}
+              >
+                {title}
+              </h1>
+            </div>
+
+            {/* Description */}
+            {description && (
+              <p 
+                className={`training-reveal text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-10 ${isLoaded ? 'visible' : ''}`}
+                style={{ transitionDelay: '0.3s' }}
+              >
+                {description}
+              </p>
+            )}
+
+            {/* CTA Button */}
+            <div 
+              className={`training-reveal mb-12 ${isLoaded ? 'visible' : ''}`}
+              style={{ transitionDelay: '0.4s' }}
+            >
+              <Link
+                href={ctaLink}
+                className="inline-flex items-center gap-2 bg-[#376eb5] hover:bg-[#2a5a96] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+              >
+                {ctaText}
+                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </Link>
+            </div>
+
+            {/* USPs */}
+            {usps && usps.length > 0 && (
+              <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+                {usps.map((usp, index) => (
+                  <div 
+                    key={index}
+                    className={`usp-item flex items-center gap-2 text-gray-600 ${isLoaded ? 'visible' : ''}`}
+                    style={{ transitionDelay: `${0.5 + index * 0.1}s` }}
+                  >
+                    <span className="text-[#376eb5]">
+                      {iconMap[usp.icon] || iconMap.check}
+                    </span>
+                    <span className="font-medium">{usp.text}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Bottom gradient line */}
+        <div className="absolute bottom-0 left-0 right-0 h-px">
+          <div 
+            className={`line-animate h-full bg-gradient-to-r from-transparent via-[#376eb5]/30 to-transparent ${isLoaded ? 'visible' : ''}`}
+            style={{ animationDelay: '0.8s', transformOrigin: 'center' }}
+          />
+        </div>
+      </section>
+    </>
+  );
+}

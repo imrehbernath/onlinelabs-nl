@@ -26,6 +26,22 @@ const skillMapping = {
   'aeo': 'aeo'
 };
 
+// Mapping van training URL parameter naar training ID
+const trainingMapping = {
+  // AI Visibility trainingen
+  'ai-visibility-online': 'training-ai-online',
+  'ai-visibility-dag': 'training-ai-dag',
+  'ai-visibility-1op1': 'training-ai-1op1',
+  // WordPress trainingen
+  'wordpress-online': 'training-wordpress-online',
+  'wordpress-dag': 'training-wordpress-dag',
+  'wordpress-1op1': 'training-wordpress-1op1',
+  // Ads & Analytics trainingen
+  'ads-analytics-online': 'training-ads-online',
+  'ads-analytics-dag': 'training-ads-dag',
+  'ads-analytics-1op1': 'training-ads-1op1',
+};
+
 function ContactForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -43,7 +59,8 @@ function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(false);
 
-  const interests = [
+  // Diensten interests
+  const serviceInterests = [
     { id: 'seo', label: 'SEO & vindbaarheid in Google' },
     { id: 'geo', label: 'Zichtbaarheid in ChatGPT & Perplexity' },
     { id: 'aeo', label: 'AI SEO / Answer Engine Optimization (AEO)' },
@@ -58,8 +75,36 @@ function ContactForm() {
     { id: 'cro', label: 'Conversie-optimalisatie (CRO)' }
   ];
 
-  // Pre-select interest based on ?skill= or ?dienst= parameter
+  // Specifieke training opties met prijs (voor ?training= links vanuit training pagina's)
+  const specificTrainingInterests = [
+    { id: 'training-ai-online', label: 'Training AI Visibility — Online (€399)' },
+    { id: 'training-ai-dag', label: 'Training AI Visibility — Dagtraining (€749)' },
+    { id: 'training-ai-1op1', label: 'Training AI Visibility — 1-op-1 Intensief (€1.499)' },
+    { id: 'training-wordpress-online', label: 'Training WordPress & AI — Online (€299)' },
+    { id: 'training-wordpress-dag', label: 'Training WordPress & AI — Dagtraining (€599)' },
+    { id: 'training-wordpress-1op1', label: 'Training WordPress & AI — 1-op-1 Intensief (€1.199)' },
+    { id: 'training-ads-online', label: 'Training Ads & Analytics — Online (€349)' },
+    { id: 'training-ads-dag', label: 'Training Ads & Analytics — Dagtraining (€699)' },
+    { id: 'training-ads-1op1', label: 'Training Ads & Analytics — 1-op-1 Intensief (€1.399)' },
+  ];
+
+  // Algemene training opties zonder prijs (voor normale contact pagina)
+  const generalTrainingInterests = [
+    { id: 'training-ai', label: 'Training AI Visibility & Website Optimalisatie' },
+    { id: 'training-wordpress', label: 'Training WordPress & AI' },
+    { id: 'training-ads', label: 'Training Online Ads & Analytics' },
+  ];
+
+  // Alle interests voor form submission (label lookup)
+  const allInterests = [...serviceInterests, ...specificTrainingInterests, ...generalTrainingInterests];
+
+  // Check if came from training page (via ?training= param)
+  const trainingParam = searchParams.get('training');
+  const hasTrainingParam = !!trainingParam;
+
+  // Pre-select interest based on URL parameters
   useEffect(() => {
+    // Check for skill/dienst parameter
     const skill = searchParams.get('skill') || searchParams.get('dienst');
     if (skill) {
       const mappedInterest = skillMapping[skill.toLowerCase()];
@@ -70,7 +115,18 @@ function ContactForm() {
         }));
       }
     }
-  }, [searchParams]);
+
+    // Check for training parameter
+    if (trainingParam) {
+      const mappedTraining = trainingMapping[trainingParam.toLowerCase()];
+      if (mappedTraining && !formData.interests.includes(mappedTraining)) {
+        setFormData(prev => ({
+          ...prev,
+          interests: [mappedTraining]
+        }));
+      }
+    }
+  }, [searchParams, trainingParam]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -94,7 +150,7 @@ function ContactForm() {
     try {
       // Map interest IDs to labels for email
       const selectedInterests = formData.interests.map(id => {
-        const interest = interests.find(i => i.id === id);
+        const interest = allInterests.find(i => i.id === id);
         return interest ? interest.label : id;
       });
 
@@ -112,7 +168,6 @@ function ContactForm() {
       const data = await response.json();
 
       if (response.ok) {
-        // Redirect naar bedankt pagina
         router.push('/bedankt');
       } else {
         setSubmitError(true);
@@ -125,6 +180,10 @@ function ContactForm() {
       setIsSubmitting(false);
     }
   };
+
+  // Determine which trainings to show
+  const trainingsToShow = hasTrainingParam ? specificTrainingInterests : generalTrainingInterests;
+  const trainingSectionTitle = hasTrainingParam ? 'Gekozen training' : 'Interesse in een training?';
 
   return (
     <section className="py-20 lg:py-24 bg-white">
@@ -147,13 +206,13 @@ function ContactForm() {
                 </div>
               )}
 
-              {/* Interests Section */}
+              {/* Diensten Interests Section */}
               <div>
                 <label className="block text-lg font-semibold text-gray-900 mb-4">
                   Interesse in
                 </label>
                 <div className="grid sm:grid-cols-2 gap-3">
-                  {interests.map((interest) => (
+                  {serviceInterests.map((interest) => (
                     <label
                       key={interest.id}
                       className={`
@@ -195,32 +254,78 @@ function ContactForm() {
                 </div>
               </div>
 
-              {/* Message */}
+              {/* Trainingen Section */}
               <div>
-                <label htmlFor="message" className="block text-lg font-semibold text-gray-900 mb-2">
+                <label className="block text-lg font-semibold text-gray-900 mb-4">
+                  {trainingSectionTitle}
+                </label>
+                <div className={`grid gap-3 ${hasTrainingParam ? '' : 'sm:grid-cols-3'}`}>
+                  {trainingsToShow.map((training) => (
+                    <label
+                      key={training.id}
+                      className={`
+                        relative flex items-start p-4 rounded-lg border-2 cursor-pointer transition-all duration-200
+                        ${formData.interests.includes(training.id)
+                          ? 'border-primary bg-blue-50'
+                          : 'border-gray-200 hover:border-gray-300 bg-white'
+                        }
+                      `}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.interests.includes(training.id)}
+                        onChange={() => handleInterestToggle(training.id)}
+                        className="sr-only"
+                      />
+                      <div className="flex items-start gap-3 w-full">
+                        <div 
+                          className={`
+                            flex-shrink-0 w-5 h-5 mt-0.5 rounded border-2 flex items-center justify-center transition-all duration-200
+                            ${formData.interests.includes(training.id)
+                              ? 'bg-primary border-primary'
+                              : 'bg-white border-gray-300'
+                            }
+                          `}
+                        >
+                          {formData.interests.includes(training.id) && (
+                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 12 12">
+                              <path d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                            </svg>
+                          )}
+                        </div>
+                        <span className="text-base text-gray-700 leading-tight flex-1">
+                          {training.label}
+                        </span>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Message Field */}
+              <div>
+                <label htmlFor="message" className="block text-lg font-semibold text-gray-900 mb-4">
                   Vertel ons meer over je project
                 </label>
-                <div className="relative">
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={6}
-                    value={formData.message}
-                    onChange={handleChange}
-                    onFocus={() => setFocusedField('message')}
-                    onBlur={() => setFocusedField(null)}
-                    placeholder="Beschrijf je doelen, uitdagingen en wat je wilt bereiken..."
-                    className={`
-                      w-full px-4 py-3 rounded-lg border-2 transition-all duration-200
-                      text-base text-gray-900 placeholder-gray-400
-                      focus:outline-none resize-none
-                      ${focusedField === 'message'
-                        ? 'border-primary ring-4 ring-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                      }
-                    `}
-                  />
-                </div>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  value={formData.message}
+                  onChange={handleChange}
+                  onFocus={() => setFocusedField('message')}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="Beschrijf je wensen, uitdagingen en wat je wilt bereiken..."
+                  className={`
+                    w-full px-4 py-3 rounded-lg border-2 transition-all duration-200
+                    text-base text-gray-900 placeholder-gray-400 resize-none
+                    focus:outline-none
+                    ${focusedField === 'message'
+                      ? 'border-primary ring-4 ring-blue-50'
+                      : 'border-gray-200 hover:border-gray-300'
+                    }
+                  `}
+                />
               </div>
 
               {/* Contact Details Row */}

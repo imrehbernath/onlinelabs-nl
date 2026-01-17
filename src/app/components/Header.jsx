@@ -20,9 +20,7 @@ export default function Header({ services = [] }) {
   }, []);
 
   // Fallback services als WordPress niet beschikbaar
-  // Rij 1: Traffic generatie | Rij 2: Website optimalisatie
   const defaultServices = [
-    // Rij 1: Hoe krijg je bezoekers
     {
       title: 'SEO & vindbaarheid',
       subtitle: 'SEO specialisten',
@@ -44,7 +42,6 @@ export default function Header({ services = [] }) {
       uri: '/skills/online-adverteren',
       featured: false,
     },
-    // Rij 2: Wat doe je met bezoekers
     {
       title: 'Webdesign & UX',
       subtitle: 'Webdesign specialisten',
@@ -68,8 +65,6 @@ export default function Header({ services = [] }) {
     },
   ];
 
-  // Transform WordPress data naar component format
-  // Filter op showInMenu - alleen tonen als expliciet true
   const displayServices = services.length > 0 
     ? services
         .filter(service => service.serviceDetails?.showInMenu === true)
@@ -92,7 +87,7 @@ export default function Header({ services = [] }) {
     >
       <nav className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Logo - with priority for LCP */}
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative w-44 h-11">
               <Image
@@ -106,7 +101,7 @@ export default function Header({ services = [] }) {
             </div>
           </Link>
 
-          {/* Desktop Navigation - Compact between 1024-1280px, full spacing above */}
+          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-4 xl:gap-8">
             {/* Mega Menu - Wat we doen */}
             <div
@@ -126,18 +121,18 @@ export default function Header({ services = [] }) {
               {/* Mega Menu Dropdown */}
               {isMegaMenuOpen && (
                 <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-screen max-w-4xl">
-                  <div className="bg-white rounded-2xl shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-gray-100 overflow-hidden">
+                  <div className="bg-white rounded-2xl shadow-[0_20px_70px_-15px_rgba(0,0,0,0.15)] border border-gray-100">
                     
                     {/* Header */}
-                    <div className="relative px-10 pt-8 pb-5 bg-gradient-to-br from-gray-50 via-white to-gray-50/30">
+                    <div className="relative px-10 pt-8 pb-5 bg-gradient-to-br from-gray-50 via-white to-gray-50/30 rounded-t-2xl">
                       <span className="block text-2xl font-bold text-gray-900 font-serif tracking-tight">
                         Wat we doen
                       </span>
                       <div className="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
                     </div>
 
-                    {/* Services Grid - 3 kolommen, 2 rijen */}
-                    <div className="px-10 py-8 bg-gradient-to-b from-white via-gray-50/20 to-white">
+                    {/* Services Grid */}
+                    <div className="px-10 py-8">
                       <div className="grid grid-cols-3 gap-6">
                         {displayServices.map((service) => (
                           <Link
@@ -149,13 +144,11 @@ export default function Header({ services = [] }) {
                                 : ''
                             }`}
                           >
-                            {/* Hover background effect */}
                             {!service.featured && (
                               <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-accent/[0.02] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -m-3 p-3" />
                             )}
                             
                             <div className="relative">
-                              {/* Title with underline */}
                               <div className={`pb-2 mb-3 border-b-2 transition-all duration-300 ${
                                 service.featured 
                                   ? 'border-primary' 
@@ -170,12 +163,10 @@ export default function Header({ services = [] }) {
                                 </span>
                               </div>
                               
-                              {/* Subtitle */}
                               <p className="text-sm text-gray-700 font-semibold mb-2 tracking-tight">
                                 {service.subtitle}
                               </p>
                               
-                              {/* Description */}
                               <p className="text-sm text-gray-600 leading-relaxed">
                                 {service.description}
                               </p>
@@ -184,7 +175,7 @@ export default function Header({ services = [] }) {
                         ))}
                       </div>
 
-                      {/* Footer Link */}
+                      {/* Diensten Footer */}
                       <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
                         <p className="text-sm text-gray-500 font-medium">
                           Meer weten over onze aanpak en werkwijze?
@@ -198,12 +189,50 @@ export default function Header({ services = [] }) {
                         </Link>
                       </div>
                     </div>
+
+                    {/* Trainingen Sectie - aparte row */}
+                    <div className="px-10 py-5 bg-gray-50 border-t border-gray-200 rounded-b-2xl">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-base font-bold text-gray-900 font-serif">Trainingen</span>
+                          <span className="text-sm text-gray-400">|</span>
+                          <span className="text-sm text-gray-500">Leer van onze experts</span>
+                        </div>
+                        <div className="flex items-center gap-5">
+                          <Link
+                            href="/trainingen/ai-visibility-website-optimalisatie"
+                            className="text-sm text-gray-600 hover:text-primary font-medium transition-colors"
+                          >
+                            AI & Website
+                          </Link>
+                          <Link
+                            href="/trainingen/wordpress-ai-training"
+                            className="text-sm text-gray-600 hover:text-primary font-medium transition-colors"
+                          >
+                            WordPress & AI
+                          </Link>
+                          <Link
+                            href="/trainingen/online-ads-analytics"
+                            className="text-sm text-gray-600 hover:text-primary font-medium transition-colors"
+                          >
+                            Ads & Analytics
+                          </Link>
+                          <Link
+                            href="/trainingen"
+                            className="text-sm text-primary hover:text-primary-dark font-semibold transition-colors"
+                          >
+                            Alle trainingen →
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Regular Menu Items - Compact text between 1024-1280px */}
+            {/* Regular Menu Items */}
             <Link
               href="/ons-werk"
               className="text-gray-700 hover:text-primary font-medium text-sm xl:text-base transition-colors duration-200"
@@ -229,7 +258,7 @@ export default function Header({ services = [] }) {
               Contact
             </Link>
 
-            {/* Teun.ai Button - Compact between 1024-1280px */}
+            {/* Teun.ai Button */}
             <a
               href="https://teun.ai"
               target="_blank"
@@ -255,7 +284,7 @@ export default function Header({ services = [] }) {
           </button>
         </div>
 
-        {/* Mobile Menu - COLLAPSIBLE */}
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="lg:hidden mt-6 pb-6 border-t border-gray-200 pt-6">
             <div className="flex flex-col gap-4">
@@ -274,9 +303,10 @@ export default function Header({ services = [] }) {
                   />
                 </button>
 
-                {/* Services Dropdown */}
                 {isMobileServicesOpen && (
                   <div className="mt-3 ml-4 space-y-2 border-l-2 border-gray-200 pl-4">
+                    {/* Diensten */}
+                    <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wider pt-1">Diensten</span>
                     {displayServices.map((service) => (
                       <Link
                         key={service.uri}
@@ -302,7 +332,50 @@ export default function Header({ services = [] }) {
                       }}
                       className="block text-primary font-medium text-base py-1"
                     >
-                      Naar alle skills →
+                      Alle diensten →
+                    </Link>
+
+                    {/* Trainingen */}
+                    <span className="text-base font-bold text-primary font-serif">Trainingen</span>
+                    <Link
+                      href="/trainingen/ai-visibility-website-optimalisatie"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileServicesOpen(false);
+                      }}
+                      className="block text-base text-gray-600 hover:text-primary transition-colors duration-200 py-1"
+                    >
+                      AI & Website Optimalisatie
+                    </Link>
+                    <Link
+                      href="/trainingen/wordpress-ai-training"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileServicesOpen(false);
+                      }}
+                      className="block text-base text-gray-600 hover:text-primary transition-colors duration-200 py-1"
+                    >
+                      WordPress & AI
+                    </Link>
+                    <Link
+                      href="/trainingen/online-ads-analytics"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileServicesOpen(false);
+                      }}
+                      className="block text-base text-gray-600 hover:text-primary transition-colors duration-200 py-1"
+                    >
+                      Online Ads & Analytics
+                    </Link>
+                    <Link
+                      href="/trainingen"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileServicesOpen(false);
+                      }}
+                      className="block text-primary font-medium text-base py-1"
+                    >
+                      Alle trainingen →
                     </Link>
                   </div>
                 )}

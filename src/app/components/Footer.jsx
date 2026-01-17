@@ -5,20 +5,10 @@ import Image from 'next/image';
 
 /**
  * Footer Component
- * 
- * Modern footer with 4 columns:
- * 1. Company info + Google Partner badge
- * 2. Services links
- * 3. Company links
- * 4. Contact info + Social media
- * 
- * Responsive: 4 cols desktop → 2 cols tablet → 1 col mobile
  */
 export default function Footer({ footerData }) {
   const currentYear = new Date().getFullYear();
 
-  // Default data if WordPress not configured yet
-  // FIX: Changed conversie-optimalisatie-specialist to conversie-optimalisatie
   const footer = footerData || {
     companyName: 'OnlineLabs',
     tagline: 'Dé expert in online groei en webdesign',
@@ -54,7 +44,6 @@ export default function Footer({ footerData }) {
     ],
   };
 
-  // Social media icons
   const SocialIcon = ({ icon }) => {
     const icons = {
       linkedin: (
@@ -72,12 +61,7 @@ export default function Footer({ footerData }) {
     };
 
     return (
-      <svg
-        className="w-5 h-5"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         {icons[icon]}
       </svg>
     );
@@ -85,27 +69,22 @@ export default function Footer({ footerData }) {
 
   return (
     <footer className="bg-gray-900 text-gray-300">
-      {/* Main Footer Content */}
       <div className="container mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           
-          {/* Column 1: Company Info + Google Partner Badge */}
+          {/* Column 1: Company Info */}
           <div className="space-y-6">
             <div>
               <div className="font-serif text-2xl font-bold text-white mb-2">
                 {footer.companyName}
               </div>
-              {/* FIX: Changed text-primary to text-sky-400 for better contrast on dark bg (4.5:1 ratio) */}
               <p className="text-base text-sky-400 font-medium mb-4 leading-relaxed">
                 {footer.tagline}
               </p>
-              {/* Description - GROTER */}
               <p className="text-base leading-relaxed">
                 {footer.description}
               </p>
             </div>
-
-            {/* Google Partner Badge */}
             <div className="pt-4">
               <a
                 href="https://www.google.com/partners/agency?id=8066409399"
@@ -151,17 +130,36 @@ export default function Footer({ footerData }) {
               Bedrijf
             </div>
             <ul className="space-y-3">
-              {footer.company.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    href={link.url}
-                    className="text-sm hover:text-primary transition-colors duration-200 flex items-center group"
-                  >
-                    <span className="w-0 h-0.5 bg-primary mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
-                    {link.title}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/over-ons" className="text-sm hover:text-primary transition-colors duration-200 flex items-center group">
+                  <span className="w-0 h-0.5 bg-primary mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
+                  Over ons
+                </Link>
+              </li>
+              <li>
+                <Link href="/ons-werk" className="text-sm hover:text-primary transition-colors duration-200 flex items-center group">
+                  <span className="w-0 h-0.5 bg-primary mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
+                  Ons werk
+                </Link>
+              </li>
+              <li>
+                <Link href="/skills" className="text-sm hover:text-primary transition-colors duration-200 flex items-center group">
+                  <span className="w-0 h-0.5 bg-primary mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
+                  Skills
+                </Link>
+              </li>
+              <li>
+                <Link href="/trainingen" className="text-sm hover:text-primary transition-colors duration-200 flex items-center group">
+                  <span className="w-0 h-0.5 bg-primary mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
+                  Trainingen
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-sm hover:text-primary transition-colors duration-200 flex items-center group">
+                  <span className="w-0 h-0.5 bg-primary mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -201,8 +199,6 @@ export default function Footer({ footerData }) {
                 </a>
               </li>
             </ul>
-
-            {/* Social Media */}
             <div>
               <div className="font-medium text-white text-sm mb-4">
                 Volg Ons
@@ -226,7 +222,6 @@ export default function Footer({ footerData }) {
         </div>
       </div>
 
-      {/* Bottom Bar */}
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
