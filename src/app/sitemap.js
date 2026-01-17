@@ -58,6 +58,34 @@ export default async function sitemap() {
     },
   ];
 
+  // Training pages
+  const trainingPages = [
+    {
+      url: `${siteUrl}/trainingen`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${siteUrl}/trainingen/ai-visibility-website-optimalisatie`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/trainingen/wordpress-ai-training`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/trainingen/online-ads-analytics`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+  ];
+
   // Dynamic blog post pages (/blog/[slug])
   const blogPages = blogSlugs.map((slug) => ({
     url: `${siteUrl}/blog/${slug}`,
@@ -82,5 +110,5 @@ export default async function sitemap() {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...servicePages, ...casePages, ...blogPages];
+  return [...staticPages, ...trainingPages, ...servicePages, ...casePages, ...blogPages];
 }
