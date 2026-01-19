@@ -9,7 +9,7 @@ const SITE_URL = 'https://www.onlinelabs.nl';
 export const revalidate = 86400; // 24 hours ISR
 
 export const metadata = {
-  title: 'Trainingen AI, WordPress & Ads | Door experts |',
+  title: 'Trainingen AI, WordPress & Ads | Door experts',
   description: 'Praktische trainingen in AI, WordPress, SEO en Online Advertising. Door onze eigen specialisten. Amsterdam of online • Max 6 deelnemers.',
   alternates: {
     canonical: '/trainingen',
