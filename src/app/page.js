@@ -1,4 +1,5 @@
 import Hero from './components/Hero';
+import AnnouncementBar from './components/AnnouncementBar';
 import ServicesSection from './components/ServicesSection';
 import AboutSection from './components/AboutSection';
 import TestimonialsSection from './components/TestimonialsSection';
@@ -37,7 +38,7 @@ export async function generateMetadata() {
   if (homepageSettings?.seo) {
     return {
       title: {
-        absolute: homepageSettings.seo.title || "OnlineLabs – Online marketing bureau in Amsterdam sinds '08"
+        absolute: homepageSettings.seo.title || "OnlineLabs — Online marketing bureau in Amsterdam sinds '08"
       },
       description: homepageSettings.seo.description || 'Online marketing bureau in Amsterdam sinds 2008. Wij helpen bedrijven groeien met SEO, AI-zichtbaarheid, snelle websites en online ads door heel Nederland.',
       alternates: {
@@ -67,13 +68,13 @@ export async function generateMetadata() {
 
   // Fallback metadata
   return {
-    title: "OnlineLabs – Online marketing bureau in Amsterdam sinds '08",
+    title: "OnlineLabs — Online marketing bureau in Amsterdam sinds '08",
     description: 'Online marketing bureau in Amsterdam sinds 2008. Wij helpen bedrijven groeien met SEO, AI-zichtbaarheid, snelle websites en online ads door heel Nederland.',
     alternates: {
       canonical: '/',
     },
     openGraph: {
-      title: "OnlineLabs – Online marketing bureau in Amsterdam sinds '08",
+      title: "OnlineLabs — Online marketing bureau in Amsterdam sinds '08",
       description: 'Online marketing bureau in Amsterdam sinds 2008. Wij helpen bedrijven groeien met SEO, AI-zichtbaarheid, snelle websites en online ads door heel Nederland.',
       url: '/',
       images: ['/og-image-homepage.jpg'],
@@ -83,7 +84,7 @@ export async function generateMetadata() {
     },
     twitter: {
       card: 'summary_large_image',
-      title: "OnlineLabs – Online marketing bureau in Amsterdam sinds '08",
+      title: "OnlineLabs — Online marketing bureau in Amsterdam sinds '08",
       description: 'Online marketing bureau in Amsterdam sinds 2008. Wij helpen bedrijven groeien met SEO, AI-zichtbaarheid, snelle websites en online ads door heel Nederland.',
       images: ['/og-image-homepage.jpg'],
     },
@@ -173,6 +174,9 @@ export default async function Home() {
         {/* Hero Section - WordPress bewerkbaar */}
         <Hero data={heroData} />
 
+        {/* Announcement Bar - Trainingen & Blog highlights */}
+        <AnnouncementBar />
+
         {/* Services Section - "Onze LABS" met colored bars */}
         <ServicesSection services={services} />
 
@@ -189,7 +193,7 @@ export default async function Home() {
         {aboutData && (
           <AboutSection 
             aboutData={aboutData}
-            imageCaption='Sanne Verschoor – Webdesigner & developer, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>'
+            imageCaption='Sanne Verschoor — Webdesigner & developer, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>'
             imageCaptionLink="/auteur/sanne-verschoor"
             background="beige"
           />
