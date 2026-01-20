@@ -17,10 +17,24 @@ export const metadata = {
   openGraph: {
     title: 'Trainingen AI, WordPress & Ads | OnlineLabs',
     description: 'Praktische trainingen in AI, WordPress, SEO en Online Advertising. Leer van onze experts.',
-    url: '/trainingen',
+    url: `${SITE_URL}/trainingen`,
     type: 'website',
     locale: 'nl_NL',
     siteName: 'OnlineLabs',
+    images: [
+      {
+        url: `${SITE_URL}/Trainingsruimte.webp`,
+        width: 1200,
+        height: 630,
+        alt: 'Trainingsruimte OnlineLabs aan de Herengracht Amsterdam',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Trainingen AI, WordPress & Ads | OnlineLabs',
+    description: 'Praktische trainingen in AI, WordPress, SEO en Online Advertising. Leer van onze experts.',
+    images: [`${SITE_URL}/Trainingsruimte.webp`],
   },
 };
 
@@ -32,7 +46,7 @@ const trainingenSchema = {
       "@type": "CollectionPage",
       "@id": `${SITE_URL}/trainingen/#collectionpage`,
       "url": `${SITE_URL}/trainingen`,
-      "name": "Trainingen AI, WordPress & Ads – Leer van onze experts",
+      "name": "Trainingen AI, WordPress & Ads — Leer van onze experts",
       "description": "Praktische trainingen in AI, WordPress, SEO en Online Advertising door de specialisten van OnlineLabs.",
       "isPartOf": {
         "@id": `${SITE_URL}/#website`
