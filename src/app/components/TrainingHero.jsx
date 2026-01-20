@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // Icon mapping for USPs
 const iconMap = {
@@ -60,7 +61,10 @@ export default function TrainingHero({
   ctaText = 'Bekijk trainingsopties',
   ctaLink = '#pricing',
   usps = [],
-  slug
+  slug,
+  // Image props - default to training room
+  heroImage = '/Trainingsruimte.webp',
+  heroImageAlt = 'Trainingsruimte OnlineLabs aan de Herengracht Amsterdam met uitzicht op de Westerkerk'
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -141,31 +145,36 @@ export default function TrainingHero({
           transform: translateY(0);
         }
 
-        /* Floating circles */
-        @keyframes circle-float-1 {
+        /* Floating effect for media - matching Hero.jsx */
+        @keyframes gentle-float {
           0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-12px); }
-        }
-        @keyframes circle-float-2 {
-          0%, 100% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(-18px) scale(1.05); }
+          50% { transform: translateY(-8px); }
         }
 
-        .circle-float-1 {
-          animation: circle-float-1 5s ease-in-out infinite;
+        /* Media card hover depth */
+        .media-card {
+          transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                      box-shadow 0.4s ease;
         }
-        .circle-float-2 {
-          animation: circle-float-2 7s ease-in-out infinite;
-          animation-delay: -2s;
+        
+        .media-card:hover {
+          transform: translateY(-4px) scale(1.02);
         }
 
-        .deco-circles {
-          opacity: 0;
-          transition: opacity 1s ease-out;
-          transition-delay: 0.6s;
+        /* Gradient blocks pulse */
+        .gradient-block {
+          transition: transform 0.6s ease, opacity 0.6s ease;
         }
-        .deco-circles.visible {
-          opacity: 1;
+        
+        .gradient-block:hover {
+          transform: scale(1.02);
+        }
+
+        /* Desktop floating animations */
+        @media (min-width: 1024px) {
+          .float-animate {
+            animation: gentle-float 6s ease-in-out infinite;
+          }
         }
 
         /* Reduced motion */
@@ -175,7 +184,7 @@ export default function TrainingHero({
             transform: none;
             transition: none;
           }
-          .orb-1, .orb-2, .orb-3, .circle-float-1, .circle-float-2 {
+          .orb-1, .orb-2, .orb-3, .float-animate {
             animation: none;
           }
           .badge-glow {
@@ -187,14 +196,13 @@ export default function TrainingHero({
           .line-animate.visible {
             animation: none;
           }
-          .deco-circles {
-            opacity: 1;
-            transition: none;
+          .media-card:hover {
+            transform: none;
           }
         }
       `}</style>
 
-      <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-20 bg-white overflow-hidden">
+      <section className="relative pt-28 pb-12 lg:pt-32 lg:pb-16 bg-white overflow-hidden">
         
         {/* Animated gradient orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -218,14 +226,6 @@ export default function TrainingHero({
           />
         </div>
 
-        {/* Decorative floating circles */}
-        <div className={`deco-circles absolute right-[15%] lg:right-[12%] xl:right-[15%] top-[30%] hidden lg:block pointer-events-none ${isLoaded ? 'visible' : ''}`}>
-          <div className="circle-float-1 absolute w-20 h-20 rounded-full border-2 border-[#376eb5]/15" />
-          <div className="circle-float-2 absolute top-28 -left-6 w-10 h-10 rounded-full bg-[#4A8FDB]/10" />
-          <div className="circle-float-1 absolute top-16 left-16 w-4 h-4 rounded-full bg-[#376eb5]/25" />
-          <div className="circle-float-2 absolute -top-8 -left-12 w-32 h-32 rounded-full border border-[#376eb5]/8" style={{ animationDelay: '-3s' }} />
-        </div>
-
         {/* Subtle grid pattern */}
         <div 
           className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -235,93 +235,156 @@ export default function TrainingHero({
         />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="max-w-4xl mx-auto text-center">
+          {/* Two-column grid layout - matching Hero.jsx structure */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             
-            {/* Breadcrumb */}
-            <nav 
-              className={`training-reveal flex items-center justify-center gap-2 text-sm text-gray-500 mb-8 ${isLoaded ? 'visible' : ''}`}
-              style={{ transitionDelay: '0s' }}
-            >
-              <Link href="/" className="hover:text-[#376eb5] transition-colors">
-                Home
-              </Link>
-              <span>/</span>
-              <Link href="/trainingen" className="hover:text-[#376eb5] transition-colors">
-                Trainingen
-              </Link>
-              <span>/</span>
-              <span className="text-gray-900 font-medium truncate max-w-[200px]">{title}</span>
-            </nav>
-
-            {/* Badge with glow */}
-            <div 
-              className={`training-reveal ${isLoaded ? 'visible' : ''}`}
-              style={{ transitionDelay: '0.1s' }}
-            >
-              <div 
-                className="badge-glow inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
-                style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}
+            {/* Left Column - Content */}
+            <div className="space-y-5 lg:space-y-6 max-w-xl">
+              
+              {/* Breadcrumb */}
+              <nav 
+                className={`training-reveal flex items-center gap-2 text-sm text-gray-500 ${isLoaded ? 'visible' : ''}`}
+                style={{ transitionDelay: '0s' }}
               >
-                <span className="w-2 h-2 rounded-full bg-[#376eb5]" />
-                <span className="text-sm font-semibold text-[#376eb5] tracking-wide uppercase">
-                  {badge}
-                </span>
-              </div>
-            </div>
+                <Link href="/" className="hover:text-[#376eb5] transition-colors">
+                  Home
+                </Link>
+                <span>/</span>
+                <Link href="/trainingen" className="hover:text-[#376eb5] transition-colors">
+                  Trainingen
+                </Link>
+                <span>/</span>
+                <span className="text-gray-900 font-medium truncate max-w-[200px]">{title}</span>
+              </nav>
 
-            {/* Heading */}
-            <div className="relative inline-block">
+              {/* Badge with glow */}
+              <div 
+                className={`training-reveal ${isLoaded ? 'visible' : ''}`}
+                style={{ transitionDelay: '0.1s' }}
+              >
+                <div 
+                  className="badge-glow inline-flex items-center gap-2 px-4 py-2 rounded-full"
+                  style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}
+                >
+                  <span className="w-2 h-2 rounded-full bg-[#376eb5]" />
+                  <span className="text-sm font-semibold text-[#376eb5] tracking-wide uppercase">
+                    {badge}
+                  </span>
+                </div>
+              </div>
+
+              {/* Heading */}
               <h1 
-                className={`training-reveal font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-6 leading-[1.1] tracking-tight ${isLoaded ? 'visible' : ''}`}
+                className={`training-reveal font-serif text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight ${isLoaded ? 'visible' : ''}`}
                 style={{ transitionDelay: '0.2s' }}
               >
                 {title}
               </h1>
-            </div>
 
-            {/* Description */}
-            {description && (
-              <p 
-                className={`training-reveal text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-10 ${isLoaded ? 'visible' : ''}`}
-                style={{ transitionDelay: '0.3s' }}
+              {/* Description */}
+              {description && (
+                <p 
+                  className={`training-reveal text-lg lg:text-xl text-gray-600 leading-relaxed ${isLoaded ? 'visible' : ''}`}
+                  style={{ transitionDelay: '0.3s' }}
+                >
+                  {description}
+                </p>
+              )}
+
+              {/* CTA Button */}
+              <div 
+                className={`training-reveal pt-2 ${isLoaded ? 'visible' : ''}`}
+                style={{ transitionDelay: '0.4s' }}
               >
-                {description}
-              </p>
-            )}
-
-            {/* CTA Button */}
-            <div 
-              className={`training-reveal mb-12 ${isLoaded ? 'visible' : ''}`}
-              style={{ transitionDelay: '0.4s' }}
-            >
-              <Link
-                href={ctaLink}
-                className="inline-flex items-center gap-2 bg-[#376eb5] hover:bg-[#2a5a96] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
-              >
-                {ctaText}
-                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </Link>
-            </div>
-
-            {/* USPs */}
-            {usps && usps.length > 0 && (
-              <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-                {usps.map((usp, index) => (
-                  <div 
-                    key={index}
-                    className={`usp-item flex items-center gap-2 text-gray-600 ${isLoaded ? 'visible' : ''}`}
-                    style={{ transitionDelay: `${0.5 + index * 0.1}s` }}
-                  >
-                    <span className="text-[#376eb5]">
-                      {iconMap[usp.icon] || iconMap.check}
-                    </span>
-                    <span className="font-medium">{usp.text}</span>
-                  </div>
-                ))}
+                <Link
+                  href={ctaLink}
+                  className="inline-flex items-center gap-2 bg-[#376eb5] hover:bg-[#2a5a96] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+                >
+                  {ctaText}
+                  <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </Link>
               </div>
-            )}
+
+              {/* USPs */}
+              {usps && usps.length > 0 && (
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-4">
+                  {usps.map((usp, index) => (
+                    <div 
+                      key={index}
+                      className={`usp-item flex items-center gap-2 text-gray-600 ${isLoaded ? 'visible' : ''}`}
+                      style={{ transitionDelay: `${0.5 + index * 0.1}s` }}
+                    >
+                      <span className="text-[#376eb5]">
+                        {iconMap[usp.icon] || iconMap.check}
+                      </span>
+                      <span className="font-medium text-sm lg:text-base">{usp.text}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Right Column - Image with overlapping elements (matching Hero.jsx style) */}
+            <div 
+              className={`training-reveal relative h-[350px] sm:h-[400px] lg:h-[500px] xl:h-[550px] ${isLoaded ? 'visible' : ''}`}
+              style={{ transitionDelay: '0.3s' }}
+            >
+              
+              {/* Blue gradient block - top right */}
+              <div 
+                className="gradient-block absolute top-0 right-0 w-[65%] lg:w-[70%] h-[55%] lg:h-[60%] rounded-[1.5rem] z-10"
+                style={{
+                  background: 'linear-gradient(135deg, #4A8FDB 0%, #376eb5 100%)'
+                }}
+              />
+              
+              {/* Main image - with hover depth & floating animation */}
+              <div 
+                className="media-card float-animate absolute top-[12%] lg:top-[15%] left-0 lg:left-[5%] w-[75%] lg:w-[70%] aspect-[4/3] z-20 rounded-xl overflow-hidden shadow-none lg:shadow-[0_20px_60px_rgba(0,0,0,0.25)]"
+                style={{ willChange: 'transform' }}
+              >
+                <Image
+                  src={heroImage}
+                  alt={heroImageAlt}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 1024px) 75vw, 40vw"
+                />
+                {/* Subtle shine overlay on hover */}
+                <div 
+                  className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{
+                    background: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)'
+                  }}
+                />
+              </div>
+
+              {/* Teal gradient block - bottom left */}
+              <div 
+                className="gradient-block absolute bottom-0 left-[5%] lg:left-0 w-[55%] lg:w-[60%] h-[45%] lg:h-[50%] rounded-[1.5rem] z-0"
+                style={{
+                  background: 'linear-gradient(135deg, #1abc9c 0%, #16a085 100%)'
+                }}
+              />
+
+              {/* Location badge - floating on image */}
+              <div 
+                className={`training-reveal absolute bottom-[15%] lg:bottom-[12%] right-[5%] lg:right-[8%] z-30 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg ${isLoaded ? 'visible' : ''}`}
+                style={{ transitionDelay: '0.6s' }}
+              >
+                <div className="flex items-center gap-2 text-sm">
+                  <svg width="16" height="16" fill="none" stroke="#376eb5" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  <span className="text-gray-700 font-medium">Herengracht, Amsterdam</span>
+                </div>
+              </div>
+              
+            </div>
           </div>
         </div>
 

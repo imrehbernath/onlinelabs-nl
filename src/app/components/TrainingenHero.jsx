@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function TrainingenHero() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -99,31 +100,36 @@ export default function TrainingenHero() {
           animation: line-expand 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Floating circles */
-        @keyframes circle-float-1 {
+        /* Floating effect for media - matching Hero.jsx */
+        @keyframes gentle-float {
           0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-12px); }
-        }
-        @keyframes circle-float-2 {
-          0%, 100% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(-18px) scale(1.05); }
+          50% { transform: translateY(-8px); }
         }
 
-        .circle-float-1 {
-          animation: circle-float-1 5s ease-in-out infinite;
+        /* Media card hover depth */
+        .media-card {
+          transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                      box-shadow 0.4s ease;
         }
-        .circle-float-2 {
-          animation: circle-float-2 7s ease-in-out infinite;
-          animation-delay: -2s;
+        
+        .media-card:hover {
+          transform: translateY(-4px) scale(1.02);
         }
 
-        .deco-circles {
-          opacity: 0;
-          transition: opacity 1s ease-out;
-          transition-delay: 0.6s;
+        /* Gradient blocks */
+        .gradient-block {
+          transition: transform 0.6s ease, opacity 0.6s ease;
         }
-        .deco-circles.visible {
-          opacity: 1;
+        
+        .gradient-block:hover {
+          transform: scale(1.02);
+        }
+
+        /* Desktop floating animations */
+        @media (min-width: 1024px) {
+          .float-animate {
+            animation: gentle-float 6s ease-in-out infinite;
+          }
         }
 
         /* Reduced motion */
@@ -133,7 +139,7 @@ export default function TrainingenHero() {
             transform: none;
             transition: none;
           }
-          .orb-1, .orb-2, .orb-3, .circle-float-1, .circle-float-2 {
+          .orb-1, .orb-2, .orb-3, .float-animate {
             animation: none;
           }
           .badge-glow {
@@ -149,14 +155,13 @@ export default function TrainingenHero() {
             transform: scale(1);
             transition: none;
           }
-          .deco-circles {
-            opacity: 1;
-            transition: none;
+          .media-card:hover {
+            transform: none;
           }
         }
       `}</style>
 
-      <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-20 bg-white overflow-hidden">
+      <section className="relative pt-28 pb-12 lg:pt-32 lg:pb-16 bg-white overflow-hidden">
         
         {/* Animated gradient orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -180,14 +185,6 @@ export default function TrainingenHero() {
           />
         </div>
 
-        {/* Decorative floating circles */}
-        <div className={`deco-circles absolute right-[15%] lg:right-[12%] xl:right-[15%] top-[30%] hidden lg:block pointer-events-none ${isLoaded ? 'visible' : ''}`}>
-          <div className="circle-float-1 absolute w-20 h-20 rounded-full border-2 border-[#376eb5]/15" />
-          <div className="circle-float-2 absolute top-28 -left-6 w-10 h-10 rounded-full bg-[#4A8FDB]/10" />
-          <div className="circle-float-1 absolute top-16 left-16 w-4 h-4 rounded-full bg-[#376eb5]/25" />
-          <div className="circle-float-2 absolute -top-8 -left-12 w-32 h-32 rounded-full border border-[#376eb5]/8" style={{ animationDelay: '-3s' }} />
-        </div>
-
         {/* Subtle grid pattern */}
         <div 
           className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -197,83 +194,149 @@ export default function TrainingenHero() {
         />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="max-w-4xl">
+          {/* Two-column grid layout */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             
-            {/* Breadcrumb */}
-            <nav 
-              className={`trainingen-reveal flex items-center gap-2 text-sm text-gray-500 mb-8 ${isLoaded ? 'visible' : ''}`}
-              style={{ transitionDelay: '0s' }}
-            >
-              <Link href="/" className="hover:text-[#376eb5] transition-colors">
-                Home
-              </Link>
-              <span>/</span>
-              <span className="text-gray-900 font-medium">Trainingen</span>
-            </nav>
-
-            {/* Badge with glow */}
-            <div 
-              className={`trainingen-reveal ${isLoaded ? 'visible' : ''}`}
-              style={{ transitionDelay: '0.1s' }}
-            >
-              <div 
-                className="badge-glow inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
-                style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}
+            {/* Left Column - Content */}
+            <div className="space-y-5 lg:space-y-6 max-w-xl">
+              
+              {/* Breadcrumb */}
+              <nav 
+                className={`trainingen-reveal flex items-center gap-2 text-sm text-gray-500 ${isLoaded ? 'visible' : ''}`}
+                style={{ transitionDelay: '0s' }}
               >
-                <span className="w-2 h-2 rounded-full bg-[#376eb5]" />
-                <span className="text-sm font-semibold text-[#376eb5] tracking-wide">
-                  Leer van onze experts
-                </span>
+                <Link href="/" className="hover:text-[#376eb5] transition-colors">
+                  Home
+                </Link>
+                <span>/</span>
+                <span className="text-gray-900 font-medium">Trainingen</span>
+              </nav>
+
+              {/* Badge with glow */}
+              <div 
+                className={`trainingen-reveal ${isLoaded ? 'visible' : ''}`}
+                style={{ transitionDelay: '0.1s' }}
+              >
+                <div 
+                  className="badge-glow inline-flex items-center gap-2 px-4 py-2 rounded-full"
+                  style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}
+                >
+                  <span className="w-2 h-2 rounded-full bg-[#376eb5]" />
+                  <span className="text-sm font-semibold text-[#376eb5] tracking-wide">
+                    Leer van onze experts
+                  </span>
+                </div>
+              </div>
+
+              {/* Heading with accent line */}
+              <div className="relative">
+                <h1 
+                  className={`trainingen-reveal font-serif text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight ${isLoaded ? 'visible' : ''}`}
+                  style={{ transitionDelay: '0.2s' }}
+                >
+                  Onze trainingen
+                </h1>
+                
+                {/* Accent underline */}
+                <div 
+                  className={`line-animate absolute -bottom-1 left-0 h-1 w-24 lg:w-32 rounded-full bg-gradient-to-r from-[#376eb5] to-[#4A8FDB] ${isLoaded ? 'visible' : ''}`}
+                  style={{ animationDelay: '0.5s' }}
+                />
+              </div>
+
+              {/* Description */}
+              <p 
+                className={`trainingen-reveal text-lg lg:text-xl text-gray-600 leading-relaxed pt-4 ${isLoaded ? 'visible' : ''}`}
+                style={{ transitionDelay: '0.3s' }}
+              >
+                Geen standaard presentaties, maar praktische trainingen door de specialisten die dagelijks met deze tools werken. Van AI en WordPress tot Google Ads en Analytics — je leert direct van de mensen die het vak beheersen. Op locatie in Amsterdam of online.
+              </p>
+
+              {/* Checkmarks - 2x2 grid */}
+              <div className="grid grid-cols-2 gap-x-6 gap-y-3 pt-2">
+                {checkmarks.map((item, index) => (
+                  <div 
+                    key={item}
+                    className={`check-item flex items-center gap-2 ${isLoaded ? 'visible' : ''}`}
+                    style={{ transitionDelay: `${0.5 + index * 0.1}s` }}
+                  >
+                    <div className="relative flex items-center justify-center w-5 h-5 flex-shrink-0">
+                      <div className="absolute inset-0 rounded-full bg-[#376eb5]/10" />
+                      <svg 
+                        className="check-icon w-3 h-3 text-[#376eb5] relative z-10" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-gray-700 font-medium text-sm lg:text-base">{item}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Heading with accent line */}
-            <div className="relative">
-              <h1 
-                className={`trainingen-reveal font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-6 leading-[1.1] tracking-tight ${isLoaded ? 'visible' : ''}`}
-                style={{ transitionDelay: '0.2s' }}
-              >
-                Onze trainingen
-              </h1>
-              
-              {/* Accent underline */}
-              <div 
-                className={`line-animate absolute -bottom-1 left-0 h-1 w-24 lg:w-32 rounded-full bg-gradient-to-r from-[#376eb5] to-[#4A8FDB] ${isLoaded ? 'visible' : ''}`}
-                style={{ animationDelay: '0.5s' }}
-              />
-            </div>
-
-            {/* Description */}
-            <p 
-              className={`trainingen-reveal text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mb-10 mt-8 ${isLoaded ? 'visible' : ''}`}
+            {/* Right Column - Image with overlapping elements */}
+            <div 
+              className={`trainingen-reveal relative h-[350px] sm:h-[400px] lg:h-[480px] xl:h-[520px] ${isLoaded ? 'visible' : ''}`}
               style={{ transitionDelay: '0.3s' }}
             >
-              Geen standaard presentaties, maar praktische trainingen door de specialisten die dagelijks met deze tools werken. Van AI en WordPress tot Google Ads en Analytics — je leert direct van de mensen die het vak beheersen. Op locatie in Amsterdam of online.
-            </p>
-
-            {/* Checkmarks */}
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-4 lg:gap-x-12">
-              {checkmarks.map((item, index) => (
+              
+              {/* Blue gradient block - top right */}
+              <div 
+                className="gradient-block absolute top-0 right-0 w-[65%] lg:w-[70%] h-[55%] lg:h-[60%] rounded-[1.5rem] z-10"
+                style={{
+                  background: 'linear-gradient(135deg, #4A8FDB 0%, #376eb5 100%)'
+                }}
+              />
+              
+              {/* Main image - with hover depth & floating animation */}
+              <div 
+                className="media-card float-animate absolute top-[12%] lg:top-[15%] left-0 lg:left-[5%] w-[75%] lg:w-[70%] aspect-[4/3] z-20 rounded-xl overflow-hidden shadow-none lg:shadow-[0_20px_60px_rgba(0,0,0,0.25)]"
+                style={{ willChange: 'transform' }}
+              >
+                <Image
+                  src="/Trainingsruimte.webp"
+                  alt="Trainingsruimte OnlineLabs aan de Herengracht Amsterdam met uitzicht op de Westerkerk"
+                  fill
+                  className="object-cover"
+                  priority
+                  fetchPriority="high"
+                  sizes="(max-width: 768px) 75vw, (max-width: 1024px) 50vw, 40vw"
+                />
+                {/* Subtle shine overlay on hover */}
                 <div 
-                  key={item}
-                  className={`check-item flex items-center gap-3 ${isLoaded ? 'visible' : ''}`}
-                  style={{ transitionDelay: `${0.5 + index * 0.1}s` }}
-                >
-                  <div className="relative flex items-center justify-center w-6 h-6">
-                    <div className="absolute inset-0 rounded-full bg-[#376eb5]/10" />
-                    <svg 
-                      className="check-icon w-4 h-4 text-[#376eb5] relative z-10" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-700 font-medium">{item}</span>
+                  className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{
+                    background: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)'
+                  }}
+                />
+              </div>
+
+              {/* Teal gradient block - bottom left */}
+              <div 
+                className="gradient-block absolute bottom-0 left-[5%] lg:left-0 w-[55%] lg:w-[60%] h-[45%] lg:h-[50%] rounded-[1.5rem] z-0"
+                style={{
+                  background: 'linear-gradient(135deg, #1abc9c 0%, #16a085 100%)'
+                }}
+              />
+
+              {/* Location badge - floating on image */}
+              <div 
+                className={`trainingen-reveal absolute bottom-[15%] lg:bottom-[12%] right-[5%] lg:right-[8%] z-30 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg ${isLoaded ? 'visible' : ''}`}
+                style={{ transitionDelay: '0.6s' }}
+              >
+                <div className="flex items-center gap-2 text-sm">
+                  <svg width="16" height="16" fill="none" stroke="#376eb5" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  <span className="text-gray-700 font-medium">Herengracht, Amsterdam</span>
                 </div>
-              ))}
+              </div>
+              
             </div>
           </div>
         </div>
