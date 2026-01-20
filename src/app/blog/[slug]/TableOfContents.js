@@ -64,20 +64,34 @@ export default function TableOfContents({ headings }) {
   };
 
   return (
-    <div className="lg:sticky lg:top-24 bg-white border border-gray-200 rounded-xl p-4 lg:p-7 shadow-sm">
-      <div className="toc-heading-underline" role="heading" aria-level="2">Inhoudsopgave</div>
-      <nav className="space-y-3">
-        {headings.map((heading, index) => (
-          <a key={index} href={`#${heading.id}`} className={`toc-link block transition-all level-${heading.level} ${heading.level === 2 ? 'font-medium' : ''} ${activeId === heading.id ? 'active' : ''}`} onClick={(e) => handleClick(e, heading.id)}>
-            <span className="toc-arrow">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-                <path d="M7 7L17 17M17 17V7M17 17H7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-            <span>{decodeHtmlEntities(heading.text)}</span>
-          </a>
-        ))}
-      </nav>
+    <div className="lg:sticky lg:top-24 space-y-6">
+      {/* Table of Contents */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4 lg:p-7 shadow-sm">
+        <div className="toc-heading-underline" role="heading" aria-level="2">Inhoudsopgave</div>
+        <nav className="space-y-3">
+          {headings.map((heading, index) => (
+            <a key={index} href={`#${heading.id}`} className={`toc-link block transition-all level-${heading.level} ${heading.level === 2 ? 'font-medium' : ''} ${activeId === heading.id ? 'active' : ''}`} onClick={(e) => handleClick(e, heading.id)}>
+              <span className="toc-arrow">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 7L17 17M17 17V7M17 17H7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <span>{decodeHtmlEntities(heading.text)}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      {/* Trainingen Banner - Desktop only */}
+      <a href="/trainingen" className="hidden lg:block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer">
+        <img 
+          src="/trainingen-banner.svg" 
+          alt="Onze trainingen - AI & GEO-optimalisatie, WordPress & AI, Ads & Analytics - Vanaf €299" 
+          width={300} 
+          height={250}
+          className="w-full h-auto"
+        />
+      </a>
     </div>
   );
 }
