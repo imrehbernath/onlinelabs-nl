@@ -64,34 +64,58 @@ export default function TableOfContents({ headings }) {
   };
 
   return (
-    <div className="lg:sticky lg:top-24 space-y-6">
-      {/* Table of Contents */}
-      <div className="bg-white border border-gray-200 rounded-xl p-4 lg:p-7 shadow-sm">
-        <div className="toc-heading-underline" role="heading" aria-level="2">Inhoudsopgave</div>
-        <nav className="space-y-3">
-          {headings.map((heading, index) => (
-            <a key={index} href={`#${heading.id}`} className={`toc-link block transition-all level-${heading.level} ${heading.level === 2 ? 'font-medium' : ''} ${activeId === heading.id ? 'active' : ''}`} onClick={(e) => handleClick(e, heading.id)}>
-              <span className="toc-arrow">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-                  <path d="M7 7L17 17M17 17V7M17 17H7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-              <span>{decodeHtmlEntities(heading.text)}</span>
-            </a>
-          ))}
-        </nav>
+    <>
+      <div className="lg:sticky lg:top-24 space-y-6">
+        {/* Table of Contents */}
+        <div className="bg-white border border-gray-200 rounded-xl p-4 lg:p-7 shadow-sm">
+          <div className="toc-heading-underline" role="heading" aria-level="2">Inhoudsopgave</div>
+          <nav className="space-y-3">
+            {headings.map((heading, index) => (
+              <a key={index} href={`#${heading.id}`} className={`toc-link block transition-all level-${heading.level} ${heading.level === 2 ? 'font-medium' : ''} ${activeId === heading.id ? 'active' : ''}`} onClick={(e) => handleClick(e, heading.id)}>
+                <span className="toc-arrow">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 7L17 17M17 17V7M17 17H7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+                <span>{decodeHtmlEntities(heading.text)}</span>
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        {/* Trainingen Banner - Desktop only */}
+        <a href="/trainingen" className="hidden lg:block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer">
+          <img 
+            src="/trainingen-banner.svg" 
+            alt="Onze trainingen - AI & GEO-optimalisatie, WordPress & AI, Ads & Analytics - Vanaf €299" 
+            width={300} 
+            height={250}
+            className="w-full h-auto"
+          />
+        </a>
+
+        {/* Teun.ai Banner - Desktop only */}
+        <a href="https://teun.ai" target="_blank" rel="noopener noreferrer" className="hidden lg:block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer">
+          <img 
+            src="/teun-ai-banner.svg" 
+            alt="Hoe zichtbaar is jouw bedrijf in ChatGPT? Gratis scannen op teun.ai" 
+            width={300} 
+            height={250}
+            className="w-full h-auto"
+          />
+        </a>
       </div>
 
-      {/* Trainingen Banner - Desktop only */}
-      <a href="/trainingen" className="hidden lg:block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer">
+      {/* Teun.ai Banner - Mobile only */}
+      <a href="https://teun.ai" target="_blank" rel="noopener noreferrer" className="lg:hidden block mt-8 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer">
         <img 
-          src="/trainingen-banner.svg" 
-          alt="Onze trainingen - AI & GEO-optimalisatie, WordPress & AI, Ads & Analytics - Vanaf €299" 
+          src="/teun-ai-banner.svg" 
+          alt="Hoe zichtbaar is jouw bedrijf in ChatGPT? Gratis scannen op teun.ai" 
           width={300} 
           height={250}
           className="w-full h-auto"
         />
       </a>
-    </div>
+    </>
   );
 }
