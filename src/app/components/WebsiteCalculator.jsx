@@ -94,10 +94,11 @@ const WebsiteCalculator = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('/api/calculator', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          type: 'calculator',
           ...formData,
           calculatedPrice: price.calculated,
         }),
