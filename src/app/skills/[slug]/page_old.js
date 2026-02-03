@@ -11,7 +11,6 @@ import TechStackSection from '@/app/components/TechStackSection';
 import WebsitesGallery from '@/app/components/WebsitesGallery';
 import TestimonialsSection from '@/app/components/TestimonialsSection';
 import AIresultsGallery from '@/app/components/AIresultsGallery';
-import WebsiteCalculator from '@/app/components/WebsiteCalculator';
 import { notFound } from 'next/navigation';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
@@ -638,26 +637,6 @@ export default async function ServiceDetailPage({ params }) {
             <p className="text-gray-600 text-lg">
               📝 Geen page sections ingesteld voor deze service
             </p>
-          </div>
-        </section>
-      )}
-
-      {/* Website Calculator - alleen voor website-laten-maken */}
-      {slug === 'website-laten-maken' && (
-        <section className="py-16 lg:py-20" style={{ backgroundColor: '#FAFAF8' }}>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-            <div className="text-center mb-10">
-              <span className="inline-block px-4 py-1.5 bg-[#376eb5]/10 text-[#376eb5] text-sm font-medium rounded-full mb-4">
-                Prijscalculator
-              </span>
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                Bereken je website investering
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Krijg binnen 2 minuten een realistische prijsindicatie. Geen verrassingen, wel direct inzicht.
-              </p>
-            </div>
-            <WebsiteCalculator />
           </div>
         </section>
       )}

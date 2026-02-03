@@ -441,6 +441,17 @@ export default async function BlogPost({ params }) {
                 </div>
               </div>
 
+              {/* Trainingen Banner - Mobile only */}
+              <a href="/trainingen" className="block lg:hidden mt-8 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer">
+                <img 
+                  src="/trainingen-banner.svg" 
+                  alt="Onze trainingen - AI & GEO-optimalisatie, WordPress & AI, Ads & Analytics - Vanaf €299" 
+                  width={300} 
+                  height={250}
+                  className="w-full h-auto"
+                />
+              </a>
+
               {/* Back to blog */}
               <div className="mt-8 text-center">
                 <Link 

@@ -404,10 +404,7 @@ export default async function BlogPost({ params }) {
             {headings.length > 0 && (
               <aside className="col-span-12 lg:col-span-4">
                 <div className="lg:sticky lg:top-24">
-                  <TableOfContents 
-                    headings={headings} 
-                    showCalculator={resolvedParams.slug === 'wat-kost-een-website-laten-bouwen'} 
-                  />
+                  <TableOfContents headings={headings} />
                 </div>
               </aside>
             )}

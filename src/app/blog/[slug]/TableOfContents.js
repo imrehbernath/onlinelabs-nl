@@ -21,7 +21,7 @@ function decodeHtmlEntities(text) {
   return textarea.value;
 }
 
-export default function TableOfContents({ headings }) {
+export default function TableOfContents({ headings, showCalculator = false }) {
   const [activeId, setActiveId] = useState('');
 
   useEffect(() => {
@@ -81,6 +81,32 @@ export default function TableOfContents({ headings }) {
               </a>
             ))}
           </nav>
+          
+          {/* Calculator CTA - only when showCalculator is true */}
+          {showCalculator && (
+            <a 
+              href="#calculator" 
+              onClick={(e) => handleClick(e, 'calculator')}
+              className="mt-6 flex items-center gap-3 p-4 bg-gradient-to-r from-[#376eb5] to-[#2d5a94] text-white rounded-xl hover:shadow-lg transition-all duration-200 group"
+            >
+              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="4" y="2" width="16" height="20" rx="2" />
+                  <line x1="8" y1="6" x2="16" y2="6" />
+                  <line x1="8" y1="10" x2="16" y2="10" />
+                  <line x1="8" y1="14" x2="12" y2="14" />
+                  <line x1="8" y1="18" x2="12" y2="18" />
+                </svg>
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-sm">Bereken je investering</div>
+                <div className="text-xs text-white/80">Direct een prijsindicatie</div>
+              </div>
+              <svg className="w-5 h-5 transform group-hover:translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </a>
+          )}
         </div>
 
         {/* Trainingen Banner - Desktop only */}
