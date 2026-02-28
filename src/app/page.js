@@ -1,5 +1,4 @@
 import Hero from './components/Hero';
-import AnnouncementBar from './components/AnnouncementBar';
 import ServicesSection from './components/ServicesSection';
 import AboutSection from './components/AboutSection';
 import TestimonialsSection from './components/TestimonialsSection';
@@ -173,9 +172,6 @@ export default async function Home() {
       <main>
         {/* Hero Section - WordPress bewerkbaar */}
         <Hero data={heroData} />
-
-        {/* Announcement Bar - Trainingen & Blog highlights */}
-        <AnnouncementBar />
 
         {/* Services Section - "Onze LABS" met colored bars */}
         <ServicesSection services={services} />
