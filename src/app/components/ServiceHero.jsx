@@ -17,6 +17,43 @@ export default function ServiceHero({
 
   const brandBlue = '#376eb5';
   const brandBlueHover = '#2d5a94';
+  const brandTeal = '#16a085';
+
+  // Woorden die gekleurd worden in de titel (langste eerst om partial matches te voorkomen)
+  const colorWords = [
+    // Multi-word eerst
+    { word: 'Core Web Vitals', color: brandBlue },
+    { word: 'Social Ads', color: brandTeal },
+    // Platforms & tech
+    { word: 'Perplexity', color: brandTeal },
+    { word: 'ChatGPT', color: brandBlue },
+    { word: 'Google', color: brandBlue },
+    { word: 'WordPress', color: brandBlue },
+    { word: 'Website', color: brandBlue },
+    // Diensten
+    { word: 'GEO', color: brandTeal },
+    { word: 'SEO', color: brandBlue },
+    { word: 'CRO', color: brandTeal },
+    // Kracht-woorden per pagina
+    { word: 'vakwerk', color: brandTeal },
+    { word: 'snelheid', color: brandTeal },
+    { word: 'Supersnel', color: brandTeal },
+    { word: 'resultaat', color: brandTeal },
+    { word: 'Conversie', color: brandBlue },
+    { word: 'AI', color: brandTeal },
+  ];
+
+  // Render titel met gekleurde woorden
+  const renderColoredTitle = (text) => {
+    if (!text) return text;
+    let result = text;
+    colorWords.forEach(({ word, color }) => {
+      // Hele woord matchen (case sensitive), niet binnen andere woorden
+      const regex = new RegExp(`(${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g');
+      result = result.replace(regex, `<span style="color:${color}">$1</span>`);
+    });
+    return result;
+  };
 
   // Helper: check of URL extern is
   const isExternal = (url) => url?.startsWith('http');
@@ -307,9 +344,10 @@ export default function ServiceHero({
           )}
           
           {/* Title */}
-          <h1 className="service-hero-reveal service-hero-reveal-1 font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight tracking-tight mb-6">
-            {title}
-          </h1>
+          <h1 
+            className="service-hero-reveal service-hero-reveal-1 font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight tracking-tight mb-6"
+            dangerouslySetInnerHTML={{ __html: renderColoredTitle(title) }}
+          />
           
           {/* Description */}
           <p className="service-hero-reveal service-hero-reveal-2 text-lg lg:text-xl text-gray-600 leading-relaxed mb-10 whitespace-pre-line">
