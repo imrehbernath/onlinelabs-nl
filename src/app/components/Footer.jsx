@@ -11,15 +11,15 @@ export default function Footer({ footerData }) {
 
   const footer = footerData || {
     companyName: 'OnlineLabs',
-    tagline: 'Dé expert in online groei en webdesign',
-    description: 'OnlineLabs helpt bedrijven groeien met slimme online marketing strategieën sinds 2008.',
+    tagline: '',
+    description: 'Online marketing bureau uit Amsterdam. SEO, webdesign, GEO optimalisatie en AI-zichtbaarheid met eigen platform Teun.ai.',
     
     services: [
-      { title: 'SEO specialist', url: '/skills/seo-specialist' },
+      { title: 'SEO & vindbaarheid', url: '/skills/seo-specialist' },
       { title: 'GEO optimalisatie', url: '/skills/geo-optimalisatie' },
       { title: 'Online adverteren', url: '/skills/online-adverteren' },
-      { title: 'Website laten maken', url: '/skills/website-laten-maken' },
-      { title: 'Website snelheid optimalisatie', url: '/skills/website-snelheid-optimalisatie' },
+      { title: 'Webdesign & UX', url: '/skills/website-laten-maken' },
+      { title: 'Website snelheid', url: '/skills/website-snelheid-optimalisatie' },
       { title: 'Conversie optimalisatie', url: '/skills/conversie-optimalisatie-specialist' },
     ],
     
@@ -31,7 +31,7 @@ export default function Footer({ footerData }) {
     ],
     
     contact: {
-      address: 'Amsterdam, Nederland',
+      address: 'Herengracht 221, Amsterdam',
       email: 'hallo@onlinelabs.nl',
       phone: '020 820 20 22',
     },
@@ -78,9 +78,11 @@ export default function Footer({ footerData }) {
               <div className="font-serif text-2xl font-bold text-white mb-2">
                 {footer.companyName}
               </div>
-              <p className="text-base text-sky-400 font-medium mb-4 leading-relaxed">
-                {footer.tagline}
-              </p>
+              {footer.tagline && (
+                <p className="text-base font-medium mb-4 leading-relaxed" style={{ color: '#1abc9c' }}>
+                  {footer.tagline}
+                </p>
+              )}
               <p className="text-base leading-relaxed">
                 {footer.description}
               </p>
@@ -147,6 +149,18 @@ export default function Footer({ footerData }) {
                   <span className="w-0 h-0.5 bg-primary mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
                   Skills
                 </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-sm hover:text-primary transition-colors duration-200 flex items-center group">
+                  <span className="w-0 h-0.5 bg-primary mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <a href="https://teun.ai" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors duration-200 flex items-center group">
+                  <span className="w-0 h-0.5 bg-primary mr-0 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
+                  Teun.ai
+                </a>
               </li>
               <li>
                 <Link href="/trainingen" className="text-sm hover:text-primary transition-colors duration-200 flex items-center group">

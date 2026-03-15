@@ -2,133 +2,142 @@
 
 import Link from 'next/link';
 
-export default function ServicesSection({ services = [] }) {
-  if (!services || services.length === 0) {
-    return null;
-  }
+const services = [
+  {
+    slug: 'geo-optimalisatie',
+    badge: 'Onze specialiteit',
+    title: 'GEO optimalisatie',
+    subtitle: 'Zichtbaar in ChatGPT, Perplexity en Google AI',
+    description: 'AI-zoekmachines zijn de nieuwe frontlijn. Wij zorgen dat jouw bedrijf wordt aanbevolen als iemand vraagt: "Wat is de beste [jouw dienst] in [jouw stad]?". Met ons eigen platform Teun.ai meten we precies waar je staat en bouwen we aan je AI-autoriteit.',
+    featured: true,
+    color: '#376eb5',
+  },
+  {
+    slug: 'seo-specialist',
+    badge: 'Het fundament',
+    title: 'SEO & vindbaarheid',
+    subtitle: 'Hogere rankings, meer organisch verkeer',
+    description: 'SEO is geen trucje, het is vakmanschap. Wij bouwen aan duurzame posities met technische excellentie, sterke content en slimme linkbuilding. 17 jaar ervaring in de Nederlandse markt.',
+    featured: false,
+    color: '#376eb5',
+  },
+  {
+    slug: 'online-adverteren',
+    badge: 'Direct resultaat',
+    title: 'Online adverteren',
+    subtitle: 'Google Ads en social media die converteren',
+    description: 'Geen budget verbranden aan clicks die niets opleveren. Wij sturen op conversies, niet op vertoningen. Google Partner, transparante rapportages en geen langlopende contracten.',
+    featured: false,
+    color: '#376eb5',
+  },
+  {
+    slug: 'website-laten-maken',
+    badge: 'Design & development',
+    title: 'Webdesign & UX',
+    subtitle: 'Snelle websites die scoren en converteren',
+    description: 'Vakwerk met Next.js en WordPress. Geen templates, geen page builders. Elke website is gebouwd op snelheid, vindbaarheid en conversie. Van ontwerp tot livegang.',
+    featured: false,
+    color: '#376eb5',
+  },
+  {
+    slug: 'website-snelheid-optimalisatie',
+    badge: 'Performance',
+    title: 'Website snelheid',
+    subtitle: 'Core Web Vitals specialist',
+    description: 'Een trage website kost je rankings én klanten. Wij optimaliseren eerst de bron, dan caching. Resultaatgarantie: groene Core Web Vitals scores of je geld terug.',
+    featured: false,
+    color: '#376eb5',
+  },
+  {
+    slug: 'conversie-optimalisatie-specialist',
+    badge: 'Meer omzet',
+    title: 'Conversie optimalisatie',
+    subtitle: 'Meer resultaat uit je bestaande verkeer',
+    description: '97% van je bezoekers converteert niet. Met data-driven A/B testing, UX-analyse en slimme aanpassingen halen we meer omzet uit het verkeer dat je al hebt.',
+    featured: false,
+    color: '#376eb5',
+  },
+];
 
-  const serviceInfo = {
-    'seo-specialist': {
-      labName: 'SEOLab',
-      tagline: 'Jouw partner in SEO-optimalisatie sinds 2008'
-    },
-    'geo-optimalisatie': {
-      labName: 'AILab',
-      tagline: 'Jouw specialisten in AI-zichtbaarheid & AEO'
-    },
-    'website-laten-maken': {
-      labName: 'DesignLab',
-      tagline: 'Websites die inspireren, converteren en presteren sinds 2001'
-    },
-    'website-snelheid-optimalisatie': {
-      labName: 'WebLab',
-      tagline: 'Techniek en performance, al meer dan 10 jaar ons vak'
-    },
-    'online-adverteren': {
-      labName: 'AdLab',
-      tagline: 'Slimme advertenties voor meer leads en omzet'
-    },
-  };
-
+export default function ServicesSection() {
   return (
-    <section className="py-20 lg:py-24 bg-[#FAFAF8]">
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
-          
-          {/* LEFT COLUMN - STICKY */}
-          <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-32">
-              {/* Heading - BLIJFT GROOT (feature section) */}
-              <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
-                De bouwstenen voor jouw online succes
-              </h2>
-              <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
-                Met onze expertise in SEO, webdesign, online adverteren en conversie-optimalisatie helpen wij bedrijven in heel Nederland groeien. Elk LAB is ontworpen om jouw online zichtbaarheid te vergroten en omzet te verhogen – of je nu een webshop runt, diensten aanbiedt of leads zoekt.
-              </p>
-            </div>
-          </div>
+    <section style={{ backgroundColor: '#F3F4F6' }}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24">
+        
+        {/* Header */}
+        <div className="max-w-2xl mb-12">
+          <p 
+            className="text-sm font-bold uppercase tracking-[0.15em] mb-4"
+            style={{ color: '#376eb5' }}
+          >
+            Wat we doen
+          </p>
+          <h2 className="font-serif font-bold text-gray-900 text-4xl lg:text-5xl xl:text-6xl leading-[1.1] mb-6">
+            Alles voor jouw{' '}
+            <span style={{ color: '#376eb5' }}>online groei</span>
+          </h2>
+          <p className="text-lg text-gray-700 leading-relaxed">
+            Van technische SEO tot AI-zichtbaarheid, van webdesign tot conversie. 
+            Wij combineren het allemaal, met 17 jaar ervaring als basis.
+          </p>
+        </div>
 
-          {/* RIGHT COLUMN - SERVICES LIST */}
-          <div className="lg:col-span-7">
-            <div className="space-y-8">
-              {services.map((service) => {
-                const info = serviceInfo[service.slug];
-                if (!info) return null;
-                
-                return (
-                  <Link
-                    key={service.slug}
-                    href={service.uri}
-                    className="group block"
-                  >
-                    <div className="relative">
-                      {/* Accent bar */}
-                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gray-700 group-hover:bg-[#376eb5] rounded-full transition-all duration-300 group-hover:w-2" />
-                      
-                      <div className="pl-8 transition-all duration-300 group-hover:pl-10">
-                        {/* Title - BLIJFT (is goed zo) */}
-                        <div className="flex items-start justify-between gap-4 mb-3">
-                          <h3 className="font-serif text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 group-hover:text-[#376eb5] transition-colors duration-300 leading-tight">
-                            {service.title}
-                          </h3>
-                          
-                          {/* Arrow */}
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full border-2 border-gray-300 group-hover:border-[#376eb5] flex items-center justify-center transition-all duration-300 group-hover:rotate-90">
-                            <svg 
-                              className="w-4 h-4 text-gray-400 group-hover:text-[#376eb5] transition-colors duration-300" 
-                              fill="none" 
-                              viewBox="0 0 24 24" 
-                              stroke="currentColor"
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </div>
-                        </div>
-
-                        {/* Subtitle - UPPERCASE + TRACKING */}
-                        {service.serviceDetails?.subtitle && (
-                          <p className="text-sm font-medium text-gray-500 mb-3 tracking-wider uppercase">
-                            {service.serviceDetails.subtitle}
-                          </p>
-                        )}
-
-                        {/* Description */}
-                        <p className="text-lg text-gray-600 leading-relaxed mb-4">
-                          {service.serviceDetails?.description}
-                        </p>
-
-                        {/* LAB tagline */}
-                        <div className="flex items-start gap-2 text-sm text-gray-500">
-                          <span className="text-[#376eb5] font-bold">→</span>
-                          <p>
-                            <span className="font-semibold text-gray-900">{info.labName}</span> – {info.tagline}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Footer link */}
-            <div className="mt-12 pl-8">
-              <Link
-                href="/skills"
-                className="group inline-flex items-center gap-2 text-[#376eb5] hover:text-[#2d5a94] font-medium text-base transition-colors duration-300"
+        {/* Services Grid - 3 kolommen */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {services.map((service) => (
+            <Link
+              key={service.slug}
+              href={`/skills/${service.slug}`}
+              className="group relative rounded-xl p-6 lg:p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col"
+              style={{
+                backgroundColor: service.featured ? '#1abc9c' : '#fff',
+                border: service.featured ? 'none' : '1px solid #e8eef6',
+              }}
+            >
+              {/* Badge */}
+              <span 
+                className="inline-block text-xs font-bold uppercase tracking-wider mb-3 px-3 py-1 rounded-full"
+                style={{
+                  backgroundColor: service.featured ? 'rgba(255,255,255,0.2)' : 'rgba(55, 110, 181, 0.06)',
+                  color: service.featured ? 'rgba(255,255,255,0.9)' : '#376eb5',
+                }}
               >
-                Bekijk alle diensten
-                <svg 
-                  className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
+                {service.badge}
+              </span>
+
+              <div className="flex-1">
+                <div>
+                  <h3 
+                    className="text-xl lg:text-2xl font-serif font-bold mb-2 transition-colors"
+                    style={{ color: service.featured ? '#fff' : '#0f1a2e' }}
+                  >
+                    {service.title}
+                  </h3>
+                  <p 
+                    className="text-sm font-medium mb-3"
+                    style={{ color: service.featured ? 'rgba(255,255,255,0.7)' : '#64748b' }}
+                  >
+                    {service.subtitle}
+                  </p>
+                  <p 
+                    className="text-sm leading-relaxed"
+                    style={{ color: service.featured ? 'rgba(255,255,255,0.85)' : '#4a5568' }}
+                  >
+                    {service.description}
+                  </p>
+                </div>
+              </div>
+              <span 
+                className="inline-flex items-center gap-1.5 text-sm font-semibold group-hover:gap-3 transition-all duration-300 mt-5"
+                style={{ color: service.featured ? '#fff' : '#376eb5' }}
+              >
+                Bekijk skill
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </Link>
-            </div>
-          </div>
+              </span>
+            </Link>
+          ))}
         </div>
       </div>
     </section>
