@@ -98,7 +98,7 @@ export default function ServicesSection() {
               <span 
                 className="inline-block text-xs font-bold uppercase tracking-wider mb-3 px-3 py-1 rounded-full"
                 style={{
-                  backgroundColor: service.featured ? 'rgba(255,255,255,0.25)' : 'rgba(55, 110, 181, 0.06)',
+                  backgroundColor: service.featured ? 'rgba(0,0,0,0.15)' : 'rgba(55, 110, 181, 0.06)',
                   color: service.featured ? '#fff' : '#376eb5',
                 }}
               >
