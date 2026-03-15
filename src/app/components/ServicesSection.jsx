@@ -98,8 +98,8 @@ export default function ServicesSection() {
               <span 
                 className="inline-block text-xs font-bold uppercase tracking-wider mb-3 px-3 py-1 rounded-full"
                 style={{
-                  backgroundColor: service.featured ? 'rgba(255,255,255,0.2)' : 'rgba(55, 110, 181, 0.06)',
-                  color: service.featured ? 'rgba(255,255,255,0.9)' : '#376eb5',
+                  backgroundColor: service.featured ? 'rgba(255,255,255,0.25)' : 'rgba(55, 110, 181, 0.06)',
+                  color: service.featured ? '#fff' : '#376eb5',
                 }}
               >
                 {service.badge}
@@ -115,13 +115,13 @@ export default function ServicesSection() {
                   </h3>
                   <p 
                     className="text-sm font-medium mb-3"
-                    style={{ color: service.featured ? 'rgba(255,255,255,0.7)' : '#64748b' }}
+                    style={{ color: service.featured ? '#fff' : '#64748b' }}
                   >
                     {service.subtitle}
                   </p>
                   <p 
                     className="text-sm leading-relaxed"
-                    style={{ color: service.featured ? 'rgba(255,255,255,0.85)' : '#4a5568' }}
+                    style={{ color: service.featured ? 'rgba(255,255,255,0.95)' : '#4a5568' }}
                   >
                     {service.description}
                   </p>

@@ -116,7 +116,7 @@ export default function Hero() {
               {/* Subtitle */}
               <p className="hero-reveal hero-reveal-3 text-lg lg:text-xl text-gray-700 leading-relaxed">
                 OnlineLabs combineert <strong className="text-gray-900 font-semibold">17 jaar SEO-expertise</strong> met ons eigen AI-platform{' '}
-                <strong className="font-semibold" style={{ color: '#16a085' }}>Teun.ai</strong>. 
+                <strong className="font-semibold" style={{ color: '#376eb5' }}>Teun.ai</strong>. 
                 Wij maken je zichtbaar waar je klanten zoeken. Niet alleen in Google, maar ook in AI-zoekmachines.
               </p>
 
