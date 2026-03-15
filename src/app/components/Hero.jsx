@@ -212,19 +212,19 @@ export default function Hero() {
                 </div>
 
                 {/* Score Cards */}
-                <div className="grid grid-cols-4 gap-2.5 px-5 py-4">
+                <div className="grid grid-cols-4 gap-2 px-4 sm:px-5 py-4">
                   {[
-                    { label: 'Visibility Score', value: '73%', color: '#1abc9c', sub: '+12% deze maand', subColor: '#1abc9c' },
-                    { label: 'ChatGPT', value: '8/10', color: '#376eb5', sub: 'prompts gevonden', subColor: '#94a3b8' },
-                    { label: 'Perplexity', value: '6/10', color: '#1abc9c', sub: 'prompts gevonden', subColor: '#94a3b8' },
-                    { label: 'Concurrenten', value: '3', color: '#f59e0b', sub: 'bedreigingen', subColor: '#f59e0b' },
+                    { label: 'Visibility', value: '73%', color: '#1abc9c', sub: '+12% deze maand', subColor: '#1abc9c' },
+                    { label: 'ChatGPT', value: '8/10', color: '#376eb5', sub: 'gevonden', subColor: '#94a3b8' },
+                    { label: 'Perplexity', value: '6/10', color: '#1abc9c', sub: 'gevonden', subColor: '#94a3b8' },
+                    { label: 'Threats', value: '3', color: '#f59e0b', sub: 'concurrenten', subColor: '#f59e0b' },
                   ].map((card) => (
                     <div 
                       key={card.label}
-                      className="rounded-xl p-3 text-center"
+                      className="rounded-xl p-2 sm:p-3 text-center overflow-hidden"
                       style={{ backgroundColor: '#fff', border: '1px solid #eef2f7' }}
                     >
-                      <div className="text-[9px] uppercase tracking-wide font-semibold text-gray-400">
+                      <div className="text-[8px] sm:text-[9px] uppercase tracking-wide font-semibold text-gray-400 truncate">
                         {card.label}
                       </div>
                       <div 
@@ -233,7 +233,7 @@ export default function Hero() {
                       >
                         {card.value}
                       </div>
-                      <div className="text-[9px]" style={{ color: card.subColor }}>
+                      <div className="text-[8px] sm:text-[9px] truncate" style={{ color: card.subColor }}>
                         {card.sub}
                       </div>
                     </div>

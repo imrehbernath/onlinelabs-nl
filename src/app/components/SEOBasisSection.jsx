@@ -122,7 +122,7 @@ export default function SEOBasisSection() {
                 Het resultaat?
               </p>
               <p className="text-2xl lg:text-3xl font-serif font-bold text-white">
-                Zichtbaar in Google én in AI
+                Zichtbaar in Google<br className="sm:hidden" /> én in AI
               </p>
               <p className="text-white/70 text-sm mt-2">
                 Waar je concurrent kiest tussen SEO of AI, combineer jij beide.
