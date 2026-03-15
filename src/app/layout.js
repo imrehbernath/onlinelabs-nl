@@ -56,11 +56,11 @@ const isProduction = process.env.VERCEL_ENV === 'production';
 export const metadata = {
   metadataBase: new URL('https://www.onlinelabs.nl'),
   title: {
-    default: 'OnlineLabs | Online Marketing Bureau Amsterdam - SEO & GEO Expert',
+    default: 'Online marketing bureau Amsterdam | OnlineLabs | AI',
     template: '%s | OnlineLabs',
   },
-  description: 'OnlineLabs: Online marketing bureau uit Amsterdam. Specialist in SEO, GEO optimalisatie, webdesign en AI-zichtbaarheid. 15+ jaar ervaring.',
-  keywords: ['online marketing amsterdam', 'seo bureau', 'geo optimalisatie', 'webdesign', 'wordpress specialist', 'ai zichtbaarheid'],
+  description: 'Online marketing bureau Amsterdam met AI-platform Teun.ai. SEO, GEO optimalisatie, webdesign en conversie. 17+ jaar ervaring, 150+ klanten.',
+  keywords: ['online marketing bureau amsterdam', 'geo optimalisatie', 'ai zichtbaarheid', 'seo bureau amsterdam', 'webdesign amsterdam', 'teun.ai'],
   authors: [{ name: 'OnlineLabs', url: 'https://www.onlinelabs.nl' }],
   creator: 'OnlineLabs',
   publisher: 'OnlineLabs',
@@ -107,11 +107,8 @@ export default async function RootLayout({ children }) {
     <html lang="nl" className={`${metropolis.variable} ${inter.variable} ${playfair.variable}`}>
       <head>
         {/* 
-          OPTIMIZED PRECONNECTS:
-          - Removed: fonts.googleapis.com (niet gebruikt - we laden fonts via next/font)
-          - Removed: fonts.gstatic.com (niet gebruikt - next/font regelt dit)
-          - Fixed: cdn.onlinelabs.nl zonder crossOrigin (CORS mismatch fix)
-          - Removed: duplicate cdn.onlinelabs.nl preconnect
+          CDN preconnect: niet nodig op homepage hero (hardcoded),
+          maar wel voor About foto, blog, skills, cases en andere subpagina's.
         */}
         <link rel="preconnect" href="https://cdn.onlinelabs.nl" />
         <link rel="dns-prefetch" href="https://cdn.onlinelabs.nl" />

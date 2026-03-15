@@ -30,11 +30,12 @@ export default function ShiftSection() {
 
     let animationId;
     let scrollPos = 0;
-    const speed = 0.5; // px per frame
+    const speed = 0.5;
+    let isVisible = false;
 
     const animate = () => {
+      if (!isVisible) return;
       scrollPos += speed;
-      // Reset when we've scrolled half (since content is duplicated)
       if (scrollPos >= el.scrollHeight / 2) {
         scrollPos = 0;
       }
@@ -42,19 +43,28 @@ export default function ShiftSection() {
       animationId = requestAnimationFrame(animate);
     };
 
-    // Small delay so content renders first
-    const timer = setTimeout(() => {
-      animationId = requestAnimationFrame(animate);
-    }, 500);
+    // Only start animation when section is in viewport
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          animationId = requestAnimationFrame(animate);
+        } else {
+          cancelAnimationFrame(animationId);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
 
     // Pause on hover
-    const handleEnter = () => cancelAnimationFrame(animationId);
-    const handleLeave = () => { animationId = requestAnimationFrame(animate); };
+    const handleEnter = () => { isVisible = false; cancelAnimationFrame(animationId); };
+    const handleLeave = () => { isVisible = true; animationId = requestAnimationFrame(animate); };
     el.addEventListener('mouseenter', handleEnter);
     el.addEventListener('mouseleave', handleLeave);
 
     return () => {
-      clearTimeout(timer);
+      observer.disconnect();
       cancelAnimationFrame(animationId);
       el.removeEventListener('mouseenter', handleEnter);
       el.removeEventListener('mouseleave', handleLeave);

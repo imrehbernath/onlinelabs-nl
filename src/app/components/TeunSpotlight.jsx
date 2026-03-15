@@ -180,7 +180,7 @@ export default function TeunSpotlight() {
         </div>
 
         {/* Teun mascotte - mobiel */}
-        <div className="lg:hidden flex justify-center mt-10">
+        <div className="lg:hidden flex justify-center mt-6 -mb-4">
           <Image
             src="/Teun-ai_welkom.png"
             alt="Teun, de AI-mascotte van Teun.ai"
