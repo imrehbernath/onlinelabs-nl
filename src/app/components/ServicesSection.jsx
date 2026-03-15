@@ -7,7 +7,7 @@ const services = [
     slug: 'geo-optimalisatie',
     badge: 'Onze specialiteit',
     title: 'GEO optimalisatie',
-    subtitle: 'Zichtbaar in ChatGPT, Perplexity en Google AI',
+    subtitle: 'Zichtbaar in ChatGPT, Perplexity en Google\u00a0AI',
     description: 'AI-zoekmachines zijn de nieuwe frontlijn. Wij zorgen dat jouw bedrijf wordt aanbevolen als iemand vraagt: "Wat is de beste [jouw dienst] in [jouw stad]?". Met ons eigen platform Teun.ai meten we precies waar je staat en bouwen we aan je AI-autoriteit.',
     featured: true,
     color: '#376eb5',
