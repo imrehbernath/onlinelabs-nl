@@ -123,13 +123,11 @@ export default function Hero() {
               {/* CTA Buttons */}
               <div className="hero-reveal hero-reveal-4 flex flex-col sm:flex-row gap-3 pt-2">
                 <Link
-                  href="https://teun.ai/tools/ai-visibility"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/skills/geo-optimalisatie"
                   className="inline-flex items-center justify-center px-7 py-3.5 rounded-lg text-base font-semibold text-white transition-all duration-200 hover:brightness-110 hover:shadow-lg"
                   style={{ backgroundColor: '#376eb5' }}
                 >
-                  Start je gratis AI-scan
+                  Start met GEO optimalisatie
                 </Link>
                 <Link
                   href="https://teun.ai"
