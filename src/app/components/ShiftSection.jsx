@@ -4,17 +4,17 @@ import { useEffect, useRef } from 'react';
 
 const searchQueries = [
   { platform: 'ChatGPT', query: 'Wat is het beste online marketing bureau in Amsterdam?', color: '#376eb5' },
-  { platform: 'Perplexity', query: 'Welke advocaat in Amsterdam is gespecialiseerd in arbeidsrecht?', color: '#0f7b64' },
-  { platform: 'Google AI', query: 'Vergelijk SEO bureaus in Nederland met goede reviews', color: '#f59e0b' },
+  { platform: 'Perplexity', query: 'Welke advocaat in Amsterdam is gespecialiseerd in arbeidsrecht?', color: '#376eb5' },
+  { platform: 'Google AI', query: 'Vergelijk SEO bureaus in Nederland met goede reviews', color: '#b45309' },
   { platform: 'ChatGPT', query: 'Welk bedrijf kan mijn website sneller maken?', color: '#376eb5' },
-  { platform: 'Perplexity', query: 'Beste restaurant voor een zakendiner in Amsterdam centrum', color: '#0f7b64' },
-  { platform: 'Google AI', query: 'Hoe vind ik een betrouwbare webdesigner voor mijn bedrijf?', color: '#f59e0b' },
+  { platform: 'Perplexity', query: 'Beste restaurant voor een zakendiner in Amsterdam centrum', color: '#376eb5' },
+  { platform: 'Google AI', query: 'Hoe vind ik een betrouwbare webdesigner voor mijn bedrijf?', color: '#b45309' },
   { platform: 'ChatGPT', query: 'Wat kost het om een website te laten maken in 2026?', color: '#376eb5' },
-  { platform: 'Perplexity', query: 'Top 5 boekhouders in Amsterdam voor een MKB bedrijf', color: '#0f7b64' },
-  { platform: 'Google AI', query: 'Welke partij doet de beste Google Ads campagnes in NL?', color: '#f59e0b' },
+  { platform: 'Perplexity', query: 'Top 5 boekhouders in Amsterdam voor een MKB bedrijf', color: '#376eb5' },
+  { platform: 'Google AI', query: 'Welke partij doet de beste Google Ads campagnes in NL?', color: '#b45309' },
   { platform: 'ChatGPT', query: 'Ik zoek een loodgieter in Amsterdam-Zuid met goede beoordelingen', color: '#376eb5' },
-  { platform: 'Perplexity', query: 'Welke fysiotherapeut in de buurt van de Jordaan is het beste?', color: '#0f7b64' },
-  { platform: 'Google AI', query: 'Vergelijk WordPress vs Next.js voor een zakelijke website', color: '#f59e0b' },
+  { platform: 'Perplexity', query: 'Welke fysiotherapeut in de buurt van de Jordaan is het beste?', color: '#376eb5' },
+  { platform: 'Google AI', query: 'Vergelijk WordPress vs Next.js voor een zakelijke website', color: '#b45309' },
 ];
 
 export default function ShiftSection() {
@@ -80,7 +80,7 @@ export default function ShiftSection() {
           <div className="max-w-xl">
             <p 
               className="text-sm font-bold uppercase tracking-[0.15em] mb-4"
-              style={{ color: '#0f7b64' }}
+              style={{ color: '#376eb5' }}
             >
               De zoekwereld verandert
             </p>

@@ -16,7 +16,7 @@ const pillars = [
   {
     title: 'GEO optimalisatie',
     description: 'AI-zichtbaarheid in ChatGPT, Perplexity en Google AI. Bouwt voort op je SEO-fundament.',
-    color: '#1abc9c',
+    color: '#376eb5',
   },
 ];
 
@@ -78,7 +78,7 @@ export default function SEOBasisSection() {
                 <div className="flex items-start gap-4">
                   <div 
                     className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold text-white"
-                    style={{ backgroundColor: i === 2 ? '#148f77' : pillar.color }}
+                    style={{ backgroundColor: pillar.color }}
                   >
                     {String(i + 1).padStart(2, '0')}
                   </div>
@@ -88,7 +88,7 @@ export default function SEOBasisSection() {
                       {i === 2 && (
                         <span 
                           className="ml-2 text-xs font-bold px-2 py-0.5 rounded-full"
-                          style={{ backgroundColor: 'rgba(26, 188, 156, 0.1)', color: '#0f7b64' }}
+                          style={{ backgroundColor: 'rgba(26, 188, 156, 0.1)', color: '#376eb5' }}
                         >
                           POWERED BY TEUN.AI
                         </span>

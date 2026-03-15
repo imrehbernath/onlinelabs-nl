@@ -116,7 +116,7 @@ export default function Hero() {
               {/* Subtitle */}
               <p className="hero-reveal hero-reveal-3 text-lg lg:text-xl text-gray-700 leading-relaxed">
                 OnlineLabs combineert <strong className="text-gray-900 font-semibold">17 jaar SEO-expertise</strong> met ons eigen AI-platform{' '}
-                <strong className="font-semibold" style={{ color: '#0f7b64' }}>Teun.ai</strong>. 
+                <strong className="font-semibold" style={{ color: '#16a085' }}>Teun.ai</strong>. 
                 Wij maken je zichtbaar waar je klanten zoeken. Niet alleen in Google, maar ook in AI-zoekmachines.
               </p>
 
@@ -189,7 +189,7 @@ export default function Hero() {
                   style={{ backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0' }}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold" style={{ color: '#0f7b64' }}>teun.ai</span>
+                    <span className="text-sm font-bold" style={{ color: '#376eb5' }}>teun.ai</span>
                     <span className="text-xs text-gray-500 hidden sm:inline">AI Visibility Dashboard</span>
                   </div>
                   <div className="flex gap-1.5">
@@ -212,10 +212,10 @@ export default function Hero() {
                 {/* Score Cards */}
                 <div className="grid grid-cols-4 gap-2 px-4 sm:px-5 py-4">
                   {[
-                    { label: 'Visibility', value: '73%', color: '#0f7b64', sub: '+12% deze maand', subColor: '#0f7b64' },
+                    { label: 'Visibility', value: '73%', color: '#376eb5', sub: '+12% deze maand', subColor: '#376eb5' },
                     { label: 'ChatGPT', value: '8/10', color: '#376eb5', sub: 'gevonden', subColor: '#64748b' },
-                    { label: 'Perplexity', value: '6/10', color: '#0f7b64', sub: 'gevonden', subColor: '#64748b' },
-                    { label: 'Threats', value: '3', color: '#f59e0b', sub: 'concurrenten', subColor: '#f59e0b' },
+                    { label: 'Perplexity', value: '6/10', color: '#376eb5', sub: 'gevonden', subColor: '#64748b' },
+                    { label: 'Threats', value: '3', color: '#b45309', sub: 'concurrenten', subColor: '#b45309' },
                   ].map((card) => (
                     <div 
                       key={card.label}
@@ -267,7 +267,7 @@ export default function Hero() {
                       {[
                         { label: 'ChatGPT', color: '#376eb5' },
                         { label: 'Perplexity', color: '#1abc9c' },
-                        { label: 'Google AI', color: '#f59e0b' },
+                        { label: 'Google AI', color: '#b45309' },
                       ].map((item) => (
                         <div key={item.label} className="flex items-center gap-1.5">
                           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }} />

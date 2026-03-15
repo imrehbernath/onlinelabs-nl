@@ -90,7 +90,7 @@ export default function ServicesSection() {
               href={`/skills/${service.slug}`}
               className="group relative rounded-xl p-6 lg:p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col"
               style={{
-                backgroundColor: service.featured ? '#148f77' : '#fff',
+                backgroundColor: service.featured ? '#376eb5' : '#fff',
                 border: service.featured ? 'none' : '1px solid #e8eef6',
               }}
             >
