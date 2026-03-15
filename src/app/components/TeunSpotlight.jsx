@@ -76,7 +76,7 @@ export default function TeunSpotlight() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-3">
               <span className="text-xl font-bold" style={{ color: '#0f1a2e' }}>
-                Teun<span style={{ color: '#1abc9c' }}>.ai</span>
+                Teun<span style={{ color: '#0f7b64' }}>.ai</span>
               </span>
               <span 
                 className="text-xs font-bold px-3 py-1 rounded-full"

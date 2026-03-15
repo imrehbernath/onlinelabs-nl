@@ -71,14 +71,14 @@ export default function SEOBasisSection() {
                 key={pillar.title}
                 className="rounded-xl p-6 lg:p-8"
                 style={{ 
-                  backgroundColor: i === 2 ? 'rgba(26, 188, 156, 0.04)' : '#f8fafd',
+                  backgroundColor: i === 2 ? 'rgba(26, 188, 156, 0.06)' : '#f8fafd',
                   border: `1px solid ${i === 2 ? 'rgba(26, 188, 156, 0.15)' : '#e8eef6'}`
                 }}
               >
                 <div className="flex items-start gap-4">
                   <div 
                     className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold text-white"
-                    style={{ backgroundColor: pillar.color }}
+                    style={{ backgroundColor: i === 2 ? '#148f77' : pillar.color }}
                   >
                     {String(i + 1).padStart(2, '0')}
                   </div>
@@ -88,7 +88,7 @@ export default function SEOBasisSection() {
                       {i === 2 && (
                         <span 
                           className="ml-2 text-xs font-bold px-2 py-0.5 rounded-full"
-                          style={{ backgroundColor: 'rgba(26, 188, 156, 0.1)', color: '#16a085' }}
+                          style={{ backgroundColor: 'rgba(26, 188, 156, 0.1)', color: '#0f7b64' }}
                         >
                           POWERED BY TEUN.AI
                         </span>
@@ -104,7 +104,7 @@ export default function SEOBasisSection() {
 
             {/* Visual connector - arrow between SEO en GEO */}
             <div className="flex items-center justify-center py-2">
-              <div className="flex items-center gap-3 text-sm text-gray-400">
+              <div className="flex items-center gap-3 text-sm text-gray-500">
                 <div className="h-px w-12 bg-gray-200" />
                 <span className="italic">SEO + GEO = maximale zichtbaarheid</span>
                 <div className="h-px w-12 bg-gray-200" />

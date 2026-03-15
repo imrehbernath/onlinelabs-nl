@@ -110,13 +110,13 @@ export default function Hero() {
                 Gevonden worden in{' '}
                 <span style={{ color: '#376eb5' }}>Google</span>,{' '}
                 <span style={{ color: '#376eb5' }}>ChatGPT</span> én{' '}
-                <span style={{ color: '#1abc9c' }}>Perplexity</span>
+                <span style={{ color: '#16a085' }}>Perplexity</span>
               </h1>
 
               {/* Subtitle */}
               <p className="hero-reveal hero-reveal-3 text-lg lg:text-xl text-gray-700 leading-relaxed">
                 OnlineLabs combineert <strong className="text-gray-900 font-semibold">17 jaar SEO-expertise</strong> met ons eigen AI-platform{' '}
-                <strong className="font-semibold" style={{ color: '#1abc9c' }}>Teun.ai</strong>. 
+                <strong className="font-semibold" style={{ color: '#0f7b64' }}>Teun.ai</strong>. 
                 Wij maken je zichtbaar waar je klanten zoeken. Niet alleen in Google, maar ook in AI-zoekmachines.
               </p>
 
@@ -189,8 +189,8 @@ export default function Hero() {
                   style={{ backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0' }}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold" style={{ color: '#1abc9c' }}>teun.ai</span>
-                    <span className="text-xs text-gray-400 hidden sm:inline">AI Visibility Dashboard</span>
+                    <span className="text-sm font-bold" style={{ color: '#0f7b64' }}>teun.ai</span>
+                    <span className="text-xs text-gray-500 hidden sm:inline">AI Visibility Dashboard</span>
                   </div>
                   <div className="flex gap-1.5">
                     {['ChatGPT', 'Perplexity', 'Google AI'].map((platform, i) => (
@@ -199,7 +199,7 @@ export default function Hero() {
                         className="text-[10px] px-2.5 py-1 rounded-full font-medium"
                         style={{
                           backgroundColor: i === 0 ? '#376eb5' : 'transparent',
-                          color: i === 0 ? '#fff' : '#94a3b8',
+                          color: i === 0 ? '#fff' : '#64748b',
                           border: i === 0 ? 'none' : '1px solid #e2e8f0'
                         }}
                       >
@@ -212,9 +212,9 @@ export default function Hero() {
                 {/* Score Cards */}
                 <div className="grid grid-cols-4 gap-2 px-4 sm:px-5 py-4">
                   {[
-                    { label: 'Visibility', value: '73%', color: '#1abc9c', sub: '+12% deze maand', subColor: '#1abc9c' },
-                    { label: 'ChatGPT', value: '8/10', color: '#376eb5', sub: 'gevonden', subColor: '#94a3b8' },
-                    { label: 'Perplexity', value: '6/10', color: '#1abc9c', sub: 'gevonden', subColor: '#94a3b8' },
+                    { label: 'Visibility', value: '73%', color: '#0f7b64', sub: '+12% deze maand', subColor: '#0f7b64' },
+                    { label: 'ChatGPT', value: '8/10', color: '#376eb5', sub: 'gevonden', subColor: '#64748b' },
+                    { label: 'Perplexity', value: '6/10', color: '#0f7b64', sub: 'gevonden', subColor: '#64748b' },
                     { label: 'Threats', value: '3', color: '#f59e0b', sub: 'concurrenten', subColor: '#f59e0b' },
                   ].map((card) => (
                     <div 
@@ -222,7 +222,7 @@ export default function Hero() {
                       className="rounded-xl p-2 sm:p-3 text-center overflow-hidden"
                       style={{ backgroundColor: '#fff', border: '1px solid #eef2f7' }}
                     >
-                      <div className="text-[8px] sm:text-[9px] uppercase tracking-wide font-semibold text-gray-400 truncate">
+                      <div className="text-[8px] sm:text-[9px] uppercase tracking-wide font-semibold text-gray-500 truncate">
                         {card.label}
                       </div>
                       <div 
@@ -271,7 +271,7 @@ export default function Hero() {
                       ].map((item) => (
                         <div key={item.label} className="flex items-center gap-1.5">
                           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }} />
-                          <span className="text-[10px] text-gray-400">{item.label}</span>
+                          <span className="text-[10px] text-gray-500">{item.label}</span>
                         </div>
                       ))}
                     </div>
