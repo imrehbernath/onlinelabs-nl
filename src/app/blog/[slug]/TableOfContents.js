@@ -109,39 +109,7 @@ export default function TableOfContents({ headings, showCalculator = false }) {
           )}
         </div>
 
-        {/* Trainingen Banner - Desktop only */}
-        <a href="/trainingen" className="hidden lg:block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer">
-          <img 
-            src="/trainingen-banner.svg" 
-            alt="Onze trainingen - AI & GEO-optimalisatie, WordPress & AI, Ads & Analytics - Vanaf €299" 
-            width={300} 
-            height={250}
-            className="w-full h-auto"
-          />
-        </a>
-
-        {/* Teun.ai Banner - Desktop only */}
-        <a href="https://teun.ai" target="_blank" rel="noopener noreferrer" className="hidden lg:block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer">
-          <img 
-            src="/teun-ai-banner.svg" 
-            alt="Hoe zichtbaar is jouw bedrijf in ChatGPT? Gratis scannen op teun.ai" 
-            width={300} 
-            height={250}
-            className="w-full h-auto"
-          />
-        </a>
       </div>
-
-      {/* Teun.ai Banner - Mobile only */}
-      <a href="https://teun.ai" target="_blank" rel="noopener noreferrer" className="lg:hidden block mt-8 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer">
-        <img 
-          src="/teun-ai-banner.svg" 
-          alt="Hoe zichtbaar is jouw bedrijf in ChatGPT? Gratis scannen op teun.ai" 
-          width={300} 
-          height={250}
-          className="w-full h-auto"
-        />
-      </a>
     </>
   );
 }
