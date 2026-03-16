@@ -81,7 +81,7 @@ export default function Hero() {
           />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4 sm:py-16 lg:py-20 relative">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 lg:pt-40 pb-4 sm:pb-16 lg:pb-20 relative">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
             {/* Left Column - Content */}
@@ -151,7 +151,7 @@ export default function Hero() {
                     href="https://www.google.com/maps/place/?q=place_id:ChIJEVS-szIKxkcRng6UB0W50u0" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="hover:text-gray-900 transition-colors underline decoration-1 underline-offset-2"
+                    className="hover:text-gray-900 transition-colors underline decoration-1 underline-offset-2 whitespace-nowrap"
                   >
                     5★ Google Reviews
                   </a>
