@@ -58,6 +58,28 @@ export default async function sitemap() {
     },
   ];
 
+  // Author pages (alleen actieve medewerkers)
+  const authorPages = [
+    {
+      url: `${siteUrl}/auteur/imre-bernath`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${siteUrl}/auteur/sanne-verschoor`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${siteUrl}/auteur/adrian-enders`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+  ];
+
   // Training pages
   const trainingPages = [
     {
@@ -110,5 +132,5 @@ export default async function sitemap() {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...trainingPages, ...servicePages, ...casePages, ...blogPages];
+  return [...staticPages, ...authorPages, ...trainingPages, ...servicePages, ...casePages, ...blogPages];
 }
