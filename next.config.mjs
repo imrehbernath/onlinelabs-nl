@@ -113,8 +113,18 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/auteur/colin-dijkstra',
+        destination: '/over-ons',
+        permanent: true,
+      },
+      {
+        source: '/over-ons/colin-dijkstra',
+        destination: '/over-ons',
+        permanent: true,
+      },
+      {
         source: '/author/colin-dijkstra',
-        destination: '/auteur/colin-dijkstra',
+        destination: '/over-ons',
         permanent: true,
       },
 

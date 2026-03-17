@@ -245,7 +245,6 @@ export default async function BlogPost({ params }) {
       'Imre Bernáth': 'imre-bernath',
       'Imre Bernath': 'imre-bernath',
       'Sanne Verschoor': 'sanne-verschoor',
-      'Colin Dijkstra': 'colin-dijkstra',
       'Adrian Enders': 'adrian-enders',
     };
     return map[name] || null;

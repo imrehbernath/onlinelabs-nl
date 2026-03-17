@@ -48,10 +48,10 @@ function getAuthorSlug(authorName) {
     'Imre Bernáth': 'imre-bernath',
     'Imre': 'imre-bernath',
     'Imre Bernath': 'imre-bernath',
-    'Colin Dijkstra': 'colin-dijkstra',
     'Adrian Enders': 'adrian-enders',
     'Sanne Verschoor': 'sanne-verschoor',
     // Oud-medewerkers - geen auteurspagina
+    'Colin Dijkstra': null,
     'Zara Fung': null,
     'Elsa Heijnen': null,
     'Nikky de Ridder': null,
