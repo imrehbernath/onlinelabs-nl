@@ -3,7 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import GoogleTagManager from './components/GoogleTagManager';
+import CookieConsent from './components/CookieConsent';
 import { getAllServices } from './lib/wordpress';
 
 // Inter - Google Font (fallback voor Metropolis)
@@ -131,7 +131,6 @@ export default async function RootLayout({ children }) {
         {/* Structured Data wordt beheerd door Rank Math per pagina */}
       </head>
       <body className={`${metropolis.variable} antialiased`}>
-        <GoogleTagManager />
         <Header services={services} />
         <main className="min-h-screen">
           {children}
@@ -144,6 +143,8 @@ export default async function RootLayout({ children }) {
             {process.env.VERCEL_ENV || 'development'} - NOINDEX
           </div>
         )}
+
+        <CookieConsent />
       </body>
     </html>
   );

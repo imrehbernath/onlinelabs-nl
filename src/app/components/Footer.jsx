@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { openCookieSettings } from './CookieConsent';
 
 /**
  * Footer Component
@@ -249,11 +250,11 @@ export default function Footer({ footerData }) {
               <Link href="/algemene-voorwaarden" className="text-gray-400 hover:text-primary transition-colors duration-200">
                 Algemene Voorwaarden
               </Link>
-              <button 
-                onClick={() => window.Cookiebot?.renew()}
+              <button
+                onClick={openCookieSettings}
                 className="font-sans text-sm text-gray-400 hover:text-primary transition-colors duration-200 bg-transparent border-none cursor-pointer p-0"
               >
-                Cookie-instellingen
+                Cookievoorkeuren
               </button>
             </div>
           </div>
