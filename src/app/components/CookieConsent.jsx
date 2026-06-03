@@ -77,15 +77,14 @@ export default function CookieConsent() {
           aria-live="polite"
           aria-label="Cookietoestemming"
         >
-          <div className="pointer-events-auto w-full max-w-3xl bg-white border border-gray-200 rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-            <div className="flex-1">
+          <div className="pointer-events-auto w-full max-w-[340px] bg-white border border-gray-200 rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-5 sm:p-6 flex flex-col gap-4">
+            <div>
               <p className="font-serif text-lg font-semibold text-gray-900 mb-1">
-                Cookies op OnlineLabs
+                OnlineLabs gebruikt alleen analytische cookies
               </p>
               <p className="font-sans text-sm leading-relaxed text-gray-700">
-                We gebruiken alleen analytische cookies (Google Analytics) om te zien
-                hoe bezoekers de site gebruiken. Geen marketing, geen tracking door
-                derden.{' '}
+                Zo zien we hoe bezoekers de site gebruiken en kunnen we hem
+                verbeteren. Geen marketingcookies en geen tracking door derden.{' '}
                 <a href="/privacyverklaring" className="text-[#376eb5] underline">
                   Privacyverklaring
                 </a>
@@ -97,13 +96,13 @@ export default function CookieConsent() {
                 </p>
               )}
             </div>
-            <div className="flex flex-col sm:flex-row gap-2.5 shrink-0">
+            <div className="flex flex-col sm:flex-row sm:justify-end gap-2.5">
               <button
                 type="button"
                 onClick={reject}
                 className="flex-1 sm:flex-none font-sans text-sm font-semibold px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
               >
-                Weigeren
+                Alleen noodzakelijk
               </button>
               <button
                 type="button"
