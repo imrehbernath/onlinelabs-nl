@@ -1,4 +1,4 @@
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display, Space_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import Header from './components/Header';
@@ -19,6 +19,14 @@ const playfair = Playfair_Display({
   variable: '--font-playfair',
   display: 'swap',
   weight: ['400', '500', '600', '700', '800', '900'],
+});
+
+// Space Mono - Google Font (mono labels / "soul" details: trust tags, eyebrows, pill)
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
+  variable: '--font-space-mono',
+  display: 'swap',
+  weight: ['400', '700'],
 });
 
 // Metropolis - Local Font (primary sans-serif)
@@ -104,7 +112,7 @@ export default async function RootLayout({ children }) {
   }
 
   return (
-    <html lang="nl" className={`${metropolis.variable} ${inter.variable} ${playfair.variable}`}>
+    <html lang="nl" className={`${metropolis.variable} ${inter.variable} ${playfair.variable} ${spaceMono.variable}`}>
       <head>
         {/* 
           CDN preconnect: niet nodig op homepage hero (hardcoded),

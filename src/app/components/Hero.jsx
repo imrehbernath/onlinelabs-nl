@@ -1,297 +1,122 @@
-'use client';
-
-import Image from 'next/image';
 import Link from 'next/link';
 
+/* OnlineLabs — filmische Amsterdam-videoheader.
+   Full-bleed timelapse, donkere canal-night scrim, tekst links uitgelijnd
+   en verticaal gecentreerd, 100vh. Trustregel onderaan de video. */
 export default function Hero() {
-
   return (
-    <>
+    <header className="relative flex items-center overflow-hidden min-h-[100svh] bg-[#0a1a2b] text-[#f4f1ea]">
       <style>{`
         @keyframes hero-fade-up {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+          from { opacity: 0; transform: translateY(26px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
-
-        .hero-reveal {
-          opacity: 0;
-          animation: hero-fade-up 0.6s ease-out forwards;
-        }
-        .hero-reveal-1 { animation-delay: 0.1s; }
-        .hero-reveal-2 { animation-delay: 0.2s; }
-        .hero-reveal-3 { animation-delay: 0.3s; }
-        .hero-reveal-4 { animation-delay: 0.4s; }
-        .hero-reveal-5 { animation-delay: 0.5s; }
-
-        @keyframes float-orb-1 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -20px) scale(1.05); }
-          66% { transform: translate(-20px, 20px) scale(0.95); }
-        }
-        @keyframes float-orb-2 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(-25px, 30px) scale(0.95); }
-          66% { transform: translate(35px, -15px) scale(1.05); }
-        }
-
-        @keyframes bar-grow {
-          from { transform: scaleY(0); }
-          to { transform: scaleY(1); }
-        }
-        .dash-bar-animate {
-          transform-origin: bottom;
-          animation: bar-grow 0.8s ease-out forwards;
-        }
-
-        @keyframes dash-float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
-        }
-
-        @keyframes teun-wave {
-          0%, 100% { transform: rotate(0deg) translateY(0); }
-          25% { transform: rotate(2deg) translateY(-3px); }
-          75% { transform: rotate(-1.5deg) translateY(2px); }
-        }
-
-        @media (min-width: 1024px) {
-          .orb-animate-1 { animation: float-orb-1 20s ease-in-out infinite; }
-          .orb-animate-2 { animation: float-orb-2 25s ease-in-out infinite; }
-          .dash-float { animation: dash-float 6s ease-in-out infinite; }
-          .teun-wave { animation: teun-wave 4s ease-in-out infinite; }
-        }
-
+        .hero-rise { opacity: 0; animation: hero-fade-up 1.1s cubic-bezier(.2,.7,.3,1) forwards; }
+        .hero-rise-1 { animation-delay: .30s; }
+        .hero-rise-2 { animation-delay: .55s; }
+        .hero-rise-3 { animation-delay: .75s; }
+        .hero-rise-4 { animation-delay: .95s; }
+        .hero-rise-5 { animation-delay: 1.2s; }
         @media (prefers-reduced-motion: reduce) {
-          .hero-reveal { opacity: 1; animation: none; transform: none; }
-          .orb-animate-1, .orb-animate-2, .dash-float, .teun-wave { animation: none !important; }
-          .dash-bar-animate { animation: none; transform: scaleY(1); }
+          .hero-rise { opacity: 1; animation: none; transform: none; }
         }
       `}</style>
-      
-      <section className="relative bg-white overflow-hidden">
-        {/* Animated background orbs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div 
-            className="orb-animate-1 absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full opacity-[0.03]"
-            style={{ background: 'radial-gradient(circle, #376eb5 0%, transparent 70%)', willChange: 'transform' }}
-          />
-          <div 
-            className="orb-animate-2 absolute -bottom-48 -left-48 w-[600px] h-[600px] rounded-full opacity-[0.04]"
-            style={{ background: 'radial-gradient(circle, #1abc9c 0%, transparent 70%)', willChange: 'transform' }}
-          />
+
+      {/* Video */}
+      <div className="absolute inset-0 z-0" aria-hidden="true">
+        <video
+          className="w-full h-full object-cover"
+          src="/amsterdam.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+      </div>
+
+      {/* Scrim — donkere canal-night tint voor leesbaarheid */}
+      <div
+        className="absolute inset-0 z-[1]"
+        aria-hidden="true"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(7,20,32,0.55) 0%, rgba(7,20,32,0.15) 30%, rgba(7,20,32,0.55) 62%, #0a1a2b 100%), radial-gradient(120% 80% at 20% 100%, rgba(7,20,32,0.57) 0%, transparent 60%)',
+        }}
+      />
+      <div className="absolute inset-0 z-[1]" aria-hidden="true" style={{ background: 'rgba(7,20,32,0.28)' }} />
+
+      {/* Content */}
+      <div className="relative z-[2] w-full max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 pt-24 pb-[clamp(80px,14vh,140px)]">
+        <h1
+          className="hero-rise hero-rise-2 font-serif font-semibold tracking-[-0.015em] max-w-[20ch] mb-[1.7rem]"
+          style={{ fontSize: 'clamp(2.1rem, 4.7vw, 3.95rem)', lineHeight: 1.06 }}
+        >
+          Online marketing bureau voor zichtbaarheid in Google, ChatGPT en{' '}
+          <span style={{ color: '#4d83c9' }}>AI</span>
+        </h1>
+
+        <p
+          className="hero-rise hero-rise-3 text-[#d7e0e8] max-w-[56ch] mb-[2.3rem]"
+          style={{ fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', lineHeight: 1.6 }}
+        >
+          Sinds 2008 helpt OnlineLabs vanuit Amsterdam bedrijven groeien met SEO, GEO,
+          webdesign, snelheid en conversie-optimalisatie. Met ons eigen AI-platform Teun.ai
+          maken we zichtbaar waar je klanten zoeken: in Google, ChatGPT en andere AI-platformen.
+        </p>
+
+        <div className="hero-rise hero-rise-4 flex flex-wrap items-center gap-4">
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center rounded-[2px] bg-[#f4f1ea] px-[1.7rem] py-4 text-base font-semibold text-[#0a1a2b] leading-none transition-all duration-200 hover:bg-white hover:-translate-y-0.5"
+          >
+            Start met online groei
+          </Link>
+          <a
+            href="https://teun.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-[2px] border border-[rgba(244,241,234,0.13)] px-[1.7rem] py-4 text-base font-semibold text-[#f4f1ea] leading-none transition-all duration-200 hover:border-[#f4f1ea] hover:bg-[rgba(244,241,234,0.04)]"
+          >
+            Bekijk Teun.ai
+          </a>
         </div>
+      </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 lg:pt-40 pb-4 sm:pb-16 lg:pb-20 relative">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            
-            {/* Left Column - Content */}
-            <div className="space-y-6 lg:space-y-8 max-w-2xl flex flex-col justify-center">
-              
-              {/* Badge */}
-              <div className="hero-reveal hero-reveal-1">
-                <span 
-                  className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full"
-                  style={{ 
-                    backgroundColor: 'rgba(55, 110, 181, 0.06)',
-                    border: '1px solid rgba(55, 110, 181, 0.12)',
-                    color: '#376eb5'
-                  }}
-                >
-                  <span 
-                    className="w-2 h-2 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: '#1abc9c' }}
-                  />
-                  Online marketing bureau Amsterdam, sinds 2008
-                </span>
-              </div>
+      {/* Trustregel — onderaan de video */}
+      <div
+        className="hero-rise hero-rise-5 absolute left-0 right-0 z-[2] mx-auto flex flex-wrap items-center gap-x-8 gap-y-4 pt-[1.4rem] border-t border-[rgba(244,241,234,0.07)] w-[min(100%-2.5rem,1280px)] sm:w-[min(100%-4rem,1280px)] lg:w-[min(100%-6rem,1280px)]"
+        style={{
+          bottom: 'clamp(26px, 4.5vh, 52px)',
+          fontFamily: 'var(--font-space-mono), ui-monospace, monospace',
+          fontSize: '0.8rem',
+          letterSpacing: '0.05em',
+          color: '#8ba0b2',
+        }}
+      >
+        <span>Amsterdam</span>
+        <span className="text-[#4d83c9]">•</span>
+        <span>sinds 2008</span>
+        <span className="text-[#4d83c9]">•</span>
+        <span>Google Partner</span>
+        <span className="text-[#4d83c9]">•</span>
+        <span>5★ Google Reviews</span>
+      </div>
 
-              {/* H1 */}
-              <h1 className="hero-reveal hero-reveal-2 font-serif font-bold leading-[1.1] text-gray-900 text-[2.5rem] sm:text-[3rem] lg:text-[3.75rem] xl:text-[4.25rem] tracking-tight">
-                Gevonden worden in{' '}
-                <span style={{ color: '#376eb5' }}>Google</span>,{' '}
-                <span style={{ color: '#376eb5' }}>ChatGPT</span> én{' '}
-                <span style={{ color: '#16a085' }}>Perplexity</span>
-              </h1>
-
-              {/* Subtitle */}
-              <p className="hero-reveal hero-reveal-3 text-lg lg:text-xl text-gray-700 leading-relaxed">
-                OnlineLabs combineert <strong className="text-gray-900 font-semibold">17 jaar SEO-expertise</strong> met ons eigen AI-platform{' '}
-                <strong className="font-semibold" style={{ color: '#376eb5' }}>Teun.ai</strong>. 
-                Wij maken je zichtbaar waar je klanten zoeken. Niet alleen in Google, maar ook in AI-zoekmachines.
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="hero-reveal hero-reveal-4 flex flex-col sm:flex-row gap-3 pt-2">
-                <Link
-                  href="/skills/geo-optimalisatie"
-                  className="inline-flex items-center justify-center px-7 py-3.5 rounded-lg text-base font-semibold text-white transition-all duration-200 hover:brightness-110 hover:shadow-lg"
-                  style={{ backgroundColor: '#376eb5' }}
-                >
-                  Start met GEO optimalisatie
-                </Link>
-                <Link
-                  href="https://teun.ai"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-lg text-base font-semibold transition-all duration-200 hover:bg-gray-50"
-                  style={{ color: '#376eb5', border: '2px solid #376eb5' }}
-                >
-                  Bekijk Teun.ai
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                  </svg>
-                </Link>
-              </div>
-
-              {/* Trust signals */}
-              <div className="hero-reveal hero-reveal-4 pt-2">
-                <div className="text-sm tracking-wider uppercase text-gray-500 text-center lg:text-left">
-                  <span>Sinds 2008 • Google Partner • </span>
-                  <a 
-                    href="https://www.google.com/maps/place/?q=place_id:ChIJEVS-szIKxkcRng6UB0W50u0" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="hover:text-gray-900 transition-colors underline decoration-1 underline-offset-2 whitespace-nowrap"
-                  >
-                    5★ Google Reviews
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column - Teun.ai Dashboard + Mascotte */}
-            <div className="hero-reveal hero-reveal-5 relative">
-              
-              {/* Teun mascotte - rechtsonder, deels achter dashboard */}
-              <div className="teun-wave absolute -bottom-2 -right-2 sm:-bottom-4 sm:-right-4 lg:-bottom-6 lg:-right-8 z-30 pointer-events-none select-none">
-                <Image
-                  src="/teun-ai-mascotte.png"
-                  alt="Teun, de AI-mascotte van Teun.ai"
-                  width={160}
-                  height={160}
-                  className="drop-shadow-2xl w-[90px] h-[90px] sm:w-[120px] sm:h-[120px] lg:w-[150px] lg:h-[150px]"
-                  priority={false}
-                />
-              </div>
-
-              {/* Dashboard Panel - Licht thema */}
-              <div 
-                className="dash-float relative rounded-2xl overflow-hidden z-20"
-                style={{ 
-                  backgroundColor: '#f8fafd',
-                  border: '1px solid #e2e8f0',
-                  boxShadow: '0 25px 80px rgba(55, 110, 181, 0.12), 0 10px 30px rgba(55, 110, 181, 0.08)'
-                }}
-              >
-                {/* Dashboard Header */}
-                <div 
-                  className="flex items-center justify-between px-5 py-3.5"
-                  style={{ backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0' }}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold" style={{ color: '#376eb5' }}>teun.ai</span>
-                    <span className="text-xs text-gray-500 hidden sm:inline">AI Visibility Dashboard</span>
-                  </div>
-                  <div className="flex gap-1.5">
-                    {['ChatGPT', 'Perplexity', 'Google AI'].map((platform, i) => (
-                      <span 
-                        key={platform}
-                        className="text-[10px] px-2.5 py-1 rounded-full font-medium"
-                        style={{
-                          backgroundColor: i === 0 ? '#376eb5' : 'transparent',
-                          color: i === 0 ? '#fff' : '#64748b',
-                          border: i === 0 ? 'none' : '1px solid #e2e8f0'
-                        }}
-                      >
-                        {platform}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Score Cards */}
-                <div className="grid grid-cols-4 gap-2 px-4 sm:px-5 py-4">
-                  {[
-                    { label: 'Visibility', value: '73%', color: '#376eb5', sub: '+12% deze maand', subColor: '#376eb5' },
-                    { label: 'ChatGPT', value: '8/10', color: '#376eb5', sub: 'gevonden', subColor: '#64748b' },
-                    { label: 'Perplexity', value: '6/10', color: '#376eb5', sub: 'gevonden', subColor: '#64748b' },
-                    { label: 'Threats', value: '3', color: '#b45309', sub: 'concurrenten', subColor: '#b45309' },
-                  ].map((card) => (
-                    <div 
-                      key={card.label}
-                      className="rounded-xl p-2 sm:p-3 text-center overflow-hidden"
-                      style={{ backgroundColor: '#fff', border: '1px solid #eef2f7' }}
-                    >
-                      <div className="text-[8px] sm:text-[9px] uppercase tracking-wide font-semibold text-gray-500 truncate">
-                        {card.label}
-                      </div>
-                      <div 
-                        className="text-xl sm:text-2xl font-bold my-0.5"
-                        style={{ color: card.color }}
-                      >
-                        {card.value}
-                      </div>
-                      <div className="text-[8px] sm:text-[9px] truncate" style={{ color: card.subColor }}>
-                        {card.sub}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Bar Chart */}
-                <div className="px-5 pb-5">
-                  <div 
-                    className="rounded-xl p-4"
-                    style={{ backgroundColor: '#fff', border: '1px solid #eef2f7' }}
-                  >
-                    <div className="flex items-end gap-1.5 h-16">
-                      {[65, 40, 82, 55, 28, 50, 88, 35, 72, 60, 45, 78].map((height, i) => {
-                        const colors = ['#1abc9c', '#1abc9c', '#376eb5', '#4A8FDB', '#f59e0b', '#1abc9c', '#376eb5', '#1abc9c', '#4A8FDB', '#1abc9c', '#f59e0b', '#376eb5'];
-                        return (
-                          <div
-                            key={i}
-                            className="dash-bar-animate flex-1 rounded-t"
-                            style={{ 
-                              height: `${height}%`,
-                              backgroundColor: colors[i],
-                              opacity: (i % 3 === 1) ? 0.45 : 0.75,
-                              animationDelay: `${0.6 + i * 0.08}s`
-                            }}
-                          />
-                        );
-                      })}
-                    </div>
-                    
-                    {/* Platform legend */}
-                    <div className="flex items-center gap-4 mt-3 pt-3" style={{ borderTop: '1px solid #eef2f7' }}>
-                      {[
-                        { label: 'ChatGPT', color: '#376eb5' },
-                        { label: 'Perplexity', color: '#1abc9c' },
-                        { label: 'Google AI', color: '#b45309' },
-                      ].map((item) => (
-                        <div key={item.label} className="flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }} />
-                          <span className="text-[10px] text-gray-500">{item.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating gradient accents achter dashboard */}
-              <div 
-                className="absolute -top-4 -right-4 w-24 h-24 rounded-2xl z-10 opacity-50"
-                style={{ background: 'linear-gradient(135deg, #4A8FDB 0%, #376eb5 100%)' }}
-              />
-              <div 
-                className="absolute -bottom-4 -left-4 w-32 h-20 rounded-2xl z-10 opacity-40"
-                style={{ background: 'linear-gradient(135deg, #1abc9c 0%, #16a085 100%)' }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+      {/* Scroll-cue (verborgen op kleine schermen) */}
+      <div
+        className="hero-rise hero-rise-5 hidden sm:flex absolute z-[2] items-center gap-4 [writing-mode:vertical-rl] uppercase text-[#8ba0b2]"
+        style={{
+          right: 'clamp(20px, 5vw, 64px)',
+          bottom: 'clamp(48px, 8vh, 96px)',
+          fontFamily: 'var(--font-space-mono), ui-monospace, monospace',
+          fontSize: '0.72rem',
+          letterSpacing: '0.2em',
+        }}
+        aria-hidden="true"
+      >
+        <span className="h-[54px] w-px" style={{ background: 'linear-gradient(#4d83c9, transparent)' }} />
+        scroll
+      </div>
+    </header>
   );
 }

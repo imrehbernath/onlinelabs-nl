@@ -17,7 +17,7 @@ export default function ServiceHero({
 
   const brandBlue = '#376eb5';
   const brandBlueHover = '#2d5a94';
-  const brandTeal = '#16a085';
+  const brandTeal = 'rgb(17 24 39 / var(--tw-text-opacity, 1))';
 
   // Woorden die gekleurd worden in de titel (langste eerst om partial matches te voorkomen)
   const colorWords = [
