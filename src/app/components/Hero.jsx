@@ -67,9 +67,9 @@ export default function Hero() {
           className="hero-rise hero-rise-3 text-[#d7e0e8] max-w-[56ch] mb-[2.3rem]"
           style={{ fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', lineHeight: 1.6 }}
         >
-          Sinds 2008 helpt OnlineLabs vanuit Amsterdam bedrijven groeien met SEO, GEO,
-          webdesign, snelheid en conversie-optimalisatie. Met ons eigen AI-platform Teun.ai
-          maken we zichtbaar waar je klanten zoeken: in Google, ChatGPT en andere AI-platformen.
+          Sinds 2008 helpt OnlineLabs bedrijven groeien met SEO, GEO, webdesign, snelheid en
+          conversie-optimalisatie. Met ons eigen AI-platform Teun.ai maken we jouw bedrijf
+          zichtbaar op de plekken waar je klanten zoeken.
         </p>
 
         <div className="hero-rise hero-rise-4 flex flex-wrap items-center gap-4">
