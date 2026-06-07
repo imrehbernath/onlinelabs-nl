@@ -4,6 +4,14 @@ import Link from 'next/link';
    Full-bleed timelapse, donkere canal-night scrim, tekst links uitgelijnd
    en verticaal gecentreerd, 100vh. Trustregel onderaan de video. */
 export default function Hero() {
+  const MONO = 'var(--font-space-mono), ui-monospace, monospace';
+  const trust = ['Amsterdam', 'sinds 2008', 'Google Partner', '5★ Google Reviews'];
+  const trustSpans = trust.flatMap((t, i) =>
+    i === 0
+      ? [<span key={t}>{t}</span>]
+      : [<span key={`${t}-sep`} className="text-[#4d83c9]">•</span>, <span key={t}>{t}</span>]
+  );
+
   return (
     <header className="relative flex items-center overflow-hidden min-h-[100svh] bg-[#0a1a2b] text-[#f4f1ea]">
       <style>{`
@@ -80,26 +88,34 @@ export default function Hero() {
             Bekijk Teun.ai
           </a>
         </div>
+
+        {/* Trustregel — mobiel: in de normale flow onder de knoppen (geen overlap),
+            één regel die meeschaalt zodat alle items passen. */}
+        <div
+          className="hero-rise hero-rise-5 sm:hidden mt-9 pt-5 border-t border-[rgba(244,241,234,0.07)] whitespace-nowrap"
+          style={{ fontFamily: MONO, fontSize: 'clamp(0.52rem, 2.5vw, 0.78rem)', letterSpacing: '0', color: '#8ba0b2' }}
+        >
+          {trust.map((t, i) => (
+            <span key={t}>
+              {i > 0 && <span className="text-[#4d83c9] mx-[5px]">•</span>}
+              {t}
+            </span>
+          ))}
+        </div>
       </div>
 
-      {/* Trustregel — onderaan de video */}
+      {/* Trustregel — desktop/tablet: vast onderaan de video */}
       <div
-        className="hero-rise hero-rise-5 absolute left-0 right-0 z-[2] mx-auto flex flex-wrap items-center gap-x-8 gap-y-4 pt-[1.4rem] border-t border-[rgba(244,241,234,0.07)] w-[min(100%-2.5rem,1280px)] sm:w-[min(100%-4rem,1280px)] lg:w-[min(100%-6rem,1280px)]"
+        className="hero-rise hero-rise-5 hidden sm:flex absolute left-0 right-0 z-[2] mx-auto flex-wrap items-center gap-x-8 gap-y-4 pt-[1.4rem] border-t border-[rgba(244,241,234,0.07)] sm:w-[min(100%-4rem,1280px)] lg:w-[min(100%-6rem,1280px)]"
         style={{
           bottom: 'clamp(26px, 4.5vh, 52px)',
-          fontFamily: 'var(--font-space-mono), ui-monospace, monospace',
+          fontFamily: MONO,
           fontSize: '0.8rem',
           letterSpacing: '0.05em',
           color: '#8ba0b2',
         }}
       >
-        <span>Amsterdam</span>
-        <span className="text-[#4d83c9]">•</span>
-        <span>sinds 2008</span>
-        <span className="text-[#4d83c9]">•</span>
-        <span>Google Partner</span>
-        <span className="text-[#4d83c9]">•</span>
-        <span>5★ Google Reviews</span>
+        {trustSpans}
       </div>
 
       {/* Scroll-cue (verborgen op kleine schermen) */}
