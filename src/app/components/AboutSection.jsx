@@ -1,286 +1,165 @@
-'use client';
-
-import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { Check } from 'lucide-react';
 
-export default function AboutSection({ aboutData, imageCaption, imageCaptionLink, background = 'white' }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const sectionRef = useRef(null);
-
-  // Background color mapping
-  const bgStyles = {
-    white: { backgroundColor: '#ffffff' },
-    gray: { backgroundColor: '#F3F4F6' },
-    beige: { backgroundColor: '#FAFAF8' },
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    const element = sectionRef.current;
-    if (element) observer.observe(element);
-
-    return () => {
-      if (element) observer.unobserve(element);
-    };
-  }, []);
-
-  // Subtle parallax for blob (CSS variable based - no JS animation loop)
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Calculate progress (0 to 1) when section is in view
-      if (rect.top < windowHeight && rect.bottom > 0) {
-        const progress = 1 - (rect.top / windowHeight);
-        setScrollProgress(Math.max(0, Math.min(1, progress)));
-      }
-    };
-
-    // Use passive listener for performance
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const data = aboutData || {
-    title: "Meer dan een Online Marketing Bureau",
-    subtitle: "Jouw partner voor digitale groei en zichtbaarheid",
-    paragraph1: "Met onze jarenlange ervaring in online marketing, webdesign, SEO en Social Ads helpen we bedrijven groeien. Of het nu gaat om website-optimalisatie, een betere vindbaarheid in Google, het creëren van een uniek webdesign of het ontwikkelen van gerichte advertenties op social media: bij OnlineLabs zetten we alles op alles om jouw online succes te realiseren.",
-    paragraph2: "We combineren creativiteit, data en technologie om oplossingen te bieden die niet alleen werken, maar ook inspireren. Laat ons jouw ambities vertalen naar meetbare resultaten.",
-    targetAudienceTitle: "Voor wie is OnlineLabs?",
-    targetAudienceItems: [
-      "Websites die willen groeien met betere vindbaarheid en conversie",
-      "Dienstverleners die in heel Nederland zichtbaar willen zijn in Google",
-      "Bedrijven die meer leads en aanvragen willen genereren",
-      "Startups en scale-ups die snel online marktaandeel willen winnen",
-      "MKB-bedrijven die een moderne, goed vindbare website nodig hebben",
-      "Marketingteams die expertise zoeken op het gebied van SEO of (Social) Ads"
-    ],
-    image: {
-      sourceUrl: "/images/workspace-onlinelabs.jpg",
-      altText: "OnlineLabs workspace in Amsterdam"
-    },
-    ctaText: "over ons",
-    ctaUrl: "/over-ons"
-  };
+/* OnlineLabs — "Over ons" sectie (editorial, paper).
+   Server component, geen client-JS: morphende blob + scan-on-hover zijn
+   pure CSS. Foto met vaste aspect-ratio zodat er geen layout shift (CLS) is.
+   Accent in OnlineLabs-blauw i.p.v. teal, conform de rest van de site. */
+export default function AboutSection() {
+  const checks = [
+    'Eigen AI-visibility platform: Teun.ai',
+    '17+ jaar SEO- en online marketingervaring',
+    'Senior specialisten, geen accountmanagers',
+    'SEO, techniek, content en conversie onder één dak',
+    'Liefde voor het vak, focus op resultaat',
+  ];
 
   return (
-    <>
+    <section className="about-sec" id="over" aria-label="Over OnlineLabs">
       <style>{`
-        /* Morphing blob animation */
-        @keyframes blob-morph {
-          0%, 100% {
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            transform: rotate(-5deg) scale(1);
-          }
-          25% {
-            border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
-            transform: rotate(-3deg) scale(1.02);
-          }
-          50% {
-            border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
-            transform: rotate(-7deg) scale(0.98);
-          }
-          75% {
-            border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
-            transform: rotate(-4deg) scale(1.01);
-          }
+        .about-sec {
+          --paper:#f4f0e7; --paper-2:#ece6d8; --paper-ink:#15212c; --paper-muted:#5d6b76;
+          --paper-line:rgba(20,32,44,0.12);
+          --ink:#0a1a2b; --cream:#f4f1ea; --muted:#8ba0b2;
+          --blue:#4d83c9; --blue-deep:#376eb5; --accent:#376eb5;
+          --serif:'Playfair Display',Georgia,serif;
+          --mono:var(--font-space-mono),'Space Mono',ui-monospace,monospace;
+          --wrap:1280px; --gutter:clamp(20px,5vw,64px);
+          position:relative; overflow:hidden;
+          background:var(--paper); color:var(--paper-ink);
+          padding:clamp(80px,11vw,168px) 0;
+        }
+        .about-sec .wrap { width:min(100% - var(--gutter)*2, var(--wrap)); margin-inline:auto; }
+        .about-sec .about__grid {
+          display:grid; grid-template-columns:0.92fr 1.08fr;
+          gap:clamp(2.5rem,6vw,6.5rem); align-items:center;
         }
 
-        .blob-morph {
-          animation: blob-morph 20s ease-in-out infinite;
-          will-change: border-radius, transform;
+        .about-sec .about__media { position:relative; isolation:isolate; padding:clamp(1.4rem,2.5vw,2.4rem); }
+        .about-sec .about__blob {
+          position:absolute; z-index:-2; inset:-4% -2% -8% 0;
+          background:var(--paper-2);
+          border-radius:62% 38% 46% 54% / 55% 50% 50% 45%;
+          animation:aboutBlob 18s ease-in-out infinite;
+        }
+        @keyframes aboutBlob {
+          0%   { border-radius:62% 38% 46% 54% / 55% 50% 50% 45%; background:var(--paper-2); }
+          25%  { border-radius:48% 52% 60% 40% / 46% 58% 42% 54%; background:color-mix(in oklab, var(--paper-2) 88%, var(--blue) 12%); }
+          50%  { border-radius:55% 45% 40% 60% / 60% 42% 58% 40%; background:color-mix(in oklab, var(--paper-2) 92%, var(--blue-deep) 8%); }
+          75%  { border-radius:40% 60% 54% 46% / 48% 56% 44% 52%; background:color-mix(in oklab, var(--paper-2) 90%, var(--blue) 10%); }
+          100% { border-radius:62% 38% 46% 54% / 55% 50% 50% 45%; background:var(--paper-2); }
         }
 
-        /* Shine effect */
-        @keyframes shine {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
+        .about-sec .about__figure {
+          margin:0; position:relative; border-radius:16px; overflow:hidden;
+          box-shadow:0 40px 80px -36px rgba(7,20,32,0.45), 0 4px 14px -6px rgba(7,20,32,0.25);
+          transition:transform .55s cubic-bezier(.2,.7,.3,1), box-shadow .55s cubic-bezier(.2,.7,.3,1);
+        }
+        .about-sec .about__ratio { position:relative; width:100%; aspect-ratio:4/5; }
+        .about-sec .about__figure::after {
+          content:""; position:absolute; left:0; right:0; top:0; height:34%; z-index:2; pointer-events:none;
+          background:linear-gradient(to bottom, transparent, rgba(255,255,255,0.16) 44%, rgba(77,131,201,0.14) 52%, transparent);
+          transform:translateY(-140%); opacity:0; transition:opacity .4s ease;
+        }
+        .about-sec .about__media:hover .about__figure {
+          transform:translateY(-5px);
+          box-shadow:0 56px 100px -34px rgba(7,20,32,0.5), 0 6px 18px -6px rgba(7,20,32,0.3);
+        }
+        .about-sec .about__media:hover .about__figure::after { opacity:1; animation:aboutScan 2.6s linear infinite; }
+        @keyframes aboutScan { 0% { transform:translateY(-140%); } 100% { transform:translateY(395%); } }
+
+        .about-sec .about__badge {
+          position:absolute; left:clamp(-0.4rem,-1vw,-1.2rem); bottom:clamp(1.4rem,4vw,2.8rem); z-index:2;
+          background:var(--ink); color:var(--cream); border-radius:14px;
+          padding:1rem 1.3rem; display:flex; align-items:baseline; gap:0.7rem;
+          box-shadow:0 24px 50px -20px rgba(7,20,32,0.6);
+        }
+        .about-sec .about__badge b { font-family:var(--serif); font-weight:700; font-size:2.5rem; line-height:0.9; color:var(--cream); }
+        .about-sec .about__badge span { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); max-width:9ch; line-height:1.35; }
+
+        .about-sec .eyebrow {
+          font-family:var(--mono); font-size:0.78rem; letter-spacing:0.22em; text-transform:uppercase;
+          color:var(--accent); display:inline-flex; align-items:center; gap:0.7em; font-weight:400;
+        }
+        .about-sec .eyebrow::before { content:""; width:26px; height:1px; background:currentColor; opacity:0.6; }
+        .about-sec .about__eyebrow { margin-bottom:1.3rem; }
+        .about-sec .about__title {
+          font-family:var(--serif); font-weight:600; line-height:1.04; letter-spacing:-0.015em; text-wrap:balance;
+          font-size:clamp(2.1rem,4.4vw,3.5rem); max-width:16ch; margin:0 0 1.6rem;
+        }
+        .about-sec .about__title em { font-style:normal; color:var(--blue-deep); }
+        .about-sec .about__lead {
+          font-size:clamp(1.1rem,1.5vw,1.35rem); line-height:1.6; color:var(--paper-muted);
+          max-width:52ch; margin:0 0 clamp(2rem,4vw,3rem);
         }
 
-        /* Respect reduced motion */
+        .about-sec .about__why { border-top:1px solid var(--paper-line); padding-top:clamp(1.6rem,3vw,2.3rem); }
+        .about-sec .about__why-title { font-family:var(--serif); font-weight:700; font-size:1.4rem; color:var(--paper-ink); margin:0 0 1.4rem; }
+        .about-sec .about__list { list-style:none; padding:0; margin:0; display:grid; gap:0.95rem; }
+        .about-sec .about__list li { display:flex; align-items:center; gap:0.95rem; font-size:1.05rem; color:var(--paper-ink); }
+        .about-sec .about__list .tick {
+          flex:none; width:28px; height:28px; border-radius:50%;
+          background:rgba(55,110,181,0.12); color:var(--blue-deep);
+          display:grid; place-items:center;
+        }
+        .about-sec .about__list .tick svg { width:15px; height:15px; }
+
+        @media (max-width:880px) {
+          .about-sec .about__grid { grid-template-columns:1fr; gap:2.5rem; }
+          .about-sec .about__media { max-width:440px; }
+        }
         @media (prefers-reduced-motion: reduce) {
-          .blob-morph {
-            animation: none;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            transform: rotate(-5deg);
-          }
+          .about-sec .about__blob { animation:none; }
+          .about-sec .about__figure { transition:none; }
+          .about-sec .about__media:hover .about__figure { transform:none; }
+          .about-sec .about__media:hover .about__figure::after { animation:none; opacity:0; }
         }
       `}</style>
-      
-      <section 
-        ref={sectionRef}
-        className="py-12 lg:py-32 overflow-hidden"
-        style={bgStyles[background] || bgStyles.white}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            
-            {/* Left Column - Image */}
-            <div className={`relative order-1 lg:h-[760px] lg:order-1 transition-all duration-1000 delay-300 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}>
-              
-              {/* Parallax Wrapper - handles scroll movement */}
-              <div 
-                className="hidden lg:block absolute"
-                style={{
-                  top: '5%',
-                  left: '5%',
-                  right: '5%',
-                  bottom: '5%',
-                  transform: `translateY(${scrollProgress * -15}px)`,
-                  transition: 'transform 0.1s linear'
-                }}
-              >
-                {/* Morphing Blob - handles shape animation */}
-                <div 
-                  className="blob-morph absolute inset-0"
-                  style={{ background: '#F5F3EE' }}
-                />
-              </div>
-              
-              {/* Image + Caption */}
-              {data.image && (
-                <>
-                  <div 
-                    className="relative w-[85%] mx-auto aspect-[346/514] lg:absolute lg:top-[15%] lg:left-[8%] lg:w-[54%] lg:translate-x-0 rounded-xl overflow-hidden group z-20"
-                    style={{
-                      boxShadow: '0 25px 60px rgba(0,0,0,0.35)'
-                    }}
-                  >
-                    <div 
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
-                        animation: 'shine 1.5s ease-in-out infinite'
-                      }}
-                    />
-                    
-                    <Image
-                      src={data.image.sourceUrl}
-                      alt={data.image.altText}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                      priority={false}
-                      quality={85}
-                      sizes="(max-width: 640px) 90vw, (max-width: 1024px) 85vw, 40vw"
-                    />
-                  </div>
 
-                  {/* Image Caption */}
-                  {imageCaption && (
-                    <div className="relative w-[85%] mx-auto mt-4 lg:absolute lg:bottom-[2%] lg:left-[8%] lg:w-[54%] lg:mt-0 text-center lg:text-left z-20">
-                      {imageCaptionLink ? (
-                        <Link 
-                          href={imageCaptionLink}
-                          className="text-sm lg:text-base text-gray-600 hover:text-gray-900 transition-colors inline-flex items-center gap-1 group italic"
-                        >
-                          <span dangerouslySetInnerHTML={{ __html: imageCaption }} />
-                          <svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </Link>
-                      ) : (
-                        <p className="text-sm lg:text-base text-gray-600 italic" dangerouslySetInnerHTML={{ __html: imageCaption }} />
-                      )}
-                    </div>
-                  )}
-                </>
-              )}
-              
+      <div className="wrap about__grid">
+        <div className="about__media">
+          <div className="about__blob" />
+          <figure className="about__figure">
+            <div className="about__ratio">
+              <Image
+                src="/sanne-onlinelabs.webp"
+                alt="Sanne Verschoor aan het werk bij OnlineLabs in Amsterdam"
+                fill
+                className="object-cover"
+                sizes="(max-width: 880px) 88vw, 540px"
+              />
             </div>
-
-            {/* Right Column - Content */}
-            <div 
-              className={`order-2 lg:order-2 transition-all duration-1000 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-            >
-              <div className="mb-8">
-                <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-3 tracking-tight">
-                  {data.title}
-                </h2>
-                <p className="text-xl lg:text-2xl text-gray-600 italic leading-relaxed">
-                  {data.subtitle}
-                </p>
-              </div>
-
-              <div className="space-y-4 mb-8">
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  {data.paragraph1}
-                </p>
-                {data.paragraph2 && (
-                  <p className="text-lg text-gray-700 leading-relaxed">
-                    Wil je meer weten over wie we zijn en wat ons drijft? Bezoek dan onze{' '}
-                    <Link 
-                      href={data.ctaUrl}
-                      className="text-primary hover:text-primary-dark font-medium underline decoration-2 decoration-primary/30 hover:decoration-primary transition-colors"
-                    >
-                      {data.ctaText}
-                    </Link>{' '}
-                    pagina.
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-4 mb-8">
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  {data.paragraph2}
-                </p>
-              </div>
-
-              <div className="h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent my-10" />
-
-              <div>
-                <h3 className="font-serif text-2xl lg:text-3xl font-bold text-gray-900 mb-6 tracking-tight">
-                  {data.targetAudienceTitle}
-                </h3>
-                
-                <div className="space-y-3">
-                  {data.targetAudienceItems.map((item, index) => (
-                    <div
-                      key={index}
-                      className={`flex items-start gap-3 transition-all duration-500 ${
-                        isVisible 
-                          ? 'opacity-100 translate-x-0' 
-                          : 'opacity-0 translate-x-8'
-                      }`}
-                      style={{ 
-                        transitionDelay: isVisible ? `${600 + index * 100}ms` : '0ms' 
-                      }}
-                    >
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}>
-                        <Check className="w-4 h-4" style={{ color: '#376eb5' }} strokeWidth={3} />
-                      </div>
-                      <p className="text-lg text-gray-700 leading-relaxed flex-1">
-                        {item}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
+          </figure>
+          <div className="about__badge">
+            <b>17</b>
+            <span>jaar online expertise</span>
           </div>
         </div>
-      </section>
-    </>
+
+        <div className="about__body">
+          <span className="eyebrow about__eyebrow">Meer dan een bureau</span>
+          <h2 className="about__title">Eén missie: <em>jouw online groei.</em></h2>
+          <p className="about__lead">
+            OnlineLabs is geen bureau dat AI als buzzword gebruikt. Wij werken er dagelijks mee. Van ons
+            eigen platform Teun.ai tot de strategieën die we voor klanten ontwikkelen. We combineren 17+ jaar
+            SEO-ervaring met technische kennis, data en een nuchtere ondernemersblik.
+          </p>
+          <div className="about__why">
+            <h3 className="about__why-title">Waarom OnlineLabs?</h3>
+            <ul className="about__list">
+              {checks.map((item) => (
+                <li key={item}>
+                  <span className="tick">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

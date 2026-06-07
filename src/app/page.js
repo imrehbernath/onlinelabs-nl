@@ -176,6 +176,9 @@ export default async function Home() {
         {/* Hero Section - Hardcoded nieuwe positionering */}
         <Hero />
 
+        {/* About Section - "Over ons" (editorial, paper) — direct onder de hero */}
+        <AboutSection />
+
         {/* Shift Section - "Het zoeken verandert" */}
         <ShiftSection />
 
@@ -195,33 +198,6 @@ export default async function Home() {
           primaryButton={{ text: "Neem contact op", url: "/contact" }}
           secondaryButton={{ text: "Bekijk onze skills", url: "/skills" }}
           variant="primary"
-        />
-
-        {/* About Section - Hardcoded, relevante content */}
-        <AboutSection 
-          aboutData={{
-            title: '17 jaar ervaring. Eén missie: jouw groei online.',
-            subtitle: 'Meer dan een bureau',
-            paragraph1: 'OnlineLabs is geen bureau dat AI als buzzword gebruikt. Wij werken er dagelijks mee. Van ons eigen platform Teun.ai tot de strategieën die we voor klanten inzetten. Ons team combineert jarenlange SEO-kennis met echte technische AI-expertise.',
-            paragraph2: '',
-            targetAudienceTitle: 'Waarom OnlineLabs?',
-            targetAudienceItems: [
-              'Eigen AI-visibility platform (Teun.ai)',
-              '17+ jaar SEO en online marketing ervaring',
-              'Klein team, directe lijnen, geen account managers',
-              'Resultaatgericht, transparant en eerlijk advies',
-              'Gevestigd aan de Herengracht in Amsterdam',
-            ],
-            image: {
-              sourceUrl: 'https://cdn.onlinelabs.nl/wp-content/uploads/2025/11/Sanne-webdeveloper-bij-OnlineLabs.webp',
-              altText: 'Sanne Verschoor, webdeveloper bij OnlineLabs Amsterdam'
-            },
-            ctaText: 'Over ons',
-            ctaUrl: '/over-ons'
-          }}
-          imageCaption='Sanne Verschoor — Webdesigner & developer, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>'
-          imageCaptionLink="/auteur/sanne-verschoor"
-          background="beige"
         />
 
         {/* Logo Slider - Partners/Clients showcase (WordPress editable) */}
