@@ -17,9 +17,12 @@ export default function WebsitesGallery({
     return null;
   }
 
-  const mobileWebsites = showAll ? websites : websites.slice(0, mobileInitialCount);
-  const desktopWebsites = showAll ? websites : websites.slice(0, desktopInitialCount);
-  
+  // Hoofdgrid toont ALTIJD alleen de eerste N; de rest verschijnt via de
+  // "Meer projecten"-reveal hieronder. (Voorheen toonde het hoofdgrid bij showAll
+  // álles, terwijl de reveal dezelfde extra items óók toonde → dubbele projecten.)
+  const mobileWebsites = websites.slice(0, mobileInitialCount);
+  const desktopWebsites = websites.slice(0, desktopInitialCount);
+
   const hasMoreMobile = websites.length > mobileInitialCount;
   const hasMoreDesktop = websites.length > desktopInitialCount;
 
