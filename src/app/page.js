@@ -1,15 +1,15 @@
 import Hero from './components/Hero';
-import ShiftSection from './components/ShiftSection';
 import TeunSpotlight from './components/TeunSpotlight';
 import SEOBasisSection from './components/SEOBasisSection';
+import ApproachSection from './components/ApproachSection';
 import ServicesSection from './components/ServicesSection';
 import AboutSection from './components/AboutSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import CTASection from './components/CTASection';
 import LogoSlider from './components/LogoSlider';
-import CasesSection from './components/CasesSection';
+import WorkSection from './components/WorkSection';
 import BlogSection from './components/BlogSection';
-import { getHomepageSettings, getTestimonials, getBlogPosts, getCases } from './lib/wordpress';
+import { getHomepageSettings, getTestimonials, getBlogPosts } from './lib/wordpress';
 // getAllServices niet meer nodig op homepage (ServicesSection is hardcoded)
 
 const SITE_URL = 'https://www.onlinelabs.nl';
@@ -99,11 +99,10 @@ export const revalidate = 86400;
 
 export default async function Home() {
   // Fetch data from WordPress (server-side, cached 24u)
-  const [homepageSettings, testimonials, blogPosts, cases] = await Promise.all([
+  const [homepageSettings, testimonials, blogPosts] = await Promise.all([
     getHomepageSettings(),  // About section + SEO + Logo Slider
     getTestimonials(100),   // Max 100 testimonials
     getBlogPosts(3),        // Latest 3 blog posts
-    getCases(3),            // Latest 3 cases
   ]);
 
   // ─── WordPress heroData (bewaard als reference voor toekomstige projecten) ───
@@ -179,30 +178,12 @@ export default async function Home() {
         {/* About Section - "Over ons" (editorial, paper) — direct onder de hero */}
         <AboutSection />
 
-        {/* Shift Section - "Het zoeken verandert" */}
-        <ShiftSection />
-
-        {/* Teun.ai Spotlight - Eigen platform showcase */}
-        <TeunSpotlight />
-
-        {/* SEO Basis - SEO als fundament voor AI-zichtbaarheid */}
-        <SEOBasisSection />
-
-        {/* Services Section - Hardcoded diensten */}
+        {/* Services Section - "Wat we doen" (donkere editorial grid) — onder Over ons */}
         <ServicesSection />
 
-        {/* CTA Section - Call to action na Services */}
-        <CTASection 
-          title="Klaar om jouw online zichtbaarheid te verbeteren?"
-          description="Ontdek hoe OnlineLabs jouw bedrijf helpt groeien met strategische SEO, GEO en webdesign."
-          primaryButton={{ text: "Neem contact op", url: "/contact" }}
-          secondaryButton={{ text: "Bekijk onze skills", url: "/skills" }}
-          variant="primary"
-        />
-
-        {/* Logo Slider - Partners/Clients showcase (WordPress editable) */}
+        {/* Logo Slider - direct onder de dienstensectie (Vertrouwd door...) */}
         {logoSliderData && logoSliderData.logos.length > 0 && (
-          <LogoSlider 
+          <LogoSlider
             title={logoSliderData.title}
             logos={logoSliderData.logos}
             speed={logoSliderData.speed}
@@ -211,14 +192,27 @@ export default async function Home() {
           />
         )}
 
-        {/* Cases Section - Featured Projects */}
-        {cases && cases.length > 0 && (
-          <CasesSection 
-            cases={cases}
-            title="Uitgelichte cases"
-            subtitle="Cases"
-          />
-        )}
+        {/* AI-zichtbaarheid / GEO - "AI-zichtbaarheid begint bij sterke SEO" — onder de logo's */}
+        <SEOBasisSection />
+
+        {/* Onze aanpak - roadmap (koele mist-sectie) */}
+        <ApproachSection />
+
+        {/* Uitgelicht werk - donkere portfolio-grid (6 cases) */}
+        <WorkSection />
+
+        {/* Teun.ai Spotlight - Eigen platform (editorial paper) — onder Uitgelicht werk */}
+        <TeunSpotlight />
+
+        {/* CTA Section - Call to action na Services */}
+        <CTASection
+          title={"Klaar om zichtbaar te worden in Google en AI?"}
+          description="Ontdek hoe OnlineLabs jouw bedrijf helpt groeien met strategische SEO, GEO en webdesign."
+          primaryButton={{ text: "Neem contact op", url: "/contact" }}
+          secondaryButton={{ text: "Bekijk onze skills", url: "/skills" }}
+          variant="primary"
+          narrow
+        />
 
         {/* Blog Section - Latest 3 blog posts with featured layout */}
         {blogPosts && blogPosts.length > 0 && (
@@ -229,9 +223,10 @@ export default async function Home() {
         )}
 
         {/* Testimonials Section - 3-column slider met auto-rotate */}
-        <TestimonialsSection 
-          testimonials={testimonials} 
+        <TestimonialsSection
+          testimonials={testimonials}
           background="beige"
+          narrow
         />
 
         {/* Footer volgt direct na Testimonials - geen extra CTA meer */}

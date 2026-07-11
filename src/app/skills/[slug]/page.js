@@ -223,19 +223,21 @@ export const revalidate = 86400;
 export async function generateStaticParams() {
   try {
     const services = await getAllServices();
-    
+
     if (services && services.length > 0) {
-      return services.map((service) => ({
-        slug: service.slug,
-      }));
+      // 'seo-specialist' heeft een eigen hardcoded route (skills/seo-specialist) — hier uitsluiten
+      return services
+        .filter((service) => service.slug !== 'seo-specialist')
+        .map((service) => ({
+          slug: service.slug,
+        }));
     }
   } catch (error) {
     console.error('Failed to generate static params:', error);
   }
-  
-  // Fallback to known services
+
+  // Fallback to known services ('seo-specialist' heeft een eigen hardcoded route)
   return [
-    { slug: 'seo-specialist' },
     { slug: 'geo-optimalisatie' },
     { slug: 'wordpress-specialist' },
     { slug: 'webdesign' },

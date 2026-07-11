@@ -18,7 +18,8 @@ export default function TestimonialsSection({
   testimonials = [],
   title = "Wat zeggen klanten over OnlineLabs",
   subtitle = "Onze klanten waarderen onze expertise en toewijding",
-  background = 'gray'
+  background = 'gray',
+  narrow = false
 }) {
   const [selectedReview, setSelectedReview] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -177,8 +178,8 @@ export default function TestimonialsSection({
         className={`py-20 lg:py-24 ${bgClasses[background] || bgClasses.gray}`}
         style={bgStyles[background] || {}}
       >
-        <div className="container mx-auto px-6 lg:px-8">
-          
+        <div className={narrow ? 'ol-wrap' : 'container mx-auto px-6 lg:px-8'}>
+
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4">

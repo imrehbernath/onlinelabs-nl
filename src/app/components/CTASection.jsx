@@ -22,7 +22,8 @@ export default function CTASection({
   primaryButton = { text: "Neem contact op", url: "/contact" },
   secondaryButton = null,
   variant = 'primary',
-  skill = null
+  skill = null,
+  narrow = false
 }) {
   
   // Add skill parameter to URL if provided and URL is /contact
@@ -102,7 +103,7 @@ export default function CTASection({
         </div>
       )}
 
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
+      <div className={`relative z-10 ${narrow ? 'ol-wrap' : 'container mx-auto px-6 lg:px-8'}`}>
         <div className="max-w-4xl mx-auto text-center">
           
           {/* Title - GROTER voor Metropolis */}

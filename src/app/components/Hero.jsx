@@ -19,6 +19,14 @@ export default function Hero() {
           from { opacity: 0; transform: translateY(26px); }
           to   { opacity: 1; transform: translateY(0); }
         }
+        /* H1 = LCP-element: nooit met opacity:0 verbergen — anders telt de browser
+           hem pas als 'geverfd' als de animatie klaar is (en blijft hij verborgen
+           als de animatie niet draait). Opacity blijft 1, alleen een subtiele settle. */
+        @keyframes hero-settle {
+          from { transform: translateY(18px); }
+          to   { transform: translateY(0); }
+        }
+        .hero-rise-h1 { animation: hero-settle .9s cubic-bezier(.2,.7,.3,1) both; }
         .hero-rise { opacity: 0; animation: hero-fade-up 1.1s cubic-bezier(.2,.7,.3,1) forwards; }
         .hero-rise-1 { animation-delay: .30s; }
         .hero-rise-2 { animation-delay: .55s; }
@@ -26,7 +34,7 @@ export default function Hero() {
         .hero-rise-4 { animation-delay: .95s; }
         .hero-rise-5 { animation-delay: 1.2s; }
         @media (prefers-reduced-motion: reduce) {
-          .hero-rise { opacity: 1; animation: none; transform: none; }
+          .hero-rise, .hero-rise-h1 { opacity: 1; animation: none; transform: none; }
         }
       `}</style>
 
@@ -56,7 +64,7 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-[2] w-full max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 pt-24 pb-[clamp(80px,14vh,140px)]">
         <h1
-          className="hero-rise hero-rise-2 font-serif font-semibold tracking-[-0.015em] max-w-[20ch] mb-[1.7rem]"
+          className="hero-rise-h1 font-serif font-semibold tracking-[-0.015em] max-w-[20ch] mb-[1.7rem]"
           style={{ fontSize: 'clamp(2.1rem, 4.7vw, 3.95rem)', lineHeight: 1.06 }}
         >
           Online marketing bureau voor zichtbaarheid in Google, ChatGPT en{' '}
@@ -67,9 +75,9 @@ export default function Hero() {
           className="hero-rise hero-rise-3 text-[#d7e0e8] max-w-[56ch] mb-[2.3rem]"
           style={{ fontSize: 'clamp(1.1rem, 1.5vw, 1.35rem)', lineHeight: 1.6 }}
         >
-          Sinds 2008 helpt OnlineLabs bedrijven groeien met SEO, GEO, webdesign, snelheid en
-          conversie-optimalisatie. Met ons eigen AI-platform Teun.ai maken we jouw bedrijf
-          zichtbaar op de plekken waar je klanten zoeken.
+          Sinds 2008 helpt OnlineLabs vanuit Amsterdam bedrijven groeien met SEO, GEO, webdesign,
+          snelheid en conversie-optimalisatie. Met Teun.ai maken we jouw bedrijf zichtbaar in
+          Google, ChatGPT en andere AI-platformen.
         </p>
 
         <div className="hero-rise hero-rise-4 flex flex-wrap items-center gap-4">

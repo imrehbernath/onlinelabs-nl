@@ -1,193 +1,169 @@
-'use client';
-
 import Image from 'next/image';
-import Link from 'next/link';
 
-const tools = [
-  {
-    name: 'AI Visibility Scan',
-    description: 'Scan je zichtbaarheid in ChatGPT en Perplexity',
-    url: 'https://teun.ai/tools/ai-visibility',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="#376eb5" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-      </svg>
-    ),
-  },
-  {
-    name: 'AI Rank Tracker',
-    description: 'Track je AI-posities over tijd',
-    url: 'https://teun.ai/tools/ai-rank-tracker',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="#376eb5" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-      </svg>
-    ),
-  },
-  {
-    name: 'GEO Audit',
-    description: 'Technische AI-check van je website',
-    url: 'https://teun.ai/tools/geo-audit',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="#376eb5" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Prompt Explorer',
-    description: '50+ AI-zoekprompts met volumes',
-    url: 'https://teun.ai/tools/ai-prompt-explorer',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="#376eb5" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Brand Check',
-    description: 'Hoe AI over jouw merk praat',
-    url: 'https://teun.ai/tools/brand-check',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="#376eb5" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-      </svg>
-    ),
-  },
-  {
-    name: 'WordPress Plugin',
-    description: 'Gratis GEO-analyse op WordPress.org',
-    url: 'https://wordpress.org/plugins/teunai-geo/',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="#376eb5" viewBox="0 0 24 24" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-      </svg>
-    ),
-  },
-];
+/* OnlineLabs — "Teun.ai" platformsectie (editorial paper).
+   Server component, geen client-JS. Teun staat op een blauwe rand met 3
+   zwevende kaartjes (pure CSS, respecteert prefers-reduced-motion).
+   Mascotte via CDN met vaste afmetingen (geen CLS), lazy onder de vouw. */
 
 export default function TeunSpotlight() {
+  const checks = [
+    'Meetbaar in plaats van giswerk',
+    'Inzicht in merk en concurrenten',
+    'Gebouwd door OnlineLabs',
+  ];
+
   return (
-    <section style={{ backgroundColor: '#FAF9F6' }}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24">
-        
-        {/* Header row met Teun */}
-        <div className="grid lg:grid-cols-3 gap-8 items-start mb-12">
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-xl font-bold" style={{ color: '#0f1a2e' }}>
-                Teun<span style={{ color: 'rgb(17 24 39 / var(--tw-text-opacity, 1))' }}>.ai</span>
-              </span>
-              <span 
-                className="text-xs font-bold px-3 py-1 rounded-full"
-                style={{ backgroundColor: 'rgba(55, 110, 181, 0.06)', color: '#376eb5' }}
-              >
-                ONS EIGEN PLATFORM
-              </span>
-            </div>
+    <section className="teun-sec" id="teun" aria-label="Teun.ai">
+      <style>{`
+        .teun-sec {
+          --paper:#f4f0e7; --paper-2:#ece6d8; --paper-ink:#15212c; --paper-muted:#5d6b76;
+          --paper-line:rgba(20,32,44,0.12);
+          --ink:#0a1a2b; --ink-2:#0f2436; --cream:#f4f1ea;
+          --blue:#4d83c9; --blue-deep:#376eb5;
+          --serif:'Playfair Display',Georgia,serif;
+          --mono:var(--font-space-mono),'Space Mono',ui-monospace,monospace;
+          --wrap:1280px; --gutter:clamp(20px,5vw,64px);
+          position:relative; overflow:hidden; background:var(--paper); color:var(--paper-ink);
+          padding:clamp(80px,11vw,168px) 0;
+        }
+        .teun-sec .wrap { width:min(100% - var(--gutter)*2, var(--wrap)); margin-inline:auto; }
+        .teun-sec .teun__grid { display:grid; grid-template-columns:1.04fr 0.96fr; gap:clamp(2.5rem,6vw,6rem); align-items:center; }
 
-            <h2 className="font-serif font-bold text-gray-900 text-4xl lg:text-5xl xl:text-6xl leading-[1.1] mb-6">
-              Wij praten niet over AI.{' '}
-              <span style={{ color: '#376eb5' }}>Wij bouwden de tools.</span>
-            </h2>
+        .teun-sec .teun__badge {
+          display:inline-flex; align-items:center; gap:0.6em; margin-bottom:1.4rem;
+          font-family:var(--mono); font-size:0.76rem; letter-spacing:0.12em; text-transform:uppercase;
+          color:var(--paper-ink); background:var(--paper-2); border:1px solid var(--paper-line);
+          border-radius:100px; padding:0.5rem 0.9rem 0.5rem 0.6rem;
+        }
+        .teun-sec .teun__badge .dot {
+          width:20px; height:20px; border-radius:50%; display:grid; place-items:center;
+          background:#e8743b; color:#fff; font-weight:700; font-size:0.7rem;
+        }
+        .teun-sec .teun__title {
+          font-family:var(--serif); font-weight:600; letter-spacing:-0.015em; text-wrap:balance;
+          font-size:clamp(2.1rem,4.6vw,3.55rem); line-height:1.05; margin:0 0 1.5rem; max-width:15ch; color:var(--paper-ink);
+        }
+        .teun-sec .teun__title em { font-style:normal; color:var(--blue-deep); }
+        .teun-sec .teun__lead { color:var(--paper-muted); max-width:50ch; font-size:clamp(1.04rem,1.3vw,1.18rem); line-height:1.62; margin:0 0 clamp(1.8rem,3vw,2.3rem); }
 
-            <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
-              <p>
-                OnlineLabs is het enige online marketing bureau in Nederland met een eigen AI-visibility platform. 
-                Teun.ai geeft ons (en jou) inzicht in hoe zichtbaar je bent in ChatGPT, Perplexity en Google AI. 
-                Geen giswerk, maar data.
-              </p>
-              <p>
-                Die inzichten gebruiken wij om jouw GEO-strategie te bepalen. En met 6 gratis tools, een WordPress 
-                plugin en een Chrome extensie, kun je het ook zelf testen.
-              </p>
-            </div>
+        .teun-sec .teun__actions { display:flex; flex-wrap:wrap; gap:0.9rem; margin-bottom:clamp(2rem,3.4vw,2.6rem); }
+        .teun-sec .btn {
+          font-weight:600; font-size:1rem; display:inline-flex; align-items:center; gap:0.55em;
+          padding:1rem 1.5rem; border-radius:100px; border:1px solid transparent; cursor:pointer;
+          transition:background .25s, transform .25s; white-space:nowrap; background:var(--ink); color:var(--cream);
+        }
+        .teun-sec .btn svg { width:17px; height:17px; transition:transform .25s; }
+        .teun-sec .btn:hover { background:var(--ink-2); transform:translateY(-2px); }
+        .teun-sec .btn:hover svg { transform:translateX(4px); }
+
+        .teun-sec .teun__checks { list-style:none; margin:0; padding:0; display:grid; gap:0.85rem; }
+        .teun-sec .teun__checks li { display:flex; align-items:center; gap:0.85rem; font-size:1.04rem; color:var(--paper-ink); font-weight:500; }
+        .teun-sec .teun__checks .tick {
+          flex:none; width:26px; height:26px; border-radius:50%;
+          background:rgba(31,138,91,0.14); color:#1f8a5b; display:grid; place-items:center;
+        }
+        .teun-sec .teun__checks .tick svg { width:14px; height:14px; }
+
+        .teun-sec .teun__stage { position:relative; min-height:540px; display:flex; align-items:flex-end; justify-content:center; }
+        .teun-sec .teun__halo {
+          position:absolute; z-index:0; left:50%; top:46%; transform:translate(-50%,-50%);
+          width:78%; aspect-ratio:1; border-radius:50%;
+          background:radial-gradient(circle, rgba(77,131,201,0.18), rgba(77,131,201,0.05) 55%, transparent 70%);
+        }
+        .teun-sec .teun__edge {
+          position:absolute; z-index:1; left:4%; right:4%; bottom:36px; height:2px;
+          background:linear-gradient(90deg, transparent, var(--blue-deep) 18%, var(--blue-deep) 82%, transparent);
+          border-radius:2px;
+        }
+        .teun-sec .teun__ground {
+          position:absolute; z-index:1; left:50%; bottom:50px; transform:translateX(-50%);
+          width:230px; height:26px; border-radius:50%;
+          background:radial-gradient(ellipse, rgba(10,26,43,0.22), transparent 70%); filter:blur(3px);
+        }
+        .teun-sec .teun__mascot {
+          position:relative; z-index:2; height:520px; width:auto; max-width:100%;
+          object-fit:contain; object-position:bottom center; margin-bottom:38px;
+          filter:drop-shadow(0 24px 30px rgba(10,26,43,0.18));
+        }
+
+        .teun-sec .teun__card {
+          position:absolute; z-index:3; background:#fff; border:1px solid var(--paper-line); border-radius:14px;
+          padding:0.7rem 0.9rem; box-shadow:0 20px 44px -20px rgba(10,26,43,0.4); min-width:150px;
+        }
+        .teun-sec .teun__card .head { display:flex; align-items:center; gap:0.5em; margin-bottom:0.35rem; }
+        .teun-sec .teun__card .head .ic {
+          width:22px; height:22px; border-radius:50%; display:grid; place-items:center;
+          font-size:0.7rem; font-weight:700; color:#fff;
+        }
+        .teun-sec .teun__card .head .lbl { font-family:var(--mono); font-size:0.64rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--paper-muted); }
+        .teun-sec .teun__card .val { font-size:1.02rem; color:var(--paper-ink); font-weight:500; white-space:nowrap; }
+        .teun-sec .teun__card .val b { font-weight:700; }
+        .teun-sec .teun__card--c1 { top:12%; left:-4%; animation:teunFloat1 7s ease-in-out infinite; }
+        .teun-sec .teun__card--c2 { top:44%; right:-6%; animation:teunFloat2 8s ease-in-out infinite; }
+        .teun-sec .teun__card--c3 { bottom:16%; left:2%; animation:teunFloat1 7.5s ease-in-out infinite 0.5s; }
+        @keyframes teunFloat1 { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+        @keyframes teunFloat2 { 0%,100% { transform:translateY(0); } 50% { transform:translateY(10px); } }
+        @media (prefers-reduced-motion: reduce) { .teun-sec .teun__card { animation:none !important; } }
+
+        @media (max-width:880px) {
+          .teun-sec .teun__grid { grid-template-columns:1fr; gap:2rem; }
+          .teun-sec .teun__stage { min-height:480px; order:-1; }
+          .teun-sec .teun__mascot { height:440px; }
+          .teun-sec .teun__card--c1 { left:0; }
+          .teun-sec .teun__card--c2 { right:0; }
+        }
+      `}</style>
+
+      <div className="wrap teun__grid">
+        <div className="teun__copy">
+          <span className="teun__badge"><span className="dot">T</span>Teun.ai · ons eigen platform</span>
+          <h2 className="teun__title">Wij praten niet over AI. <em>Wij bouwen de tools.</em></h2>
+          <p className="teun__lead">
+            Met Teun.ai meten we hoe zichtbaar je bedrijf is in ChatGPT, Google AI en andere
+            AI-antwoorden. Die inzichten gebruiken we om je SEO- en GEO-strategie scherper,
+            meetbaarder en toekomstbestendiger te maken.
+          </p>
+          <div className="teun__actions">
+            <a className="btn" href="https://teun.ai" target="_blank" rel="noopener noreferrer">
+              Bekijk Teun.ai
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="M13 6l6 6-6 6" /></svg>
+            </a>
           </div>
+          <ul className="teun__checks">
+            {checks.map((c) => (
+              <li key={c}>
+                <span className="tick">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+                </span>
+                {c}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          {/* Teun mascotte */}
-          <div className="hidden lg:flex justify-center items-start">
-            <Image
-              src="/Teun-ai_welkom.png"
-              alt="Teun, de AI-mascotte van Teun.ai"
-              width={220}
-              height={220}
-              className="drop-shadow-xl object-contain"
-              priority={false}
-            />
+        <div className="teun__stage">
+          <div className="teun__halo" />
+          <div className="teun__card teun__card--c1">
+            <div className="head"><span className="ic" style={{ background: '#0a1a2b' }}>G</span><span className="lbl">ChatGPT zegt</span></div>
+            <div className="val">✓ <b>genoemd</b> · positie 2</div>
           </div>
-        </div>
-
-        {/* Tools Grid - klikbaar */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-          {tools.map((tool) => (
-            <Link
-              key={tool.name}
-              href={tool.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-white rounded-xl p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-              style={{ border: '1px solid #e8eef6' }}
-            >
-              <div 
-                className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110"
-                style={{ backgroundColor: 'rgba(55, 110, 181, 0.06)' }}
-              >
-                {tool.icon}
-              </div>
-              <h3 className="text-sm font-bold text-gray-900 mb-1 group-hover:text-[#376eb5] transition-colors">
-                {tool.name}
-              </h3>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                {tool.description}
-              </p>
-            </Link>
-          ))}
-        </div>
-
-        {/* Proof Points */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-8">
-          {['Gratis te gebruiken', 'Chrome Web Store', 'WordPress.org goedgekeurd'].map((point) => (
-            <div key={point} className="flex items-center gap-2">
-              <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24">
-                <path d="M9 12.75L11.25 15 15 9.75" stroke="#376eb5" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span className="text-sm text-gray-600 font-medium">{point}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center px-7 py-3.5 rounded-lg text-base font-semibold text-white transition-all duration-200 hover:brightness-110 hover:shadow-lg"
-            style={{ backgroundColor: '#376eb5' }}
-          >
-            Plan een adviesgesprek
-          </Link>
-          <Link
-            href="https://teun.ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-lg text-base font-semibold transition-all duration-200 hover:bg-gray-50"
-            style={{ color: '#376eb5', border: '2px solid #376eb5' }}
-          >
-            Probeer Teun.ai zelf
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-            </svg>
-          </Link>
-        </div>
-
-        {/* Teun mascotte - mobiel */}
-        <div className="lg:hidden flex justify-center mt-6 -mb-4">
+          <div className="teun__card teun__card--c2">
+            <div className="head"><span className="ic" style={{ background: '#e0a23b' }}>★</span><span className="lbl">GEO score</span></div>
+            <div className="val">72 / 100 <b>goed</b></div>
+          </div>
+          <div className="teun__card teun__card--c3">
+            <div className="head"><span className="ic" style={{ background: '#1f8a5b' }}>✓</span><span className="lbl">Scan klaar</span></div>
+            <div className="val">14 / 20 <b>vermeldingen</b></div>
+          </div>
+          <div className="teun__edge" />
+          <div className="teun__ground" />
           <Image
-            src="/Teun-ai_welkom.png"
-            alt="Teun, de AI-mascotte van Teun.ai"
-            width={160}
-            height={160}
-            className="drop-shadow-xl object-contain"
-            priority={false}
+            className="teun__mascot"
+            src="https://cdn.onlinelabs.nl/wp-content/uploads/2026/06/teun-ai.png"
+            alt="Teun, de AI-zichtbaarheidsassistent van Teun.ai"
+            width={360}
+            height={540}
+            sizes="(max-width: 880px) 300px, 360px"
           />
         </div>
       </div>
