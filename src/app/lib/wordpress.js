@@ -745,11 +745,53 @@ export async function getAllBlogPostSlugs() {
 
     const slugs = data?.posts?.nodes?.map(post => post.slug) || [];
     console.log('✅ Blog post slugs fetched:', slugs.length);
-    
+
     return slugs;
 
   } catch (error) {
     console.error('❌ Failed to fetch post slugs:', error.message);
+    return [];
+  }
+}
+
+/**
+ * Get All Blog Posts (lightweight)
+ * Alleen titel, slug, excerpt en datum — geen content. Voor llms.txt / sitemaps.
+ *
+ * @param {number} limit - Aantal posts (default: 200)
+ * @returns {Array} Array van { title, slug, excerpt, date }
+ */
+export async function getAllBlogPostsBasic(limit = 200) {
+  console.log(`📝 Fetching basic blog posts (limit: ${limit})...`);
+
+  try {
+    const data = await fetchAPI(
+      `
+      query GetAllPostsBasic($limit: Int!) {
+        posts(first: $limit, where: { orderby: { field: DATE, order: DESC } }) {
+          nodes {
+            title
+            slug
+            excerpt
+            date
+          }
+        }
+      }
+    `,
+      { variables: { limit } }
+    );
+
+    const posts = data?.posts?.nodes?.map((post) => ({
+      title: post.title || '',
+      slug: post.slug,
+      excerpt: post.excerpt ? post.excerpt.replace(/<[^>]*>/g, '').trim() : '',
+      date: post.date,
+    })) || [];
+
+    console.log('✅ Basic blog posts fetched:', posts.length);
+    return posts;
+  } catch (error) {
+    console.error('❌ Failed to fetch basic blog posts:', error.message);
     return [];
   }
 }
