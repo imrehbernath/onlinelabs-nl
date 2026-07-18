@@ -219,12 +219,24 @@ export default function ServiceHero({
         .orb-2 { animation: float-orb-medium 18s ease-in-out infinite; animation-delay: -4s; }
         .orb-3 { animation: float-orb-slow 26s ease-in-out infinite reverse; animation-delay: -8s; }
 
-        /* Badge glow */
-        @keyframes badge-glow {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(55, 110, 181, 0.2); }
-          50% { box-shadow: 0 0 20px 5px rgba(55, 110, 181, 0.12); }
+        /* Badge glow — glow op pseudo-element met statische box-shadow,
+           alleen opacity animeren (composited, geen box-shadow-animatie). */
+        .badge-glow { position: relative; }
+        .badge-glow::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          box-shadow: 0 0 20px 5px rgba(55, 110, 181, 0.12);
+          opacity: 0;
+          pointer-events: none;
+          z-index: -1;
+          animation: badge-glow 3s ease-in-out infinite;
         }
-        .badge-glow { animation: badge-glow 3s ease-in-out infinite; }
+        @keyframes badge-glow {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 1; }
+        }
 
         /* Floating circles */
         @keyframes circle-float-1 {
@@ -262,7 +274,7 @@ export default function ServiceHero({
           .circle-float-1, .circle-float-2, .circle-float-3, .circle-float-4 {
             animation: none;
           }
-          .badge-glow { animation: none; }
+          .badge-glow::after { animation: none; }
           .deco-circles {
             opacity: 1;
             animation: none;

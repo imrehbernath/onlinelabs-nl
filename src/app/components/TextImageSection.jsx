@@ -21,6 +21,7 @@ export default function TextImageSection({
   const [isVisible, setIsVisible] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,6 +40,33 @@ export default function TextImageSection({
       if (element) observer.unobserve(element);
     };
   }, []);
+
+  // Lazy-load video: bron (src) pas zetten zodra de video binnen 200px van de
+  // viewport komt. Alleen preload="none" of het autoplay-attribuut is niet
+  // genoeg — zolang de <source> een src heeft downloadt de browser de webm al
+  // bij HTML-parse. Daarom staat de src als data-src en zetten we die hier pas.
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        const sources = videoEl.querySelectorAll('source[data-src]');
+        sources.forEach((source) => {
+          if (source.dataset.src) source.src = source.dataset.src;
+        });
+        videoEl.load();
+        const playPromise = videoEl.play();
+        if (playPromise?.catch) playPromise.catch(() => {});
+        observer.disconnect();
+      },
+      { rootMargin: '200px' }
+    );
+
+    observer.observe(videoEl);
+    return () => observer.disconnect();
+  }, [video?.webm, video?.mp4]);
 
   // Subtle parallax for blob (CSS variable based - no JS animation loop)
   useEffect(() => {
@@ -343,16 +371,17 @@ export default function TextImageSection({
                 >
                   <div className="shine-effect" />
                   <video
+                    ref={videoRef}
                     className="w-full h-full block"
                     style={{ objectFit: 'cover' }}
                     autoPlay
                     loop
                     muted
                     playsInline
-                    preload="auto"
+                    preload="none"
                   >
-                    <source src={video.webm} type="video/webm" />
-                    <source src={video.mp4} type="video/mp4" />
+                    <source data-src={video.webm} type="video/webm" />
+                    <source data-src={video.mp4} type="video/mp4" />
                   </video>
                 </div>
               )}
@@ -412,8 +441,8 @@ export default function TextImageSection({
                       height={520}
                       className="w-full h-auto"
                       priority={false}
-                      quality={90}
-                      sizes="(max-width: 640px) 90vw, (max-width: 1024px) 80vw, 520px"
+                      quality={78}
+                      sizes="(max-width: 1024px) 85vw, 342px"
                     />
                   </div>
                   

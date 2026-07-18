@@ -194,6 +194,7 @@ function TimelineSection({ title, subtitle, items }) {
                         {!youtubeId && !vimeoId && isDirectVideoUrl && (
                           <video
                             controls
+                            muted
                             className="absolute inset-0 w-full h-full object-cover"
                           >
                             <source src={item.videoUrl} type={`video/${item.videoUrl.split('.').pop()}`} />
