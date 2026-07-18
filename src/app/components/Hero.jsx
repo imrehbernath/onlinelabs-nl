@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import HeroVideo from './HeroVideo';
 
 /* OnlineLabs — filmische Amsterdam-videoheader.
    Full-bleed timelapse, donkere canal-night scrim, tekst links uitgelijnd
@@ -47,17 +48,7 @@ export default function Hero() {
           backgroundPosition: 'center',
         }}
       >
-        <video
-          className="w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-        >
-          <source src="/amsterdam.webm" type="video/webm" />
-          <source src="/amsterdam.mp4" type="video/mp4" />
-        </video>
+        <HeroVideo />
       </div>
 
       {/* Scrim — donkere canal-night tint voor leesbaarheid */}
