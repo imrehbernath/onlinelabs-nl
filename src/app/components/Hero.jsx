@@ -1,8 +1,11 @@
 import Link from 'next/link';
 
 /* OnlineLabs — filmische Amsterdam-videoheader.
-   Full-bleed timelapse, donkere canal-night scrim, tekst links uitgelijnd
-   en verticaal gecentreerd, 100vh. Trustregel onderaan de video. */
+   Full-bleed timelapse, donkere canal-night scrim, tekst links uitgelijnd.
+   Hoogte GECAPT (max 900px) en content via padding i.p.v. flex-center: crawlers
+   (GSC WRS / Screaming Frog) rekken de viewport na het laden op tot ~8192px om
+   lazy content te laden. Met 100vh + flex-center zou de H1 dan ~3800px omlaag
+   zakken -> alleen de vaste nav + zwart zichtbaar in het screenshot. */
 export default function Hero() {
   const MONO = 'var(--font-space-mono), ui-monospace, monospace';
   const trust = ['Amsterdam', 'sinds 2008', 'Google Partner', '5★ Google Reviews'];
@@ -13,7 +16,7 @@ export default function Hero() {
   );
 
   return (
-    <header className="relative flex items-center overflow-hidden min-h-screen bg-[#0a1a2b] text-[#f4f1ea]">
+    <header className="relative overflow-hidden min-h-[clamp(680px,100svh,900px)] bg-[#0a1a2b] text-[#f4f1ea]">
       <style>{`
         /* Hero-content is ALTIJD zichtbaar (opacity:1). Alleen een transform-rise als
            entree — géén opacity:0-startstaat. Die zorgde dat Googlebot (en DebugBear)
@@ -72,7 +75,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-[1]" aria-hidden="true" style={{ background: 'rgba(7,20,32,0.28)' }} />
 
       {/* Content */}
-      <div className="relative z-[2] w-full max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 pt-24 pb-[clamp(80px,14vh,140px)]">
+      <div className="relative z-[2] w-full max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 pt-[clamp(112px,16vh,190px)] pb-[clamp(80px,14vh,140px)]">
         <h1
           className="hero-rise hero-rise-2 font-serif font-semibold tracking-[-0.015em] max-w-[20ch] mb-[1.7rem]"
           style={{ fontSize: 'clamp(2.1rem, 4.7vw, 3.95rem)', lineHeight: 1.06 }}
