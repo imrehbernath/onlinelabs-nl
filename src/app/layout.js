@@ -11,6 +11,7 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
+  preload: false, // alleen fallback voor Metropolis — rendert nooit als primair, dus niet preloaden
 });
 
 // Playfair Display - Google Font (serif voor headers)
@@ -18,7 +19,7 @@ const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['400', '600', '700'], // 500/800/900 nergens gebruikt (geen font-medium/extrabold/black op serif)
 });
 
 // Space Mono - Google Font (mono labels / "soul" details: trust tags, eyebrows, pill)
@@ -27,6 +28,7 @@ const spaceMono = Space_Mono({
   variable: '--font-space-mono',
   display: 'swap',
   weight: ['400', '700'],
+  preload: false, // decoratieve labels/eyebrows — niet kritisch above the fold, dus niet preloaden
 });
 
 // Metropolis - Local Font (primary sans-serif)
