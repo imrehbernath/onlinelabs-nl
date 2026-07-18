@@ -133,11 +133,11 @@ body {
         /* Hero-content is ALTIJD zichtbaar (opacity:1). Alleen een transform-rise als
            entree — géén opacity:0-startstaat. Die zorgde dat Googlebot (en DebugBear)
            de hero zwart/leeg renderden: de screenshot valt vóór de animatie klaar is. */
-        @keyframes hero-rise-up {
-          from { transform: translateY(24px); }
-          to   { transform: translateY(0); }
-        }
-        .hero-rise { animation: hero-rise-up 1s cubic-bezier(.2,.7,.3,1) both; }
+        /* Content statisch: een verticale rise oogt als een layout shift (CLS-gevoel)
+           en een opacity:0-start liet crawlers de hero leeg/zwart renderen. Geen
+           animatie op content -> optimaal voor LCP en crawler-safe. Beweging zit in
+           de ambient-laag (de cinematische videoheader). */
+        .hero-rise { animation: none; transform: none; opacity: 1; }
         .hero-rise-1 { animation-delay: .30s; }
         .hero-rise-2 { animation-delay: .55s; }
         .hero-rise-3 { animation-delay: .75s; }

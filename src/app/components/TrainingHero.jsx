@@ -100,16 +100,11 @@ export default function TrainingHero({
           animation-delay: -10s;
         }
 
-        /* Staggered reveal */
+        /* Content statisch, direct zichtbaar: geen opacity:0/translate op content
+           (oogt als CLS + crawler-leeg-risico). Leven: orbs, glow, accentlijn. */
         .training-reveal {
-          opacity: 0;
-          transform: translateY(30px);
-          transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
-                      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .training-reveal.visible {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
 
         /* Badge pulse glow */
@@ -134,15 +129,10 @@ export default function TrainingHero({
           animation: line-expand 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* USP items */
+        /* USP items statisch */
         .usp-item {
-          opacity: 0;
-          transform: translateY(10px);
-          transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
-        .usp-item.visible {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
 
         /* Floating effect for media - matching Hero.jsx */

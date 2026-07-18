@@ -172,7 +172,10 @@ export default function ServiceHero({
 
         /* Staggered reveal - direct bij page load */
         .service-hero-reveal {
-          animation: service-hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+          /* statisch: geen rise (oogt als CLS), direct zichtbaar voor LCP + crawlers.
+             Leven komt van de zwevende orbs + badge-glow. */
+          animation: none;
+          transform: none;
         }
         
         .service-hero-reveal-0 { animation-delay: 0s; }

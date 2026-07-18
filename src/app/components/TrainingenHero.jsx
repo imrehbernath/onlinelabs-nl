@@ -47,35 +47,23 @@ export default function TrainingenHero() {
         }
 
         /* Staggered reveal */
+        /* Content statisch, direct zichtbaar: geen opacity:0/translate op content.
+           Een rise/slide oogt als CLS en een opacity:0-start liet crawlers de hero
+           leeg renderen. Beweging blijft in de ambient-laag (orbs, glow, accentlijn). */
         .trainingen-reveal {
-          opacity: 0;
-          transform: translateY(30px);
-          transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
-                      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .trainingen-reveal.visible {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
 
         /* Checkmark items */
         .check-item {
-          opacity: 0;
-          transform: translateX(-20px);
-          transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
-        .check-item.visible {
           opacity: 1;
-          transform: translateX(0);
+          transform: none;
         }
 
-        /* Check icon pop */
+        /* Check icon statisch */
         .check-icon {
-          transform: scale(0);
-          transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .check-item.visible .check-icon {
-          transform: scale(1);
+          transform: none;
         }
 
         /* Badge pulse glow */

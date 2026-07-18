@@ -46,32 +46,20 @@ export default function ContactHero() {
           animation-delay: -10s;
         }
 
-        /* Staggered reveal */
-        /* opacity blijft 1 (Googlebot-safe) — alleen een transform-rise als reveal */
+        /* Content statisch: geen rise (oogt als CLS), direct zichtbaar voor LCP + crawlers.
+           Leven komt van de orbs, badge-glow en de accentlijn. */
         .contact-reveal {
-          transform: translateY(30px);
-          transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .contact-reveal.visible {
-          transform: translateY(0);
+          transform: none;
         }
 
         /* Checkmark items */
         .check-item {
-          transform: translateX(-20px);
-          transition: transform 0.5s ease-out;
-        }
-        .check-item.visible {
-          transform: translateX(0);
+          transform: none;
         }
 
-        /* Check icon pop */
+        /* Check icon statisch */
         .check-icon {
-          transform: scale(0);
-          transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .check-item.visible .check-icon {
-          transform: scale(1);
+          transform: none;
         }
 
         /* Badge pulse glow */
