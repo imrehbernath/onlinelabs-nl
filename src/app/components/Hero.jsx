@@ -33,25 +33,19 @@ export default function Hero() {
         }
       `}</style>
 
-      {/* Video met stilstaand Amsterdam-beeld als CSS-achtergrond eronder (fallback voor
-          Googlebot, geblokkeerde autoplay en het laadmoment — echte bezoekers zien de video). */}
-      <div
-        className="absolute inset-0 z-0"
-        aria-hidden="true"
-        style={{
-          backgroundImage: 'url(/Amsterdam.webp)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
+      {/* Video — WebM eerst (open codec: Googlebot/Screaming Frog kunnen dit
+          renderen), mp4 als fallback voor Safari. */}
+      <div className="absolute inset-0 z-0" aria-hidden="true">
         <video
           className="w-full h-full object-cover"
-          src="/amsterdam.mp4"
           autoPlay
           muted
           loop
           playsInline
-        />
+        >
+          <source src="/amsterdam.webm" type="video/webm" />
+          <source src="/amsterdam.mp4" type="video/mp4" />
+        </video>
       </div>
 
       {/* Scrim — donkere canal-night tint voor leesbaarheid */}
