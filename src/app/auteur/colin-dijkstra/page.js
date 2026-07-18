@@ -184,7 +184,7 @@ export default async function ColinAuthorPage() {
   };
 
   return (
-    <main>
+    <div>
       {/* Structured Data */}
       <script
         type="application/ld+json"
@@ -385,7 +385,7 @@ export default async function ColinAuthorPage() {
           )}
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

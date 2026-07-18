@@ -190,7 +190,7 @@ export default async function OverOnsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(overOnsSchema) }}
       />
 
-      <main>
+      <div>
         {/* Hero Section */}
         <AboutHero 
           title={heroSection.title || 'Over OnlineLabs: Innovatie, betrouwbaarheid en maatwerk'}
@@ -267,7 +267,7 @@ export default async function OverOnsPage() {
           buttonText="Neem contact op"
           buttonUrl="/contact"
         />
-      </main>
+      </div>
     </>
   );
 }

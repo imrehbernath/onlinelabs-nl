@@ -205,7 +205,7 @@ export default async function CaseDetailPage({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudySchema) }}
       />
 
-      <main>
+      <div>
         {/* Hero Section */}
         <CaseHero caseData={caseData} />
 
@@ -233,7 +233,7 @@ export default async function CaseDetailPage({ params }) {
           secondaryButton={{ text: "Bekijk onze skills", url: "/skills" }}
           variant="primary"
         />
-      </main>
+      </div>
     </>
   );
 }

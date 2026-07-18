@@ -131,7 +131,7 @@ export default async function BlogOverview() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
       />
 
-      <main>
+      <div>
         {/* Hero Section - Matching ServiceHero style */}
         <section className="relative bg-gradient-to-b from-gray-50 to-white pt-24 sm:pt-28 pb-12 sm:pb-16 lg:pb-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
@@ -170,7 +170,7 @@ export default async function BlogOverview() {
           buttonText="Naar contact"
           buttonUrl="/contact"
         />
-      </main>
+      </div>
     </>
   );
 }

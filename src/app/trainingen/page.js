@@ -134,7 +134,7 @@ export default async function TrainingenPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(trainingenSchema) }}
       />
 
-      <main>
+      <div>
         {/* Hero Section */}
         <TrainingenHero />
         
@@ -159,7 +159,7 @@ export default async function TrainingenPage() {
           secondaryButton={{ text: "Bekijk ons werk", url: "/ons-werk" }}
           variant="primary"
         />
-      </main>
+      </div>
     </>
   );
 }

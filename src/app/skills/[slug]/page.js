@@ -410,7 +410,7 @@ export default async function ServiceDetailPage({ params }) {
   };
 
   return (
-    <main>
+    <div>
       {/* Hero Section */}
       <ServiceHero 
         title={heroData.title}
@@ -681,6 +681,6 @@ export default async function ServiceDetailPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-    </main>
+    </div>
   );
 }

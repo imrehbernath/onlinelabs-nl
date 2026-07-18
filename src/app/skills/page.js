@@ -145,7 +145,7 @@ export default async function SkillsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(skillsSchema) }}
       />
 
-      <main>
+      <div>
         {/* Hero Section */}
         <SkillsHero />
         
@@ -170,7 +170,7 @@ export default async function SkillsPage() {
           secondaryButton={{ text: "Bekijk ons werk", url: "/ons-werk" }}
           variant="primary"
         />
-      </main>
+      </div>
     </>
   );
 }

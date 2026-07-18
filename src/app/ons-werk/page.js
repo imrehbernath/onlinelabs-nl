@@ -213,7 +213,7 @@ export default async function OnsWerkPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(onsWerkSchema) }}
       />
 
-      <main>
+      <div>
         {/* Hero Section - White background */}
         <section className="relative bg-gradient-to-b from-gray-50 to-white pt-24 sm:pt-28 pb-12 sm:pb-16 lg:pb-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
@@ -306,7 +306,7 @@ export default async function OnsWerkPage() {
           buttonText="Neem contact op"
           buttonUrl="/contact"
         />
-      </main>
+      </div>
     </>
   );
 }

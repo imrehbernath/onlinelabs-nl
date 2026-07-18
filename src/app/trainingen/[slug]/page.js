@@ -208,7 +208,7 @@ export default async function TrainingDetailPage({ params }) {
   };
 
   return (
-    <main>
+    <div>
       {/* Hero Section */}
       <TrainingHero
         badge={heroData.badge}
@@ -315,6 +315,6 @@ export default async function TrainingDetailPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-    </main>
+    </div>
   );
 }

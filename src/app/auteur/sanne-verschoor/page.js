@@ -183,7 +183,7 @@ export default async function SanneAuthorPage() {
   };
 
   return (
-    <main>
+    <div>
       {/* Structured Data */}
       <script
         type="application/ld+json"
@@ -384,7 +384,7 @@ export default async function SanneAuthorPage() {
           )}
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

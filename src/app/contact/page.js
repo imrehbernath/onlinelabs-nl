@@ -127,7 +127,7 @@ export default async function ContactPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
       />
 
-      <main>
+      <div>
         {/* Hero Section */}
         <ContactHero />
 
@@ -144,7 +144,7 @@ export default async function ContactPage() {
 
         {/* Testimonials - Social proof before contact */}
         <TestimonialsSection testimonials={testimonials} />
-      </main>
+      </div>
     </>
   );
 }

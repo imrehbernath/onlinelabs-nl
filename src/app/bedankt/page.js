@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function BedanktPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <section className="pt-32 sm:pt-40 pb-20 lg:pb-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl text-center">
           
@@ -87,6 +87,6 @@ export default function BedanktPage() {
 
         </div>
       </section>
-    </main>
+    </div>
   );
 }

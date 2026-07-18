@@ -67,7 +67,7 @@ export default function AlgemeneVoorwaardenPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(algemeeneVoorwaardenSchema) }}
       />
 
-      <main className="pt-24 sm:pt-28 pb-16 lg:pb-24">
+      <div className="pt-24 sm:pt-28 pb-16 lg:pb-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           
           {/* Header */}
@@ -319,7 +319,7 @@ export default function AlgemeneVoorwaardenPage() {
 
           </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }

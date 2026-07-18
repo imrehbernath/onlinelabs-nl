@@ -171,7 +171,7 @@ export default async function Home() {
         />
       )}
 
-      <main>
+      <div>
         {/* Hero Section - Hardcoded nieuwe positionering */}
         <Hero />
 
@@ -230,7 +230,7 @@ export default async function Home() {
         />
 
         {/* Footer volgt direct na Testimonials - geen extra CTA meer */}
-      </main>
+      </div>
     </>
   );
 }
