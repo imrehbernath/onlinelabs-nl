@@ -46,7 +46,6 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: ['lucide-react'],
-    inlineCss: true,
   },
 
   // 301 Redirects - Comprehensive migration from old to new URLs
