@@ -46,7 +46,19 @@ export default function Hero() {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
-      />{/* TEST: video tijdelijk verwijderd, alleen still-achtergrond */}
+      >
+        <video
+          className="w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        >
+          <source src="/amsterdam.webm" type="video/webm" />
+          <source src="/amsterdam.mp4" type="video/mp4" />
+        </video>
+      </div>
 
       {/* Scrim — donkere canal-night tint voor leesbaarheid */}
       <div
