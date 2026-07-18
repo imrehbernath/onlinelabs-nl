@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import HeroVideo from './HeroVideo';
 
 /* OnlineLabs — filmische Amsterdam-videoheader.
    Full-bleed timelapse, donkere canal-night scrim, tekst links uitgelijnd
@@ -43,13 +42,11 @@ export default function Hero() {
         className="absolute inset-0 z-0"
         aria-hidden="true"
         style={{
-          backgroundImage: 'url(/amsterdam-poster.webp)',
+          backgroundImage: 'url(https://cdn.onlinelabs.nl/wp-content/uploads/2026/07/amsterdam-poster.webp)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
-      >
-        <HeroVideo />
-      </div>
+      />{/* TEST: video tijdelijk verwijderd, alleen still-achtergrond */}
 
       {/* Scrim — donkere canal-night tint voor leesbaarheid */}
       <div
