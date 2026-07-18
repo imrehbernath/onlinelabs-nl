@@ -15,11 +15,14 @@ export default function Hero() {
   return (
     <header className="relative flex items-center overflow-hidden min-h-[100svh] bg-[#0a1a2b] text-[#f4f1ea]">
       <style>{`
-        @keyframes hero-fade-up {
-          from { opacity: 0; transform: translateY(26px); }
-          to   { opacity: 1; transform: translateY(0); }
+        /* Hero-content is ALTIJD zichtbaar (opacity:1). Alleen een transform-rise als
+           entree — géén opacity:0-startstaat. Die zorgde dat Googlebot (en DebugBear)
+           de hero zwart/leeg renderden: de screenshot valt vóór de animatie klaar is. */
+        @keyframes hero-rise-up {
+          from { transform: translateY(24px); }
+          to   { transform: translateY(0); }
         }
-        .hero-rise { opacity: 0; animation: hero-fade-up 1.1s cubic-bezier(.2,.7,.3,1) forwards; }
+        .hero-rise { animation: hero-rise-up 1s cubic-bezier(.2,.7,.3,1) both; }
         .hero-rise-1 { animation-delay: .30s; }
         .hero-rise-2 { animation-delay: .55s; }
         .hero-rise-3 { animation-delay: .75s; }

@@ -163,21 +163,16 @@ export default function ServiceHero({
     <>
       <style>{`
         /* ===== CSS-ONLY REVEAL ANIMATIES (geen JS/hydration nodig) ===== */
-        @keyframes service-hero-fade-up {
-          from {
-            opacity: 0;
-            transform: translateY(25px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        /* Content-reveal: opacity blijft 1 — anders rendert Googlebot de hero leeg,
+           net als bij de homepage-hero. Alleen een transform-rise als entree. */
+        @keyframes service-hero-rise {
+          from { transform: translateY(22px); }
+          to   { transform: translateY(0); }
         }
 
         /* Staggered reveal - direct bij page load */
         .service-hero-reveal {
-          opacity: 0;
-          animation: service-hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: service-hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         
         .service-hero-reveal-0 { animation-delay: 0s; }

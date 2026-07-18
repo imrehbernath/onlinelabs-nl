@@ -47,25 +47,21 @@ export default function ContactHero() {
         }
 
         /* Staggered reveal */
+        /* opacity blijft 1 (Googlebot-safe) — alleen een transform-rise als reveal */
         .contact-reveal {
-          opacity: 0;
           transform: translateY(30px);
-          transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
-                      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .contact-reveal.visible {
-          opacity: 1;
           transform: translateY(0);
         }
 
         /* Checkmark items */
         .check-item {
-          opacity: 0;
           transform: translateX(-20px);
-          transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+          transition: transform 0.5s ease-out;
         }
         .check-item.visible {
-          opacity: 1;
           transform: translateX(0);
         }
 
