@@ -13,7 +13,7 @@ export default function Hero() {
   );
 
   return (
-    <header className="relative flex items-center overflow-hidden min-h-[100svh] bg-[#0a1a2b] text-[#f4f1ea]">
+    <header className="relative flex items-center overflow-hidden min-h-screen bg-[#0a1a2b] text-[#f4f1ea]">
       <style>{`
         /* Hero-content is ALTIJD zichtbaar (opacity:1). Alleen een transform-rise als
            entree — géén opacity:0-startstaat. Die zorgde dat Googlebot (en DebugBear)
