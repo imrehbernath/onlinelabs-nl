@@ -33,15 +33,27 @@ export default function Hero() {
         }
       `}</style>
 
-      {/* Video — WebM eerst (open codec: Googlebot/Screaming Frog kunnen dit
-          renderen), mp4 als fallback voor Safari. */}
-      <div className="absolute inset-0 z-0" aria-hidden="true">
+      {/* Video met eerste-frame als still-achtergrond: die rendert ALTIJD (plain
+          CSS-image, geen codec/decodering nodig), dus Googlebot/GSC/Screaming Frog
+          zien nooit zwart — ook niet als de video niet decodeert of laadt. De still
+          is frame 0 van de video, dus naadloos: geen verspringing als de video start.
+          WebM eerst (open codec), mp4 als fallback voor Safari. */}
+      <div
+        className="absolute inset-0 z-0"
+        aria-hidden="true"
+        style={{
+          backgroundImage: 'url(/amsterdam-poster.webp)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
         <video
           className="w-full h-full object-cover"
           autoPlay
           muted
           loop
           playsInline
+          preload="metadata"
         >
           <source src="/amsterdam.webm" type="video/webm" />
           <source src="/amsterdam.mp4" type="video/mp4" />
