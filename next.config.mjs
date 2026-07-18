@@ -163,11 +163,50 @@ const nextConfig = {
       },
 
       // ============================================
-      // MISC REDIRECTS
+      // AI-TOOLS → TEUN.AI (tools verhuisd naar teun.ai/tools/ai-visibility)
       // ============================================
       {
         source: '/ai-tools',
-        destination: '/skills/geo-optimalisatie',
+        destination: 'https://teun.ai/tools/ai-visibility',
+        permanent: true,
+      },
+      {
+        source: '/ai-tools/geo-optimalisatie-tool',
+        destination: 'https://teun.ai/tools/ai-visibility',
+        permanent: true,
+      },
+      {
+        source: '/ai-tools/ai-zichtbaarheidsanalyse-tool',
+        destination: 'https://teun.ai/tools/ai-visibility',
+        permanent: true,
+      },
+
+      // ============================================
+      // GSC BROKEN URLS (Search Console export, juli 2026)
+      // ============================================
+      {
+        source: '/zichtbaar-worden-in-chatgpt',
+        destination: '/blog/zichtbaar-worden-in-chatgpt',
+        permanent: true,
+      },
+      {
+        source: '/on-page-seo-factoren',
+        destination: '/blog/on-page-seo-factoren',
+        permanent: true,
+      },
+      {
+        source: '/ons-werk/tubble',
+        destination: '/ons-werk',
+        permanent: true,
+      },
+      {
+        source: '/ons-werk/contactcare',
+        destination: '/ons-werk',
+        permanent: true,
+      },
+      {
+        source: '/sitemap',
+        destination: '/sitemap.xml',
         permanent: true,
       },
 
