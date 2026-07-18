@@ -17,24 +17,6 @@ export default function Hero() {
 
   return (
     <header className="relative overflow-hidden min-h-[clamp(680px,100svh,900px)] bg-[#0a1a2b] text-[#f4f1ea]">
-      <style>{`
-        /* Hero-content is ALTIJD zichtbaar (opacity:1). Alleen een transform-rise als
-           entree — géén opacity:0-startstaat. Die zorgde dat Googlebot (en DebugBear)
-           de hero zwart/leeg renderden: de screenshot valt vóór de animatie klaar is. */
-        @keyframes hero-rise-up {
-          from { transform: translateY(24px); }
-          to   { transform: translateY(0); }
-        }
-        .hero-rise { animation: hero-rise-up 1s cubic-bezier(.2,.7,.3,1) both; }
-        .hero-rise-1 { animation-delay: .30s; }
-        .hero-rise-2 { animation-delay: .55s; }
-        .hero-rise-3 { animation-delay: .75s; }
-        .hero-rise-4 { animation-delay: .95s; }
-        .hero-rise-5 { animation-delay: 1.2s; }
-        @media (prefers-reduced-motion: reduce) {
-          .hero-rise { opacity: 1; animation: none; transform: none; }
-        }
-      `}</style>
 
       {/* Video met eerste-frame als still-achtergrond: die rendert ALTIJD (plain
           CSS-image, geen codec/decodering nodig), dus Googlebot/GSC/Screaming Frog
