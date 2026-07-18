@@ -382,6 +382,8 @@ export default function TextImageSection({
                   >
                     <source data-src={video.webm} type="video/webm" />
                     <source data-src={video.mp4} type="video/mp4" />
+                    {/* Decoratieve, geluidloze video -> lege captions-track zodat a11y-audit (video-caption) slaagt */}
+                    <track kind="captions" srcLang="nl" label="Nederlands" src="/decorative-video.vtt" />
                   </video>
                 </div>
               )}

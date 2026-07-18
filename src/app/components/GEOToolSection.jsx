@@ -117,7 +117,7 @@ export default function GEOToolSection({ background = 'beige' }) {
         {/* Header */}
         <div className="text-center mb-12">
           <span 
-            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-[#376eb5] mb-6"
+            className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-[#2d5a94] mb-6"
             style={{ backgroundColor: 'rgba(55, 110, 181, 0.1)' }}
           >
             Gratis AI Visibility Check
@@ -191,7 +191,7 @@ export default function GEOToolSection({ background = 'beige' }) {
                       {keywordTags.length} zoekwoorden opgehaald
                     </p>
                   ) : (
-                    <p className="text-sm text-gray-400 mt-1.5">Je URL zorgt voor betere zoekwoorden en prompts</p>
+                    <p className="text-sm text-gray-500 mt-1.5">Je URL zorgt voor betere zoekwoorden en prompts</p>
                   )}
                 </div>
               </div>
@@ -258,7 +258,7 @@ export default function GEOToolSection({ background = 'beige' }) {
                 >
                   <span>⚙️</span>
                   <span className="font-medium">Geavanceerde instellingen</span>
-                  <span className="text-gray-400 text-sm">{showAdvanced ? '▼' : '▶'}</span>
+                  <span className="text-gray-500 text-sm">{showAdvanced ? '▼' : '▶'}</span>
                 </button>
 
                 {showAdvanced && (
