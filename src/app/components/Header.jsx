@@ -207,8 +207,11 @@ export default function Header({ services = [] }) {
           BUITEN de header omdat backdrop-filter op de header een containing block
           maakt voor fixed children (anders wordt de overlay tot de balk afgekapt). */}
       <div
-        className={`min-[1080px]:hidden fixed inset-0 z-40 flex flex-col gap-1 px-6 pt-24 pb-8 overflow-y-auto transition-transform duration-500 ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        aria-hidden={!isMobileMenuOpen}
+        className={`min-[1080px]:hidden fixed inset-0 z-40 flex flex-col gap-1 px-6 pt-24 pb-8 overflow-y-auto transition-all duration-500 ${
+          isMobileMenuOpen
+            ? 'translate-x-0 opacity-100 visible'
+            : 'translate-x-full opacity-0 invisible pointer-events-none'
         }`}
         style={{ backgroundColor: '#071420' }}
       >
