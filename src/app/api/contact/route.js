@@ -1,7 +1,136 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
+import { checkBotId } from 'botid/server';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+// ============================================
+// ANTI-SPAM
+// Alle checks lopen vóór het versturen van mail. Bezoekers zien nooit een
+// challenge, checkbox of extra stap — dit is volledig serverside + onzichtbaar.
+// ============================================
+
+const ALLOWED_HOSTS = ['onlinelabs.nl', 'www.onlinelabs.nl'];
+const MIN_FILL_MS = 3000; // sneller ingevuld dan 3s = geen mens
+const MAX_FORM_AGE_MS = 2 * 60 * 60 * 1000; // ouder dan 2 uur = gescraped/replay
+const URL_PATTERN = /https?:\/\//i;
+
+function hostnameFrom(value) {
+  if (!value) return null;
+  try {
+    return new URL(value).hostname.toLowerCase();
+  } catch {
+    return null;
+  }
+}
+
+function isAllowedHost(hostname) {
+  if (!hostname) return false;
+  if (ALLOWED_HOSTS.includes(hostname)) return true;
+  // Preview deploys mogen posten, productie blijft strikt
+  if (process.env.VERCEL_ENV !== 'production' && hostname.endsWith('.vercel.app')) return true;
+  // Lokale development
+  if (process.env.NODE_ENV !== 'production' && ['localhost', '127.0.0.1', '[::1]'].includes(hostname)) return true;
+  return false;
+}
+
+// Browsers sturen bij een POST altijd een Origin; Referer is de fallback.
+// Bots die rechtstreeks JSON posten hebben doorgaans geen van beide.
+function hasTrustedOrigin(request) {
+  const origin = hostnameFrom(request.headers.get('origin'));
+  if (origin) return isAllowedHost(origin);
+
+  const referer = hostnameFrom(request.headers.get('referer'));
+  if (referer) return isAllowedHost(referer);
+
+  return false;
+}
+
+function vowelRatio(value) {
+  const letters = value.replace(/[^\p{L}]/gu, '');
+  if (!letters.length) return 0;
+  const vowels = letters.match(/[aeiouyàáâäãåèéêëìíîïòóôöõùúûüýÿ]/giu);
+  return (vowels ? vowels.length : 0) / letters.length;
+}
+
+// "iVCsXuthlulZlrJg" → random string. "Schmidt" of "Imre" → gewoon een naam.
+function looksLikeRandomString(name) {
+  if (name.length < 8) return false; // korte namen nooit flaggen
+  if (/\s/.test(name)) return false; // meerdere woorden = echte naam
+  return vowelRatio(name) < 0.2;
+}
+
+function spamSignals({ name, message, interests }) {
+  const hard = []; // elk signaal apart genoeg om te weigeren
+  const soft = []; // pas weigeren bij twee of meer
+
+  const interestCount = Array.isArray(interests) ? interests.length : 0;
+  if (interestCount > 6) hard.push(`${interestCount} interesses aangevinkt (max 6)`);
+  else if (interestCount >= 5) soft.push(`${interestCount} interesses aangevinkt`);
+
+  const cleanName = (name || '').trim();
+  const cleanMessage = (message || '').trim();
+
+  if (!cleanMessage) soft.push('geen bericht ingevuld');
+  else if (cleanMessage.length < 10) hard.push(`bericht is ${cleanMessage.length} tekens (min 10)`);
+  else if (!/\s/.test(cleanMessage)) hard.push('bericht bevat geen enkele spatie');
+
+  if (looksLikeRandomString(cleanName)) {
+    hard.push(`naam lijkt een random string (${Math.round(vowelRatio(cleanName) * 100)}% klinkers, geen spatie)`);
+  }
+
+  if (URL_PATTERN.test(cleanName)) hard.push('naam bevat een URL');
+  if (URL_PATTERN.test(cleanMessage)) hard.push('bericht bevat een URL');
+
+  return { hard, soft };
+}
+
+function describeBotId(check) {
+  if (!check) return 'niet uitgevoerd (check mislukt)';
+  if (check.bypassed) return 'bypassed (development)';
+  if (check.isVerifiedBot) return `verified bot doorgelaten${check.verifiedBotName ? ` — ${check.verifiedBotName}` : ''}`;
+  if (check.isBot) return 'bot';
+  if (check.isHuman) return 'mens';
+  return 'onbekend';
+}
+
+// Geweigerde submits gaan naar Slack (nooit naar de mail), zodat een false
+// positive zichtbaar blijft en de regels bij te stellen zijn.
+async function sendSpamAlert({ reasons, payload, botId }) {
+  console.warn('🚫 Contactformulier geweigerd:', reasons.join(' | '), JSON.stringify(payload));
+
+  const webhookUrl = process.env.SLACK_WEBHOOK_URL;
+  if (!webhookUrl) return;
+
+  try {
+    const interests = Array.isArray(payload.interests) ? payload.interests : [];
+    const text = [
+      '🚫 *Contactaanvraag geblokkeerd (mogelijke spam)*',
+      `*Reden:* ${reasons.join(' · ')}`,
+      `*BotID:* ${botId}`,
+      '',
+      '_Volledige inhoud:_',
+      `*Naam:* ${payload.name || '(leeg)'}`,
+      `*Email:* ${payload.email || '(leeg)'}`,
+      `*Telefoon:* ${payload.phone || '(leeg)'}`,
+      `*Website:* ${payload.website || '(leeg)'}`,
+      `*Interesses (${interests.length}):* ${interests.length ? interests.join(', ') : '(geen)'}`,
+      `*Bericht:* ${payload.message || '(leeg)'}`,
+      '',
+      '_Onterecht geblokkeerd? Dan staan de regels te streng — laat het weten._',
+    ].join('\n');
+
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+
+    if (!response.ok) console.error('❌ Slack spam-alert mislukt: ' + response.status);
+  } catch (error) {
+    console.error('❌ Slack spam-alert error:', error);
+  }
+}
 
 // ✅ Slack notificatie functie
 async function sendSlackNotification(contactData) {
@@ -274,15 +403,82 @@ async function handleCalculatorSubmission(data) {
 
 export async function POST(request) {
   try {
+    // ---- Anti-spam: origin ----
+    if (!hasTrustedOrigin(request)) {
+      console.warn(
+        '🚫 Aanvraag geweigerd: origin niet toegestaan',
+        `origin=${request.headers.get('origin') || '-'}`,
+        `referer=${request.headers.get('referer') || '-'}`
+      );
+      return NextResponse.json({ error: 'Verzoek geweigerd' }, { status: 403 });
+    }
+
+    // ---- Anti-spam: Vercel BotID ----
+    // Faalt de check zelf (netwerk, config), dan laten we de submit door:
+    // een gemiste lead is erger dan een doorgelaten spamsubmit.
+    let botCheck = null;
+    try {
+      botCheck = await checkBotId();
+    } catch (error) {
+      console.error('BotID check mislukt, submit wordt doorgelaten:', error);
+    }
+
+    // Verified bots (zoekmachine crawlers) blokkeren we niet
+    if (botCheck?.isBot && !botCheck.isVerifiedBot) {
+      console.warn('🚫 Aanvraag geweigerd: BotID markeert dit verzoek als bot');
+      return NextResponse.json({ error: 'Verzoek geweigerd' }, { status: 403 });
+    }
+
+    const botIdResult = describeBotId(botCheck);
+
     const body = await request.json();
-    
+
     // Check if this is a calculator submission
     if (body.type === 'calculator') {
       return handleCalculatorSubmission(body);
     }
-    
+
     // Regular contact form
     const { name, email, phone, website, message, interests } = body;
+
+    // ---- Anti-spam: honeypot, tijdslot en heuristiek ----
+    const reasons = [];
+    let elapsedMs = null;
+
+    // Alleen bots vullen dit veld in — het is onzichtbaar en niet tabbaar
+    if (typeof body.company_website === 'string' && body.company_website.trim()) {
+      reasons.push('honeypot-veld ingevuld');
+    }
+
+    const renderedAt = Number(body.form_rendered_at);
+    if (!Number.isFinite(renderedAt) || renderedAt <= 0) {
+      reasons.push('render-timestamp ontbreekt');
+    } else {
+      elapsedMs = Date.now() - renderedAt;
+      if (elapsedMs < MIN_FILL_MS) {
+        reasons.push(`in ${Math.max(0, Math.round(elapsedMs / 100) / 10)}s ingevuld (min 3s)`);
+      } else if (elapsedMs > MAX_FORM_AGE_MS) {
+        reasons.push(`formulier was ${Math.round(elapsedMs / 60000)} min oud (max 120)`);
+      }
+    }
+
+    const { hard, soft } = spamSignals({ name, message, interests });
+    reasons.push(...hard);
+    if (soft.length >= 2) reasons.push(...soft);
+
+    if (reasons.length > 0) {
+      await sendSpamAlert({
+        reasons,
+        payload: { name, email, phone, website, message, interests },
+        botId: botIdResult,
+      });
+
+      // Zelfde nette succesrespons als een echte submit: geen hint voor de bot
+      return NextResponse.json(
+        { success: true, message: 'Bericht succesvol verstuurd' },
+        { status: 200 }
+      );
+    }
 
     // Validation
     if (!name || !email) {
@@ -298,6 +494,8 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+
+    const fillTime = elapsedMs === null ? '' : ` · ingevuld in ${Math.round(elapsedMs / 1000)}s`;
 
     const dateTime = new Date().toLocaleString('nl-NL', {
       dateStyle: 'full',
@@ -378,6 +576,7 @@ export async function POST(request) {
               
               <div class="footer">
                 <p>Via het contactformulier op onlinelabs.nl</p>
+                <p>Spamchecks doorstaan · BotID: ${botIdResult}${fillTime}</p>
                 <p>Klik reply om direct te antwoorden naar ${email}</p>
               </div>
             </div>

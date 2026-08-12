@@ -71,6 +71,16 @@ function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(false);
 
+  // Anti-spam (onzichtbaar voor bezoekers): honeypot + moment van renderen.
+  // De timestamp wordt in een effect gezet zodat server- en client-render
+  // identiek zijn (geen hydration mismatch).
+  const [companyWebsite, setCompanyWebsite] = useState('');
+  const [renderedAt, setRenderedAt] = useState('');
+
+  useEffect(() => {
+    setRenderedAt(String(Date.now()));
+  }, []);
+
   // Diensten interests
   const serviceInterests = [
     { id: 'seo', label: 'SEO & vindbaarheid in Google' },
@@ -173,7 +183,9 @@ function ContactForm() {
           phone: trainingFormData.phone,
           website: '',
           message: fullMessage,
-          interests: [selectedTraining.label]
+          interests: [selectedTraining.label],
+          company_website: companyWebsite,
+          form_rendered_at: renderedAt
         }),
       });
 
@@ -212,7 +224,9 @@ function ContactForm() {
         },
         body: JSON.stringify({
           ...formData,
-          interests: selectedInterests
+          interests: selectedInterests,
+          company_website: companyWebsite,
+          form_rendered_at: renderedAt
         }),
       });
 
@@ -232,6 +246,28 @@ function ContactForm() {
     }
   };
 
+  // Verborgen anti-spamvelden. Buiten beeld via position absolute + opacity 0
+  // (géén display:none, dat slaan bots over), niet tabbaar en genegeerd door
+  // screenreaders. Nul layout-impact, dus geen CLS.
+  const antiSpamFields = (
+    <div
+      aria-hidden="true"
+      className="absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden opacity-0 pointer-events-none"
+    >
+      <label htmlFor="company_website">Company website</label>
+      <input
+        type="text"
+        id="company_website"
+        name="company_website"
+        value={companyWebsite}
+        onChange={(e) => setCompanyWebsite(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+      />
+      <input type="hidden" name="form_rendered_at" value={renderedAt} readOnly />
+    </div>
+  );
+
   // ============================================
   // TRAINING FORMULIER (als ?training= aanwezig)
   // ============================================
@@ -244,7 +280,7 @@ function ContactForm() {
             {/* Form Column */}
             <div className="lg:col-span-7">
               <form onSubmit={handleTrainingSubmit} className="space-y-6">
-                
+
                 {submitError && (
                   <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                     <p className="text-red-800">
@@ -501,6 +537,8 @@ function ContactForm() {
                     )}
                   </button>
                 </div>
+
+                {antiSpamFields}
               </form>
             </div>
 
@@ -591,7 +629,7 @@ function ContactForm() {
           {/* Form Column */}
           <div className="lg:col-span-7">
             <form onSubmit={handleSubmit} className="space-y-8">
-              
+
               {submitError && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                   <p className="text-red-800">
@@ -863,6 +901,8 @@ function ContactForm() {
                   We nemen meestal binnen 24 uur contact met je op
                 </p>
               </div>
+
+              {antiSpamFields}
             </form>
           </div>
 
