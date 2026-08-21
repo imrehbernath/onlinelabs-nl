@@ -71,6 +71,27 @@ const nextConfig = {
         destination: '/sitemap.xml',
         permanent: true,
       },
+      // WordPress RSS feeds (GSC crawl stats, 7x 404 sinds mei 2026)
+      {
+        source: '/feed',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/feed/:path*',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/comments/feed',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/blog/feed',
+        destination: '/blog',
+        permanent: true,
+      },
 
       // ============================================
       // VACATURE REDIRECTS
@@ -133,6 +154,23 @@ const nextConfig = {
       // ============================================
       // SKILLS - Service page redirects
       // ============================================
+      // Hoofdlettervariant (Ahrefs crawled pages, 404)
+      {
+        source: '/Skills',
+        destination: '/skills',
+        permanent: true,
+      },
+      // Afgekorte skill-URLs (GSC crawl stats, 5x 404 elk)
+      {
+        source: '/skills/conversie-optimalisatie',
+        destination: '/skills/conversie-optimalisatie-specialist',
+        permanent: true,
+      },
+      {
+        source: '/skills/website-snelheid',
+        destination: '/skills/website-snelheid-optimalisatie',
+        permanent: true,
+      },
       {
         source: '/skills/website-optimalisatie',
         destination: '/skills/website-snelheid-optimalisatie',
@@ -184,6 +222,20 @@ const nextConfig = {
       },
 
       // ============================================
+      // SEO-REVIEWS (oude reviewpagina's, Ahrefs crawled pages)
+      // ============================================
+      {
+        source: '/seo-reviews',
+        destination: '/over-ons',
+        permanent: true,
+      },
+      {
+        source: '/seo-reviews/:path*',
+        destination: '/over-ons',
+        permanent: true,
+      },
+
+      // ============================================
       // GSC BROKEN URLS (Search Console export, juli 2026)
       // ============================================
       {
@@ -207,8 +259,53 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/ons-werk/galliano',
+        destination: '/ons-werk',
+        permanent: true,
+      },
+      {
         source: '/sitemap',
         destination: '/sitemap.xml',
+        permanent: true,
+      },
+
+      // ============================================
+      // GSC BROKEN URLS (Crawlstatistieken export, augustus 2026)
+      // Blogslugs zonder /blog/-prefix
+      // ============================================
+      {
+        source: '/5-beste-wordpress-seo-plugins',
+        destination: '/blog/5-beste-wordpress-seo-plugins',
+        permanent: true,
+      },
+      {
+        source: '/kunstmatige-intelligentie-voor-seo',
+        destination: '/blog/kunstmatige-intelligentie-voor-seo',
+        permanent: true,
+      },
+      {
+        source: '/de-belangrijkste-webdesign-trends-van-2026-tips',
+        destination: '/blog/de-belangrijkste-webdesign-trends-van-2026-tips',
+        permanent: true,
+      },
+      {
+        source: '/wat-kost-een-website-laten-bouwen',
+        destination: '/blog/wat-kost-een-website-laten-bouwen',
+        permanent: true,
+      },
+      {
+        source: '/is-seo-nog-nodig-in-het-ai-tijdperk',
+        destination: '/blog/is-seo-nog-nodig-in-het-ai-tijdperk',
+        permanent: true,
+      },
+      {
+        source: '/website-migratie-checklist',
+        destination: '/blog/website-migratie-checklist',
+        permanent: true,
+      },
+      {
+        source: '/10-signalen-dat-je-nieuwe-website-nodig-hebt',
+        destination: '/blog/10-signalen-dat-je-nieuwe-website-nodig-hebt',
         permanent: true,
       },
 
