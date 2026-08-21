@@ -19,7 +19,7 @@ export default function Footer({ footerData }) {
       { title: 'SEO & vindbaarheid', url: '/skills/seo-specialist' },
       { title: 'GEO optimalisatie', url: '/skills/geo-optimalisatie' },
       { title: 'Online adverteren', url: '/skills/online-adverteren' },
-      { title: 'Webdesign & UX', url: '/skills/website-laten-maken' },
+      { title: 'Website laten maken', url: '/skills/website-laten-maken' },
       { title: 'Website snelheid', url: '/skills/website-snelheid-optimalisatie' },
       { title: 'Conversie optimalisatie', url: '/skills/conversie-optimalisatie-specialist' },
     ],
