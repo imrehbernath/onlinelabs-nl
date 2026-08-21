@@ -97,9 +97,6 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code-here',
-  },
 };
 
 export default async function RootLayout({ children }) {
