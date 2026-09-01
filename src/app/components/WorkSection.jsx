@@ -16,7 +16,7 @@ const cases = [
   {
     name: 'Grachtenmuseum',
     tags: 'Webdesign • SEO • content',
-    result: 'Nieuwe website en SEO voor het museum over de Amsterdamse grachten.',
+    result: 'Website en SEO voor het museum over de Amsterdamse grachten.',
     img: 'https://cdn.onlinelabs.nl/wp-content/uploads/2026/06/Rode-Salon_Grachtenmuseum_RebekkaMell.webp',
     alt: 'De Rode Salon van het Grachtenmuseum in Amsterdam',
     href: 'https://grachten.museum',
