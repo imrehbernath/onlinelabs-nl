@@ -362,7 +362,7 @@ export default async function SeoSpecialistPage() {
           <div className="story__media">
             <div style={{ position: 'relative', width: '100%', aspectRatio: '5 / 6', borderRadius: '16px', overflow: 'hidden' }}>
               <Image
-                src="https://cdn.onlinelabs.nl/wp-content/uploads/2025/04/11093106/Imre-Bernath-eigenaar-OnlineLabs.webp"
+                src="https://cdn.onlinelabs.nl/wp-content/uploads/2025/11/Imre-Bernath.webp"
                 alt="Imre Bernáth, SEO &amp; AI visibility specialist bij OnlineLabs"
                 fill
                 className="story__img"

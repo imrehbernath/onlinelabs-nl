@@ -154,12 +154,9 @@ const nextConfig = {
       // ============================================
       // SKILLS - Service page redirects
       // ============================================
-      // Hoofdlettervariant (Ahrefs crawled pages, 404)
-      {
-        source: '/Skills',
-        destination: '/skills',
-        permanent: true,
-      },
+      // LET OP: geen hoofdletter-variant zoals '/Skills' toevoegen. Next matcht
+      // redirect-sources hoofdletterongevoelig, dus '/Skills' vangt ook '/skills'
+      // af en maakt een 308-loop naar zichzelf.
       // Afgekorte skill-URLs (GSC crawl stats, 5x 404 elk)
       {
         source: '/skills/conversie-optimalisatie',

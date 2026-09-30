@@ -102,7 +102,7 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
           </div>
         `,
         image: {
-          sourceUrl: 'https://cdn.onlinelabs.nl/wp-content/uploads/2025/04/11093106/Imre-Bernath-eigenaar-OnlineLabs.webp',
+          sourceUrl: 'https://cdn.onlinelabs.nl/wp-content/uploads/2025/11/Imre-Bernath.webp',
           altText: 'Imre Bernáth - SEO & AI visibility specialist bij OnlineLabs Amsterdam'
         },
         imageCaption: 'Imre Bernáth – SEO & AI visibility specialist, <span style="color: #376eb5; font-weight: 600;">OnlineLabs</span>',
