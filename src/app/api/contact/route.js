@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 import { checkBotId } from 'botid/server';
+import { checkContactSubmission, isRateLimited } from '@/lib/spam-filter';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -8,12 +9,11 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // ANTI-SPAM
 // Alle checks lopen vóór het versturen van mail. Bezoekers zien nooit een
 // challenge, checkbox of extra stap — dit is volledig serverside + onzichtbaar.
+// Honeypot, tijdslot, heuristiek en blocklists staan in src/lib/spam-filter.js,
+// de lijsten zelf in src/lib/spam-config.js.
 // ============================================
 
 const ALLOWED_HOSTS = ['onlinelabs.nl', 'www.onlinelabs.nl'];
-const MIN_FILL_MS = 3000; // sneller ingevuld dan 3s = geen mens
-const MAX_FORM_AGE_MS = 2 * 60 * 60 * 1000; // ouder dan 2 uur = gescraped/replay
-const URL_PATTERN = /https?:\/\//i;
 
 function hostnameFrom(value) {
   if (!value) return null;
@@ -46,43 +46,9 @@ function hasTrustedOrigin(request) {
   return false;
 }
 
-function vowelRatio(value) {
-  const letters = value.replace(/[^\p{L}]/gu, '');
-  if (!letters.length) return 0;
-  const vowels = letters.match(/[aeiouyàáâäãåèéêëìíîïòóôöõùúûüýÿ]/giu);
-  return (vowels ? vowels.length : 0) / letters.length;
-}
-
-// "iVCsXuthlulZlrJg" → random string. "Schmidt" of "Imre" → gewoon een naam.
-function looksLikeRandomString(name) {
-  if (name.length < 8) return false; // korte namen nooit flaggen
-  if (/\s/.test(name)) return false; // meerdere woorden = echte naam
-  return vowelRatio(name) < 0.2;
-}
-
-function spamSignals({ name, message, interests }) {
-  const hard = []; // elk signaal apart genoeg om te weigeren
-  const soft = []; // pas weigeren bij twee of meer
-
-  const interestCount = Array.isArray(interests) ? interests.length : 0;
-  if (interestCount > 6) hard.push(`${interestCount} interesses aangevinkt (max 6)`);
-  else if (interestCount >= 5) soft.push(`${interestCount} interesses aangevinkt`);
-
-  const cleanName = (name || '').trim();
-  const cleanMessage = (message || '').trim();
-
-  if (!cleanMessage) soft.push('geen bericht ingevuld');
-  else if (cleanMessage.length < 10) hard.push(`bericht is ${cleanMessage.length} tekens (min 10)`);
-  else if (!/\s/.test(cleanMessage)) hard.push('bericht bevat geen enkele spatie');
-
-  if (looksLikeRandomString(cleanName)) {
-    hard.push(`naam lijkt een random string (${Math.round(vowelRatio(cleanName) * 100)}% klinkers, geen spatie)`);
-  }
-
-  if (URL_PATTERN.test(cleanName)) hard.push('naam bevat een URL');
-  if (URL_PATTERN.test(cleanMessage)) hard.push('bericht bevat een URL');
-
-  return { hard, soft };
+function clientIp(request) {
+  const forwarded = request.headers.get('x-forwarded-for');
+  return (forwarded ? forwarded.split(',')[0].trim() : request.headers.get('x-real-ip')) || 'onbekend';
 }
 
 function describeBotId(check) {
@@ -441,30 +407,19 @@ export async function POST(request) {
     // Regular contact form
     const { name, email, phone, website, message, interests } = body;
 
-    // ---- Anti-spam: honeypot, tijdslot en heuristiek ----
-    const reasons = [];
-    let elapsedMs = null;
-
-    // Alleen bots vullen dit veld in — het is onzichtbaar en niet tabbaar
-    if (typeof body.company_website === 'string' && body.company_website.trim()) {
-      reasons.push('honeypot-veld ingevuld');
+    // ---- Anti-spam: rate limit ----
+    // Alleen naar de console, niet naar Slack: een burst mag het kanaal niet volzetten
+    const ip = clientIp(request);
+    if (isRateLimited(ip)) {
+      console.warn('🚫 Contactformulier geweigerd: rate limit bereikt', `ip=${ip}`, JSON.stringify({ name, email }));
+      return NextResponse.json(
+        { success: true, message: 'Bericht succesvol verstuurd' },
+        { status: 200 }
+      );
     }
 
-    const renderedAt = Number(body.form_rendered_at);
-    if (!Number.isFinite(renderedAt) || renderedAt <= 0) {
-      reasons.push('render-timestamp ontbreekt');
-    } else {
-      elapsedMs = Date.now() - renderedAt;
-      if (elapsedMs < MIN_FILL_MS) {
-        reasons.push(`in ${Math.max(0, Math.round(elapsedMs / 100) / 10)}s ingevuld (min 3s)`);
-      } else if (elapsedMs > MAX_FORM_AGE_MS) {
-        reasons.push(`formulier was ${Math.round(elapsedMs / 60000)} min oud (max 120)`);
-      }
-    }
-
-    const { hard, soft } = spamSignals({ name, message, interests });
-    reasons.push(...hard);
-    if (soft.length >= 2) reasons.push(...soft);
+    // ---- Anti-spam: honeypot, tijdslot, heuristiek en blocklists ----
+    const { reasons, elapsedMs } = checkContactSubmission(body);
 
     if (reasons.length > 0) {
       await sendSpamAlert({
