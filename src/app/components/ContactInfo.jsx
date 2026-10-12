@@ -1,5 +1,7 @@
 'use client';
 
+import EmailLink, { EmailAddress } from './EmailLink';
+
 function ContactInfo() {
   const contactDetails = [
     {
@@ -30,8 +32,9 @@ function ContactInfo() {
         </svg>
       ),
       label: 'E-mail',
-      value: 'hallo@onlinelabs.nl',
-      link: 'mailto:hallo@onlinelabs.nl'
+      value: <EmailAddress />,
+      link: null,
+      email: true
     },
     {
       icon: (
@@ -84,7 +87,11 @@ function ContactInfo() {
                   {detail.label}
                 </h3>
                 
-                {detail.link ? (
+                {detail.email ? (
+                  <EmailLink className="text-base text-gray-700 hover:text-primary transition-colors duration-200 whitespace-pre-line group">
+                    <span className="group-hover:underline underline-offset-2">{detail.value}</span>
+                  </EmailLink>
+                ) : detail.link ? (
                   <a
                     href={detail.link}
                     target={detail.link.startsWith('http') ? '_blank' : undefined}

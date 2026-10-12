@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import EmailLink, { EmailAddress } from './EmailLink';
 
 // Mapping van URL parameter naar interest ID
 const skillMapping = {
@@ -285,9 +286,7 @@ function ContactForm() {
                   <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                     <p className="text-red-800">
                       Er is iets misgegaan bij het versturen. Probeer het opnieuw of mail ons direct op{' '}
-                      <a href="mailto:hallo@onlinelabs.nl" className="underline font-medium">
-                        hallo@onlinelabs.nl
-                      </a>
+                      <EmailLink className="underline font-medium" />
                     </p>
                   </div>
                 )}
@@ -589,12 +588,12 @@ function ContactForm() {
                       </svg>
                       <span>020 - 820 20 22</span>
                     </a>
-                    <a href="mailto:hallo@onlinelabs.nl" className="flex items-center gap-2 text-gray-700 hover:text-primary transition-colors">
+                    <EmailLink className="flex items-center gap-2 text-gray-700 hover:text-primary transition-colors">
                       <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      <span>hallo@onlinelabs.nl</span>
-                    </a>
+                      <span><EmailAddress /></span>
+                    </EmailLink>
                   </div>
                 </div>
 
@@ -634,9 +633,7 @@ function ContactForm() {
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                   <p className="text-red-800">
                     Er is iets misgegaan bij het versturen. Probeer het opnieuw of mail ons direct op{' '}
-                    <a href="mailto:hallo@onlinelabs.nl" className="underline font-medium">
-                      hallo@onlinelabs.nl
-                    </a>
+                    <EmailLink className="underline font-medium" />
                   </p>
                 </div>
               )}

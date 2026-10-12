@@ -12,10 +12,10 @@ export const revalidate = 86400; // 24 hours ISR
 
 export const metadata = {
   title: 'Contact – Bel, mail of bezoek ons in Amsterdam',
-  description: 'Neem contact op met OnlineLabs. Herengracht 221, Amsterdam. Bel 020-820 20 22 of mail hallo@onlinelabs.nl. Reactie binnen 24 uur.',
+  description: 'Neem contact op met OnlineLabs. Herengracht 221, Amsterdam. Bel 020-820 20 22 of stuur een bericht. Reactie binnen 24 uur.',
   openGraph: {
     title: 'Contact – Bel, mail of bezoek ons in Amsterdam | OnlineLabs',
-    description: 'Neem contact op met OnlineLabs. Herengracht 221, Amsterdam. Bel 020-820 20 22 of mail hallo@onlinelabs.nl.',
+    description: 'Neem contact op met OnlineLabs. Herengracht 221, Amsterdam. Bel 020-820 20 22 of stuur een bericht.',
     url: '/contact',
     type: 'website',
     locale: 'nl_NL',
@@ -30,7 +30,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Contact – Bel, mail of bezoek ons in Amsterdam | OnlineLabs',
-    description: 'Neem contact op met OnlineLabs. Herengracht 221, Amsterdam. Bel 020-820 20 22 of mail hallo@onlinelabs.nl.',
+    description: 'Neem contact op met OnlineLabs. Herengracht 221, Amsterdam. Bel 020-820 20 22 of stuur een bericht.',
     images: ['/og-image-contact.jpg'],
   },
   alternates: {

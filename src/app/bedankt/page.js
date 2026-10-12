@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import EmailLink, { EmailAddress } from '../components/EmailLink';
 
 export const metadata = {
   title: 'Bedankt voor je bericht',
@@ -42,15 +43,12 @@ export default function BedanktPage() {
               Heb je directe vragen? Neem gerust contact op:
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
-              <a 
-                href="mailto:hallo@onlinelabs.nl" 
-                className="inline-flex items-center gap-2 text-[#376eb5] hover:text-[#2d5a94] font-medium transition-colors"
-              >
+              <EmailLink className="inline-flex items-center gap-2 text-[#376eb5] hover:text-[#2d5a94] font-medium transition-colors">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                hallo@onlinelabs.nl
-              </a>
+                <EmailAddress />
+              </EmailLink>
               <a 
                 href="tel:0208202022" 
                 className="inline-flex items-center gap-2 text-[#376eb5] hover:text-[#2d5a94] font-medium transition-colors"

@@ -1,3 +1,5 @@
+import EmailLink from '../components/EmailLink';
+
 const SITE_URL = 'https://www.onlinelabs.nl';
 
 export const revalidate = 86400; // 24 hours ISR
@@ -234,9 +236,7 @@ export default function PrivacyverklaringPage() {
               </p>
               <p className="text-gray-700 mb-2">
                 <strong>E-mail:</strong>{' '}
-                <a href="mailto:hallo@onlinelabs.nl" className="text-[#376eb5] hover:underline">
-                  hallo@onlinelabs.nl
-                </a>
+                <EmailLink className="text-[#376eb5] hover:underline" />
               </p>
               <p className="text-gray-700 mb-2">
                 <strong>Telefoon:</strong>{' '}

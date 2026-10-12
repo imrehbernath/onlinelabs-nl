@@ -1,3 +1,5 @@
+import EmailLink, { EmailAddress } from '../components/EmailLink';
+
 const SITE_URL = 'https://www.onlinelabs.nl';
 
 export const revalidate = 86400; // 24 hours ISR
@@ -182,7 +184,7 @@ export default function AlgemeneVoorwaardenPage() {
             <section className="mb-10">
               <h2 className="font-serif text-2xl font-bold text-gray-900 mb-4">8. Privacy- en cookiebeleid</h2>
               <ol className="list-decimal pl-6 space-y-3 text-gray-700">
-                <li>Het privacy- en cookiebeleid van OnlineLabs is te lezen op onze <a href="/privacyverklaring" className="text-[#376eb5] hover:underline">privacyverklaring pagina</a>. Voor vragen kan contact worden opgenomen met Imre Bernáth via hallo@onlinelabs.nl of 020 820 20 22.</li>
+                <li>Het privacy- en cookiebeleid van OnlineLabs is te lezen op onze <a href="/privacyverklaring" className="text-[#376eb5] hover:underline">privacyverklaring pagina</a>. Voor vragen kan contact worden opgenomen met Imre Bernáth via <EmailAddress /> of 020 820 20 22.</li>
                 <li>OnlineLabs zal met haar opdrachtgevers een verwerkersovereenkomst sluiten als dit is vereist op grond de geldende wet- en regelgeving.</li>
                 <li>OnlineLabs zal passende technische en organisatorische maatregelen (doen) nemen om de persoonsgegevens die zij verwerkt in opdracht van de opdrachtgever te beveiligen.</li>
                 <li>De opdrachtgever garandeert dat iedere verstrekking van (persoons)gegevens aan OnlineLabs rechtmatig is.</li>
@@ -302,9 +304,7 @@ export default function AlgemeneVoorwaardenPage() {
               <h2 className="font-serif text-xl font-bold text-gray-900 mb-4">Vragen?</h2>
               <p className="text-gray-700 mb-2">
                 <strong>E-mail:</strong>{' '}
-                <a href="mailto:hallo@onlinelabs.nl" className="text-[#376eb5] hover:underline">
-                  hallo@onlinelabs.nl
-                </a>
+                <EmailLink className="text-[#376eb5] hover:underline" />
               </p>
               <p className="text-gray-700 mb-2">
                 <strong>Telefoon:</strong>{' '}
