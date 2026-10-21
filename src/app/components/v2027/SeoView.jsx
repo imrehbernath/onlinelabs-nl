@@ -167,7 +167,7 @@ export default function SeoView({ logosTop = [], logosBottom = [] }) {
       <section className="ol-imre ol-snap" aria-labelledby="ol-imre-h" style={{ maxWidth: '1440px', margin: '0 auto', padding: '96px 40px', boxSizing: 'border-box', minHeight: 'calc(100vh - 104px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <div className="ol-imre-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 0.85fr) minmax(0, 1.15fr)', gap: '72px', alignItems: 'center' }}>
       <div className="ol-imre-photo" style={{ position: 'relative', aspectRatio: '2 / 3', maxHeight: '680px', borderRadius: '12px', overflow: 'hidden', background: '#DCE7F6' }}>
-      <Image src="https://cdn.onlinelabs.nl/wp-content/uploads/2025/11/Imre-Bernath.webp" alt="Imre Bernáth, SEO specialist en oprichter van OnlineLabs" fill sizes="(max-width: 960px) 100vw, 40vw" quality={80} style={{ objectFit: 'cover', objectPosition: 'center 20%' }} />
+      <Image src="https://cdn.onlinelabs.nl/wp-content/uploads/2025/11/Imre-Bernath.webp" alt="Imre Bernáth, SEO specialist en oprichter van OnlineLabs" fill sizes="(max-width: 960px) 100vw, 40vw" quality={85} style={{ objectFit: 'cover', objectPosition: 'center 20%' }} />
       <span style={{ position: 'absolute', left: '20px', bottom: '20px', display: 'inline-flex', alignItems: 'center', height: '40px', padding: '0 16px', borderRadius: '6px', background: '#FFFFFF', color: '#0A0F1F', fontSize: '15px', fontWeight: '700' }}>Imre Bernáth</span>
       </div>
       <div>
