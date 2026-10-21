@@ -126,3 +126,31 @@ html,body{overflow-x:clip}
 html:has(.v27-home){scroll-snap-type:y proximity}
 .v27-home .ol-snap,.v27 .ol-endwrap{scroll-snap-align:start;scroll-margin-top:104px}
 }
+
+/* SEO specialist 2027 */
+.ol-drum{outline:none;cursor:ns-resize}
+.ol-drum:focus-visible{box-shadow:0 0 0 3px #376EB5}
+.ol-drumitem{cursor:pointer;transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .45s ease,filter .45s ease,font-size .45s ease}
+.ol-drumitem:not(.is-active):hover{opacity:.9 !important;filter:none !important}
+.ol-fanpanel{animation:olFanIn .45s ease}
+@keyframes olFanIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ol-faqbtn{cursor:pointer}
+.ol-faqbtn:hover{color:#376EB5 !important}
+.ol-faqplus{transition:transform .3s ease}
+@media (prefers-reduced-motion: reduce){.ol-drumitem{transition:none}.ol-fanpanel{animation:none}}
+@media (max-width: 960px){
+.ol-seo-lede{font-size:24px !important}
+.ol-seo-big{white-space:normal !important;text-align:left !important;font-size:56px !important;margin-top:32px !important}
+.ol-wwd{padding:0 8px 8px !important}
+.ol-wwd-panel{padding:40px 20px !important;border-radius:10px !important}
+.ol-fanwrap{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
+.ol-drum{height:380px !important}
+.ol-drumitem{left:20px !important;right:16px !important}
+.ol-drumitem span:last-child{white-space:normal !important;font-size:22px !important}
+.ol-imre{padding:72px 20px !important}
+.ol-imre-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
+.ol-imre-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+.ol-fanpanel ul{grid-template-columns:minmax(0,1fr) !important}
+.ol-steps,.ol-faq{padding:72px 20px !important}
+.ol-steps-grid,.ol-faq-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
+}

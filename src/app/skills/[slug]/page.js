@@ -13,6 +13,7 @@ import TestimonialsSection from '@/app/components/TestimonialsSection';
 import AIresultsGallery from '@/app/components/AIresultsGallery';
 import WebsiteCalculator from '@/app/components/WebsiteCalculator';
 import { notFound } from 'next/navigation';
+import SeoView, { SEO_FAQS } from '@/app/components/v2027/SeoView';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
 const WP_URL = 'https://cdn.onlinelabs.nl';
@@ -408,6 +409,38 @@ export default async function ServiceDetailPage({ params }) {
     },
     "serviceType": heroData.title?.split('–')[0]?.trim() || heroData.title
   };
+
+  // Nieuw design 2027 voor de SEO specialist-pagina
+  if (slug === 'seo-specialist') {
+    const allLogos = (logoSliderData?.logos || [])
+      .map((l) => ({ n: l.name || '', src: replaceWpUrls(l.imageUrl)?.replace(SITE_URL + '/wp-content', WP_URL + '/wp-content'), href: l.url || '#' }))
+      .filter((l) => l.src);
+    const half = Math.ceil(allLogos.length / 2);
+    const mkRow = (row) => {
+      const base = row.map((l) => ({ ...l, dup: 'false', tab: '0' }));
+      return base.concat(base.map((l) => ({ ...l, dup: 'true', tab: '-1' })));
+    };
+    const seoFaqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": SEO_FAQS.map((f) => ({
+        "@type": "Question",
+        "name": f.q,
+        "acceptedAnswer": { "@type": "Answer", "text": f.a }
+      }))
+    };
+    return (
+      <>
+        {processedJsonLd && (
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: processedJsonLd }} />
+        )}
+        <SeoView logosTop={mkRow(allLogos.slice(0, half))} logosBottom={mkRow(allLogos.slice(half))} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(seoFaqSchema) }} />
+      </>
+    );
+  }
 
   return (
     <div>
