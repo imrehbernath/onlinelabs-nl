@@ -1,10 +1,10 @@
-import { Inter, Playfair_Display, Space_Mono } from 'next/font/google';
+import { Inter, Playfair_Display, Space_Mono, Poppins } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import './components/v2027/v2027.css';
+import SiteHeader from './components/v2027/SiteHeader';
+import SiteFooter from './components/v2027/SiteFooter';
 import CookieConsent from './components/CookieConsent';
-import { getAllServices } from './lib/wordpress';
 
 // Inter - Google Font (fallback voor Metropolis)
 const inter = Inter({
@@ -29,6 +29,14 @@ const spaceMono = Space_Mono({
   display: 'swap',
   weight: ['400', '700'],
   preload: false, // decoratieve labels/eyebrows — niet kritisch above the fold, dus niet preloaden
+});
+
+// Poppins - Google Font (huisstijl 2027: header, homepage en footer)
+const poppins = Poppins({
+  subsets: ['latin'],
+  variable: '--font-poppins',
+  display: 'swap',
+  weight: ['400', '600', '800'],
 });
 
 // Metropolis - Local Font (primary sans-serif)
@@ -100,18 +108,8 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  // Fetch services voor mega menu - Server Component (geen client-side fetch!)
-  // Cached 24 uur via ISR voor maximale performance
-  let services = [];
-  try {
-    services = await getAllServices();
-  } catch (error) {
-    console.error('Failed to fetch services:', error);
-    // Fallback naar default services in Header component
-  }
-
   return (
-    <html lang="nl" className={`${metropolis.variable} ${inter.variable} ${playfair.variable} ${spaceMono.variable}`}>
+    <html lang="nl" className={`${metropolis.variable} ${inter.variable} ${playfair.variable} ${spaceMono.variable} ${poppins.variable}`}>
       <head>
         {/* 
           CDN preconnect: niet nodig op homepage hero (hardcoded),
@@ -138,11 +136,11 @@ export default async function RootLayout({ children }) {
         {/* Structured Data wordt beheerd door Rank Math per pagina */}
       </head>
       <body className={`${metropolis.variable} antialiased`}>
-        <Header services={services} />
+        <SiteHeader />
         <main className="min-h-screen">
           {children}
         </main>
-        <Footer />
+        <SiteFooter />
         
         {/* 🔴 VISUAL INDICATOR voor non-production */}
         {!isProduction && (

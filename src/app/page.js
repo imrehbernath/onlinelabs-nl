@@ -1,16 +1,5 @@
-import Hero from './components/Hero';
-import TeunSpotlight from './components/TeunSpotlight';
-import SEOBasisSection from './components/SEOBasisSection';
-import ApproachSection from './components/ApproachSection';
-import ServicesSection from './components/ServicesSection';
-import AboutSection from './components/AboutSection';
-import TestimonialsSection from './components/TestimonialsSection';
-import CTASection from './components/CTASection';
-import LogoSlider from './components/LogoSlider';
-import WorkSection from './components/WorkSection';
-import BlogSection from './components/BlogSection';
-import { getHomepageSettings, getTestimonials, getBlogPosts } from './lib/wordpress';
-// getAllServices niet meer nodig op homepage (ServicesSection is hardcoded)
+import HomeView from './components/v2027/HomeView';
+import { getHomepageSettings, getTestimonials } from './lib/wordpress';
 
 const SITE_URL = 'https://www.onlinelabs.nl';
 const CDN_URL = 'https://cdn.onlinelabs.nl';
@@ -99,59 +88,37 @@ export const revalidate = 86400;
 
 export default async function Home() {
   // Fetch data from WordPress (server-side, cached 24u)
-  const [homepageSettings, testimonials, blogPosts] = await Promise.all([
-    getHomepageSettings(),  // About section + SEO + Logo Slider
+  const [homepageSettings, testimonials] = await Promise.all([
+    getHomepageSettings(),  // SEO + Logo Slider
     getTestimonials(100),   // Max 100 testimonials
-    getBlogPosts(3),        // Latest 3 blog posts
   ]);
 
-  // ─── WordPress heroData (bewaard als reference voor toekomstige projecten) ───
-  // const heroData = homepageSettings?.heroSection ? {
-  //   ...homepageSettings.heroSection,
-  //   heroImage: homepageSettings.heroSection.heroImage?.node ? {
-  //     sourceUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroImage.node.sourceUrl),
-  //     altText: homepageSettings.heroSection.heroImage.node.altText
-  //   } : null,
-  //   heroImage2: homepageSettings.heroSection.heroImage2?.node ? {
-  //     sourceUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroImage2.node.sourceUrl),
-  //     altText: homepageSettings.heroSection.heroImage2.node.altText
-  //   } : null,
-  //   heroVideoWebm: homepageSettings.heroSection.heroVideoWebm?.mediaItemUrl ? {
-  //     mediaItemUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroVideoWebm.mediaItemUrl)
-  //   } : null,
-  //   heroVideoMp4: homepageSettings.heroSection.heroVideoMp4?.mediaItemUrl ? {
-  //     mediaItemUrl: replaceWpUrlsToCdn(homepageSettings.heroSection.heroVideoMp4.mediaItemUrl)
-  //   } : null,
-  // } : null;
+  // Reviews uit WordPress (geen gedachtestreepjes in de weergave)
+  const cleanDash = (str) => (str || '').replace(/\s+[—–]\s+/g, ', ').trim();
+  const reviews = (testimonials || [])
+    .map((t) => {
+      const d = t?.testimonialDetails || {};
+      const q = cleanDash(d.shortQuote || d.fullReview);
+      const role = [d.reviewerRole, d.reviewerCompany].filter(Boolean).join(', ');
+      return { q, n: d.reviewerName || t?.title || '', r: role };
+    })
+    .filter((r) => r.q);
 
-  // ─── WordPress aboutData (bewaard als reference voor toekomstige projecten) ───
-  // const aboutData = homepageSettings?.aboutSection ? {
-  //   title: homepageSettings.aboutSection.aboutTitle,
-  //   subtitle: homepageSettings.aboutSection.aboutSubtitle,
-  //   paragraph1: homepageSettings.aboutSection.aboutParagraph1,
-  //   paragraph2: homepageSettings.aboutSection.aboutParagraph2,
-  //   targetAudienceTitle: homepageSettings.aboutSection.aboutTargetTitle,
-  //   targetAudienceItems: homepageSettings.aboutSection.aboutTargetItems?.map(item => item.item) || [],
-  //   image: {
-  //     sourceUrl: replaceWpUrlsToCdn(homepageSettings.aboutSection.aboutImage?.node?.sourceUrl) || '/images/workspace-onlinelabs.jpg',
-  //     altText: homepageSettings.aboutSection.aboutImage?.node?.altText || 'OnlineLabs workspace in Amsterdam'
-  //   },
-  //   ctaText: homepageSettings.aboutSection.aboutCtaText || 'over ons',
-  //   ctaUrl: homepageSettings.aboutSection.aboutCtaUrl || '/over-ons'
-  // } : null;
-
-  // Extract and transform Logo Slider data with CDN URLs
-  const logoSliderData = homepageSettings?.logoSlider && homepageSettings.logoSlider.sliderEnabled ? {
-    title: homepageSettings.logoSlider.sliderTitle || 'Vertrouwd door toonaangevende bedrijven',
-    speed: homepageSettings.logoSlider.sliderSpeed || 'normal',
-    grayscale: homepageSettings.logoSlider.sliderGrayscale !== false,
-    logos: homepageSettings.logoSlider.logos?.map(logo => ({
-      name: logo.companyName,
-      imageUrl: replaceWpUrlsToCdn(logo.logoImage?.node?.sourceUrl),
-      altText: logo.logoAlt || `${logo.companyName} logo`,
-      url: logo.websiteUrl || null
-    })) || []
-  } : null;
+  // Logo's uit de Logo Slider in WordPress, verdeeld over twee rijen
+  const allLogos = (homepageSettings?.logoSlider?.logos || [])
+    .map((logo) => ({
+      n: logo.companyName || '',
+      src: replaceWpUrlsToCdn(logo.logoImage?.node?.sourceUrl),
+      href: logo.websiteUrl || '#',
+    }))
+    .filter((l) => l.src);
+  const half = Math.ceil(allLogos.length / 2);
+  const mkRow = (row) => {
+    const base = row.map((l) => ({ ...l, dup: 'false', tab: '0' }));
+    return base.concat(base.map((l) => ({ ...l, dup: 'true', tab: '-1' })));
+  };
+  const logosTop = mkRow(allLogos.slice(0, half));
+  const logosBottom = mkRow(allLogos.slice(half));
 
   // Process JSON-LD from Rank Math: replace WordPress URLs with production URLs (NOT CDN for SEO)
   const processedJsonLd = homepageSettings?.seo?.jsonLd?.raw 
@@ -171,66 +138,8 @@ export default async function Home() {
         />
       )}
 
-      <div>
-        {/* Hero Section - Hardcoded nieuwe positionering */}
-        <Hero />
-
-        {/* About Section - "Over ons" (editorial, paper) — direct onder de hero */}
-        <AboutSection />
-
-        {/* Services Section - "Wat we doen" (donkere editorial grid) — onder Over ons */}
-        <ServicesSection />
-
-        {/* Logo Slider - direct onder de dienstensectie (Vertrouwd door...) */}
-        {logoSliderData && logoSliderData.logos.length > 0 && (
-          <LogoSlider
-            title={logoSliderData.title}
-            logos={logoSliderData.logos}
-            speed={logoSliderData.speed}
-            grayscale={logoSliderData.grayscale}
-            background="gray"
-          />
-        )}
-
-        {/* AI-zichtbaarheid / GEO - "AI-zichtbaarheid begint bij sterke SEO" — onder de logo's */}
-        <SEOBasisSection />
-
-        {/* Onze aanpak - roadmap (koele mist-sectie) */}
-        <ApproachSection />
-
-        {/* Uitgelicht werk - donkere portfolio-grid (6 cases) */}
-        <WorkSection />
-
-        {/* Teun.ai Spotlight - Eigen platform (editorial paper) — onder Uitgelicht werk */}
-        <TeunSpotlight />
-
-        {/* CTA Section - Call to action na Services */}
-        <CTASection
-          title={"Klaar om zichtbaar te worden in Google en AI?"}
-          description="Ontdek hoe OnlineLabs jouw bedrijf helpt groeien met strategische SEO, GEO en webdesign."
-          primaryButton={{ text: "Neem contact op", url: "/contact" }}
-          secondaryButton={{ text: "Bekijk onze skills", url: "/skills" }}
-          variant="primary"
-          narrow
-        />
-
-        {/* Blog Section - Latest 3 blog posts with featured layout */}
-        {blogPosts && blogPosts.length > 0 && (
-          <BlogSection 
-            posts={blogPosts}
-            title="Laatste Inzichten"
-          />
-        )}
-
-        {/* Testimonials Section - 3-column slider met auto-rotate */}
-        <TestimonialsSection
-          testimonials={testimonials}
-          background="beige"
-          narrow
-        />
-
-        {/* Footer volgt direct na Testimonials - geen extra CTA meer */}
-      </div>
+      {/* Homepage 2027 */}
+      <HomeView reviews={reviews} logosTop={logosTop} logosBottom={logosBottom} />
     </>
   );
 }
