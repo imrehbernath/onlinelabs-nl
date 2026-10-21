@@ -13,7 +13,8 @@ import TestimonialsSection from '@/app/components/TestimonialsSection';
 import AIresultsGallery from '@/app/components/AIresultsGallery';
 import WebsiteCalculator from '@/app/components/WebsiteCalculator';
 import { notFound } from 'next/navigation';
-import SeoView, { SEO_FAQS } from '@/app/components/v2027/SeoView';
+import SeoView from '@/app/components/v2027/SeoView';
+import { SEO_FAQS } from '@/app/components/v2027/seoFaqs';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
 const WP_URL = 'https://cdn.onlinelabs.nl';
