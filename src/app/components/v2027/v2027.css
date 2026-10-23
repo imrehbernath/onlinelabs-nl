@@ -156,7 +156,7 @@ html,body{overflow-x:clip}
 .ol-drumitem{left:20px !important;right:16px !important}
 .ol-drumitem span:last-child{white-space:normal !important;font-size:22px !important}
 .ol-imre{padding:24px 20px 72px !important}
-.v27-seo .ol-hero,.v27-seo .ol-imre,.v27-geo .ol-hero,.v27-geo .ol-imre,.v27-ads .ol-hero,.v27-ads .ol-imre{min-height:0 !important}
+.v27-seo .ol-hero,.v27-seo .ol-imre,.v27-geo .ol-hero,.v27-geo .ol-imre,.v27-ads .ol-hero,.v27-ads .ol-imre,.v27-lokaal .ol-hero,.v27-lokaal .ol-imre{min-height:0 !important}
 .ol-imre-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
 .ol-imre-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 .ol-fanpanel ul{grid-template-columns:minmax(0,1fr) !important}
@@ -240,12 +240,28 @@ html,body{overflow-x:clip}
 }
 @media (min-width: 961px) and (max-width: 1200px){
 .ol-kan span:last-child{font-size:28px !important}
-.v27-ads .ol-steps-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;row-gap:48px !important}
+.v27-ads .ol-steps-grid,.v27-lokaal .ol-steps-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;row-gap:48px !important}
 }
 @media (min-width: 641px) and (max-width: 960px){
-.v27-ads .ol-steps-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+.v27-ads .ol-steps-grid,.v27-lokaal .ol-steps-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 .ol-prijs-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 }
 @media (max-width: 640px){
 .v27-ads .ol-imre-photo{max-width:360px !important}
+}
+
+/* Lokale SEO Amsterdam 2027 */
+.ol-plek{cursor:pointer;transition:background-color .2s ease,color .2s ease,border-color .2s ease}
+.ol-plek[aria-selected="false"]:hover{border-color:#376EB5 !important;color:#376EB5 !important}
+.ol-plek:focus:not(:focus-visible){outline:none}
+#ol-plekken{scroll-margin-top:104px}
+@media (max-width: 960px){
+#ol-plekken{scroll-margin-top:72px}
+.ol-query{height:auto !important;padding:18px 20px !important;border-radius:16px !important}
+.ol-query p{white-space:normal !important;font-size:17px !important}
+.ol-plek{height:42px !important;padding:0 16px !important;font-size:15px !important}
+.ol-plek-panel{grid-template-columns:minmax(0,1fr) !important;padding:24px 20px !important;gap:24px !important;min-height:0 !important}
+}
+@media (min-width: 961px) and (max-width: 1200px){
+.ol-query p{font-size:18px !important}
 }

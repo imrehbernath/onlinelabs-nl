@@ -19,6 +19,8 @@ import GeoView from '@/app/components/v2027/GeoView';
 import { GEO_FAQS } from '@/app/components/v2027/geoFaqs';
 import AdsView from '@/app/components/v2027/AdsView';
 import { ADS_FAQS } from '@/app/components/v2027/adsFaqs';
+import LokaalView from '@/app/components/v2027/LokaalView';
+import { LOKAAL_FAQS } from '@/app/components/v2027/lokaalFaqs';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
 const WP_URL = 'https://cdn.onlinelabs.nl';
@@ -159,6 +161,21 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
       ctaUrl: 'https://teun.ai',
       secondaryCtaText: 'Neem contact op',
       secondaryCtaUrl: '/contact',
+      serviceColor: 'blue'
+    },
+    pageSections: []
+  },
+  // Nieuwe pagina 2027, nog zonder dienst in WordPress
+  'lokale-seo-amsterdam': {
+    title: 'Lokale SEO Amsterdam, gevonden in Google en AI',
+    subtitle: 'Lokale SEO',
+    description: 'Lokaal gevonden door klanten in Amsterdam: in Google, Google Maps en de antwoorden van ChatGPT en Gemini. Lokale SEO van OnlineLabs, aan de Herengracht.',
+    heroSection: {
+      title: 'Lokale SEO Amsterdam, gevonden in Google en AI',
+      subtitle: 'Lokale SEO',
+      description: 'Lokaal gevonden door klanten in Amsterdam: in Google, Google Maps en de antwoorden van ChatGPT en Gemini. Lokale SEO van OnlineLabs, aan de Herengracht.',
+      ctaText: 'Bespreek je lokale vindbaarheid',
+      ctaUrl: '/contact',
       serviceColor: 'blue'
     },
     pageSections: []
@@ -420,6 +437,7 @@ export default async function ServiceDetailPage({ params }) {
     'seo-specialist': [SeoView, SEO_FAQS],
     'geo-optimalisatie': [GeoView, GEO_FAQS],
     'online-adverteren': [AdsView, ADS_FAQS],
+    'lokale-seo-amsterdam': [LokaalView, LOKAAL_FAQS],
   };
   if (V2027[slug]) {
     const [View, pageFaqs] = V2027[slug];
