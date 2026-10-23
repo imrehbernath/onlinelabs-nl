@@ -15,6 +15,8 @@ import WebsiteCalculator from '@/app/components/WebsiteCalculator';
 import { notFound } from 'next/navigation';
 import SeoView from '@/app/components/v2027/SeoView';
 import { SEO_FAQS } from '@/app/components/v2027/seoFaqs';
+import GeoView from '@/app/components/v2027/GeoView';
+import { GEO_FAQS } from '@/app/components/v2027/geoFaqs';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
 const WP_URL = 'https://cdn.onlinelabs.nl';
@@ -411,8 +413,11 @@ export default async function ServiceDetailPage({ params }) {
     "serviceType": heroData.title?.split('–')[0]?.trim() || heroData.title
   };
 
-  // Nieuw design 2027 voor de SEO specialist-pagina
-  if (slug === 'seo-specialist') {
+  // Nieuw design 2027 voor de SEO specialist- en GEO-pagina
+  if (slug === 'seo-specialist' || slug === 'geo-optimalisatie') {
+    const isGeo = slug === 'geo-optimalisatie';
+    const pageFaqs = isGeo ? GEO_FAQS : SEO_FAQS;
+    const View = isGeo ? GeoView : SeoView;
     const allLogos = (logoSliderData?.logos || [])
       .map((l) => ({ n: l.name || '', src: replaceWpUrls(l.imageUrl)?.replace(SITE_URL + '/wp-content', WP_URL + '/wp-content'), href: l.url || '#' }))
       .filter((l) => l.src);
@@ -424,7 +429,7 @@ export default async function ServiceDetailPage({ params }) {
     const seoFaqSchema = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": SEO_FAQS.map((f) => ({
+      "mainEntity": pageFaqs.map((f) => ({
         "@type": "Question",
         "name": f.q,
         "acceptedAnswer": { "@type": "Answer", "text": f.a }
@@ -435,7 +440,7 @@ export default async function ServiceDetailPage({ params }) {
         {processedJsonLd && (
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: processedJsonLd }} />
         )}
-        <SeoView logosTop={mkRow(allLogos.slice(0, half))} logosBottom={mkRow(allLogos.slice(half))} />
+        <View logosTop={mkRow(allLogos.slice(0, half))} logosBottom={mkRow(allLogos.slice(half))} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(seoFaqSchema) }} />

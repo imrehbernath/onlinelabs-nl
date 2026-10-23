@@ -152,7 +152,7 @@ html:has(.v27-home){scroll-snap-type:y proximity}
 .ol-drumitem{left:20px !important;right:16px !important}
 .ol-drumitem span:last-child{white-space:normal !important;font-size:22px !important}
 .ol-imre{padding:24px 20px 72px !important}
-.v27-seo .ol-hero,.v27-seo .ol-imre{min-height:0 !important}
+.v27-seo .ol-hero,.v27-seo .ol-imre,.v27-geo .ol-hero,.v27-geo .ol-imre{min-height:0 !important}
 .ol-imre-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
 .ol-imre-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 .ol-fanpanel ul{grid-template-columns:minmax(0,1fr) !important}
@@ -173,4 +173,48 @@ html:has(.v27-home){scroll-snap-type:y proximity}
 .ol-seo-cta .ol-down::after{transform:scaleX(1);opacity:.35}
 .ol-steps-meta{flex-direction:column !important;gap:8px !important;margin-top:32px !important}
 .ol-steps-meta span[aria-hidden]{display:none}
+}
+
+/* GEO optimalisatie 2027 */
+.ol-seg{cursor:pointer;transition:background-color .25s ease,color .25s ease}
+.ol-seg[aria-pressed="false"]:hover{color:#376EB5 !important}
+.ol-seg:focus:not(:focus-visible){outline:none}
+.ol-cmp-v{transition:color .3s ease}
+.ol-teunlink{cursor:pointer;transition:color .2s ease,border-color .2s ease}
+.ol-teunlink:hover{color:#8DB6EE !important;border-bottom-color:#8DB6EE !important}
+.ol-input{transition:border-color .2s ease,box-shadow .2s ease}
+.ol-input:hover{border-color:#376EB5 !important}
+.ol-input:focus{outline:none;border-color:#376EB5 !important;box-shadow:0 0 0 3px rgba(55,110,181,.18)}
+.ol-scanform .ol-pill{cursor:pointer}
+#ol-geo,#ol-scan{scroll-margin-top:104px}
+@media (prefers-reduced-motion: reduce){.ol-seg,.ol-cmp-v{transition:none}}
+@media (max-width: 960px){
+#ol-geo,#ol-scan{scroll-margin-top:72px}
+.ol-geo-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
+.ol-cmp{padding:20px !important}
+.ol-cmp-list > div{grid-template-columns:minmax(0,1fr) !important;gap:6px !important;min-height:76px;box-sizing:border-box}
+.ol-cmp-v{font-size:17px !important;white-space:normal !important}
+.ol-teun{padding:8px !important}
+.ol-teun-panel{grid-template-columns:minmax(0,1fr) !important;padding:48px 20px !important;gap:32px !important;border-radius:10px !important}
+.ol-teun-h{font-size:40px !important}
+.ol-scanform{padding:24px 20px !important}
+}
+
+/* Tablet en kleinere laptops (iPad) */
+@media (min-width: 961px) and (max-width: 1600px){
+.ol-drumitem span:last-child{white-space:normal !important;line-height:1.05 !important}
+.ol-drumitem.is-active span:last-child{font-size:32px !important}
+.ol-drumitem:not(.is-active) span:last-child{font-size:24px !important}
+}
+@media (min-width: 961px) and (max-width: 1200px){
+.ol-drumitem.is-active span:last-child{font-size:26px !important}
+.ol-drumitem:not(.is-active) span:last-child{font-size:20px !important}
+.ol-imre-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+.ol-cta-h{font-size:clamp(40px,4.6vw,88px) !important}
+.ol-office{max-width:360px !important}
+}
+@media (min-width: 641px) and (max-width: 960px){
+.ol-imre-grid{grid-template-columns:minmax(0,0.8fr) minmax(0,1.2fr) !important;gap:40px !important;align-items:start !important}
+.ol-cta-top{grid-template-columns:minmax(0,1fr) 220px !important;gap:32px !important;align-items:end !important}
+.ol-office{max-width:none !important;justify-self:stretch !important}
 }
