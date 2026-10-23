@@ -83,7 +83,9 @@ html,body{overflow-x:clip}
 .ol-endwrap{padding:8px !important}
 .ol-endpanel{padding:48px 20px 28px !important;border-radius:10px !important;gap:48px !important}
 .ol-cta-top{grid-template-columns:minmax(0,1fr) !important;gap:40px !important}
-.ol-office{max-width:none !important;justify-self:stretch !important;aspect-ratio:4 / 3 !important}
+.ol-office{max-width:none !important;justify-self:stretch !important;aspect-ratio:4 / 5 !important}
+.ol-cta-top div:has(> .ol-pill){flex-direction:column !important;align-items:flex-start !important;gap:14px !important}
+.ol-cta-top .ol-pill{width:100%;justify-content:center;box-sizing:border-box;margin-bottom:6px}
 .ol-cta-h{font-size:clamp(34px,10vw,56px) !important}
 .ol-foot-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:32px !important}
 .ol-foot-grid > div:first-child,.ol-foot-grid > div:nth-child(2){grid-column:1 / -1}
@@ -154,12 +156,21 @@ html:has(.v27-home){scroll-snap-type:y proximity}
 .ol-imre-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
 .ol-imre-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 .ol-fanpanel ul{grid-template-columns:minmax(0,1fr) !important}
-.ol-steps,.ol-faq{padding:72px 20px !important}
+.ol-steps,.ol-faq{padding:56px 20px !important}
+.ol-faq{padding-top:32px !important}
+.ol-steps-grid{margin-top:40px !important}
+.ol-step-col{padding-top:20px !important}
+.ol-step-col > p:first-child{font-size:44px !important}
+.ol-step-col h3{margin-top:14px !important;font-size:24px !important}
+.ol-imre-photo{aspect-ratio:4 / 5 !important;max-height:none !important}
+.ol-seo-proof{font-size:14px !important;gap:6px 8px !important}
+.ol-seo-proof span:nth-child(4){display:none}
+.ol-seo-proof span:nth-child(5){flex-basis:100%}
 .ol-steps-grid,.ol-faq-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
 .ol-seo-cta{flex-direction:column !important;align-items:stretch !important;gap:20px !important;width:100%}
 .ol-seo-cta .ol-pill{order:-1;justify-content:center;width:100%;box-sizing:border-box}
 .ol-seo-cta .ol-down{align-self:center;font-size:16px !important}
 .ol-seo-cta .ol-down::after{transform:scaleX(1);opacity:.35}
-.ol-steps-meta{flex-direction:column !important;gap:12px !important;margin-top:40px !important}
+.ol-steps-meta{flex-direction:column !important;gap:8px !important;margin-top:32px !important}
 .ol-steps-meta span[aria-hidden]{display:none}
 }

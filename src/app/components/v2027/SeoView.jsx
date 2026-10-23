@@ -94,6 +94,8 @@ export default function SeoView({ logosTop = [], logosBottom = [] }) {
         chars.push({ c: pool[Math.floor(Math.random() * pool.length)], color: '#376EB5' });
       }
     }
+  } else {
+    for (let j = 0; j < WORD.length; j++) chars.push({ c: WORD[j], color: 'transparent' });
   }
   const dot = done;
 
@@ -150,11 +152,11 @@ export default function SeoView({ logosTop = [], logosBottom = [] }) {
       <span className="ol-eyebrow" style={{ display: 'block', fontSize: '15px', fontWeight: '600', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#5B6275', marginBottom: '32px' }}>SEO bureau Amsterdam, sinds 2008</span>
       <span className="ol-sr">SEO specialist: hoger in Google en zichtbaar in AI.</span>
       <span aria-hidden="true" className="ol-seo-lede" style={{ display: 'block', maxWidth: '880px', fontSize: '36px', fontWeight: '400', lineHeight: '1.3', letterSpacing: '-0.01em', color: '#0A0F1F' }}>Hoger in Google en zichtbaar in AI. Traditionele SEO als fundament, AI-zichtbaarheid als volgende laag.</span>
-      <span aria-hidden="true" className="ol-seo-big" style={{ display: 'block', marginTop: '56px', textAlign: 'right', whiteSpace: 'nowrap', fontSize: 'clamp(56px, 10vw, 150px)', lineHeight: '0.95', letterSpacing: '-0.035em' }}>{chars.map((ch, $index) => (<Fragment key={$index}><span style={{ color: ch.color }}>{ch.c}</span></Fragment>))}{dot && (<><span style={{ color: '#376EB5' }}>.</span></>)}</span>
+      <span aria-hidden="true" className="ol-seo-big" style={{ display: 'block', marginTop: '56px', textAlign: 'right', whiteSpace: 'nowrap', fontSize: 'clamp(56px, 10vw, 150px)', lineHeight: '0.95', letterSpacing: '-0.035em' }}>{chars.map((ch, $index) => (<Fragment key={$index}><span style={{ color: ch.color }}>{ch.c}</span></Fragment>))}<span style={{ color: dot ? '#376EB5' : 'transparent' }}>.</span></span>
       </h1>
 
       <div className="ol-hero-row" style={{ marginTop: '72px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '24px 48px' }}>
-      <p style={{ margin: '0', fontSize: '15px', color: '#5B6275', display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}>
+      <p className="ol-seo-proof" style={{ margin: '0', fontSize: '15px', color: '#5B6275', display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}>
       <span>Google Partner</span><span aria-hidden="true">·</span><span>5,0 uit 29 Google reviews</span><span aria-hidden="true">·</span><span>150+ websites in beheer</span>
       </p>
       <div className="ol-seo-cta" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px 32px' }}>
