@@ -134,8 +134,8 @@ export default function SeoView({ logosTop = [], logosBottom = [] }) {
       <h1 style={{ margin: '0', fontWeight: '800' }}>
       <span className="ol-eyebrow" style={{ display: 'block', fontSize: '15px', fontWeight: '600', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#5B6275', marginBottom: '32px' }}>SEO bureau Amsterdam, sinds 2008</span>
       <span className="ol-sr">SEO specialist: hoger in Google en zichtbaar in AI.</span>
-      <span aria-hidden="true" className="ol-seo-lede" style={{ display: 'block', maxWidth: '880px', fontSize: '36px', fontWeight: '400', lineHeight: '1.3', letterSpacing: '-0.01em', color: '#0A0F1F' }}>Hoger in Google en zichtbaar in AI. Traditionele SEO als fundament, AI-zichtbaarheid als volgende laag.</span>
-      <span aria-hidden="true" className="ol-seo-big" style={{ display: 'block', marginTop: '56px', textAlign: 'right', whiteSpace: 'nowrap', fontSize: 'clamp(56px, 10vw, 150px)', lineHeight: '0.95', letterSpacing: '-0.035em' }}>{chars.map((ch, $index) => (<Fragment key={$index}><span style={{ color: ch.color }}>{ch.c}</span></Fragment>))}<span style={{ color: dot ? '#376EB5' : 'transparent' }}>.</span></span>
+      <span aria-hidden="true" className="ol-seo-lede" style={{ display: 'block', maxWidth: '900px', fontSize: '36px', fontWeight: '400', lineHeight: '1.3', letterSpacing: '-0.01em', color: '#0A0F1F' }}>Hoger in Google en zichtbaar in AI. Traditionele SEO als fundament, AI-zichtbaarheid als volgende laag.</span>
+      <span aria-hidden="true" className="ol-seo-big" style={{ display: 'block', marginTop: '56px', textAlign: 'right', whiteSpace: 'nowrap', fontSize: 'clamp(56px, 8.4vw, 132px)', lineHeight: '0.95', letterSpacing: '-0.035em' }}>{chars.map((ch, $index) => (<Fragment key={$index}><span style={{ color: ch.color }}>{ch.c}</span></Fragment>))}<span style={{ color: dot ? '#376EB5' : 'transparent' }}>.</span></span>
       </h1>
 
       <div className="ol-hero-row" style={{ marginTop: '72px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '24px 48px' }}>
