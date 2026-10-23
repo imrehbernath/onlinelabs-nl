@@ -79,6 +79,12 @@ html,body{overflow-x:clip}
 .ol-big:hover,.ol-big:focus-visible{color:#8DB6EE !important}
 .ol-endpanel a:focus-visible{outline-color:#8DB6EE}
 .ol-mob{display:none !important}
+/* Tot 1100px het mobiele menu, anders raakt het desktopmenu de knop */
+@media (min-width: 961px) and (max-width: 1100px){
+.ol-nav,.ol-right,.ol-mega{display:none !important}
+.ol-mob{display:flex !important}
+.ol-headrow{display:flex !important}
+}
 @media (max-width: 960px){
 .ol-endwrap{padding:8px !important}
 .ol-endpanel{padding:48px 20px 28px !important;border-radius:10px !important;gap:48px !important}
@@ -148,7 +154,7 @@ html,body{overflow-x:clip}
 .ol-drumitem{left:20px !important;right:16px !important}
 .ol-drumitem span:last-child{white-space:normal !important;font-size:22px !important}
 .ol-imre{padding:24px 20px 72px !important}
-.v27-seo .ol-hero,.v27-seo .ol-imre,.v27-geo .ol-hero,.v27-geo .ol-imre{min-height:0 !important}
+.v27-seo .ol-hero,.v27-seo .ol-imre,.v27-geo .ol-hero,.v27-geo .ol-imre,.v27-ads .ol-hero,.v27-ads .ol-imre{min-height:0 !important}
 .ol-imre-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
 .ol-imre-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 .ol-fanpanel ul{grid-template-columns:minmax(0,1fr) !important}
@@ -213,4 +219,31 @@ html,body{overflow-x:clip}
 .ol-imre-grid{grid-template-columns:minmax(0,0.8fr) minmax(0,1.2fr) !important;gap:40px !important;align-items:start !important}
 .ol-cta-top{grid-template-columns:minmax(0,1fr) 220px !important;gap:32px !important;align-items:end !important}
 .ol-office{max-width:none !important;justify-self:stretch !important}
+}
+
+/* Online adverteren 2027 */
+.ol-kan{cursor:pointer;transition:color .25s ease}
+.ol-kan[aria-selected="false"]:hover{color:#376EB5 !important}
+.ol-kan:focus:not(:focus-visible){outline:none}
+#ol-prijs,#ol-kanalen{scroll-margin-top:104px}
+@media (max-width: 960px){
+#ol-prijs,#ol-kanalen{scroll-margin-top:72px}
+.ol-kan-grid{grid-template-columns:minmax(0,1fr) !important;gap:24px !important;margin-top:32px !important}
+.ol-kan span:last-child{font-size:26px !important}
+.ol-kan-panel{padding:24px 20px !important;min-height:320px !important}
+.ol-prijs{padding:8px !important}
+.ol-prijs-panel{padding:48px 20px !important;border-radius:10px !important}
+.ol-prijs-grid{grid-template-columns:minmax(0,1fr) !important;gap:16px !important}
+.ol-price{padding:24px 20px !important}
+}
+@media (min-width: 961px) and (max-width: 1200px){
+.ol-kan span:last-child{font-size:28px !important}
+.v27-ads .ol-steps-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;row-gap:48px !important}
+}
+@media (min-width: 641px) and (max-width: 960px){
+.v27-ads .ol-steps-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+.ol-prijs-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+}
+@media (max-width: 640px){
+.v27-ads .ol-imre-photo{max-width:360px !important}
 }

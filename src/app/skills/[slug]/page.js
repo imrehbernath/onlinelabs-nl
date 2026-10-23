@@ -17,6 +17,8 @@ import SeoView from '@/app/components/v2027/SeoView';
 import { SEO_FAQS } from '@/app/components/v2027/seoFaqs';
 import GeoView from '@/app/components/v2027/GeoView';
 import { GEO_FAQS } from '@/app/components/v2027/geoFaqs';
+import AdsView from '@/app/components/v2027/AdsView';
+import { ADS_FAQS } from '@/app/components/v2027/adsFaqs';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
 const WP_URL = 'https://cdn.onlinelabs.nl';
@@ -413,11 +415,14 @@ export default async function ServiceDetailPage({ params }) {
     "serviceType": heroData.title?.split('–')[0]?.trim() || heroData.title
   };
 
-  // Nieuw design 2027 voor de SEO specialist- en GEO-pagina
-  if (slug === 'seo-specialist' || slug === 'geo-optimalisatie') {
-    const isGeo = slug === 'geo-optimalisatie';
-    const pageFaqs = isGeo ? GEO_FAQS : SEO_FAQS;
-    const View = isGeo ? GeoView : SeoView;
+  // Nieuw design 2027 voor de SEO specialist-, GEO- en advertentiepagina
+  const V2027 = {
+    'seo-specialist': [SeoView, SEO_FAQS],
+    'geo-optimalisatie': [GeoView, GEO_FAQS],
+    'online-adverteren': [AdsView, ADS_FAQS],
+  };
+  if (V2027[slug]) {
+    const [View, pageFaqs] = V2027[slug];
     const allLogos = (logoSliderData?.logos || [])
       .map((l) => ({ n: l.name || '', src: replaceWpUrls(l.imageUrl)?.replace(SITE_URL + '/wp-content', WP_URL + '/wp-content'), href: l.url || '#' }))
       .filter((l) => l.src);

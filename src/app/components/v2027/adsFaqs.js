@@ -1,0 +1,9 @@
+// Veelgestelde vragen online adverteren: los bestand zodat de server-pagina ze voor de FAQ-schema kan gebruiken.
+export const ADS_FAQS = [
+  { q: 'Wat kost adverteren op Google of social media?', a: 'De kosten bestaan uit twee delen: onze kosten voor setup en beheer, en je advertentiebudget. De setup kost €500 per platform, beheer vanaf €125 per maand. Je advertentiebudget bepaal je zelf. We adviseren minimaal €500 per maand voor meetbare resultaten.' },
+  { q: 'Hoe snel zie ik resultaat van online advertenties?', a: 'Bij Google Ads zie je vaak binnen enkele dagen de eerste kliks en conversies. Bij social media campagnes duurt het opbouwen van data meestal 2 tot 4 weken voordat we goed kunnen optimaliseren. Schaalbare resultaten zie je na 2 tot 3 maanden.' },
+  { q: 'Welk advertentieplatform past bij mijn bedrijf?', a: 'Google Ads werkt goed als mensen actief zoeken naar jouw product of dienst. Meta (Facebook en Instagram) is sterk voor visuele producten en het bereiken van nieuwe doelgroepen. LinkedIn is ideaal voor B2B en het bereiken van specifieke functies.' },
+  { q: 'Kan ik mijn advertentiebudget tussentijds aanpassen?', a: 'Ja, je budget is volledig flexibel. We kunnen op- of afschalen wanneer je wilt. Bij seizoenspieken of acties verhogen we tijdelijk, in rustige periodes verlagen we. Jij houdt altijd de controle.' },
+  { q: 'Wat is ROAS en waarom is het belangrijk?', a: 'ROAS staat voor Return On Ad Spend: de omzet die je terugkrijgt per geïnvesteerde euro. Een ROAS van 4 betekent €4 omzet per €1 advertentiekosten. Wij sturen op ROAS, niet op kliks of vertoningen.' },
+  { q: 'Zit ik vast aan een contract?', a: 'Nee, we werken zonder langlopende contracten. Na de eenmalige setup kun je maandelijks opzeggen. We geloven dat je blijft omdat het werkt, niet omdat het moet.' },
+];
