@@ -149,7 +149,8 @@ html:has(.v27-home){scroll-snap-type:y proximity}
 .ol-drum{height:380px !important}
 .ol-drumitem{left:20px !important;right:16px !important}
 .ol-drumitem span:last-child{white-space:normal !important;font-size:22px !important}
-.ol-imre{padding:72px 20px !important}
+.ol-imre{padding:24px 20px 72px !important}
+.v27-seo .ol-hero,.v27-seo .ol-imre{min-height:0 !important}
 .ol-imre-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
 .ol-imre-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 .ol-fanpanel ul{grid-template-columns:minmax(0,1fr) !important}
@@ -161,8 +162,4 @@ html:has(.v27-home){scroll-snap-type:y proximity}
 .ol-seo-cta .ol-down::after{transform:scaleX(1);opacity:.35}
 .ol-steps-meta{flex-direction:column !important;gap:12px !important;margin-top:40px !important}
 .ol-steps-meta span[aria-hidden]{display:none}
-.ol-steps-meta span{border-left:2px solid #376EB5;padding-left:14px;line-height:1.5}
-.ol-seo-proof{flex-direction:column !important;gap:10px !important}
-.ol-seo-proof span[aria-hidden]{display:none}
-.ol-seo-proof span{border-left:2px solid #376EB5;padding-left:14px;line-height:1.4}
 }
