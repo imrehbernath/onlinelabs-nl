@@ -8,7 +8,8 @@ html,body{overflow-x:clip}
 .ol-navlink{height:44px;border-radius:999px;box-sizing:border-box;transition:background-color .2s ease}
 .ol-navlink:hover,.ol-navlink:focus-visible{background:#EEF3FA !important;color:#0A0F1F}
 :where(.v27) a:focus-visible,:where(.v27) button:focus-visible{outline:3px solid #376EB5;outline-offset:3px;border-radius:8px}
-.ol-mega a:focus-visible,.ol-work a:focus-visible{outline-color:#8DB6EE}
+.ol-mega a:focus-visible{outline-color:#FFFFFF}
+.ol-work a:focus-visible{outline-color:#8DB6EE}
 .ol-pill{transition:background-color .25s ease,box-shadow .25s ease !important}
 .ol-pill:hover,.ol-pill:focus-visible{background:#376EB5 !important;color:#FFFFFF !important;box-shadow:0 4px 14px rgba(55,110,181,.22)}
 .ol-pill svg{transition:transform .25s ease}
@@ -22,7 +23,7 @@ html,body{overflow-x:clip}
 .ol-pill-light:hover{background:#8DB6EE;color:#0A0F1F}
 .ol-textlink:hover{color:#376EB5}
 .ol-mlink .ol-mt{transition:color .2s ease}
-.ol-mlink:hover .ol-mt,.ol-mlink:focus-visible .ol-mt{color:#8DB6EE}
+.ol-mlink:hover .ol-mt,.ol-mlink:focus-visible .ol-mt{color:#0A0F1F}
 .ol-marr{opacity:0;transform:translateX(-6px);transition:opacity .2s ease,transform .2s ease}
 .ol-mlink:hover .ol-marr,.ol-mlink:focus-visible .ol-marr{opacity:1;transform:none}
 .ol-tool:hover{color:#8DB6EE}
