@@ -134,6 +134,8 @@ html,body{overflow-x:clip}
 /* Vrij scrollen: geen scroll-snap, die maakte het scrollen stroperig */
 
 /* SEO specialist 2027 */
+/* Grote kop in de hero: vaste hoogte op desktop, zodat de scramble de hero niet laat verspringen */
+@media (min-width: 961px){.ol-seo-big{height:0.95em;overflow:visible}}
 .ol-drum{outline:none}
 .ol-drum:focus-visible{box-shadow:0 0 0 3px #376EB5}
 .ol-drumitem{cursor:pointer;transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .45s ease,filter .45s ease,font-size .45s ease}
