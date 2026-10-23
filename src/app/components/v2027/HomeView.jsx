@@ -36,6 +36,7 @@ function Hero() {
   const startsRef = useRef(NEVER);
   const heroRef = useRef(null);
   const reduced = useRef(false);
+  const heroVisible = useRef(true);
 
   const lineEnd = (st, i) => (st[i] || 0) + 280 + KOP.lines[i].t.length * 55;
 
@@ -58,6 +59,8 @@ function Hero() {
   const scheduleWow = useCallback(() => {
     clearTimeout(wow.current);
     wow.current = setTimeout(() => {
+      // Hero niet in beeld: niets animeren, alleen later opnieuw kijken
+      if (!heroVisible.current || document.hidden) { scheduleWow(); return; }
       const i = Math.floor(Math.random() * KOP.lines.length);
       const st = startsRef.current.slice();
       st[i] = Date.now();
@@ -85,6 +88,11 @@ function Hero() {
 
     // Diepte: de woorden schuiven een paar pixels mee met de muis
     const el = heroRef.current;
+    let io = null;
+    if (el && 'IntersectionObserver' in window) {
+      io = new IntersectionObserver(([en]) => { heroVisible.current = en.isIntersecting; });
+      io.observe(el);
+    }
     let onMove = null;
     let onLeave = null;
     if (el && !reduced.current && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
@@ -104,6 +112,7 @@ function Hero() {
     return () => {
       clearInterval(anim.current);
       clearTimeout(wow.current);
+      if (io) io.disconnect();
       if (el && onMove) {
         el.removeEventListener('mousemove', onMove);
         el.removeEventListener('mouseleave', onLeave);

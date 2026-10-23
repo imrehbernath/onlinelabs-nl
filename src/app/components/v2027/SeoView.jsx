@@ -29,7 +29,6 @@ export default function SeoView({ logosTop = [], logosBottom = [] }) {
   const touched = useRef(false);
   const heldRef = useRef(false);
   const activeRef = useRef(0);
-  const lastDrum = useRef(0);
   heldRef.current = fanHeld;
   activeRef.current = fanActive;
 
@@ -56,25 +55,9 @@ export default function SeoView({ logosTop = [], logosBottom = [] }) {
       }, 5000);
     }
 
-    // Scrollen over de trommel draait de trommel, niet de pagina
-    const drum = document.querySelector('.ol-drum');
-    const onDrumWheel = (e) => {
-      const st = e.deltaY > 0 ? 1 : -1;
-      const next = activeRef.current + st;
-      if (next < 0 || next >= SERVICES.length) return;
-      e.preventDefault();
-      if (Math.abs(e.deltaY) < 4) return;
-      const t = Date.now();
-      if (t - lastDrum.current < 420) return;
-      lastDrum.current = t;
-      touched.current = true;
-      setFanActive(next);
-    };
-    if (drum) drum.addEventListener('wheel', onDrumWheel, { passive: false });
     return () => {
       if (anim) clearInterval(anim);
       if (fanTimer) clearInterval(fanTimer);
-      if (drum) drum.removeEventListener('wheel', onDrumWheel);
     };
   }, []);
 

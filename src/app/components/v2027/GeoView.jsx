@@ -39,6 +39,7 @@ export default function GeoView({ logosTop = [], logosBottom = [] }) {
   const [scanError, setScanError] = useState(null);
   const lastUrl = useRef('');
   const extracting = useRef(false);
+  const teunVisible = useRef(false);
 
   useEffect(() => {
     const isReduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -56,9 +57,17 @@ export default function GeoView({ logosTop = [], logosBottom = [] }) {
     let ti = 0;
     setTStart(ts);
     // Eén timer: hero-scramble en het wisselende AI-platform
+    // Het wisselende AI-platform alleen laten lopen als het blok in beeld is
+    const teun = document.getElementById('ol-scan');
+    let io = null;
+    if (teun && 'IntersectionObserver' in window) {
+      io = new IntersectionObserver(([en]) => { teunVisible.current = en.isIntersecting; });
+      io.observe(teun);
+    } else teunVisible.current = true;
     const anim = setInterval(() => {
       const t = Date.now();
       const w = AI_WORDS[ti];
+      if (t > heroEnd && !teunVisible.current) return;
       if (t > ts + 280 + w.length * 55 + 2600) {
         ti = (ti + 1) % AI_WORDS.length;
         ts = t;
@@ -68,7 +77,7 @@ export default function GeoView({ logosTop = [], logosBottom = [] }) {
       // Alleen verversen terwijl er iets beweegt
       if (t < heroEnd || t < ts + 280 + AI_WORDS[ti].length * 55 + 60) setNow(t);
     }, 50);
-    return () => clearInterval(anim);
+    return () => { clearInterval(anim); if (io) io.disconnect(); };
   }, []);
 
   // Website invullen: Teun.ai haalt zoekwoorden, naam en branche op

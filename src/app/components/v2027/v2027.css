@@ -125,14 +125,10 @@ html,body{overflow-x:clip}
 #ol-werk{scroll-margin-top:104px}
 .v27 h1,.v27 h2,.v27 h3,.v27 h4{color:inherit;line-height:normal;letter-spacing:normal}
 .v27 p{margin-bottom:0;line-height:normal}
-/* Stoppen per onderdeel: native scroll-snap (alleen homepage, alleen desktop) */
-@media (min-width: 961px) and (prefers-reduced-motion: no-preference){
-html:has(.v27-home){scroll-snap-type:y proximity}
-.v27-home .ol-snap,.v27 .ol-endwrap{scroll-snap-align:start;scroll-margin-top:104px}
-}
+/* Vrij scrollen: geen scroll-snap, die maakte het scrollen stroperig */
 
 /* SEO specialist 2027 */
-.ol-drum{outline:none;cursor:ns-resize}
+.ol-drum{outline:none}
 .ol-drum:focus-visible{box-shadow:0 0 0 3px #376EB5}
 .ol-drumitem{cursor:pointer;transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .45s ease,filter .45s ease,font-size .45s ease}
 .ol-drumitem:not(.is-active):hover{opacity:.9 !important;filter:none !important}
