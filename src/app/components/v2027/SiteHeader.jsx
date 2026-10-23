@@ -79,9 +79,6 @@ export default function SiteHeader() {
       </nav>
 
       <div className="ol-right" style={{ justifySelf: 'end', display: 'flex', alignItems: 'center', gap: '28px', flexShrink: '0' }}>
-      <a className="ol-textlink" href="https://teun.ai" target="_blank" rel="noopener" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '17px', fontWeight: '600', textDecoration: 'none', whiteSpace: 'nowrap' }}>Teun.ai
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" style={{ strokeWidth: '2.5', strokeLinecap: 'round', strokeLinejoin: 'round' }}><path d="M7 17L17 7M8 7h9v9"></path></svg>
-      </a>
       <a className="ol-pill" href="/contact" style={{ display: 'inline-flex', alignItems: 'center', height: '56px', padding: '0 30px', borderRadius: '999px', background: '#0A0F1F', color: '#FFFFFF', fontSize: '16px', fontWeight: '600', textDecoration: 'none', whiteSpace: 'nowrap', transition: 'background .2s ease' }}>Kennismaken</a>
       </div>
 
