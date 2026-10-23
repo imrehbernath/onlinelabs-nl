@@ -86,7 +86,8 @@ html,body{overflow-x:clip}
 .ol-office{max-width:none !important;justify-self:stretch !important;aspect-ratio:4 / 3 !important}
 .ol-cta-h{font-size:clamp(34px,10vw,56px) !important}
 .ol-foot-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:32px !important}
-.ol-foot-grid > div:first-child{grid-column:1 / -1}
+.ol-foot-grid > div:first-child,.ol-foot-grid > div:nth-child(2){grid-column:1 / -1}
+.ol-foot-grid .ol-fl{white-space:nowrap}
 .ol-revs{padding:72px 20px !important}
 .ol-revgrid{margin-right:-20px !important;padding-right:20px !important}
 .ol-rev{flex-basis:85% !important}
@@ -161,4 +162,7 @@ html:has(.v27-home){scroll-snap-type:y proximity}
 .ol-steps-meta{flex-direction:column !important;gap:12px !important;margin-top:40px !important}
 .ol-steps-meta span[aria-hidden]{display:none}
 .ol-steps-meta span{border-left:2px solid #376EB5;padding-left:14px;line-height:1.5}
+.ol-seo-proof{flex-direction:column !important;gap:10px !important}
+.ol-seo-proof span[aria-hidden]{display:none}
+.ol-seo-proof span{border-left:2px solid #376EB5;padding-left:14px;line-height:1.4}
 }
