@@ -82,7 +82,8 @@ html,body{overflow-x:clip}
 @media (max-width: 960px){
 .ol-endwrap{padding:8px !important}
 .ol-endpanel{padding:48px 20px 28px !important;border-radius:10px !important;gap:48px !important}
-.ol-cta-top{grid-template-columns:minmax(0,1fr) !important;gap:24px !important}
+.ol-cta-top{grid-template-columns:minmax(0,1fr) !important;gap:40px !important}
+.ol-office{max-width:none !important;justify-self:stretch !important;aspect-ratio:4 / 3 !important}
 .ol-cta-h{font-size:clamp(34px,10vw,56px) !important}
 .ol-foot-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:32px !important}
 .ol-foot-grid > div:first-child{grid-column:1 / -1}
@@ -153,4 +154,11 @@ html:has(.v27-home){scroll-snap-type:y proximity}
 .ol-fanpanel ul{grid-template-columns:minmax(0,1fr) !important}
 .ol-steps,.ol-faq{padding:72px 20px !important}
 .ol-steps-grid,.ol-faq-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
+.ol-seo-cta{flex-direction:column !important;align-items:stretch !important;gap:20px !important;width:100%}
+.ol-seo-cta .ol-pill{order:-1;justify-content:center;width:100%;box-sizing:border-box}
+.ol-seo-cta .ol-down{align-self:center;font-size:16px !important}
+.ol-seo-cta .ol-down::after{transform:scaleX(1);opacity:.35}
+.ol-steps-meta{flex-direction:column !important;gap:12px !important;margin-top:40px !important}
+.ol-steps-meta span[aria-hidden]{display:none}
+.ol-steps-meta span{border-left:2px solid #376EB5;padding-left:14px;line-height:1.5}
 }

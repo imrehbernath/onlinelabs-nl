@@ -157,7 +157,7 @@ export default function SeoView({ logosTop = [], logosBottom = [] }) {
       <p style={{ margin: '0', fontSize: '15px', color: '#5B6275', display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}>
       <span>Google Partner</span><span aria-hidden="true">·</span><span>5,0 uit 29 Google reviews</span><span aria-hidden="true">·</span><span>150+ websites in beheer</span>
       </p>
-      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px 32px' }}>
+      <div className="ol-seo-cta" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px 32px' }}>
       <a className="ol-scroll ol-down" href="#ol-wwd" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', fontSize: '17px', fontWeight: '600', textDecoration: 'none' }}>Bekijk wat we doen</a>
       <a className="ol-pill" href="/contact" style={{ display: 'inline-flex', alignItems: 'center', height: '56px', padding: '0 28px', borderRadius: '999px', background: '#0A0F1F', color: '#FFFFFF', fontSize: '16px', fontWeight: '600', textDecoration: 'none', whiteSpace: 'nowrap' }}>Vraag SEO-advies aan</a>
       </div>
@@ -254,7 +254,7 @@ export default function SeoView({ logosTop = [], logosBottom = [] }) {
       <p style={{ margin: '14px 0 0', fontSize: '17px', lineHeight: '1.6', color: '#3A4256' }}>Je krijgt realtime SEO-data en maandelijkse updates. Wat niet werkt, sturen we bij.</p>
       </div>
       </div>
-      <p style={{ margin: '56px 0 0', fontSize: '15px', color: '#5B6275', display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}><span>Eerste meetbare verbetering na 3 tot 6 maanden</span><span aria-hidden="true">·</span><span>Structurele groei na 12 maanden of langer</span></p>
+      <p className="ol-steps-meta" style={{ margin: '56px 0 0', fontSize: '15px', color: '#5B6275', display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}><span>Eerste meetbare verbetering na 3 tot 6 maanden</span><span aria-hidden="true">·</span><span>Structurele groei na 12 maanden of langer</span></p>
       </section>
 
       <section className="ol-faq ol-snap" aria-labelledby="ol-faq-h" style={{ maxWidth: '1440px', margin: '0 auto', padding: '96px 40px', boxSizing: 'border-box', minHeight: 'calc(100vh - 104px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>

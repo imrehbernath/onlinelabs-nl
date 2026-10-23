@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 // Afsluiter en footer 2027: overgenomen uit het Claude Design-bestand (Main.dc.html).
 export default function SiteFooter() {
   return (
@@ -6,14 +8,19 @@ export default function SiteFooter() {
       <div className="ol-endpanel" style={{ maxWidth: '1600px', margin: '0 auto', background: '#0A0F1F', color: '#FFFFFF', borderRadius: '12px', padding: '72px 56px 40px', boxSizing: 'border-box', minHeight: 'calc(100vh - 136px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '72px' }}>
 
       <section className="ol-cta-top" aria-labelledby="ol-cta-h" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(0, 1fr)', gap: '64px', alignItems: 'end' }}>
-      <h2 id="ol-cta-h" className="ol-cta-h" style={{ margin: '0', fontSize: 'clamp(40px, 5.6vw, 88px)', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}><span style={{ display: 'block', whiteSpace: 'nowrap' }}>Kop koffie aan</span><span style={{ display: 'block', whiteSpace: 'nowrap' }}>de Herengracht<span style={{ color: '#6FA3E6' }}>?</span></span></h2>
       <div>
+      <h2 id="ol-cta-h" className="ol-cta-h" style={{ margin: '0', fontSize: 'clamp(40px, 5.6vw, 88px)', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}><span style={{ display: 'block', whiteSpace: 'nowrap' }}>Kop koffie aan</span><span style={{ display: 'block', whiteSpace: 'nowrap' }}>de Herengracht<span style={{ color: '#6FA3E6' }}>?</span></span></h2>
+      <div style={{ marginTop: '40px', maxWidth: '560px' }}>
       <p style={{ margin: '0', fontSize: '20px', lineHeight: '1.6', color: '#A9AFBF' }}>Vertel waar je staat en waar je naartoe wilt. Dan kijken we samen wat er nodig is, zonder verkooppraatje.</p>
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px 32px', marginTop: '32px' }}>
       <a className="ol-pill" href="/contact" style={{ display: 'inline-flex', alignItems: 'center', height: '56px', padding: '0 30px', borderRadius: '999px', background: '#FFFFFF', color: '#0A0F1F', fontSize: '16px', fontWeight: '600', textDecoration: 'none', whiteSpace: 'nowrap' }}>Kennismaken</a>
       <a className="ol-big" href="tel:+31208202022" style={{ color: '#FFFFFF', fontSize: '20px', fontWeight: '600', textDecoration: 'none' }}>020 820 20 22</a>
       <a className="ol-big" href="mailto:hallo@onlinelabs.nl" style={{ color: '#FFFFFF', fontSize: '20px', fontWeight: '600', textDecoration: 'none' }}>hallo@onlinelabs.nl</a>
       </div>
+      </div>
+      </div>
+      <div className="ol-office" style={{ position: 'relative', width: '100%', maxWidth: '440px', aspectRatio: '875 / 1000', justifySelf: 'end', borderRadius: '10px', overflow: 'hidden', background: '#1A2033' }}>
+      <Image src="https://cdn.onlinelabs.nl/wp-content/uploads/2025/11/OnlineLabs-kantoor.webp" alt="Kantoor van OnlineLabs aan de Herengracht 221 in Amsterdam" fill sizes="(max-width: 960px) 100vw, 440px" quality={78} style={{ objectFit: 'cover' }} />
       </div>
       </section>
 
