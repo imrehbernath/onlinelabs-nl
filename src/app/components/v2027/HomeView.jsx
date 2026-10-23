@@ -171,10 +171,7 @@ function Hero() {
       </span>
       </h1>
 
-      <div className="ol-hero-row" style={{ marginTop: '80px', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 540px)', gap: '64px', alignItems: 'end' }}>
-      <a className="ol-scroll ol-down" href="#ol-werk" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', fontSize: '17px', fontWeight: '600', textDecoration: 'none', justifySelf: 'start' }}>Bekijk ons werk
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" style={{ strokeWidth: '2.2', strokeLinecap: 'round', strokeLinejoin: 'round' }}><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
-      </a>
+      <div className="ol-hero-row" style={{ marginTop: '80px', display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: '64px', alignItems: 'end' }}>
       <div>
       <p className="ol-intro" style={{ margin: '0', fontSize: '20px', lineHeight: '1.6', color: '#3A4256' }}>Drie specialisten met een slimme AI-assistent ernaast. Wij leveren vakwerk: websites, SEO, AI-zichtbaarheid en campagnes in Google Ads en Meta, die tot achter de komma kloppen. Topkwaliteit die vroeger alleen voor grote budgetten was, nu binnen bereik.</p>
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 28px', marginTop: '32px' }}>
@@ -184,6 +181,9 @@ function Hero() {
       <span>Google Partner</span><span aria-hidden="true">·</span><span>5,0 uit 29 Google reviews</span><span aria-hidden="true">·</span><span>150+ websites in beheer</span>
       </p>
       </div>
+      <a className="ol-scroll ol-down" href="#ol-werk" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', fontSize: '17px', fontWeight: '600', textDecoration: 'none', justifySelf: 'end' }}>Bekijk ons werk
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" style={{ strokeWidth: '2.2', strokeLinecap: 'round', strokeLinejoin: 'round' }}><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+      </a>
       </div>
       </section>
     </>

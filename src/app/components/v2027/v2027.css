@@ -103,7 +103,7 @@ html,body{overflow-x:clip}
 .ol-logo{height:24px !important}
 .ol-hero{padding:56px 20px 48px !important}
 .ol-hero-row{grid-template-columns:minmax(0,1fr) !important;gap:40px !important;margin-top:40px !important}
-.ol-hero-row > .ol-scroll{order:2}
+.ol-hero-row > .ol-scroll{order:2;justify-self:start !important}
 .ol-eyebrow{font-size:12px !important;margin-bottom:20px !important}
 .ol-intro{font-size:18px !important}
 .ol-workwrap{padding:0 8px 8px !important}
