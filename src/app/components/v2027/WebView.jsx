@@ -19,6 +19,9 @@ const PROJECTEN = [
   { name: 'De Muider Compagnie', href: 'https://www.muidercompagnie.nl', img: `${CDN}/2026/10/Muider-compagnie-desktop.webp`, alt: 'Website De Muider Compagnie', framed: true },
   { name: 'Human Rights Initiatives', href: 'https://www.humanrightsinitiatives.com', img: `${CDN}/2026/10/Human-Rights-Initiatives-desktop.webp`, alt: 'Website Human Rights Initiatives', framed: true },
   { name: 'Forteiland Pampus', href: 'https://www.pampus.nl', img: `${CDN}/2026/10/Forteiland-Pampus-desktop.webp`, alt: 'Website Forteiland Pampus', framed: true },
+  { name: 'Evert Groot', href: 'https://evertgroot.nl', img: `${CDN}/2026/10/Evert-Groot-desktop.webp`, alt: 'Website Evert Groot', framed: true },
+  { name: 'Farber Zwaanswijk Advocaten', href: 'https://www.fzadvocaten.nl', img: `${CDN}/2026/10/Farber-Zwaanswijk-Advocaten-desktop.webp`, alt: 'Website Farber Zwaanswijk Advocaten', framed: true },
+  { name: 'Dry Systems', href: 'https://drysystems.nl', img: `${CDN}/2026/10/Dry-Systems-desktop-versie.webp`, alt: 'Website Dry Systems', framed: true },
 ];
 
 const lower = 'abcdefghijklnoprstuvxyz';
