@@ -10,15 +10,15 @@ const WORD = 'Website op maat';
 const CDN = 'https://cdn.onlinelabs.nl/wp-content/uploads';
 
 const PROJECTEN = [
-  { name: 'De Smaak van Italië', href: 'https://www.desmaakvanitalie.nl', img: `${CDN}/2026/10/De-Smaak-van-Italie-project.webp`, alt: 'Website De Smaak van Italië' },
-  { name: 'Grachtenmuseum', href: 'https://grachten.museum', img: `${CDN}/2026/07/Het-Grachtenmuseum-project.webp`, alt: 'Website Grachtenmuseum' },
-  { name: 'HvanA', href: 'https://hvana.nl', img: `${CDN}/2025/11/HvanA.webp`, alt: 'Website Hogeschool van Amsterdam' },
-  { name: 'HM2 kwadraat', href: 'https://www.hmkwadraat.com', img: `${CDN}/2026/07/Project-HM2-kwadraat.webp`, alt: 'Project HM2 kwadraat' },
-  { name: 'Rederij Navigo', href: 'https://navigoamsterdam.nl', img: `${CDN}/2025/11/Project-Rederij-Navigo.webp`, alt: 'Project Rederij Navigo' },
-  { name: 'Sinck&Ko', href: 'https://www.sinck-ko.nl', img: `${CDN}/2026/10/Sinck-en-Ko-project.webp`, alt: 'Website Sinck&Ko' },
-  { name: 'De Muider Compagnie', href: 'https://www.muidercompagnie.nl', img: `${CDN}/2025/11/Muider-Compagnie.webp`, alt: 'Website De Muider Compagnie' },
-  { name: 'Human Rights Initiatives', href: 'https://www.humanrightsinitiatives.com', img: `${CDN}/2025/11/Human-Rights-Initiatives.webp`, alt: 'Website Human Rights Initiatives' },
-  { name: 'Farber Zwaanswijk Advocaten', href: 'https://www.fzadvocaten.nl', img: `${CDN}/2026/10/Farber-Zwaanswijk-Advocaten-project.webp`, alt: 'Website Farber Zwaanswijk Advocaten' },
+  { name: 'De Smaak van Italië', href: 'https://www.desmaakvanitalie.nl', img: `${CDN}/2026/10/De-Smaak-van-Italie-Desktop.webp`, alt: 'Website De Smaak van Italië', framed: true },
+  { name: 'Grachtenmuseum', href: 'https://grachten.museum', img: `${CDN}/2026/10/De-Grachten-Museum-desktop.webp`, alt: 'Website Grachtenmuseum', framed: true },
+  { name: 'HvanA', href: 'https://hvana.nl', img: `${CDN}/2026/10/HvanA-Desktop.webp`, alt: 'Website Hogeschool van Amsterdam', framed: true },
+  { name: 'HM2 kwadraat', href: 'https://www.hmkwadraat.com', img: `${CDN}/2026/10/HM-kwadraat-desktop.webp`, alt: 'Website HM2 kwadraat', framed: true },
+  { name: 'Rederij Navigo', href: 'https://navigoamsterdam.nl', img: `${CDN}/2026/10/Rederij-Navigo-desktop.webp`, alt: 'Website Rederij Navigo', framed: true },
+  { name: 'Sinck&Ko', href: 'https://www.sinck-ko.nl', img: `${CDN}/2026/10/Sinck-en-Ko-desktop-versie.webp`, alt: 'Website Sinck&Ko', framed: true },
+  { name: 'De Muider Compagnie', href: 'https://www.muidercompagnie.nl', img: `${CDN}/2026/10/Muider-compagnie-desktop.webp`, alt: 'Website De Muider Compagnie', framed: true },
+  { name: 'Human Rights Initiatives', href: 'https://www.humanrightsinitiatives.com', img: `${CDN}/2026/10/Human-Rights-Initiatives-desktop.webp`, alt: 'Website Human Rights Initiatives', framed: true },
+  { name: 'Forteiland Pampus', href: 'https://www.pampus.nl', img: `${CDN}/2026/10/Forteiland-Pampus-desktop.webp`, alt: 'Website Forteiland Pampus', framed: true },
 ];
 
 const lower = 'abcdefghijklnoprstuvxyz';
@@ -127,8 +127,8 @@ export default function WebView({ logosTop = [], logosBottom = [] }) {
       <div className="ol-port-grid" style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '32px 24px' }}>
       {projecten.map((p, $index) => (<Fragment key={$index}>
       <a className="ol-portcard" href={p.href} target="_blank" rel="noopener" aria-label={`Bekijk de website van ${p.name}`} style={{ display: 'block', color: '#0A0F1F', textDecoration: 'none' }}>
-      <span className="ol-portimg" style={{ position: 'relative', display: 'block', aspectRatio: '3 / 2', borderRadius: '10px', overflow: 'hidden', background: '#DCE7F6' }}>
-      <Image src={p.img} alt={p.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw" quality={78} style={{ objectFit: 'cover', objectPosition: 'top center' }} />
+      <span className={p.framed ? 'ol-portimg is-framed' : 'ol-portimg'} style={{ position: 'relative', display: 'block', aspectRatio: '3 / 2', borderRadius: '10px', overflow: 'hidden', background: '#DCE7F6' }}>
+      <span className="ol-portshot"><Image src={p.img} alt={p.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw" quality={78} style={{ objectFit: 'cover', objectPosition: 'top center' }} /></span>
       <span className="ol-portover" style={{ position: 'absolute', left: '16px', bottom: '16px', display: 'inline-flex', alignItems: 'center', height: '40px', padding: '0 16px', borderRadius: '6px', background: '#FFFFFF', color: '#0A0F1F', fontSize: '14px', fontWeight: '700' }}>Bekijk website</span>
       </span>
       <span style={{ display: 'block', marginTop: '14px', fontSize: '20px', fontWeight: '600', letterSpacing: '-0.01em' }}>{p.name}</span>

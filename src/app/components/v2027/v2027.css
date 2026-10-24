@@ -271,11 +271,15 @@ html,body{overflow-x:clip}
 .ol-portcard{cursor:pointer}
 .ol-portimg img{transition:transform .5s ease}
 .ol-portcard:hover .ol-portimg img{transform:scale(1.03)}
+.ol-portshot{position:absolute;inset:0;display:block}
+.ol-portimg.is-framed .ol-portshot{top:6%;left:6%;right:auto;bottom:auto;width:88%;aspect-ratio:3 / 2;border-radius:6px;overflow:hidden;box-shadow:0 12px 32px rgba(10,15,31,.14);transition:transform .45s ease}
+.ol-portcard:hover .ol-portimg.is-framed img{transform:none}
+.ol-portcard:hover .ol-portimg.is-framed .ol-portshot{transform:translateY(-6px)}
 .ol-portcard:hover > span:last-child{color:#376EB5}
 .ol-portover{opacity:0;transform:translateY(6px);transition:opacity .25s ease,transform .25s ease}
 .ol-portcard:hover .ol-portover,.ol-portcard:focus-visible .ol-portover{opacity:1;transform:none}
 #ol-portfolio{scroll-margin-top:104px}
-@media (prefers-reduced-motion: reduce){.ol-portimg img,.ol-portover{transition:none}.ol-portcard:hover .ol-portimg img{transform:none}}
+@media (prefers-reduced-motion: reduce){.ol-portimg img,.ol-portover,.ol-portshot{transition:none}.ol-portcard:hover .ol-portimg img,.ol-portcard:hover .ol-portshot{transform:none !important}}
 @media (max-width: 960px){
 #ol-portfolio{scroll-margin-top:72px}
 .ol-port-grid{grid-template-columns:minmax(0,1fr) !important;gap:28px !important}
@@ -285,3 +289,12 @@ html,body{overflow-x:clip}
 @media (min-width: 641px) and (max-width: 1200px){
 .ol-port-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 }
+
+/* Subtiel 2027: punt achter koppen, rustiger hero */
+.ol-why-h{text-wrap:balance}
+.ol-dots .ol-why-h:not(.ol-teun-h) > span:last-child{display:inline-block;transform:scale(0);transform-origin:50% 80%;transition:transform .55s cubic-bezier(.3,1.6,.5,1) .15s}
+.ol-dots .ol-why-h.is-in:not(.ol-teun-h) > span:last-child{transform:none}
+@media (min-width: 961px){
+.v27-seo .ol-hero,.v27-geo .ol-hero,.v27-ads .ol-hero,.v27-lokaal .ol-hero,.v27-web .ol-hero{min-height:min(calc(100vh - 104px), 760px) !important}
+}
+@media (prefers-reduced-motion: reduce){.ol-dots .ol-why-h:not(.ol-teun-h) > span:last-child{transform:none;transition:none}}

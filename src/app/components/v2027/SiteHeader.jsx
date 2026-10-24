@@ -17,6 +17,25 @@ export default function SiteHeader() {
     setMobOpen(false);
   }, [pathname]);
 
+  // De blauwe punt achter een kop komt binnen zodra het blok in beeld komt
+  useEffect(() => {
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !('IntersectionObserver' in window)) return undefined;
+    const root = document.documentElement;
+    root.classList.add('ol-dots');
+    const heads = document.querySelectorAll('.v27 .ol-why-h');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) {
+          en.target.classList.add('is-in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -15% 0px' });
+    heads.forEach((h) => io.observe(h));
+    return () => io.disconnect();
+  }, [pathname]);
+
   // Escape en klik buiten het megamenu sluiten het menu
   useEffect(() => {
     const onKey = (e) => {
