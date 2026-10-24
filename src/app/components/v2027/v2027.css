@@ -157,7 +157,7 @@ html,body{overflow-x:clip}
 .ol-drumitem{left:20px !important;right:16px !important}
 .ol-drumitem span:last-child{white-space:normal !important;font-size:22px !important}
 .ol-imre{padding:24px 20px 72px !important}
-.v27-seo .ol-hero,.v27-seo .ol-imre,.v27-geo .ol-hero,.v27-geo .ol-imre,.v27-ads .ol-hero,.v27-ads .ol-imre,.v27-lokaal .ol-hero,.v27-lokaal .ol-imre{min-height:0 !important}
+.v27-seo .ol-hero,.v27-seo .ol-imre,.v27-geo .ol-hero,.v27-geo .ol-imre,.v27-ads .ol-hero,.v27-ads .ol-imre,.v27-lokaal .ol-hero,.v27-lokaal .ol-imre,.v27-web .ol-hero{min-height:0 !important}
 .ol-imre-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
 .ol-imre-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 .ol-fanpanel ul{grid-template-columns:minmax(0,1fr) !important}
@@ -265,4 +265,23 @@ html,body{overflow-x:clip}
 }
 @media (min-width: 961px) and (max-width: 1200px){
 .ol-query p{font-size:18px !important}
+}
+
+/* Website laten maken 2027 */
+.ol-portcard{cursor:pointer}
+.ol-portimg img{transition:transform .5s ease}
+.ol-portcard:hover .ol-portimg img{transform:scale(1.03)}
+.ol-portcard:hover > span:last-child{color:#376EB5}
+.ol-portover{opacity:0;transform:translateY(6px);transition:opacity .25s ease,transform .25s ease}
+.ol-portcard:hover .ol-portover,.ol-portcard:focus-visible .ol-portover{opacity:1;transform:none}
+#ol-portfolio{scroll-margin-top:104px}
+@media (prefers-reduced-motion: reduce){.ol-portimg img,.ol-portover{transition:none}.ol-portcard:hover .ol-portimg img{transform:none}}
+@media (max-width: 960px){
+#ol-portfolio{scroll-margin-top:72px}
+.ol-port-grid{grid-template-columns:minmax(0,1fr) !important;gap:28px !important}
+.ol-portover{opacity:1 !important;transform:none !important}
+.ol-logosec{padding:16px 20px 48px !important}
+}
+@media (min-width: 641px) and (max-width: 1200px){
+.ol-port-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 }

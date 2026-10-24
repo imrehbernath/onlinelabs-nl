@@ -1,0 +1,10 @@
+// Veelgestelde vragen website laten maken: los bestand zodat de server-pagina ze voor de FAQ-schema kan gebruiken.
+export const WEB_FAQS = [
+  { q: 'Hoe lang duurt het om een website te laten maken?', a: 'Een website is meestal binnen 3 tot 10 weken live, afhankelijk van de omvang en het maatwerk. De doorlooptijd hangt ook af van hoe snel je feedback geeft en content aanlevert. We plannen vooraf duidelijke feedbackmomenten in.' },
+  { q: 'Wat is het verschil tussen WordPress en een headless Next.js website?', a: 'Een WordPress website is ideaal als je zelf content wilt beheren. Een headless Next.js website laadt 2 tot 3 keer sneller, scoort vaak 100 op PageSpeed en is beter beveiligd. WordPress blijft dan het CMS, de voorkant draait in Next.js.' },
+  { q: 'Is mijn website ook zichtbaar in AI-zoekmachines zoals ChatGPT?', a: 'Ja. Elke website die we bouwen is AI-ready, met structured data, semantische HTML en content die AI-modellen begrijpen en kunnen citeren. Zo verschijn je ook in ChatGPT, Perplexity en de AI Overviews van Google.' },
+  { q: 'Wordt de website mijn eigendom?', a: 'Ja. Na oplevering is de website volledig van jou: het design, de code en de content. Je beheert hem zelf of laat dat aan ons over. Je zit nergens aan vast, ook niet bij een headless Next.js website.' },
+  { q: 'Kan ik niet beter zelf een website maken met AI?', a: 'Voor een persoonlijke site of hobbyproject is dat prima. Voor een bedrijfswebsite die moet scoren in Google, genoemd moet worden in AI en bezoekers klant moet maken, schiet het tekort. Wij gebruiken AI als versneller, met 25 jaar ervaring erachter.' },
+  { q: 'Wat is het verschil tussen een template en maatwerk?', a: 'Een template deel je met duizenden andere websites. Het is snel en goedkoop, maar beperkt in snelheid, SEO en uitstraling. Maatwerk wordt voor jouw merk gebouwd, met een eigen design, schone code en ingebouwde SEO.' },
+  { q: 'Waarom is jullie eigen website zo snel?', a: 'Onze site scoort 98 op Google PageSpeed door de combinatie van Next.js en WordPress. Geen overbodige plugins, geen zware page builders, geen onnodige scripts. Dezelfde aanpak gebruiken we voor onze klanten.' },
+];
