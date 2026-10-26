@@ -11,17 +11,17 @@ const CDN = 'https://cdn.onlinelabs.nl/wp-content/uploads';
 
 const PROJECTEN = [
   { name: 'De Smaak van Italië', href: 'https://www.desmaakvanitalie.nl', img: `${CDN}/2026/10/De-Smaak-van-Italie-Desktop.webp`, alt: 'Website De Smaak van Italië', framed: true, case: '/ons-werk/de-smaak-van-italie' },
-  { name: 'Grachtenmuseum', href: 'https://grachten.museum', img: `${CDN}/2026/10/De-Grachten-Museum-desktop.webp`, alt: 'Website Grachtenmuseum', framed: true },
-  { name: 'HvanA', href: 'https://hvana.nl', img: `${CDN}/2026/10/HvanA-Desktop.webp`, alt: 'Website Hogeschool van Amsterdam', framed: true },
-  { name: 'HM2 kwadraat', href: 'https://www.hmkwadraat.com', img: `${CDN}/2026/10/HM-kwadraat-desktop.webp`, alt: 'Website HM2 kwadraat', framed: true },
-  { name: 'Rederij Navigo', href: 'https://navigoamsterdam.nl', img: `${CDN}/2026/10/Rederij-Navigo-desktop.webp`, alt: 'Website Rederij Navigo', framed: true },
-  { name: 'Sinck&Ko', href: 'https://www.sinck-ko.nl', img: `${CDN}/2026/10/Sinck-en-Ko-desktop-versie.webp`, alt: 'Website Sinck&Ko', framed: true },
-  { name: 'De Muider Compagnie', href: 'https://www.muidercompagnie.nl', img: `${CDN}/2026/10/Muider-compagnie-desktop.webp`, alt: 'Website De Muider Compagnie', framed: true },
-  { name: 'Human Rights Initiatives', href: 'https://www.humanrightsinitiatives.com', img: `${CDN}/2026/10/Human-Rights-Initiatives-desktop.webp`, alt: 'Website Human Rights Initiatives', framed: true },
-  { name: 'Forteiland Pampus', href: 'https://www.pampus.nl', img: `${CDN}/2026/10/Forteiland-Pampus-desktop.webp`, alt: 'Website Forteiland Pampus', framed: true },
-  { name: 'Evert Groot', href: 'https://evertgroot.nl', img: `${CDN}/2026/10/Evert-Groot-desktop.webp`, alt: 'Website Evert Groot', framed: true },
-  { name: 'Farber Zwaanswijk Advocaten', href: 'https://www.fzadvocaten.nl', img: `${CDN}/2026/10/Farber-Zwaanswijk-Advocaten-desktop.webp`, alt: 'Website Farber Zwaanswijk Advocaten', framed: true },
-  { name: 'Dry Systems', href: 'https://drysystems.nl', img: `${CDN}/2026/10/Dry-Systems-desktop-versie.webp`, alt: 'Website Dry Systems', framed: true },
+  { name: 'Grachtenmuseum', href: 'https://grachten.museum', img: `${CDN}/2026/10/De-Grachten-Museum-desktop.webp`, alt: 'Website Grachtenmuseum', framed: true, case: '/ons-werk/grachtenmuseum' },
+  { name: 'HvanA', href: 'https://hvana.nl', img: `${CDN}/2026/10/HvanA-Desktop.webp`, alt: 'Website Hogeschool van Amsterdam', framed: true, case: '/ons-werk/hvana' },
+  { name: 'HM2 kwadraat', href: 'https://www.hmkwadraat.com', img: `${CDN}/2026/10/HM-kwadraat-desktop.webp`, alt: 'Website HM2 kwadraat', framed: true, case: '/ons-werk/hm2-kwadraat' },
+  { name: 'Rederij Navigo', href: 'https://navigoamsterdam.nl', img: `${CDN}/2026/10/Rederij-Navigo-desktop.webp`, alt: 'Website Rederij Navigo', framed: true, case: '/ons-werk/rederij-navigo' },
+  { name: 'Sinck&Ko', href: 'https://www.sinck-ko.nl', img: `${CDN}/2026/10/Sinck-en-Ko-desktop-versie.webp`, alt: 'Website Sinck&Ko', framed: true, case: '/ons-werk/sinck-en-ko' },
+  { name: 'De Muider Compagnie', href: 'https://www.muidercompagnie.nl', img: `${CDN}/2026/10/Muider-compagnie-desktop.webp`, alt: 'Website De Muider Compagnie', framed: true, case: '/ons-werk/de-muider-compagnie' },
+  { name: 'Human Rights Initiatives', href: 'https://www.humanrightsinitiatives.com', img: `${CDN}/2026/10/Human-Rights-Initiatives-desktop.webp`, alt: 'Website Human Rights Initiatives', framed: true, case: '/ons-werk/human-rights-initiatives' },
+  { name: 'Forteiland Pampus', href: 'https://www.pampus.nl', img: `${CDN}/2026/10/Forteiland-Pampus-desktop.webp`, alt: 'Website Forteiland Pampus', framed: true, case: '/ons-werk/forteiland-pampus' },
+  { name: 'Evert Groot', href: 'https://evertgroot.nl', img: `${CDN}/2026/10/Evert-Groot-desktop.webp`, alt: 'Website Evert Groot', framed: true, case: '/ons-werk/evert-groot' },
+  { name: 'Farber Zwaanswijk Advocaten', href: 'https://www.fzadvocaten.nl', img: `${CDN}/2026/10/Farber-Zwaanswijk-Advocaten-desktop.webp`, alt: 'Website Farber Zwaanswijk Advocaten', framed: true, case: '/ons-werk/farber-zwaanswijk-advocaten' },
+  { name: 'Dry Systems', href: 'https://drysystems.nl', img: `${CDN}/2026/10/Dry-Systems-desktop-versie.webp`, alt: 'Website Dry Systems', framed: true, case: '/ons-werk/dry-systems' },
 ];
 
 const lower = 'abcdefghijklnoprstuvxyz';
