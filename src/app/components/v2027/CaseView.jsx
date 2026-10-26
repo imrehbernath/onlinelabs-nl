@@ -26,7 +26,7 @@ export default function CaseView({ c }) {
       <div className="ol-case-screen" style={{ position: 'relative', maxWidth: '1200px', margin: '0 auto', aspectRatio: '3 / 2', borderRadius: '10px', overflow: 'hidden', boxShadow: '0 24px 64px rgba(10,15,31,.16)', background: '#FFFFFF' }}>
       <Image src={c.desktop.src} alt={c.desktop.alt} fill priority sizes="(max-width: 960px) 92vw, 1200px" quality={85} style={{ objectFit: 'cover', objectPosition: 'top center' }} />
       </div>
-      <dl className="ol-case-stats" style={{ margin: '72px auto 0', maxWidth: '1200px', display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '32px' }}>
+      <dl className="ol-case-stats" style={{ margin: '72px auto 0', maxWidth: '1200px', display: 'grid', gridTemplateColumns: `repeat(${c.stats.length}, minmax(0, 1fr))`, gap: '32px' }}>
       {c.stats.map((s, i) => (<div key={i} style={{ borderTop: '2px solid #0A0F1F', paddingTop: '20px' }}>
       <dt style={{ fontSize: '56px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.04em', color: '#376EB5' }}>{s.n}</dt>
       <dd style={{ margin: '10px 0 0', fontSize: '17px', color: '#3A4256' }}>{s.l}</dd>
