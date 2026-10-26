@@ -6,6 +6,8 @@ import RelatedCases from '../../components/RelatedCases';
 import CTASection from '../../components/CTASection';
 import LogoSlider from '../../components/LogoSlider';
 import { getCaseBySlug, getCases, getAllCaseSlugs, getHomepageSettings } from '../../lib/wordpress';
+import CaseView from '../../components/v2027/CaseView';
+import { CASES_2027 } from '../../components/v2027/cases2027';
 
 const SITE_URL = 'https://www.onlinelabs.nl';
 
@@ -15,12 +17,24 @@ export const revalidate = 86400;
 // Generate static paths for all cases
 export async function generateStaticParams() {
   const slugs = await getAllCaseSlugs();
-  return slugs.map((slug) => ({ slug }));
+  const all = [...new Set([...slugs, ...Object.keys(CASES_2027)])];
+  return all.map((slug) => ({ slug }));
 }
 
 // Dynamic metadata based on case content + Rank Math SEO
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
+  const c27 = CASES_2027[resolvedParams.slug];
+  if (c27) {
+    const url = `/ons-werk/${resolvedParams.slug}`;
+    return {
+      title: { absolute: c27.metaTitle },
+      description: c27.metaDescription,
+      alternates: { canonical: url },
+      openGraph: { title: c27.metaTitle, description: c27.metaDescription, url, images: [c27.desktop.src], type: 'article', locale: 'nl_NL', siteName: 'OnlineLabs' },
+      twitter: { card: 'summary_large_image', title: c27.metaTitle, description: c27.metaDescription, images: [c27.desktop.src] },
+    };
+  }
   const caseData = await getCaseBySlug(resolvedParams.slug);
 
   if (!caseData) {
@@ -98,6 +112,43 @@ export async function generateMetadata({ params }) {
 
 export default async function CaseDetailPage({ params }) {
   const resolvedParams = await params;
+
+  // Cases in de 2027-stijl
+  const c27 = CASES_2027[resolvedParams.slug];
+  if (c27) {
+    const url27 = `${SITE_URL}/ons-werk/${resolvedParams.slug}`;
+    const schema27 = [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Ons werk', item: `${SITE_URL}/ons-werk` },
+          { '@type': 'ListItem', position: 3, name: c27.name, item: url27 },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        '@id': `${url27}/#article`,
+        headline: `${c27.name}: ${c27.storyH}`,
+        description: c27.metaDescription,
+        image: c27.desktop.src,
+        author: { '@type': 'Organization', '@id': `${SITE_URL}/#organization`, name: 'OnlineLabs', url: SITE_URL },
+        publisher: { '@type': 'Organization', '@id': `${SITE_URL}/#organization`, name: 'OnlineLabs' },
+        about: { '@type': 'Organization', name: c27.name, url: c27.url },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': url27 },
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        inLanguage: 'nl-NL',
+      },
+    ];
+    return (
+      <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema27) }} />
+        <CaseView c={c27} />
+      </>
+    );
+  }
   
   // Fetch case data and related cases in parallel
   const [caseData, allCases, homepageSettings] = await Promise.all([

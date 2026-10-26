@@ -10,7 +10,7 @@ const WORD = 'Website op maat';
 const CDN = 'https://cdn.onlinelabs.nl/wp-content/uploads';
 
 const PROJECTEN = [
-  { name: 'De Smaak van Italië', href: 'https://www.desmaakvanitalie.nl', img: `${CDN}/2026/10/De-Smaak-van-Italie-Desktop.webp`, alt: 'Website De Smaak van Italië', framed: true },
+  { name: 'De Smaak van Italië', href: 'https://www.desmaakvanitalie.nl', img: `${CDN}/2026/10/De-Smaak-van-Italie-Desktop.webp`, alt: 'Website De Smaak van Italië', framed: true, case: '/ons-werk/de-smaak-van-italie' },
   { name: 'Grachtenmuseum', href: 'https://grachten.museum', img: `${CDN}/2026/10/De-Grachten-Museum-desktop.webp`, alt: 'Website Grachtenmuseum', framed: true },
   { name: 'HvanA', href: 'https://hvana.nl', img: `${CDN}/2026/10/HvanA-Desktop.webp`, alt: 'Website Hogeschool van Amsterdam', framed: true },
   { name: 'HM2 kwadraat', href: 'https://www.hmkwadraat.com', img: `${CDN}/2026/10/HM-kwadraat-desktop.webp`, alt: 'Website HM2 kwadraat', framed: true },
@@ -129,10 +129,10 @@ export default function WebView({ logosTop = [], logosBottom = [] }) {
       </div>
       <div className="ol-port-grid" style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '32px 24px' }}>
       {projecten.map((p, $index) => (<Fragment key={$index}>
-      <a className="ol-portcard" href={p.href} target="_blank" rel="noopener" aria-label={`Bekijk de website van ${p.name}`} style={{ display: 'block', color: '#0A0F1F', textDecoration: 'none' }}>
+      <a className="ol-portcard" href={p.case || p.href} target={p.case ? undefined : '_blank'} rel={p.case ? undefined : 'noopener'} aria-label={p.case ? `Bekijk de case ${p.name}` : `Bekijk de website van ${p.name}`} style={{ display: 'block', color: '#0A0F1F', textDecoration: 'none' }}>
       <span className={p.framed ? 'ol-portimg is-framed' : 'ol-portimg'} style={{ position: 'relative', display: 'block', aspectRatio: '3 / 2', borderRadius: '10px', overflow: 'hidden', background: '#DCE7F6' }}>
       <span className="ol-portshot"><Image src={p.img} alt={p.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw" quality={78} style={{ objectFit: 'cover', objectPosition: 'top center' }} /></span>
-      <span className="ol-portover" style={{ position: 'absolute', left: '16px', bottom: '16px', display: 'inline-flex', alignItems: 'center', height: '40px', padding: '0 16px', borderRadius: '6px', background: '#FFFFFF', color: '#0A0F1F', fontSize: '14px', fontWeight: '700' }}>Bekijk website</span>
+      <span className="ol-portover" style={{ position: 'absolute', left: '16px', bottom: '16px', display: 'inline-flex', alignItems: 'center', height: '40px', padding: '0 16px', borderRadius: '6px', background: '#FFFFFF', color: '#0A0F1F', fontSize: '14px', fontWeight: '700' }}>{p.case ? 'Bekijk case' : 'Bekijk website'}</span>
       </span>
       <span style={{ display: 'block', marginTop: '14px', fontSize: '20px', fontWeight: '600', letterSpacing: '-0.01em' }}>{p.name}</span>
       </a>

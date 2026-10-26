@@ -298,3 +298,22 @@ html,body{overflow-x:clip}
 .v27-seo .ol-hero,.v27-geo .ol-hero,.v27-ads .ol-hero,.v27-lokaal .ol-hero,.v27-web .ol-hero{min-height:min(calc(100vh - 104px), 760px) !important}
 }
 @media (prefers-reduced-motion: reduce){.ol-dots .ol-why-h:not(.ol-teun-h) > span:last-child{transform:none;transition:none}}
+/* Case 2027 */
+.ol-case-back{cursor:pointer;transition:color .2s ease}
+.ol-case-back:hover{color:#376EB5 !important}
+.ol-case-stats dt,.ol-case-stats dd{display:block}
+@media (max-width: 1200px){
+.ol-case-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important;row-gap:40px !important}
+}
+@media (max-width: 960px){
+.ol-case-hero{padding:56px 20px 40px !important}
+.ol-case-show,.v27-case .ol-wwd{padding:0 8px 8px !important}
+.ol-case-panel{padding:24px 16px 40px !important}
+.ol-case-screen{border-radius:6px !important;box-shadow:0 12px 32px rgba(10,15,31,.14) !important}
+.ol-case-stats{margin-top:40px !important;gap:28px 20px !important}
+.ol-case-stats dt{font-size:40px !important}
+.ol-case-story{padding:72px 20px 32px !important}
+.ol-case-done{padding:32px 20px 72px !important}
+.ol-case-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important;margin-top:40px !important}
+.ol-case-grid .ol-step-col > p:first-child{font-size:15px !important}
+}
