@@ -141,4 +141,33 @@ export const CASES_2027 = {
       { name: 'Evert Groot', href: '/ons-werk/evert-groot', img: `${CDN}/2026/10/Evert-Groot-desktop.webp`, alt: 'Website Evert Groot' },
     ],
   },
+  'grachtenmuseum': {
+    name: 'Grachtenmuseum',
+    sector: 'Museum',
+    url: 'https://grachten.museum',
+    urlLabel: 'grachten.museum',
+    metaTitle: 'Grachtenmuseum case | Eigen design en website | OnlineLabs',
+    metaDescription: 'Nieuwe website voor het Grachtenmuseum in Amsterdam: een eigen design, volledig tweetalig en gebouwd in WordPress. Al 8+ jaar samenwerking.',
+    lede: 'Een eigen, herkenbaar design voor het museum over de Amsterdamse grachten. Volledig tweetalig en door het museum zelf te beheren.',
+    proof: ['8+ jaar samen', 'Webdesign en website', 'Live sinds juli 2026'],
+    desktop: { src: `${CDN}/2026/10/De-Grachten-Museum-desktop.webp`, alt: 'Homepage van de website van het Grachtenmuseum op desktop' },
+    stats: [
+      { n: '8+ jaar', l: 'samenwerking' },
+      { n: '2 talen', l: 'Nederlands en Engels' },
+      { n: 'Juli 2026', l: 'live' },
+    ],
+    storyH: 'Een museum met een eigen gezicht',
+    story: 'Het Grachtenmuseum aan de Herengracht vertelt het verhaal van de Amsterdamse grachten. We werken al meer dan 8 jaar samen. Voor de nieuwe website leverde het museum een heldere briefing, sitemap en wireframes aan. Designer Daaf Laurens maakte daarop een eigen ontwerp, en wij bouwden het uit tot een tweetalige website die sinds juli 2026 live staat.',
+    done: [
+      { t: 'Eigen design', d: 'Kaarten met een organische uitsparing, een header met zachte rondingen en veel ruimte voor beeld. Herkenbaar Grachtenmuseum, geen template.' },
+      { t: 'Gebouwd in Bricks', d: 'Een eigen child theme met header en footer in code en de pagina\u2019s in Bricks Builder. Schone code die goed te beheren is.' },
+      { t: 'Nederlands en Engels', d: 'Een volledige Engelse versie, inclusief de tentoonstellingen, de agenda, de zoekfunctie en een tweetalige footer.' },
+      { t: 'Zelf aan de slag', d: 'Het team past zelf foto\u2019s en teksten aan. Aanvragen voor onder meer schoolbezoeken en Steun ons komen via eigen formulieren binnen.' },
+    ],
+    more: [
+      { name: 'De Smaak van Italië', href: '/ons-werk/de-smaak-van-italie', img: `${CDN}/2026/10/De-Smaak-van-Italie-Desktop.webp`, alt: 'Website De Smaak van Italië' },
+      { name: 'Forteiland Pampus', href: '/ons-werk/forteiland-pampus', img: `${CDN}/2026/10/Forteiland-Pampus-desktop.webp`, alt: 'Website Forteiland Pampus' },
+      { name: 'HM2 Warehouse Signing', href: '/ons-werk/hm2-kwadraat', img: `${CDN}/2026/10/HM-kwadraat-desktop.webp`, alt: 'Website HM2 Warehouse Signing' },
+    ],
+  },
 };
