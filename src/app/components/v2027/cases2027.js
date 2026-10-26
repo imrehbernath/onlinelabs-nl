@@ -200,4 +200,32 @@ export const CASES_2027 = {
       { name: 'HM2 Warehouse Signing', href: '/ons-werk/hm2-kwadraat', img: `${CDN}/2026/10/HM-kwadraat-desktop.webp`, alt: 'Website HM2 Warehouse Signing' },
     ],
   },
+  'rederij-navigo': {
+    name: 'Rederij Navigo',
+    sector: 'Rederij',
+    url: 'https://navigoamsterdam.nl',
+    urlLabel: 'navigoamsterdam.nl',
+    metaTitle: 'Rederij Navigo case | Twee websites naar één | OnlineLabs',
+    metaDescription: 'Voor Rederij Navigo voegden we de evenementensite en Veerdienst Amsterdam samen tot één website, met een domeinverhuizing zonder zoekwoordverlies.',
+    lede: 'Twee websites, één rederij. We voegden de evenementensite en Veerdienst Amsterdam samen tot één website, zonder een zoekwoord te verliezen.',
+    proof: ['Gebouwd in 2020', 'Website en domeinverhuizing', 'Thuishaven IJburg'],
+    desktop: { src: `${CDN}/2026/10/Rederij-Navigo-desktop.webp`, alt: 'Homepage van de website van Rederij Navigo op desktop' },
+    stats: [
+      { n: '2 \u2192 1', l: 'websites samengevoegd' },
+      { n: '0', l: 'zoekwoorden verloren bij de verhuizing' },
+      { n: '6 jaar', l: 'online en nog steeds sterk' },
+    ],
+    storyH: 'Van twee websites naar één',
+    story: 'Rederij Navigo, ook bekend als Veerdienst Amsterdam, vaart vanuit de jachthaven van IJburg met groepen en privécharters over het IJmeer, onder meer naar Forteiland Pampus en Kasteel Muiderslot. Er waren twee websites: één voor evenementen en één voor de veerdienst. Wij maakten er één site van, die na 6 jaar nog steeds goed staat. Leuk detail: de eigenaar heet ook Imre.',
+    done: [
+      { t: 'Twee sites samengevoegd', d: 'Evenementen en veerdienst op één website, met een duidelijke keuze tussen een privéboot voor je evenement en varen met een groep.' },
+      { t: 'Officiële domeinverhuizing', d: 'Veerdienst Amsterdam is officieel verhuisd via Google Search Console. De zoekwoorden van de oude site zijn allemaal behouden.' },
+      { t: 'Groepen en charters', d: 'Van bedrijfsuitje en bruiloft tot een tocht naar Pampus of het Muiderslot: elke pagina leidt naar een offerteaanvraag.' },
+    ],
+    more: [
+      { name: 'Forteiland Pampus', href: '/ons-werk/forteiland-pampus', img: `${CDN}/2026/10/Forteiland-Pampus-desktop.webp`, alt: 'Website Forteiland Pampus' },
+      { name: 'De Smaak van Italië', href: '/ons-werk/de-smaak-van-italie', img: `${CDN}/2026/10/De-Smaak-van-Italie-Desktop.webp`, alt: 'Website De Smaak van Italië' },
+      { name: 'Grachtenmuseum', href: '/ons-werk/grachtenmuseum', img: `${CDN}/2026/10/De-Grachten-Museum-desktop.webp`, alt: 'Website Grachtenmuseum' },
+    ],
+  },
 };
