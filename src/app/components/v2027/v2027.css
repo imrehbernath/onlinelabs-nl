@@ -157,7 +157,7 @@ html,body{overflow-x:clip}
 .ol-drumitem{left:20px !important;right:16px !important}
 .ol-drumitem span:last-child{white-space:normal !important;font-size:22px !important}
 .ol-imre{padding:24px 20px 72px !important}
-.v27-seo .ol-hero,.v27-seo .ol-imre,.v27-geo .ol-hero,.v27-geo .ol-imre,.v27-ads .ol-hero,.v27-ads .ol-imre,.v27-lokaal .ol-hero,.v27-lokaal .ol-imre,.v27-web .ol-hero,.v27-snelheid .ol-hero{min-height:0 !important}
+.v27-seo .ol-hero,.v27-seo .ol-imre,.v27-geo .ol-hero,.v27-geo .ol-imre,.v27-ads .ol-hero,.v27-ads .ol-imre,.v27-lokaal .ol-hero,.v27-lokaal .ol-imre,.v27-web .ol-hero,.v27-snelheid .ol-hero,.v27-snelheid .ol-imre{min-height:0 !important}
 .ol-imre-grid{grid-template-columns:minmax(0,1fr) !important;gap:32px !important}
 .ol-imre-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
 .ol-fanpanel ul{grid-template-columns:minmax(0,1fr) !important}

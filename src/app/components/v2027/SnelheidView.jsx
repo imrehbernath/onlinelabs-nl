@@ -1,6 +1,7 @@
 'use client';
 
 import { Fragment, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { SNELHEID_FAQS } from './snelheidFaqs';
 
 // Website snelheid 2027: zelfde opbouw als de andere dienstpagina's (WebView, SeoView).
@@ -115,13 +116,6 @@ export default function SnelheidView({ logosTop = [], logosBottom = [] }) {
       </div>
       </section>
 
-      <section className="ol-logosec" aria-label="Een greep uit onze klanten" style={{ maxWidth: '1440px', margin: '0 auto', padding: '24px 40px 72px', boxSizing: 'border-box' }}>
-      <div className="ol-logowrap" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      {logoRow(logosTop, false)}
-      {logoRow(logosBottom, true)}
-      </div>
-      </section>
-
       <section id="ol-resultaten" className="ol-wwd ol-snap" aria-labelledby="ol-res-h" style={{ marginTop: '30px', padding: '30px 16px 16px' }}>
       <div className="ol-wwd-panel" style={{ maxWidth: '1600px', margin: '0 auto', background: '#F4F6FA', borderRadius: '12px', padding: '64px 56px', boxSizing: 'border-box', minHeight: 'calc(100vh - 150px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <div className="ol-why-top" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '64px', alignItems: 'end' }}>
@@ -139,6 +133,32 @@ export default function SnelheidView({ logosTop = [], logosBottom = [] }) {
       </article>
       ))}
       </div>
+      </div>
+      </section>
+
+      <section className="ol-imre ol-snap" aria-labelledby="ol-imre-h" style={{ maxWidth: '1440px', margin: '0 auto', padding: '96px 40px', boxSizing: 'border-box', minHeight: 'calc(100vh - 104px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <div className="ol-imre-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 0.85fr) minmax(0, 1.15fr)', gap: '72px', alignItems: 'center' }}>
+      <div className="ol-imre-photo" style={{ position: 'relative', aspectRatio: '2 / 3', maxHeight: '680px', borderRadius: '12px', overflow: 'hidden', background: '#DCE7F6' }}>
+      <Image src="https://cdn.onlinelabs.nl/wp-content/uploads/2025/11/Imre-Bernath.webp" alt="Imre Bernáth, specialist in website snelheid en oprichter van OnlineLabs" fill sizes="(max-width: 960px) 100vw, 40vw" quality={85} style={{ objectFit: 'cover', objectPosition: 'center 20%' }} />
+      <span style={{ position: 'absolute', left: '20px', bottom: '20px', display: 'inline-flex', alignItems: 'center', height: '40px', padding: '0 16px', borderRadius: '6px', background: '#FFFFFF', color: '#0A0F1F', fontSize: '15px', fontWeight: '700' }}>Imre Bernáth</span>
+      </div>
+      <div>
+      <p style={{ margin: '0', fontSize: '15px', fontWeight: '600', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#5B6275' }}>Je snelheidsspecialist</p>
+      <h2 id="ol-imre-h" className="ol-why-h" style={{ margin: '16px 0 0', fontSize: '64px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}>Het maximale eruit<span style={{ color: '#376EB5' }}>.</span></h2>
+      <p style={{ margin: '28px 0 0', fontSize: '20px', lineHeight: '1.6', color: '#3A4256', maxWidth: '660px' }}>Imre Bernáth maakt al jaren websites sneller, tot alle Core Web Vitals op groen staan. Geen standaard trucje, maar per website uitzoeken waar de laatste milliseconden zitten.</p>
+      <p style={{ margin: '24px 0 0', fontSize: '24px', fontWeight: '600', lineHeight: '1.45', letterSpacing: '-0.01em', color: '#0A0F1F', maxWidth: '660px' }}>&ldquo;Het maximale eruit halen tot alle scores op groen staan. Het lastigste werk dat er is, en daarom het leukste.&rdquo;</p>
+      <p style={{ margin: '24px 0 0', fontSize: '20px', lineHeight: '1.6', color: '#3A4256', maxWidth: '660px' }}>Je spreekt de specialist die het werk ook echt doet. <a className="ol-down" href="/auteur/imre-bernath" style={{ fontWeight: '600', color: '#0A0F1F', textDecoration: 'none' }}>Meer over Imre</a></p>
+      <div className="ol-imre-stats" style={{ marginTop: '44px', display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '24px' }}>
+      <div style={{ borderTop: '2px solid #0A0F1F', paddingTop: '18px' }}><p style={{ margin: '0', fontSize: '44px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.03em' }}>25+ jaar</p><p style={{ margin: '10px 0 0', fontSize: '15px', color: '#5B6275' }}>webontwikkeling</p></div>
+      <div style={{ borderTop: '2px solid #0A0F1F', paddingTop: '18px' }}><p style={{ margin: '0', fontSize: '44px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.03em' }}>150+</p><p style={{ margin: '10px 0 0', fontSize: '15px', color: '#5B6275' }}>websites in beheer</p></div>
+      <div style={{ borderTop: '2px solid #0A0F1F', paddingTop: '18px' }}><p style={{ margin: '0', fontSize: '44px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.03em' }}>5,0</p><p style={{ margin: '10px 0 0', fontSize: '15px', color: '#5B6275' }}>uit 29 Google reviews</p></div>
+      <div style={{ borderTop: '2px solid #0A0F1F', paddingTop: '18px' }}><p style={{ margin: '0', fontSize: '44px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.03em' }}>2008</p><p style={{ margin: '10px 0 0', fontSize: '15px', color: '#5B6275' }}>OnlineLabs opgericht</p></div>
+      </div>
+      </div>
+      </div>
+      <div className="ol-logowrap" aria-label="Een greep uit onze klanten" style={{ marginTop: '48px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      {logoRow(logosTop, false)}
+      {logoRow(logosBottom, true)}
       </div>
       </section>
 
