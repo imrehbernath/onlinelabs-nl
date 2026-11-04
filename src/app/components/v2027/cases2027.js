@@ -228,4 +228,33 @@ export const CASES_2027 = {
       { name: 'Grachtenmuseum', href: '/ons-werk/grachtenmuseum', img: `${CDN}/2026/10/De-Grachten-Museum-desktop.webp`, alt: 'Website Grachtenmuseum' },
     ],
   },
+  'human-rights-initiatives': {
+    name: 'Human Rights Initiatives',
+    sector: 'Stichting',
+    url: 'https://www.humanrightsinitiatives.com',
+    urlLabel: 'humanrightsinitiatives.com',
+    metaTitle: 'HRI case | Website en ENO-platform | OnlineLabs',
+    metaDescription: 'Voor Human Rights Initiatives zetten we de website binnen vier weken over naar WordPress. Nu bouwen we het nieuwe platform van het ENO.',
+    lede: 'Een snelle overstap naar WordPress voor de stichting die opkomt voor de rechten van ongedocumenteerden. En nu bouwen we het nieuwe platform van het Expertise Netwerk Ongedocumenteerden.',
+    proof: ['Klant sinds 2025', 'Website, beveiliging en platform', 'Amsterdam'],
+    desktop: { src: `${CDN}/2026/10/Human-Rights-Initiatives-desktop.webp`, alt: 'Homepage van de website van Human Rights Initiatives op desktop' },
+    stats: [
+      { n: '4 weken', l: 'van start tot livegang' },
+      { n: '2', l: 'projecten: website en ENO-platform' },
+      { n: '3 \u2192 1', l: 'losse systemen samen in één ENO-platform' },
+    ],
+    storyH: 'Kennis die mensen helpt',
+    story: 'Stichting Human Rights Initiatives (HRI) zet zich in voor de rechten en de positie van ongedocumenteerde migranten in Nederland en Europa. HRI runt onder meer het Amsterdam Centrum voor Ongedocumenteerden en is sinds 2025 de drager van het Expertise Netwerk Ongedocumenteerden (ENO). De vraag aan ons was helder: een goed werkende website zonder franje, passend bij een stichting.',
+    done: [
+      { t: 'Naar WordPress', d: 'De bestaande site is omgezet naar WordPress, met behoud van design en domeinnaam. Binnen vier weken stond hij live.' },
+      { t: 'Zelf beheren', d: 'Het team past zelf teksten aan, ook de ANBI- en governancegegevens die een stichting moet publiceren.' },
+      { t: 'Veilig en bijgewerkt', d: 'We houden de site up-to-date en beveiligd, met tweestapsverificatie voor iedereen die inlogt.' },
+      { t: 'Het nieuwe ENO-platform', d: 'Voor het ENO bouwen we een nieuw platform in WordPress: kennisbank, netwerk voor collegiaal overleg, bijeenkomsten en lesmodules in één omgeving, in plaats van drie losse systemen.' },
+    ],
+    more: [
+      { name: 'Grachtenmuseum', href: '/ons-werk/grachtenmuseum', img: `${CDN}/2026/10/De-Grachten-Museum-desktop.webp`, alt: 'Website Grachtenmuseum' },
+      { name: 'De Smaak van Italië', href: '/ons-werk/de-smaak-van-italie', img: `${CDN}/2026/10/De-Smaak-van-Italie-Desktop.webp`, alt: 'Website De Smaak van Italië' },
+      { name: 'HvanA', href: '/ons-werk/hvana', img: `${CDN}/2026/10/HvanA-Desktop.webp`, alt: 'Website Hogeschool van Amsterdam' },
+    ],
+  },
 };
