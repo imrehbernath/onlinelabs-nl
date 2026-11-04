@@ -23,6 +23,8 @@ import LokaalView from '@/app/components/v2027/LokaalView';
 import { LOKAAL_FAQS } from '@/app/components/v2027/lokaalFaqs';
 import WebView from '@/app/components/v2027/WebView';
 import { WEB_FAQS } from '@/app/components/v2027/webFaqs';
+import SnelheidView from '@/app/components/v2027/SnelheidView';
+import { SNELHEID_FAQS } from '@/app/components/v2027/snelheidFaqs';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 
 const WP_URL = 'https://cdn.onlinelabs.nl';
@@ -441,6 +443,7 @@ export default async function ServiceDetailPage({ params }) {
     'online-adverteren': [AdsView, ADS_FAQS],
     'lokale-seo-amsterdam': [LokaalView, LOKAAL_FAQS],
     'website-laten-maken': [WebView, WEB_FAQS],
+    'website-snelheid-optimalisatie': [SnelheidView, SNELHEID_FAQS],
   };
   if (V2027[slug]) {
     const [View, pageFaqs] = V2027[slug];
