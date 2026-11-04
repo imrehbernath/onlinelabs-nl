@@ -2,6 +2,7 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import HeroRing from './HeroRing';
 
 // Homepage 2027: overgenomen uit het Claude Design-bestand (Main.dc.html).
 
@@ -155,7 +156,8 @@ function Hero() {
   });
 
   return (
-    <>
+    <div className="ol-herowrap">
+      <HeroRing />
       <section ref={heroRef} className="ol-hero ol-snap" style={{ maxWidth: '1440px', margin: '0 auto', padding: '120px 40px 96px', boxSizing: 'border-box', minHeight: 'calc(100vh - 104px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <h1 style={{ margin: '0', fontWeight: '800' }}>
       <span className="ol-eyebrow" style={{ display: 'block', fontSize: '15px', fontWeight: '600', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#5B6275', marginBottom: '32px' }}>Online marketing bureau Amsterdam, sinds 2008</span>
@@ -186,7 +188,7 @@ function Hero() {
       </a>
       </div>
       </section>
-    </>
+    </div>
   );
 }
 
