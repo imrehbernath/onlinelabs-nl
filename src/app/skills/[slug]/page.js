@@ -163,9 +163,14 @@ Vanuit ons kantoor aan de Herengracht in Amsterdam combineren we techniek, conte
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   
-  // Try WordPress first
-  const service = await getServiceBySlug(slug);
-  
+  // Try WordPress first (bij een fetch-fout alleen terugvallen als er dummy data is)
+  let service = null;
+  try {
+    service = await getServiceBySlug(slug);
+  } catch (error) {
+    if (!dummyServiceData[slug]) throw error;
+  }
+
   // Fallback to dummy data
   const fallbackService = dummyServiceData[slug];
   
@@ -271,6 +276,9 @@ export default async function ServiceDetailPage({ params }) {
       console.log('✅ Using WordPress data for:', slug);
     }
   } catch (error) {
+    // Zonder dummy-fallback zou dit notFound() worden en cachet ISR een 404.
+    // Gooien laat Next de vorige versie van de pagina blijven serveren.
+    if (!dummyServiceData[slug]) throw error;
     console.error('❌ WordPress fetch failed, using dummy data');
   }
   

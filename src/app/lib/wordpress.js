@@ -419,8 +419,10 @@ export async function getServiceBySlug(slug) {
     console.log('✅ Service fetched:', data?.service?.title || 'Not found');
     return data?.service || null;
   } catch (error) {
+    // Niet als null teruggeven: dan volgt notFound() en cachet ISR een 404 voor
+    // een pagina die gewoon bestaat. Door te gooien houdt Next de vorige versie.
     console.error('❌ Failed to fetch service:', error.message);
-    return null;
+    throw error;
   }
 }
 
@@ -995,8 +997,10 @@ export async function getCaseBySlug(slug) {
 
     return caseObj;
   } catch (error) {
+    // Niet als null teruggeven: dan volgt notFound() en cachet ISR een 404 voor
+    // een case die gewoon bestaat. Door te gooien houdt Next de vorige versie.
     console.error('❌ Failed to fetch case:', error.message);
-    return null;
+    throw error;
   }
 }
 
