@@ -53,8 +53,7 @@ Kerngegevens:
 
 - [Imre Bernath](${SITE_URL}/auteur/imre-bernath): oprichter van Teun.ai
 - [Sanne Verschoor](${SITE_URL}/auteur/sanne-verschoor)
-- [Adrian Enders](${SITE_URL}/auteur/adrian-enders)
-- [Colin Dijkstra](${SITE_URL}/auteur/colin-dijkstra)`;
+- [Adrian Enders](${SITE_URL}/auteur/adrian-enders)`;
 
 const OPTIONAL = `## Optional
 
