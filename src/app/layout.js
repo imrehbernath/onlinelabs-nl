@@ -1,4 +1,4 @@
-import { Inter, Playfair_Display, Space_Mono, Poppins } from 'next/font/google';
+import { Inter, Playfair_Display, Space_Mono, Bricolage_Grotesque, Instrument_Serif } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import './components/v2027/v2027.css';
@@ -6,12 +6,11 @@ import SiteHeader from './components/v2027/SiteHeader';
 import SiteFooter from './components/v2027/SiteFooter';
 import CookieConsent from './components/CookieConsent';
 
-// Inter - Google Font (fallback voor Metropolis)
+// Inter - Google Font (lopende tekst huisstijl 2027, ook fallback voor Metropolis)
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
-  preload: false, // alleen fallback voor Metropolis — rendert nooit als primair, dus niet preloaden
 });
 
 // Playfair Display - Google Font (serif voor headers)
@@ -31,12 +30,22 @@ const spaceMono = Space_Mono({
   preload: false, // decoratieve labels/eyebrows — niet kritisch above the fold, dus niet preloaden
 });
 
-// Poppins - Google Font (huisstijl 2027: header, homepage en footer)
-const poppins = Poppins({
+// Bricolage Grotesque - Google Font (koppen huisstijl 2027, met optische maat)
+const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
-  variable: '--font-poppins',
+  variable: '--font-bricolage',
   display: 'swap',
-  weight: ['400', '600', '800'],
+  axes: ['opsz'],
+});
+
+// Instrument Serif - Google Font (cursief accentwoord per sectie)
+const instrument = Instrument_Serif({
+  subsets: ['latin'],
+  variable: '--font-instrument',
+  display: 'swap',
+  weight: '400',
+  style: 'italic',
+  preload: false,
 });
 
 // Metropolis - Local Font (primary sans-serif)
@@ -109,7 +118,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   return (
-    <html lang="nl" className={`${metropolis.variable} ${inter.variable} ${playfair.variable} ${spaceMono.variable} ${poppins.variable}`}>
+    <html lang="nl" className={`${metropolis.variable} ${inter.variable} ${playfair.variable} ${spaceMono.variable} ${bricolage.variable} ${instrument.variable}`}>
       <head>
         {/* 
           CDN preconnect: niet nodig op homepage hero (hardcoded),

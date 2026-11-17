@@ -1,6 +1,10 @@
 /* OnlineLabs 2027: header, homepage en footer. Overgenomen uit het Claude Design-bestand (Main.dc.html). */
 html,body{overflow-x:clip}
-.v27{font-family:var(--font-poppins),system-ui,sans-serif;color:#0A0F1F}
+.v27{font-family:var(--font-inter),system-ui,sans-serif;color:#0A0F1F}
+/* Koppen en grote cijfers in Bricolage Grotesque */
+.v27 h1,.v27 h2,.v27 h3,.v27 [style*="font-weight:800"],.v27 [style*="font-weight: 800"],.v27 .ol-wname{font-family:var(--font-bricolage),var(--font-inter),system-ui,sans-serif}
+.v27 .ol-h1label,.v27 .ol-eyebrow{font-family:var(--font-inter),system-ui,sans-serif}
+.v27 .ol-acc{font-family:var(--font-instrument),Georgia,serif;font-style:italic;font-weight:400;letter-spacing:0}
 .v27 *,.v27 *::before,.v27 *::after{box-sizing:border-box}
 .v27-home{background:#FFFFFF;padding-top:104px}
 @media (max-width: 960px){.v27-home{padding-top:72px}}
@@ -335,3 +339,24 @@ html,body{overflow-x:clip}
 .ol-speed-cards article{padding:28px 24px !important}
 .ol-speed-n{font-size:44px !important}
 }
+
+/* Concept B: de punt als venster */
+.ol-portal{position:relative;width:min(64vw,360px);aspect-ratio:1;margin:36px 0 0 auto;border-radius:50%;overflow:hidden;opacity:0;pointer-events:none;will-change:transform;transform-origin:center}
+.ol-portal.is-on{opacity:1}
+@media (min-width:1101px){.ol-portal{position:absolute;right:0;top:50%;width:min(28%,420px);margin:calc(min(28%,420px) / -2) 0 0}}
+.ol-portal-ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,#376EB5,#6FD3F4,#8FB0F5,#B8A3FA,#376EB5);animation:olspin 14s linear infinite;animation-play-state:paused}
+.ol-herowrap.is-vis .ol-portal-ring{animation-play-state:running}
+@keyframes olspin{to{transform:rotate(1turn)}}
+.ol-portal-disc{position:absolute;inset:4%;border-radius:50%;background:#FFFFFF}
+.ol-portal-img{position:absolute;inset:6.5%;border-radius:50%;overflow:hidden;background:#DCE7F6}
+.ol-portal-img img{opacity:0;transition:opacity 1.2s ease}
+.ol-portal-img img.is-on{opacity:1}
+.ol-wwin{position:absolute;left:calc(100% + 16px);top:50%;width:56px;height:56px;margin-top:-28px;border-radius:50%;padding:3px;box-sizing:border-box;background:conic-gradient(from 0deg,#376EB5,#6FD3F4,#8FB0F5,#B8A3FA,#376EB5);transform:scale(.2);opacity:0;transition:transform .55s cubic-bezier(.3,1.3,.5,1),opacity .3s ease;pointer-events:none}
+.ol-wwin img{display:block;width:100%;height:100%;border-radius:50%}
+.ol-wwin.is-on{transform:scale(1);opacity:1}
+.ol-mark{position:relative;display:inline-block}
+.ol-mw{position:absolute;left:0;bottom:.12em;width:1.3em;height:1.3em;max-width:150px;max-height:150px;border-radius:50%;padding:.05em;box-sizing:border-box;background:conic-gradient(from 0deg,#376EB5,#6FD3F4,#8FB0F5,#B8A3FA,#376EB5);transform:scale(.14);transform-origin:10% 90%;opacity:0;pointer-events:none;z-index:2;transition:transform .7s cubic-bezier(.2,.9,.3,1.15),opacity .25s ease}
+.ol-mw img{display:block;width:100%;height:100%;border-radius:50%;background:#FFFFFF}
+.ol-mw.is-open{transform:scale(1);opacity:1}
+.ol-mw.is-closing{transition:transform .5s cubic-bezier(.6,0,.8,.3),opacity .3s ease .3s}
+@media (prefers-reduced-motion: reduce){.ol-portal-ring{animation:none}.ol-portal-img img,.ol-wwin{transition:none}.ol-mw{display:none}}

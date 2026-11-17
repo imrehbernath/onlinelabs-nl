@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import MarkDot from './MarkDot';
 
 // Afsluiter en footer 2027: overgenomen uit het Claude Design-bestand (Main.dc.html).
 export default function SiteFooter() {
@@ -9,7 +10,7 @@ export default function SiteFooter() {
 
       <section className="ol-cta-top" aria-labelledby="ol-cta-h" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(0, 1fr)', gap: '64px', alignItems: 'end' }}>
       <div>
-      <h2 id="ol-cta-h" className="ol-cta-h" style={{ margin: '0', fontSize: 'clamp(40px, 5.6vw, 88px)', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}><span style={{ display: 'block', whiteSpace: 'nowrap' }}>Kop koffie aan</span><span style={{ display: 'block', whiteSpace: 'nowrap' }}>de Herengracht<span style={{ color: '#6FA3E6' }}>?</span></span></h2>
+      <h2 id="ol-cta-h" className="ol-cta-h" style={{ margin: '0', fontSize: 'clamp(40px, 5.6vw, 88px)', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}><span style={{ display: 'block', whiteSpace: 'nowrap' }}>Kop koffie aan</span><span style={{ display: 'block', whiteSpace: 'nowrap' }}>de <em className="ol-acc">Herengracht</em><MarkDot img="https://cdn.onlinelabs.nl/wp-content/uploads/2025/11/OnlineLabs-kantoor.webp" char="?" color="#6FA3E6" /></span></h2>
       <div style={{ marginTop: '40px', maxWidth: '560px' }}>
       <p style={{ margin: '0', fontSize: '20px', lineHeight: '1.6', color: '#A9AFBF' }}>Vertel waar je staat en waar je naartoe wilt. Dan kijken we samen wat er nodig is, zonder verkooppraatje.</p>
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px 32px', marginTop: '32px' }}>

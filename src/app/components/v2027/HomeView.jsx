@@ -3,6 +3,7 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import HeroRing from './HeroRing';
+import MarkDot from './MarkDot';
 
 // Homepage 2027: overgenomen uit het Claude Design-bestand (Main.dc.html).
 
@@ -38,6 +39,35 @@ function Hero() {
   const heroRef = useRef(null);
   const reduced = useRef(false);
   const heroVisible = useRef(true);
+  const dotRef = useRef(null);
+  const portalRef = useRef(null);
+  const wrapRef = useRef(null);
+  const grownRef = useRef(false);
+  const [grown, setGrown] = useState(false);
+  const [slide, setSlide] = useState(0);
+
+  // De punt van "Gekozen" groeit uit tot een rond venster met projectbeelden
+  const grow = useCallback(() => {
+    if (grownRef.current) return;
+    const dot = dotRef.current;
+    const portal = portalRef.current;
+    if (!dot || !portal) return;
+    grownRef.current = true;
+    if (reduced.current) { setGrown(true); return; }
+    const d = dot.getBoundingClientRect();
+    const p = portal.getBoundingClientRect();
+    const size = Math.max(8, d.width * 0.7);
+    const cx = d.left + d.width / 2;
+    const cy = d.top + d.height * 0.78;
+    portal.style.transition = 'none';
+    portal.style.transform = `translate(${cx - (p.left + p.width / 2)}px, ${cy - (p.top + p.height / 2)}px) scale(${size / p.width})`;
+    portal.getBoundingClientRect();
+    setGrown(true);
+    requestAnimationFrame(() => {
+      portal.style.transition = 'transform 1.3s cubic-bezier(.65,0,.25,1)';
+      portal.style.transform = 'none';
+    });
+  }, []);
 
   const lineEnd = (st, i) => (st[i] || 0) + 280 + KOP.lines[i].t.length * 55;
 
@@ -84,14 +114,21 @@ function Hero() {
       startsRef.current = st;
       setStarts(st);
       setNow(Date.now());
-      runScramble(() => scheduleWow());
+      runScramble(() => {
+        scheduleWow();
+        setTimeout(() => { if (heroVisible.current) grow(); }, 500);
+      });
     }
 
     // Diepte: de woorden schuiven een paar pixels mee met de muis
     const el = heroRef.current;
     let io = null;
     if (el && 'IntersectionObserver' in window) {
-      io = new IntersectionObserver(([en]) => { heroVisible.current = en.isIntersecting; });
+      io = new IntersectionObserver(([en]) => {
+        heroVisible.current = en.isIntersecting;
+        if (wrapRef.current) wrapRef.current.classList.toggle('is-vis', en.isIntersecting && !reduced.current);
+        if (en.isIntersecting && reduced.current) grow();
+      });
       io.observe(el);
     }
     let onMove = null;
@@ -119,7 +156,17 @@ function Hero() {
         el.removeEventListener('mouseleave', onLeave);
       }
     };
-  }, [runScramble, scheduleWow]);
+  }, [runScramble, scheduleWow, grow]);
+
+  // Elke 4 seconden een ander beeld, alleen als de hero in beeld is
+  useEffect(() => {
+    if (!grown || reduced.current) return undefined;
+    const id = setInterval(() => {
+      if (!heroVisible.current || document.hidden) return;
+      setSlide((s) => (s + 1) % PORTAL.length);
+    }, 4000);
+    return () => clearInterval(id);
+  }, [grown]);
 
   const accent = ACCENT;
   const h1Size = KOP.size;
@@ -156,9 +203,10 @@ function Hero() {
   });
 
   return (
-    <div className="ol-herowrap">
+    <div ref={wrapRef} className="ol-herowrap">
       <HeroRing />
       <section ref={heroRef} className="ol-hero ol-snap" style={{ maxWidth: '1440px', margin: '0 auto', padding: '120px 40px 96px', boxSizing: 'border-box', minHeight: 'calc(100vh - 104px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <div className="ol-herohead" style={{ position: 'relative' }}>
       <h1 style={{ margin: '0', fontWeight: '800' }}>
       <span className="ol-eyebrow" style={{ display: 'block', fontSize: '15px', fontWeight: '600', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#5B6275', marginBottom: '32px' }}>Online marketing bureau Amsterdam, sinds 2008</span>
       <span className="ol-sr">{srText}</span>
@@ -166,16 +214,26 @@ function Hero() {
       {lines.map((ln, $index) => (<Fragment key={$index}>
       <span className="ol-hline" style={{ display: 'flex', alignItems: 'baseline', gap: '0.18em', minHeight: '0.95em', whiteSpace: 'pre', justifyContent: ln.justify, paddingLeft: ln.indent, transform: `translate3d(calc(var(--mx, 0) * ${ln.k}px), calc(var(--my, 0) * ${ln.ky}px), 0)`, transition: 'transform 1.1s cubic-bezier(.2,.7,.2,1), padding-left .6s cubic-bezier(.2,.7,.2,1)' }}>
       {ln.labelBefore && (<><span className="ol-h1label" style={{ fontSize: '22px', fontWeight: '600', letterSpacing: '0', color: '#5B6275', opacity: ln.labelOpacity }}>{ln.label}</span></>)}
-      <span>{ln.chars.map((ch, $index) => (<Fragment key={$index}><span style={{ color: ch.color }}>{ch.c}</span></Fragment>))}{ln.dot && (<><span style={{ color: accent }}>.</span></>)}</span>
+      <span>{ln.chars.map((ch, $index) => (<Fragment key={$index}><span style={{ color: ch.color }}>{ch.c}</span></Fragment>))}{ln.dot && (<><span ref={$index === KOP.lines.length - 1 ? dotRef : null} style={{ color: grown ? 'transparent' : accent, transition: 'color .3s ease' }}>.</span></>)}</span>
       {ln.labelAfter && (<><span className="ol-h1label" style={{ fontSize: '22px', fontWeight: '600', letterSpacing: '0', color: '#5B6275', opacity: ln.labelOpacity }}>{ln.label}</span></>)}
       </span>
       </Fragment>))}
       </span>
       </h1>
+      <div ref={portalRef} className={`ol-portal${grown ? ' is-on' : ''}`} aria-hidden="true">
+      <span className="ol-portal-ring"></span>
+      <span className="ol-portal-disc"></span>
+      <span className="ol-portal-img">
+      {PORTAL.map((c, k) => (<Fragment key={k}>
+      <Image src={c.img} alt="" fill sizes="(max-width: 1100px) 64vw, 420px" quality={78} className={k === slide ? 'is-on' : ''} style={{ objectFit: 'cover', objectPosition: c.pos }} />
+      </Fragment>))}
+      </span>
+      </div>
+      </div>
 
       <div className="ol-hero-row" style={{ marginTop: '80px', display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: '64px', alignItems: 'end' }}>
       <div>
-      <p className="ol-intro" style={{ margin: '0', fontSize: '20px', lineHeight: '1.6', color: '#3A4256' }}>Drie specialisten met een slimme AI-assistent ernaast. Wij leveren vakwerk: websites, SEO, AI-zichtbaarheid en campagnes in Google Ads en Meta, die tot achter de komma kloppen. Topkwaliteit die vroeger alleen voor grote budgetten was, nu binnen bereik.</p>
+      <p className="ol-intro" style={{ margin: '0', fontSize: '20px', lineHeight: '1.6', color: '#3A4256' }}>Drie specialisten met een slimme AI-assistent ernaast. Wij leveren <em className="ol-acc">vakwerk</em>: websites, SEO, AI-zichtbaarheid en campagnes in Google Ads en Meta, die tot achter de komma kloppen. Topkwaliteit die vroeger alleen voor grote budgetten was, nu binnen bereik.</p>
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 28px', marginTop: '32px' }}>
       <a className="ol-pill" href="/over-ons" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', height: '56px', padding: '0 28px', borderRadius: '999px', background: '#0A0F1F', color: '#FFFFFF', fontSize: '16px', fontWeight: '600', textDecoration: 'none', transition: 'background .2s ease' }}>Meer over ons</a>
       </div>
@@ -206,6 +264,9 @@ const CASES = [
   { name: 'HvanA', tag: 'Onderwijs', services: 'Migratie · WordPress', stat: 'Migratie van 3.400 artikelen naar WordPress met behoud van design en functionaliteit.', href: '/ons-werk/hvana', img: `${CDN}/2026/06/Hogeschool-van-Amsterdam-case-homepage.webp`, alt: 'Gebouw van de Hogeschool van Amsterdam', pos: 'center', tone: PALE },
 ];
 
+// Beelden in het ronde venster van de hero
+const PORTAL = [CASES[3], CASES[4], CASES[0]];
+
 function Work() {
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
@@ -233,6 +294,7 @@ function Work() {
     overClass: c.img ? '' : 'ol-nophoto',
     bg: c.tone.bg, fg: c.tone.fg, circleBg: c.tone.circleBg, circleFg: c.tone.circleFg,
     nameColor: i === active ? '#FFFFFF' : 'rgba(255, 255, 255, 0.32)',
+    winClass: i === active ? 'ol-wwin is-on' : 'ol-wwin',
     pick: () => { if (activeRef.current !== i) setActive(i); },
   }));
 
@@ -242,14 +304,14 @@ function Work() {
       <div className="ol-work" style={{ maxWidth: '1600px', margin: '0 auto', background: '#0A0F1F', color: '#FFFFFF', borderRadius: '12px', padding: '56px', boxSizing: 'border-box', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '56px' }}>
 
       <div className="ol-workleft" style={{ position: 'sticky', top: '120px', alignSelf: 'start', display: 'flex', flexDirection: 'column' }}>
-      <h2 id="ol-werk-h" style={{ margin: '0', fontSize: '22px', fontWeight: '600', letterSpacing: '-0.01em' }}>Ons werk</h2>
+      <h2 id="ol-werk-h" style={{ margin: '0', fontSize: '22px', fontWeight: '600', letterSpacing: '-0.01em' }}>Ons <em className="ol-acc">werk</em></h2>
       <p style={{ margin: '8px 0 0', fontSize: '16px', lineHeight: '1.6', color: '#A9AFBF', maxWidth: '380px' }}>Een greep uit de 150+ websites waar we dagelijks aan werken.</p>
       <ul className="ol-names" style={{ listStyle: 'none', margin: '120px 0 0', padding: '0', display: 'flex', flexDirection: 'column', gap: '18px' }}>
       {cases.map((c, $index) => (<Fragment key={$index}>
       <li>
       <a className="ol-name" href={c.href} onMouseEnter={c.pick} onFocus={c.pick} style={{ display: 'block', textDecoration: 'none', color: c.nameColor }}>
       <span style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#A9AFBF' }}>({c.tag})</span>
-      <span style={{ display: 'block', fontSize: 'clamp(36px, 4.2vw, 64px)', fontWeight: '600', letterSpacing: '-0.035em', lineHeight: '1.05' }}>{c.name}</span>
+      <span className="ol-wname" style={{ display: 'block', fontSize: 'clamp(36px, 4.2vw, 64px)', fontWeight: '600', letterSpacing: '-0.035em', lineHeight: '1.05' }}><span style={{ position: 'relative' }}>{c.name}<span className={c.winClass} aria-hidden="true"><Image src={c.img} alt="" width={112} height={112} sizes="56px" quality={75} style={{ objectFit: 'cover', objectPosition: c.pos }} /></span></span></span>
       </a>
       </li>
       </Fragment>))}
@@ -315,7 +377,7 @@ function Why() {
     <>
       <section className="ol-why ol-snap" aria-labelledby="ol-why-h" style={{ maxWidth: '1440px', margin: '0 auto', padding: '96px 40px', boxSizing: 'border-box', minHeight: 'calc(100vh - 104px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <div className="ol-why-top" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '64px', alignItems: 'start' }}>
-      <h2 id="ol-why-h" className="ol-why-h" style={{ margin: '0', fontSize: '64px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}>Waarom OnlineLabs<span style={{ color: '#376EB5' }}>.</span></h2>
+      <h2 id="ol-why-h" className="ol-why-h" style={{ margin: '0', fontSize: '64px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}>Waarom <em className="ol-acc">OnlineLabs</em><MarkDot img={`${CDN}/2025/11/Imre-Bernath.webp`} pos="center 25%" /></h2>
       <p style={{ margin: '0', fontSize: '20px', lineHeight: '1.6', color: '#3A4256' }}>Voor de AI-revolutie werkten hier twee programmeurs en drie SEO-copywriters. Nu doen we het met drie specialisten en een slimme AI-assistent naast ons. Sneller, scherper en betaalbaarder. AI is ons gereedschap, het vakwerk en de liefde voor het vak maken het verschil.</p>
       </div>
 
@@ -396,7 +458,7 @@ function Reviews({ reviews, logosTop, logosBottom }) {
     <>
       <section className="ol-revs ol-snap" aria-labelledby="ol-revs-h" style={{ maxWidth: '1440px', margin: '0 auto', padding: '72px 40px', boxSizing: 'border-box', minHeight: 'calc(100vh - 104px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <div className="ol-why-top" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '64px', alignItems: 'end' }}>
-      <h2 id="ol-revs-h" className="ol-why-h" style={{ margin: '0', fontSize: '64px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}>In hun woorden<span style={{ color: '#376EB5' }}>.</span></h2>
+      <h2 id="ol-revs-h" className="ol-why-h" style={{ margin: '0', fontSize: '64px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}>In hun <em className="ol-acc">woorden</em><MarkDot img={`${CDN}/2026/10/Evert-Groot-achter-rol-linnen-gordijnen.webp`} /></h2>
       <div>
       <p style={{ margin: '0', fontSize: '20px', lineHeight: '1.6', color: '#3A4256' }}>Sommige klanten werken al meer dan tien jaar met ons. Dat zegt meer dan wij zelf kunnen zeggen.</p>
       <p style={{ margin: '16px 0 0', fontSize: '15px', color: '#5B6275', display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}><span>5,0 uit 29 Google reviews</span><span aria-hidden="true">·</span><span>Google Partner</span></p>
