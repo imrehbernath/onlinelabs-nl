@@ -78,13 +78,15 @@ async function getPost(slug) {
     
     if (json.errors) {
       console.error('GraphQL Errors:', json.errors);
-      return null;
+      throw new Error('GraphQL errors');
     }
-    
+
     return json.data?.post || null;
   } catch (error) {
+    // Niet als null teruggeven: dan volgt notFound() en cachet ISR een 404 voor
+    // een bestaande post. Door te gooien houdt Next de vorige versie.
     console.error('Fetch Error:', error);
-    return null;
+    throw error;
   }
 }
 
