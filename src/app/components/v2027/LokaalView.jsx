@@ -99,7 +99,7 @@ export default function LokaalView({ logosTop = [], logosBottom = [] }) {
 
       <div className="ol-hero-row" style={{ marginTop: '72px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '24px 48px' }}>
       <p className="ol-seo-proof" style={{ margin: '0', fontSize: '15px', color: '#5B6275', display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}>
-      <span>Google Partner</span><span aria-hidden="true">·</span><span>5,0 uit 29 Google reviews</span><span aria-hidden="true">·</span><span>Kantoor aan de Herengracht</span>
+      <span>Google Partner</span><span aria-hidden="true">·</span><span>5,0 uit 30 Google reviews</span><span aria-hidden="true">·</span><span>Kantoor aan de Herengracht</span>
       </p>
       <div className="ol-seo-cta" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px 32px' }}>
       <a className="ol-scroll ol-down" href="#ol-plekken" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', fontSize: '17px', fontWeight: '600', textDecoration: 'none' }}>Bekijk hoe het werkt</a>
@@ -122,7 +122,7 @@ export default function LokaalView({ logosTop = [], logosBottom = [] }) {
       <div className="ol-imre-stats" style={{ marginTop: '44px', display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '24px' }}>
       <div style={{ borderTop: '2px solid #0A0F1F', paddingTop: '18px' }}><p style={{ margin: '0', fontSize: '44px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.03em' }}>20 jaar</p><p style={{ margin: '10px 0 0', fontSize: '15px', color: '#5B6275' }}>SEO-ervaring</p></div>
       <div style={{ borderTop: '2px solid #0A0F1F', paddingTop: '18px' }}><p style={{ margin: '0', fontSize: '44px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.03em' }}>150+</p><p style={{ margin: '10px 0 0', fontSize: '15px', color: '#5B6275' }}>websites in beheer</p></div>
-      <div style={{ borderTop: '2px solid #0A0F1F', paddingTop: '18px' }}><p style={{ margin: '0', fontSize: '44px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.03em' }}>5,0</p><p style={{ margin: '10px 0 0', fontSize: '15px', color: '#5B6275' }}>uit 29 Google reviews</p></div>
+      <div style={{ borderTop: '2px solid #0A0F1F', paddingTop: '18px' }}><p style={{ margin: '0', fontSize: '44px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.03em' }}>5,0</p><p style={{ margin: '10px 0 0', fontSize: '15px', color: '#5B6275' }}>uit 30 Google reviews</p></div>
       <div style={{ borderTop: '2px solid #0A0F1F', paddingTop: '18px' }}><p style={{ margin: '0', fontSize: '44px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.03em' }}>Teun.ai</p><p style={{ margin: '10px 0 0', fontSize: '15px', color: '#5B6275' }}>eigen AI-platform</p></div>
       </div>
       </div>
