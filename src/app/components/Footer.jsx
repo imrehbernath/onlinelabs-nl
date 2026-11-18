@@ -237,9 +237,14 @@ export default function Footer({ footerData }) {
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-            <p className="text-gray-400">
-              © {currentYear} {footer.companyName}. Alle rechten voorbehouden.
-            </p>
+            <div className="space-y-1 text-center md:text-left">
+              <p className="text-gray-400">
+                © {currentYear} {footer.companyName}. Alle rechten voorbehouden.
+              </p>
+              <p className="text-gray-400">
+                De SEO-diensten van OnlineLabs worden niet geverifieerd of goedgekeurd door Google.
+              </p>
+            </div>
             <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2">
               <Link href="/privacyverklaring" className="text-gray-400 hover:text-primary transition-colors duration-200">
                 Privacyverklaring
