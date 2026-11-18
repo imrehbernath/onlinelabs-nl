@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import MarkDot from './MarkDot';
+import FooterCookieButton from './FooterCookieButton';
 
-// Afsluiter en footer 2027: overgenomen uit het Claude Design-bestand (Main.dc.html).
+// Afsluiter (navy paneel met Kop koffie aan de Herengracht) en daaronder de witte footer met het Google Partner-badge.
 export default function SiteFooter() {
   return (
     <div className="v27">
       <div className="ol-endwrap ol-snap" style={{ padding: '16px' }}>
-      <div className="ol-endpanel" style={{ maxWidth: '1600px', margin: '0 auto', background: '#0A0F1F', color: '#FFFFFF', borderRadius: '12px', padding: '72px 56px 40px', boxSizing: 'border-box', minHeight: 'calc(100vh - 136px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '72px' }}>
+      <div className="ol-endpanel" style={{ maxWidth: '1600px', margin: '0 auto', background: '#0A0F1F', color: '#FFFFFF', borderRadius: '12px', padding: '72px 56px', boxSizing: 'border-box' }}>
 
       <section className="ol-cta-top" aria-labelledby="ol-cta-h" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(0, 1fr)', gap: '64px', alignItems: 'end' }}>
       <div>
@@ -25,50 +26,48 @@ export default function SiteFooter() {
       </div>
       </section>
 
-      <footer style={{ borderTop: '1px solid rgba(255, 255, 255, 0.12)', paddingTop: '48px' }}>
-      <div className="ol-foot-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.4fr) repeat(3, minmax(0, 1fr))', gap: '40px' }}>
-      <div>
-      <a href="/" aria-label="OnlineLabs, naar de homepage" style={{ display: 'inline-block' }}><img src="/onlinelabs-logo-2027-wit.svg" alt="OnlineLabs" style={{ height: '26px', width: 'auto', display: 'block' }} /></a>
-      <p style={{ margin: '20px 0 0', fontSize: '15px', lineHeight: '1.7', color: '#A9AFBF' }}>Herengracht 221<br />1016 BG Amsterdam</p>
-      <a className="ol-fl" href="https://www.google.com/partners/agency?id=8066409399" target="_blank" rel="noopener" style={{ display: 'inline-block', marginTop: '16px', fontSize: '15px' }}>Google Partner</a>
-      </div>
-      <div>
-      <p style={{ margin: '0 0 16px', fontSize: '15px', fontWeight: '600', color: '#FFFFFF' }}>Wat we doen</p>
-      <ul style={{ listStyle: 'none', margin: '0', padding: '0', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '15px' }}>
-      <li><a className="ol-fl" href="/skills/seo-specialist">SEO &amp; vindbaarheid</a></li>
-      <li><a className="ol-fl" href="/skills/geo-optimalisatie">GEO en AI-zichtbaarheid</a></li>
-      <li><a className="ol-fl" href="/skills/online-adverteren">Online adverteren</a></li>
-      <li><a className="ol-fl" href="/skills/website-laten-maken">Website laten maken</a></li>
-      <li><a className="ol-fl" href="/skills/website-snelheid-optimalisatie">Website snelheid</a></li>
-      <li><a className="ol-fl" href="/contact">Maatwerk en applicaties</a></li>
-      </ul>
-      </div>
-      <div>
-      <p style={{ margin: '0 0 16px', fontSize: '15px', fontWeight: '600', color: '#FFFFFF' }}>OnlineLabs</p>
-      <ul style={{ listStyle: 'none', margin: '0', padding: '0', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '15px' }}>
-      <li><a className="ol-fl" href="/aanpak">Aanpak</a></li>
-      <li><a className="ol-fl" href="/ons-werk">Ons werk</a></li>
-      <li><a className="ol-fl" href="/blog">Blog</a></li>
-      <li><a className="ol-fl" href="/over-ons">Over ons</a></li>
-      <li><a className="ol-fl" href="/contact">Contact</a></li>
-      </ul>
-      </div>
-      <div>
-      <p style={{ margin: '0 0 16px', fontSize: '15px', fontWeight: '600', color: '#FFFFFF' }}>Volg ons</p>
-      <ul style={{ listStyle: 'none', margin: '0', padding: '0', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '15px' }}>
-      <li><a className="ol-fl" href="https://www.linkedin.com/company/onlinelabs" target="_blank" rel="noopener">LinkedIn</a></li>
-      <li><a className="ol-fl" href="https://teun.ai" target="_blank" rel="noopener">Teun.ai</a></li>
-      </ul>
-      </div>
-      </div>
-      <div className="ol-foot-bottom" style={{ marginTop: '48px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '12px 32px', fontSize: '14px', color: '#A9AFBF' }}>
-      <span>© {new Date().getFullYear()} OnlineLabs</span>
-      <span style={{ display: 'flex', gap: '24px' }}><a className="ol-fl" href="/privacyverklaring">Privacyverklaring</a><a className="ol-fl" href="/algemene-voorwaarden">Algemene voorwaarden</a></span>
-      </div>
-      </footer>
 
       </div>
       </div>
+
+      <footer className="ol-ft">
+      <div className="ol-ft-inner">
+      <div className="ol-ft-top">
+      <a className="ol-ft-logo" href="/" aria-label="OnlineLabs, naar de homepage"><img src="/onlinelabs-logo-2027.svg" alt="OnlineLabs" width="207" height="36" loading="lazy" style={{ height: '36px', width: 'auto', display: 'block' }} /></a>
+      <a className="ol-ft-badge" href="https://www.google.com/partners/agency?id=8066409399" target="_blank" rel="noopener noreferrer" aria-label="OnlineLabs op Google Partners, opent in een nieuw tabblad"><img src="https://www.gstatic.com/partners/badge/images/2021/PartnerBadgeClickable.svg" alt="Google Partner" width="110" height="110" loading="lazy" decoding="async" style={{ display: 'block' }} /></a>
+      </div>
+      <div className="ol-ft-grid">
+      <div className="ol-ft-col ol-ft-contact">
+      <p className="ol-ft-title">Contact</p>
+      <address className="ol-ft-addr" style={{ fontStyle: 'normal' }}>OnlineLabs<br />Herengracht 221<br />1016 BG Amsterdam<br /><a className="ol-ft-link" href="tel:+31208202022">020 820 20 22</a><br /><a className="ol-ft-link" href="mailto:hallo@onlinelabs.nl">hallo@onlinelabs.nl</a></address>
+      <p className="ol-ft-rating">5,0 uit 30 Google reviews</p>
+      </div>
+      <nav className="ol-ft-col ol-ft-wat" aria-label="Wat we doen">
+      <p className="ol-ft-title">Wat we doen</p>
+      <ul className="ol-ft-list"><li><a className="ol-ft-link" href="/skills">Alle skills</a></li><li><a className="ol-ft-link" href="/skills/seo-specialist">SEO specialist</a></li><li><a className="ol-ft-link" href="/skills/geo-optimalisatie">GEO en AI-zichtbaarheid</a></li><li><a className="ol-ft-link" href="/skills/online-adverteren">Online adverteren</a></li><li><a className="ol-ft-link" href="/skills/lokale-seo-amsterdam">Lokale SEO Amsterdam</a></li><li><a className="ol-ft-link" href="/skills/website-laten-maken">Website laten maken</a></li><li><a className="ol-ft-link" href="/skills/website-snelheid-optimalisatie">Website snelheid</a></li><li><a className="ol-ft-link" href="/skills/conversie-optimalisatie-specialist">Conversie optimalisatie</a></li></ul>
+      </nav>
+      <nav className="ol-ft-col" aria-label="OnlineLabs">
+      <p className="ol-ft-title">OnlineLabs</p>
+      <ul className="ol-ft-list"><li><a className="ol-ft-link" href="/ons-werk">Ons werk</a></li><li><a className="ol-ft-link" href="/over-ons">Over ons</a></li><li><a className="ol-ft-link" href="/blog">Blog</a></li><li><a className="ol-ft-link" href="/trainingen">Trainingen</a></li><li><a className="ol-ft-link" href="/contact">Contact</a></li><li><a className="ol-ft-link" href="https://teun.ai" target="_blank" rel="noopener noreferrer">Teun.ai</a></li></ul>
+      </nav>
+      <nav className="ol-ft-col" aria-label="Volg ons">
+      <p className="ol-ft-title">Volg ons</p>
+      <ul className="ol-ft-list"><li><a className="ol-ft-link" href="https://www.linkedin.com/company/onlinelabs" target="_blank" rel="noopener noreferrer">LinkedIn</a></li><li><a className="ol-ft-link" href="https://www.facebook.com/onlinelabs.nl" target="_blank" rel="noopener noreferrer">Facebook</a></li><li><a className="ol-ft-link" href="https://x.com/onlinelabs_nl" target="_blank" rel="noopener noreferrer">X</a></li><li><a className="ol-ft-link" href="https://www.youtube.com/@OnlineLabs-nl" target="_blank" rel="noopener noreferrer">YouTube</a></li></ul>
+      </nav>
+      </div>
+      <div className="ol-ft-bottom">
+      <div className="ol-ft-legal">
+      <p>© {new Date().getFullYear()} OnlineLabs. Alle rechten voorbehouden.</p>
+      <p>De SEO-diensten van OnlineLabs worden niet geverifieerd of goedgekeurd door Google.</p>
+      </div>
+      <ul className="ol-ft-bl">
+      <li><a className="ol-ft-link" href="/privacyverklaring">Privacyverklaring</a></li>
+      <li><a className="ol-ft-link" href="/algemene-voorwaarden">Algemene voorwaarden</a></li>
+      <li><FooterCookieButton /></li>
+      </ul>
+      </div>
+      </div>
+      </footer>
     </div>
   );
 }

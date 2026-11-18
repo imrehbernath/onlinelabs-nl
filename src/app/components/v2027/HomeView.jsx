@@ -214,7 +214,7 @@ function Hero() {
       <a className="ol-pill" href="/over-ons" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', height: '56px', padding: '0 28px', borderRadius: '999px', background: '#0A0F1F', color: '#FFFFFF', fontSize: '16px', fontWeight: '600', textDecoration: 'none', transition: 'background .2s ease' }}>Meer over ons</a>
       </div>
       <p style={{ margin: '28px 0 0', fontSize: '15px', color: '#5B6275', display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}>
-      <span>Google Partner</span><span aria-hidden="true">·</span><span>5,0 uit 29 Google reviews</span><span aria-hidden="true">·</span><span>150+ websites in beheer</span>
+      <span>Google Partner</span><span aria-hidden="true">·</span><span>5,0 uit 30 Google reviews</span><span aria-hidden="true">·</span><span>150+ websites in beheer</span>
       </p>
       </div>
       <a className="ol-scroll ol-down" href="#ol-werk" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', fontSize: '17px', fontWeight: '600', textDecoration: 'none', justifySelf: 'end' }}>Bekijk ons werk
@@ -434,7 +434,7 @@ function Reviews({ reviews, logosTop, logosBottom }) {
       <h2 id="ol-revs-h" className="ol-why-h" style={{ margin: '0', fontSize: '64px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}>In hun <em className="ol-acc">woorden</em><MarkDot img={`${CDN}/2026/10/Evert-Groot-achter-rol-linnen-gordijnen.webp`} /></h2>
       <div>
       <p style={{ margin: '0', fontSize: '20px', lineHeight: '1.6', color: '#3A4256' }}>Sommige klanten werken al meer dan tien jaar met ons. Dat zegt meer dan wij zelf kunnen zeggen.</p>
-      <p style={{ margin: '16px 0 0', fontSize: '15px', color: '#5B6275', display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}><span>5,0 uit 29 Google reviews</span><span aria-hidden="true">·</span><span>Google Partner</span></p>
+      <p style={{ margin: '16px 0 0', fontSize: '15px', color: '#5B6275', display: 'flex', flexWrap: 'wrap', gap: '6px 10px' }}><span>5,0 uit 30 Google reviews</span><span aria-hidden="true">·</span><span>Google Partner</span></p>
       </div>
       </div>
 

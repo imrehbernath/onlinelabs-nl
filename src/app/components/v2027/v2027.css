@@ -78,8 +78,6 @@ html,body{overflow-x:clip}
 .ol-revgrid::-webkit-scrollbar{display:none}
 .ol-revbtn{background:none;border:0;padding:0;font-family:inherit;font-size:15px;font-weight:600;color:#0A0F1F;min-height:44px;cursor:pointer;transition:color .2s ease,opacity .2s ease}
 .ol-revbtn:hover{color:#376EB5}
-.ol-fl{color:#A9AFBF;text-decoration:none;cursor:pointer;transition:color .2s ease}
-.ol-fl:hover,.ol-fl:focus-visible{color:#FFFFFF}
 .ol-big{transition:color .2s ease}
 .ol-big:hover,.ol-big:focus-visible{color:#8DB6EE !important}
 .ol-endpanel a:focus-visible{outline-color:#8DB6EE}
@@ -98,9 +96,6 @@ html,body{overflow-x:clip}
 .ol-cta-top div:has(> .ol-pill){flex-direction:column !important;align-items:flex-start !important;gap:14px !important}
 .ol-cta-top .ol-pill{width:100%;justify-content:center;box-sizing:border-box;margin-bottom:6px}
 .ol-cta-h{font-size:clamp(34px,10vw,56px) !important}
-.ol-foot-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:32px !important}
-.ol-foot-grid > div:first-child,.ol-foot-grid > div:nth-child(2){grid-column:1 / -1}
-.ol-foot-grid .ol-fl{white-space:nowrap}
 .ol-revs{padding:72px 20px !important}
 .ol-revgrid{margin-right:-20px !important;padding-right:20px !important}
 .ol-rev{flex-basis:85% !important}
@@ -370,3 +365,37 @@ html,body{overflow-x:clip}
 .ol-mw.is-open{transform:scale(1);opacity:1}
 .ol-mw.is-closing{transition:transform .25s cubic-bezier(.6,0,.8,.3),opacity .15s ease .1s}
 @media (prefers-reduced-motion: reduce){.ol-portal-ring{animation:none}.ol-portal.is-pop,.ol-portal.is-pop .ol-portal-pulse,.ol-portal.is-pop .ol-portal-img{animation:none}.ol-portal-img{clip-path:none}.ol-portal-pulse{display:none}.ol-flash-img,.ol-wwin{transition:none}.ol-mw{display:none}}
+
+/* Witte footer met Google Partner-badge */
+.ol-ft{background:#FFFFFF;padding:0 16px;color:#0A0F1F}
+.ol-ft-inner{position:relative;max-width:1600px;margin:0 auto;padding:72px 56px 40px;box-sizing:border-box}
+.ol-ft-inner::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,#376EB5,#6FD3F4,#8FB0F5,#B8A3FA)}
+.ol-ft-top{display:flex;align-items:center;justify-content:space-between;gap:55px;padding-bottom:32px}
+.ol-ft-logo{display:inline-flex;align-items:center;min-height:44px}
+.ol-ft-badge{display:block;flex:none;width:110px;height:110px}
+.ol-ft-grid{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:40px;padding:40px 0;border-top:1px solid #E3E6EC}
+.ol-ft-title{margin:0 0 16px;font-size:15px;font-weight:600;color:#0A0F1F}
+.ol-ft-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:15px}
+.ol-ft-addr{font-size:15px;line-height:1.8;color:#5B6275}
+.ol-ft-rating{margin:16px 0 0;font-size:14px;color:#5B6275}
+.ol-ft-link{color:#5B6275;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:4px;cursor:pointer;transition:color .2s ease,text-decoration-color .2s ease}
+.ol-ft-link:hover,.ol-ft-link:focus-visible{color:#0A0F1F;text-decoration-color:#376EB5}
+.ol-ft a:focus-visible,.ol-ft button:focus-visible{outline:3px solid #376EB5;outline-offset:2px;border-radius:2px}
+.ol-ft-btn{background:none;border:0;padding:0;font:inherit;font-size:14px}
+.ol-ft-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px 32px;padding-top:24px;border-top:1px solid #E3E6EC;font-size:14px;color:#5B6275}
+.ol-ft-legal p{margin:0;line-height:1.6}
+.ol-ft-bl{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 24px}
+.ol-ft-bl .ol-ft-link{font-size:14px}
+@media (max-width: 960px){
+.ol-ft{padding:0 8px}
+.ol-ft-inner{padding:48px 20px 28px}
+.ol-ft-top{flex-direction:column;align-items:flex-start;gap:55px;padding-bottom:55px}
+.ol-ft-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 24px}
+.ol-ft-contact,.ol-ft-wat{grid-column:1 / -1}
+.ol-ft-list{gap:0}
+.ol-ft-link{display:inline-flex;align-items:center;min-height:44px}
+.ol-ft-addr .ol-ft-link{display:inline-flex}
+.ol-ft-bottom{flex-direction:column;gap:12px}
+.ol-ft-bl{flex-direction:column;gap:0}
+}
+@media (prefers-reduced-motion: reduce){.ol-ft-link{transition:none}}
