@@ -233,11 +233,11 @@ const BLUE = { bg: '#376EB5', fg: '#FFFFFF', circleBg: '#FFFFFF', circleFg: '#0A
 const PALE = { bg: '#DCE7F6', fg: '#0A0F1F', circleBg: '#0A0F1F', circleFg: '#FFFFFF' };
 const CDN = 'https://cdn.onlinelabs.nl/wp-content/uploads';
 const CASES = [
-  { name: 'De Smaak van Italië', tag: 'Magazine', services: 'Website · SEO', stat: 'Nieuwe website met 1.199 artikelen, 218 plaatsen en 300 accommodaties. Al 6 jaar website en SEO.', href: '/ons-werk/de-smaak-van-italie', img: `${CDN}/2026/10/Covers-van-de-Smaak-van-Italie.webp`, alt: 'Covers van het magazine De Smaak van Italië', pos: 'center', tone: PALE },
-  { name: 'Forteiland Pampus', tag: 'Erfgoed', services: 'Website · SEO · Campagnes', stat: '10+ jaar samenwerking aan websites, SEO, campagnes en meer online boekingen.', href: '/ons-werk/forteiland-pampus', img: `${CDN}/2026/06/Forteiland-Pampus-case-homepage.webp`, alt: 'Forteiland Pampus vanuit de lucht tijdens een evenement', pos: 'center 45%', tone: BLUE },
-  { name: 'Grachtenmuseum', tag: 'Museum', services: 'Website · SEO', stat: 'Website en SEO voor het museum over de Amsterdamse grachten.', href: '/ons-werk', img: `${CDN}/2026/06/Rode-Salon_Grachtenmuseum_RebekkaMell.webp`, alt: 'Bezoeker in de beschilderde zaal van het Grachtenmuseum', pos: 'center 55%', tone: PALE },
-  { name: 'Evert Groot', tag: 'Retail', services: 'Webdesign · SEO', stat: 'SEO en webdesign voor meer zichtbaarheid op linnen gordijnen en maatwerk advies.', href: '/ons-werk/evert-groot', img: `${CDN}/2026/10/Evert-Groot-achter-rol-linnen-gordijnen.webp`, alt: 'Evert Groot achter een rol linnen voor gordijnen', pos: 'center', tone: BLUE },
-  { name: 'HvanA', tag: 'Onderwijs', services: 'Migratie · WordPress', stat: 'Migratie van 3.400 artikelen naar WordPress met behoud van design en functionaliteit.', href: '/ons-werk/hvana', img: `${CDN}/2026/06/Hogeschool-van-Amsterdam-case-homepage.webp`, alt: 'Gebouw van de Hogeschool van Amsterdam', pos: 'center', tone: PALE },
+  { name: 'De Smaak van Italië', tag: 'Magazine', services: 'Website · SEO', stat: 'Nieuwe website: 1.199 artikelen, 218 plaatsen en 300 accommodaties. Al 6 jaar website en SEO.', href: '/ons-werk/de-smaak-van-italie', img: `${CDN}/2026/10/Covers-van-de-Smaak-van-Italie.webp`, alt: 'Covers van het magazine De Smaak van Italië', pos: 'center', tone: PALE },
+  { name: 'Forteiland Pampus', tag: 'Erfgoed', services: 'Website · SEO · Campagnes', stat: 'Ruim 10 jaar website, SEO en campagnes, met meer online boekingen.', href: '/ons-werk/forteiland-pampus', img: `${CDN}/2026/06/Forteiland-Pampus-case-homepage.webp`, alt: 'Forteiland Pampus vanuit de lucht tijdens een evenement', pos: 'center 45%', tone: BLUE },
+  { name: 'Grachtenmuseum', tag: 'Museum', services: 'Website · SEO', stat: 'Website en SEO voor het museum over de grachten.', href: '/ons-werk', img: `${CDN}/2026/06/Rode-Salon_Grachtenmuseum_RebekkaMell.webp`, alt: 'Bezoeker in de beschilderde zaal van het Grachtenmuseum', pos: 'center 55%', tone: PALE },
+  { name: 'Evert Groot', tag: 'Retail', services: 'Webdesign · SEO', stat: 'Beter vindbaar op linnen gordijnen en maatwerk advies.', href: '/ons-werk/evert-groot', img: `${CDN}/2026/10/Evert-Groot-achter-rol-linnen-gordijnen.webp`, alt: 'Evert Groot achter een rol linnen voor gordijnen', pos: 'center', tone: BLUE },
+  { name: 'HvanA', tag: 'Onderwijs', services: 'Migratie · WordPress', stat: '3.400 artikelen naar WordPress, met behoud van design.', href: '/ons-werk/hvana', img: `${CDN}/2026/06/Hogeschool-van-Amsterdam-case-homepage.webp`, alt: 'Gebouw van de Hogeschool van Amsterdam', pos: 'center', tone: PALE },
 ];
 
 function Work() {
@@ -263,9 +263,7 @@ function Work() {
   const cases = CASES.map((c, i) => ({
     ...c,
     hasImg: !!c.img,
-    overBase: c.img ? '0' : '1',
-    overClass: c.img ? '' : 'ol-nophoto',
-    bg: c.tone.bg, fg: c.tone.fg, circleBg: c.tone.circleBg, circleFg: c.tone.circleFg,
+    bg: c.tone.bg,
     nameColor: i === active ? '#FFFFFF' : 'rgba(255, 255, 255, 0.32)',
     winClass: i === active ? 'ol-wwin is-on' : 'ol-wwin',
     pick: () => { if (activeRef.current !== i) setActive(i); },
@@ -301,18 +299,12 @@ function Work() {
       {c.hasImg && (<>
       <Image src={c.img} alt={c.alt} fill sizes="(max-width: 960px) 100vw, 50vw" quality={78} style={{ objectFit: 'cover', objectPosition: c.pos }} />
       </>)}
-      <div className={`ol-cardover ${c.overClass}`} style={{ position: 'absolute', inset: '0', background: c.bg, padding: '32px', boxSizing: 'border-box', opacity: c.overBase }}>
-      <p className="ol-cardstat" style={{ margin: '0', maxWidth: '92%', fontSize: 'clamp(26px, 2.6vw, 40px)', fontWeight: '600', lineHeight: '1.12', letterSpacing: '-0.025em', color: c.fg }}>{c.stat}</p>
-      <span className="ol-circle" aria-hidden="true" style={{ position: 'absolute', left: '50%', top: '58%', transform: 'translate(-50%, -50%)', width: '112px', height: '112px', borderRadius: '50%', background: c.circleBg, color: c.circleFg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' }}><path d="M7 17L17 7M8 7h9v9"></path></svg>
+      <span className="ol-cardgo" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' }}><path d="M7 17L17 7M8 7h9v9"></path></svg>
       </span>
-      </div>
-      <div style={{ position: 'absolute', left: '20px', right: '20px', bottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-      <span style={{ display: 'inline-flex', alignItems: 'center', height: '40px', padding: '0 16px', borderRadius: '6px', background: '#FFFFFF', color: '#0A0F1F', fontSize: '15px', fontWeight: '700' }}>{c.name}</span>
-      <span style={{ display: 'inline-flex', alignItems: 'center', height: '40px', padding: '0 16px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.92)', color: '#0A0F1F', fontSize: '14px', fontWeight: '600' }}>{c.services}</span>
-      </div>
+      <span className="ol-cardtag">{c.services}</span>
       </a>
-      <p className="ol-cardcap" style={{ margin: '14px 0 0', fontSize: '16px', lineHeight: '1.5', color: '#A9AFBF' }}>{c.stat}</p>
+      <p className="ol-cardcap"><span className="ol-cardname">{c.name}</span>{c.stat}</p>
       </div>
       </Fragment>))}
       </div>
