@@ -4,6 +4,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import HeroRing from './HeroRing';
 import MarkDot from './MarkDot';
+import PortalFlash from './PortalFlash';
 
 // Homepage 2027: overgenomen uit het Claude Design-bestand (Main.dc.html).
 
@@ -39,34 +40,18 @@ function Hero() {
   const heroRef = useRef(null);
   const reduced = useRef(false);
   const heroVisible = useRef(true);
-  const dotRef = useRef(null);
   const portalRef = useRef(null);
   const wrapRef = useRef(null);
   const grownRef = useRef(false);
   const [grown, setGrown] = useState(false);
-  const [slide, setSlide] = useState(0);
+  const [inView, setInView] = useState(true);
+  const [isReduced, setIsReduced] = useState(false);
 
-  // De punt van "Gekozen" groeit uit tot een rond venster met projectbeelden
+  // De punt van "Gekozen" opent als rond venster: pop met overshoot, ringflits en irisopening (CSS)
   const grow = useCallback(() => {
-    if (grownRef.current) return;
-    const dot = dotRef.current;
-    const portal = portalRef.current;
-    if (!dot || !portal) return;
+    if (grownRef.current || !portalRef.current) return;
     grownRef.current = true;
-    if (reduced.current) { setGrown(true); return; }
-    const d = dot.getBoundingClientRect();
-    const p = portal.getBoundingClientRect();
-    const size = Math.max(8, d.width * 0.7);
-    const cx = d.left + d.width / 2;
-    const cy = d.top + d.height * 0.78;
-    portal.style.transition = 'none';
-    portal.style.transform = `translate(${cx - (p.left + p.width / 2)}px, ${cy - (p.top + p.height / 2)}px) scale(${size / p.width})`;
-    portal.getBoundingClientRect();
     setGrown(true);
-    requestAnimationFrame(() => {
-      portal.style.transition = 'transform 1.3s cubic-bezier(.65,0,.25,1)';
-      portal.style.transform = 'none';
-    });
   }, []);
 
   const lineEnd = (st, i) => (st[i] || 0) + 280 + KOP.lines[i].t.length * 55;
@@ -104,6 +89,7 @@ function Hero() {
 
   useEffect(() => {
     reduced.current = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    setIsReduced(reduced.current);
     if (reduced.current) {
       startsRef.current = [0, 0, 0];
       setStarts([0, 0, 0]);
@@ -116,7 +102,7 @@ function Hero() {
       setNow(Date.now());
       runScramble(() => {
         scheduleWow();
-        setTimeout(() => { if (heroVisible.current) grow(); }, 500);
+        setTimeout(() => { if (heroVisible.current) grow(); }, 250);
       });
     }
 
@@ -126,6 +112,7 @@ function Hero() {
     if (el && 'IntersectionObserver' in window) {
       io = new IntersectionObserver(([en]) => {
         heroVisible.current = en.isIntersecting;
+        setInView(en.isIntersecting);
         if (wrapRef.current) wrapRef.current.classList.toggle('is-vis', en.isIntersecting && !reduced.current);
         if (en.isIntersecting && reduced.current) grow();
       });
@@ -157,16 +144,6 @@ function Hero() {
       }
     };
   }, [runScramble, scheduleWow, grow]);
-
-  // Elke 4 seconden een ander beeld, alleen als de hero in beeld is
-  useEffect(() => {
-    if (!grown || reduced.current) return undefined;
-    const id = setInterval(() => {
-      if (!heroVisible.current || document.hidden) return;
-      setSlide((s) => (s + 1) % PORTAL.length);
-    }, 4000);
-    return () => clearInterval(id);
-  }, [grown]);
 
   const accent = ACCENT;
   const h1Size = KOP.size;
@@ -214,19 +191,18 @@ function Hero() {
       {lines.map((ln, $index) => (<Fragment key={$index}>
       <span className="ol-hline" style={{ display: 'flex', alignItems: 'baseline', gap: '0.18em', minHeight: '0.95em', whiteSpace: 'pre', justifyContent: ln.justify, paddingLeft: ln.indent, transform: `translate3d(calc(var(--mx, 0) * ${ln.k}px), calc(var(--my, 0) * ${ln.ky}px), 0)`, transition: 'transform 1.1s cubic-bezier(.2,.7,.2,1), padding-left .6s cubic-bezier(.2,.7,.2,1)' }}>
       {ln.labelBefore && (<><span className="ol-h1label" style={{ fontSize: '22px', fontWeight: '600', letterSpacing: '0', color: '#5B6275', opacity: ln.labelOpacity }}>{ln.label}</span></>)}
-      <span>{ln.chars.map((ch, $index) => (<Fragment key={$index}><span style={{ color: ch.color }}>{ch.c}</span></Fragment>))}{ln.dot && (<><span ref={$index === KOP.lines.length - 1 ? dotRef : null} style={{ color: grown ? 'transparent' : accent, transition: 'color .3s ease' }}>.</span></>)}</span>
+      <span>{ln.chars.map((ch, $index) => (<Fragment key={$index}><span style={{ color: ch.color }}>{ch.c}</span></Fragment>))}{ln.dot && (<><span style={{ color: grown ? 'transparent' : accent, transition: 'color .08s ease' }}>.</span></>)}</span>
       {ln.labelAfter && (<><span className="ol-h1label" style={{ fontSize: '22px', fontWeight: '600', letterSpacing: '0', color: '#5B6275', opacity: ln.labelOpacity }}>{ln.label}</span></>)}
       </span>
       </Fragment>))}
       </span>
       </h1>
-      <div ref={portalRef} className={`ol-portal${grown ? ' is-on' : ''}`} aria-hidden="true">
+      <div ref={portalRef} className={`ol-portal${grown ? (isReduced ? ' is-on' : ' is-on is-pop') : ''}`} aria-hidden="true">
+      <span className="ol-portal-pulse"></span>
       <span className="ol-portal-ring"></span>
       <span className="ol-portal-disc"></span>
       <span className="ol-portal-img">
-      {PORTAL.map((c, k) => (<Fragment key={k}>
-      <Image src={c.img} alt="" fill sizes="(max-width: 1100px) 64vw, 420px" quality={78} className={k === slide ? 'is-on' : ''} style={{ objectFit: 'cover', objectPosition: c.pos }} />
-      </Fragment>))}
+      <PortalFlash active={grown && inView} reduced={isReduced} />
       </span>
       </div>
       </div>
@@ -263,9 +239,6 @@ const CASES = [
   { name: 'Evert Groot', tag: 'Retail', services: 'Webdesign · SEO', stat: 'SEO en webdesign voor meer zichtbaarheid op linnen gordijnen en maatwerk advies.', href: '/ons-werk/evert-groot', img: `${CDN}/2026/10/Evert-Groot-achter-rol-linnen-gordijnen.webp`, alt: 'Evert Groot achter een rol linnen voor gordijnen', pos: 'center', tone: BLUE },
   { name: 'HvanA', tag: 'Onderwijs', services: 'Migratie · WordPress', stat: 'Migratie van 3.400 artikelen naar WordPress met behoud van design en functionaliteit.', href: '/ons-werk/hvana', img: `${CDN}/2026/06/Hogeschool-van-Amsterdam-case-homepage.webp`, alt: 'Gebouw van de Hogeschool van Amsterdam', pos: 'center', tone: PALE },
 ];
-
-// Beelden in het ronde venster van de hero
-const PORTAL = [CASES[3], CASES[4], CASES[0]];
 
 function Work() {
   const [active, setActive] = useState(0);
@@ -377,7 +350,7 @@ function Why() {
     <>
       <section className="ol-why ol-snap" aria-labelledby="ol-why-h" style={{ maxWidth: '1440px', margin: '0 auto', padding: '96px 40px', boxSizing: 'border-box', minHeight: 'calc(100vh - 104px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <div className="ol-why-top" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '64px', alignItems: 'start' }}>
-      <h2 id="ol-why-h" className="ol-why-h" style={{ margin: '0', fontSize: '64px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}>Waarom <em className="ol-acc">OnlineLabs</em><MarkDot img={`${CDN}/2025/11/Imre-Bernath.webp`} pos="center 25%" /></h2>
+      <h2 id="ol-why-h" className="ol-why-h" style={{ margin: '0', fontSize: '64px', fontWeight: '800', lineHeight: '1', letterSpacing: '-0.035em' }}>Waarom <em className="ol-acc">OnlineLabs</em><MarkDot img="/img/flash/02-kantoor-onlinelabs-herengracht.webp" /></h2>
       <p style={{ margin: '0', fontSize: '20px', lineHeight: '1.6', color: '#3A4256' }}>Voor de AI-revolutie werkten hier twee programmeurs en drie SEO-copywriters. Nu doen we het met drie specialisten en een slimme AI-assistent naast ons. Sneller, scherper en betaalbaarder. AI is ons gereedschap, het vakwerk en de liefde voor het vak maken het verschil.</p>
       </div>
 

@@ -7,7 +7,9 @@ import Image from 'next/image';
 // Puur decoratie (aria-hidden), staat stil bij reduced motion.
 export default function MarkDot({ img, pos = 'center', char = '.', color = '#376EB5' }) {
   const ref = useRef(null);
+  const winRef = useRef(null);
   const [state, setState] = useState('');
+  const [flip, setFlip] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -21,8 +23,11 @@ export default function MarkDot({ img, pos = 'center', char = '.', color = '#376
       if (en.isIntersecting && armed) {
         armed = false;
         t1 = setTimeout(() => {
+          // Past het venster rechts niet in beeld, dan opent het naar links
+          const w = winRef.current ? winRef.current.offsetWidth : 0;
+          setFlip(el.getBoundingClientRect().left + w > window.innerWidth - 8);
           setState('is-open');
-          t2 = setTimeout(() => setState('is-closing'), 1900);
+          t2 = setTimeout(() => setState('is-closing'), 1400);
         }, 450);
       }
       if (!en.isIntersecting) armed = true;
@@ -34,7 +39,7 @@ export default function MarkDot({ img, pos = 'center', char = '.', color = '#376
   return (
     <span ref={ref} className="ol-mark" style={{ color }}>
       {char}
-      <span className={`ol-mw ${state}`} aria-hidden="true">
+      <span ref={winRef} className={`ol-mw ${state}${flip ? ' is-left' : ''}`} aria-hidden="true">
         <Image src={img} alt="" width={160} height={160} sizes="160px" quality={75} style={{ objectFit: 'cover', objectPosition: pos }} />
       </span>
     </span>
