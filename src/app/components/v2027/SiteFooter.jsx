@@ -52,7 +52,7 @@ export default function SiteFooter() {
       </nav>
       <nav className="ol-ft-col" aria-label="Volg ons">
       <p className="ol-ft-title">Volg ons</p>
-      <ul className="ol-ft-list"><li><a className="ol-ft-link" href="https://www.linkedin.com/company/onlinelabs" target="_blank" rel="noopener noreferrer">LinkedIn</a></li><li><a className="ol-ft-link" href="https://www.facebook.com/onlinelabs.nl" target="_blank" rel="noopener noreferrer">Facebook</a></li><li><a className="ol-ft-link" href="https://x.com/onlinelabs_nl" target="_blank" rel="noopener noreferrer">X</a></li><li><a className="ol-ft-link" href="https://www.youtube.com/@OnlineLabs-nl" target="_blank" rel="noopener noreferrer">YouTube</a></li></ul>
+      <ul className="ol-ft-list"><li><a className="ol-ft-link" href="https://www.linkedin.com/company/onlinelabs" target="_blank" rel="noopener noreferrer">LinkedIn</a></li><li><a className="ol-ft-link" href="https://www.facebook.com/onlinelabs.nl" target="_blank" rel="noopener noreferrer">Facebook</a></li><li><a className="ol-ft-link" href="https://www.youtube.com/@OnlineLabs-nl" target="_blank" rel="noopener noreferrer">YouTube</a></li><li><a className="ol-ft-link" href="https://x.com/onlinelabs_nl" target="_blank" rel="noopener noreferrer">X</a></li></ul>
       </nav>
       </div>
       <div className="ol-ft-bottom">

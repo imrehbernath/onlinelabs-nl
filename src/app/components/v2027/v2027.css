@@ -368,14 +368,13 @@ html,body{overflow-x:clip}
 
 /* Witte footer met Google Partner-badge */
 .ol-ft{background:#FFFFFF;padding:0 16px;color:#0A0F1F}
-.ol-ft-inner{position:relative;max-width:1600px;margin:0 auto;padding:72px 56px 40px;box-sizing:border-box}
-.ol-ft-inner::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,#376EB5,#6FD3F4,#8FB0F5,#B8A3FA)}
+.ol-ft-inner{position:relative;max-width:1600px;margin:0 auto;padding:56px 56px 40px;box-sizing:border-box}
 .ol-ft-top{display:flex;align-items:center;justify-content:space-between;gap:55px;padding-bottom:32px}
 .ol-ft-logo{display:inline-flex;align-items:center;min-height:44px}
 .ol-ft-badge{display:block;flex:none;width:110px;height:110px}
-.ol-ft-grid{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:40px;padding:40px 0;border-top:1px solid #E3E6EC}
-.ol-ft-title{margin:0 0 16px;font-size:15px;font-weight:600;color:#0A0F1F}
-.ol-ft-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:15px}
+.ol-ft-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:48px;padding:40px 0 48px;border-top:1px solid #E3E6EC}
+.v27 .ol-ft-title{margin:0 0 20px;font-family:var(--font-bricolage),var(--font-inter),system-ui,sans-serif;font-size:20px;font-weight:700;line-height:1.2;letter-spacing:-.01em;color:#0A0F1F}
+.ol-ft-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;font-size:15px}
 .ol-ft-addr{font-size:15px;line-height:1.8;color:#5B6275}
 .ol-ft-rating{margin:16px 0 0;font-size:14px;color:#5B6275}
 .ol-ft-link{color:#5B6275;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:4px;cursor:pointer;transition:color .2s ease,text-decoration-color .2s ease}
@@ -388,11 +387,12 @@ html,body{overflow-x:clip}
 .ol-ft-bl .ol-ft-link{font-size:14px}
 @media (max-width: 960px){
 .ol-ft{padding:0 8px}
-.ol-ft-inner{padding:48px 20px 28px}
+.ol-ft-inner{padding:32px 20px 28px}
 .ol-ft-top{flex-direction:column;align-items:flex-start;gap:55px;padding-bottom:55px}
-.ol-ft-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 24px}
+.ol-ft-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 24px;padding:40px 0}
 .ol-ft-contact,.ol-ft-wat{grid-column:1 / -1}
 .ol-ft-list{gap:0}
+.v27 .ol-ft-title{margin-bottom:8px}
 .ol-ft-link{display:inline-flex;align-items:center;min-height:44px}
 .ol-ft-addr .ol-ft-link{display:inline-flex}
 .ol-ft-bottom{flex-direction:column;gap:12px}
