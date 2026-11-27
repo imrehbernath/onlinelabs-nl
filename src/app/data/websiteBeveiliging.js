@@ -1,6 +1,7 @@
 // Inhoud van /skills/website-beveiliging, vast in de code.
 // Deze pagina hangt niet van WordPress af: [slug]/page.js gebruikt dit object
-// en doet voor deze slug geen GraphQL-call. Zelfde vorm als het WordPress-antwoord.
+// en vraagt voor deze slug geen inhoud op bij WordPress. Zelfde vorm als het WordPress-antwoord.
+// Sectievolgorde en componenten zoals /skills/seo-specialist.
 
 const websiteBeveiliging = {
   "id": "code-website-beveiliging",
@@ -39,6 +40,13 @@ const websiteBeveiliging = {
     },
     "pageSections": [
       {
+        "__typename": "ServiceDetailsPageSectionsLogoSliderLayout",
+        "title": "Vertrouwd door toonaangevende bedrijven",
+        "logoSliderBackground": [
+          "beige"
+        ]
+      },
+      {
         "__typename": "ServiceDetailsPageSectionsTextImageLayout",
         "layout": "image-right",
         "subheading": null,
@@ -59,53 +67,110 @@ const websiteBeveiliging = {
         "videoMp4": null,
         "imageCaption": null,
         "imageCaptionLink": null,
-        "background": "gray"
-      },
-      {
-        "__typename": "ServiceDetailsPageSectionsTextImageLayout",
-        "layout": "text-only",
-        "subheading": null,
-        "title": "Meestal is het geen gerichte aanval.",
-        "content": "<p>De meeste sites worden niet uitgekozen. Geautomatiseerde scripts zoeken het hele internet af naar oude plugins, zwakke wachtwoorden en open bestanden. Een kleine site met een verouderde plugin is net zo gemakkelijk als een grote.</p>",
-        "mediaType": "image",
-        "image": null,
-        "videoWebm": null,
-        "videoMp4": null,
-        "imageCaption": null,
-        "imageCaptionLink": null,
         "background": "white"
       },
       {
         "__typename": "ServiceDetailsPageSectionsTextImageLayout",
-        "layout": "text-only",
+        "layout": "image-left",
         "subheading": null,
-        "title": "Wat we doen om je website te beveiligen.",
-        "content": "<p>Zes onderdelen die samen je website dichttimmeren tegen hackers. We kijken naar wat bezoekers zien en naar wat er binnenin gebeurt.</p>\n<h3>Scan en nulmeting.</h3>\n<p>We beginnen met een beveiligingsscan. Je krijgt een cijfer van A+ tot F, een lijst met wat eerst moet en een rapport in gewone taal.</p>\n<ul>\n<li>Passieve scan: wat elke bezoeker van buiten kan zien</li>\n<li>Volledige scan, met toestemming van de eigenaar</li>\n<li>Malware-scan van maximaal 20 pagina's, op spam en verborgen doorverwijzingen</li>\n<li>Binnenkant-scan via de server: plugins, gewijzigde bestanden en beheerders</li>\n</ul>\n<h3>Toegang en software.</h3>\n<p>De meeste hacks beginnen bij een oude plugin of een zwakke inlog. Bij WordPress beveiliging kijken we daarom eerst wie er mag inloggen en of de kern, thema's en plugins up-to-date zijn.</p>\n<ul>\n<li>Beheerders en inlogbeveiliging</li>\n<li>WordPress-versie, thema's en plugins</li>\n<li>Bekende kwetsbaarheden en verouderde scripts</li>\n</ul>\n<h3>Malware en hacksporen.</h3>\n<p>We zoeken naar wat er niet hoort te staan: spampagina's, verborgen doorverwijzingen en onbekende beheerders.</p>\n<h3>Verbinding en firewall.</h3>\n<p>Je site moet veilig praten met bezoekers. We controleren HTTPS, security headers en firewall-instellingen.</p>\n<ul>\n<li>HTTPS en SSL-certificaat</li>\n<li>Security headers</li>\n<li>Firewall en toegangsregels</li>\n</ul>\n<h3>Bestanden, domein en e-mail.</h3>\n<p>Een vergeten back-upbestand of een open configuratiebestand is een open deur. Ook je domein en e-mail horen erbij.</p>\n<ul>\n<li>Configuratie-, back-up- en databasebestanden die niet publiek horen te zijn</li>\n<li>Domeininstellingen (DNS)</li>\n<li>E-mailbeveiliging van je domein</li>\n</ul>\n<h3>Back-up en herstel.</h3>\n<p>Gaat er toch iets mis, dan wil je snel terug naar een schone versie. We controleren of er back-ups zijn en of ze bruikbaar zijn.</p>\n<ul>\n<li>Back-ups op een andere plek</li>\n<li>Controle dat terugzetten werkt</li>\n<li>Vaste volgorde voor herstel bij een incident</li>\n</ul>\n<p>Liever zelf aan de slag met WordPress? Lees <a href=\"/blog/wordpress-website-beveiligen\">WordPress beveiligen: 10 tips tegen hackers</a>.</p>",
+        "title": "Meestal is het geen gerichte aanval.",
+        "content": "<p>De meeste sites worden niet uitgekozen. Geautomatiseerde scripts zoeken het hele internet af naar oude plugins, zwakke wachtwoorden en open bestanden. Een kleine site met een verouderde plugin is net zo gemakkelijk als een grote.</p>",
         "mediaType": "image",
-        "image": null,
+        "image": {
+          "node": {
+            "sourceUrl": "https://cdn.onlinelabs.nl/wp-content/uploads/2025/12/SEO-specialist-aan-het-werk.webp",
+            "altText": "Website beveiliging bij OnlineLabs: scannen, beveiligen en bewaken"
+          }
+        },
         "videoWebm": null,
         "videoMp4": null,
         "imageCaption": null,
         "imageCaptionLink": null,
-        "background": "gray"
+        "background": "beige"
       },
       {
         "__typename": "ServiceDetailsPageSectionsTextImageLayout",
         "layout": "text-only",
         "subheading": null,
         "title": "Niet beloofd, gemeten.",
-        "content": "<ul>\n<li><strong>7</strong> categorieën in elk rapport</li>\n<li><strong>4</strong> soorten scans</li>\n<li><strong>150+</strong> websites in beheer</li>\n</ul>\n<p>Wat we doen laten we zien in cijfers. Elke scan eindigt in een cijfer van A+ tot F. Een tweede scan toont wat er is verbeterd sinds de vorige, zodat je het verschil ziet.</p>\n<p>Ook een nieuwe site die technisch op 100 scoort? Bekijk <a href=\"/skills/website-laten-maken\">Website laten maken</a>.</p>",
+        "content": "<div class=\"not-prose grid grid-cols-3 gap-4 lg:gap-8 mb-8\"><div class=\"border-t-2 border-gray-900 pt-4\"><p class=\"!mb-2 font-serif text-4xl lg:text-5xl font-bold !text-[#376eb5] leading-none\">7</p><p class=\"!mb-0 !text-base !text-gray-600 leading-snug\">categorieën in elk rapport</p></div><div class=\"border-t-2 border-gray-900 pt-4\"><p class=\"!mb-2 font-serif text-4xl lg:text-5xl font-bold !text-[#376eb5] leading-none\">4</p><p class=\"!mb-0 !text-base !text-gray-600 leading-snug\">soorten scans</p></div><div class=\"border-t-2 border-gray-900 pt-4\"><p class=\"!mb-2 font-serif text-4xl lg:text-5xl font-bold !text-[#376eb5] leading-none\">150+</p><p class=\"!mb-0 !text-base !text-gray-600 leading-snug\">websites in beheer</p></div></div>\n<p>Wat we doen laten we zien in cijfers. Elke scan eindigt in een cijfer van A+ tot F. Een tweede scan toont wat er is verbeterd sinds de vorige, zodat je het verschil ziet.</p>\n<p>Ook een nieuwe site die technisch op 100 scoort? Bekijk <a href=\"/skills/website-laten-maken\">Website laten maken</a>.</p>",
         "mediaType": "image",
         "image": null,
         "videoWebm": null,
         "videoMp4": null,
         "imageCaption": null,
         "imageCaptionLink": null,
-        "background": "white"
+        "background": "gray"
       },
       {
         "__typename": "ServiceDetailsPageSectionsProcessSectionLayout",
-        "processBackground": "beige"
+        "processBackground": "white"
+      },
+      {
+        "__typename": "ServiceDetailsPageSectionsServicesListLayout",
+        "servicesListBackground": "beige",
+        "title": "Wat we doen om je website te beveiligen.",
+        "subtitle": "Zes onderdelen die samen je website dichttimmeren tegen hackers. We kijken naar wat bezoekers zien en naar wat er binnenin gebeurt.",
+        "services": [
+          {
+            "id": 1,
+            "title": "Scan en nulmeting.",
+            "description": "We beginnen met een beveiligingsscan. Je krijgt een cijfer van A+ tot F, een lijst met wat eerst moet en een rapport in gewone taal.",
+            "details": [
+              "Passieve scan: wat elke bezoeker van buiten kan zien",
+              "Volledige scan, met toestemming van de eigenaar",
+              "Malware-scan van maximaal 20 pagina's, op spam en verborgen doorverwijzingen",
+              "Binnenkant-scan via de server: plugins, gewijzigde bestanden en beheerders"
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Toegang en software.",
+            "description": "De meeste hacks beginnen bij een oude plugin of een zwakke inlog. Bij WordPress beveiliging kijken we daarom eerst wie er mag inloggen en of de kern, thema's en plugins up-to-date zijn.",
+            "details": [
+              "Beheerders en inlogbeveiliging",
+              "WordPress-versie, thema's en plugins",
+              "Bekende kwetsbaarheden en verouderde scripts"
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Malware en hacksporen.",
+            "description": "We zoeken naar wat er niet hoort te staan: spampagina's, verborgen doorverwijzingen en onbekende beheerders.",
+            "details": []
+          },
+          {
+            "id": 4,
+            "title": "Verbinding en firewall.",
+            "description": "Je site moet veilig praten met bezoekers. We controleren HTTPS, security headers en firewall-instellingen.",
+            "details": [
+              "HTTPS en SSL-certificaat",
+              "Security headers",
+              "Firewall en toegangsregels"
+            ]
+          },
+          {
+            "id": 5,
+            "title": "Bestanden, domein en e-mail.",
+            "description": "Een vergeten back-upbestand of een open configuratiebestand is een open deur. Ook je domein en e-mail horen erbij.",
+            "details": [
+              "Configuratie-, back-up- en databasebestanden die niet publiek horen te zijn",
+              "Domeininstellingen (DNS)",
+              "E-mailbeveiliging van je domein"
+            ]
+          },
+          {
+            "id": 6,
+            "title": "Back-up en herstel.",
+            "description": "Gaat er toch iets mis, dan wil je snel terug naar een schone versie. We controleren of er back-ups zijn en of ze bruikbaar zijn.",
+            "details": [
+              "Back-ups op een andere plek",
+              "Controle dat terugzetten werkt",
+              "Vaste volgorde voor herstel bij een incident"
+            ]
+          }
+        ],
+        "footerHtml": "Liever zelf aan de slag met WordPress? Lees <a href=\"/blog/wordpress-website-beveiligen\">WordPress beveiligen: 10 tips tegen hackers</a>."
       },
       {
         "__typename": "ServiceDetailsPageSectionsFaqLayout",

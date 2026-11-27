@@ -7,7 +7,10 @@ export default function ServicesListSection({
   title = "SEO-diensten die we aanbieden",
   subtitle = "Vanuit Amsterdam zorgen we voor SEO-groei in Nederland en daarbuiten.",
   services = [],
-  background = 'beige'
+  background = 'beige',
+  id = undefined,
+  checkIcons = true, // false: een rustig bolletje in plaats van een vinkje voor de lijstpunten
+  footer = null // optionele regel onder de tabs, bijvoorbeeld een link
 }) {
   
   const backgroundClasses = {
@@ -109,7 +112,7 @@ export default function ServicesListSection({
   };
 
   return (
-    <section className={`py-16 lg:py-24 ${bgClass}`}>
+    <section id={id} className={`py-16 lg:py-24 ${bgClass}${id ? ' scroll-mt-24' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -164,9 +167,13 @@ export default function ServicesListSection({
                       <ul className="space-y-2">
                         {service.details.map((detail, index) => (
                           <li key={index} className="flex items-start gap-2">
+                            {checkIcons ? (
                             <svg className="w-5 h-5 text-[#376eb5] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
+                            ) : (
+                            <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#376eb5] flex-shrink-0 mt-2.5" />
+                            )}
                             <span className="text-gray-700 text-sm leading-relaxed">
                               {detail}
                             </span>
@@ -247,9 +254,13 @@ export default function ServicesListSection({
                   <ul className="space-y-3">
                     {activeService.details.map((detail, index) => (
                       <li key={index} className="flex items-start gap-3">
+                        {checkIcons ? (
                         <svg className="w-6 h-6 text-[#376eb5] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
+                        ) : (
+                        <span aria-hidden="true" className="w-2 h-2 rounded-full bg-[#376eb5] flex-shrink-0 mt-3" />
+                        )}
                         <span className="text-gray-700 text-base lg:text-lg leading-relaxed">
                           {detail}
                         </span>
@@ -261,6 +272,12 @@ export default function ServicesListSection({
             </div>
           </div>
         </div>
+
+        {footer && (
+          <div className="max-w-7xl mx-auto mt-10 lg:mt-12 text-center">
+            {footer}
+          </div>
+        )}
       </div>
     </section>
   );

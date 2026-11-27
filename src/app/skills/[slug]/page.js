@@ -37,6 +37,7 @@ const PAGE_OPTIONS = {
   'website-beveiliging': {
     plainEyebrow: true,
     hideCtaTrust: true,
+    plainLists: true,
     anchors: { 'Wat we doen om je website te beveiligen.': 'wat-we-doen' },
     ogImageAlt: 'Website beveiliging bij OnlineLabs: scannen, beveiligen en bewaken',
     schemaGraph: true,
@@ -344,8 +345,17 @@ export default async function ServiceDetailPage({ params }) {
   }
 
   // Fetch homepage settings for logo slider data
-  // (code-pagina's hebben geen logo slider of testimonials, dus geen WordPress-calls)
-  const homepageSettings = isCodeService ? null : await getHomepageSettings();
+  // Code-pagina's: de logo's zijn optioneel; lukt WordPress niet, dan valt alleen de slider weg
+  let homepageSettings = null;
+  if (isCodeService) {
+    try {
+      homepageSettings = await getHomepageSettings();
+    } catch (error) {
+      homepageSettings = null;
+    }
+  } else {
+    homepageSettings = await getHomepageSettings();
+  }
   
   // Prepare logo slider data (used when logo_slider section is in pageSections)
   const logoSliderData = homepageSettings?.logoSlider && homepageSettings.logoSlider.sliderEnabled ? {
@@ -597,6 +607,20 @@ export default async function ServiceDetailPage({ params }) {
               <ServicesListSection
                 key={index}
                 background={getBackgroundValue(section, 'servicesListBackground', 'beige')}
+                {...(section.services ? {
+                  // Code-pagina's geven eigen titel, intro en onderdelen mee
+                  title: section.title,
+                  subtitle: section.subtitle,
+                  services: section.services,
+                  id: pageOptions.anchors?.[section.title],
+                  checkIcons: !pageOptions.plainLists,
+                  footer: section.footerHtml ? (
+                    <p
+                      className="text-lg text-gray-600 leading-relaxed [&_a]:text-[#376eb5] [&_a]:font-medium hover:[&_a]:underline"
+                      dangerouslySetInnerHTML={{ __html: section.footerHtml }}
+                    />
+                  ) : null,
+                } : {})}
               />
             );
           }
