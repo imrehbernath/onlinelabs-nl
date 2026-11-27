@@ -15,6 +15,13 @@ import WebsiteCalculator from '@/app/components/WebsiteCalculator';
 import { notFound } from 'next/navigation';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
 import he from 'he';
+import websiteBeveiliging from '@/app/data/websiteBeveiliging';
+
+// Skills-pagina's waarvan de inhoud vast in de code staat. Voor deze slugs
+// wordt WordPress niet bevraagd; staat er toch een item in WordPress, dan wint de code.
+const CODE_SERVICES = {
+  'website-beveiliging': websiteBeveiliging,
+};
 
 const WP_URL = 'https://cdn.onlinelabs.nl';
 const SITE_URL = 'https://www.onlinelabs.nl';
@@ -188,11 +195,13 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   
   // Try WordPress first (bij een fetch-fout alleen terugvallen als er dummy data is)
-  let service = null;
-  try {
-    service = await getServiceBySlug(slug);
-  } catch (error) {
-    if (!dummyServiceData[slug]) throw error;
+  let service = CODE_SERVICES[slug] || null;
+  if (!service) {
+    try {
+      service = await getServiceBySlug(slug);
+    } catch (error) {
+      if (!dummyServiceData[slug]) throw error;
+    }
   }
 
   // Fallback to dummy data
@@ -252,18 +261,26 @@ export const revalidate = 86400;
 
 // Generate static paths
 export async function generateStaticParams() {
+  // Code-pagina's altijd bij de build renderen, los van WordPress
+  const codeParams = Object.keys(CODE_SERVICES).map((slug) => ({ slug }));
+
   try {
     const services = await getAllServices();
-    
+
     if (services && services.length > 0) {
-      return services.map((service) => ({
-        slug: service.slug,
-      }));
+      return [
+        ...services
+          .filter((service) => !CODE_SERVICES[service.slug])
+          .map((service) => ({
+            slug: service.slug,
+          })),
+        ...codeParams,
+      ];
     }
   } catch (error) {
     console.error('Failed to generate static params:', error);
   }
-  
+
   // Fallback to known services
   return [
     { slug: 'seo-specialist' },
@@ -271,6 +288,7 @@ export async function generateStaticParams() {
     { slug: 'wordpress-specialist' },
     { slug: 'webdesign' },
     { slug: 'website-snelheid' },
+    ...codeParams,
   ];
 }
 
@@ -294,18 +312,25 @@ export default async function ServiceDetailPage({ params }) {
   // Try WordPress first, fallback to dummy data
   let service = null;
   let useWordPress = false;
-  
-  try {
-    service = await getServiceBySlug(slug);
-    if (service && service.serviceDetails) {
-      useWordPress = true;
-      console.log('✅ Using WordPress data for:', slug);
+  const isCodeService = !!CODE_SERVICES[slug];
+
+  if (isCodeService) {
+    // Inhoud uit de code, zelfde vorm als het WordPress-antwoord
+    service = CODE_SERVICES[slug];
+    useWordPress = true;
+  } else {
+    try {
+      service = await getServiceBySlug(slug);
+      if (service && service.serviceDetails) {
+        useWordPress = true;
+        console.log('✅ Using WordPress data for:', slug);
+      }
+    } catch (error) {
+      // Zonder dummy-fallback zou dit notFound() worden en cachet ISR een 404.
+      // Gooien laat Next de vorige versie van de pagina blijven serveren.
+      if (!dummyServiceData[slug]) throw error;
+      console.error('❌ WordPress fetch failed, using dummy data');
     }
-  } catch (error) {
-    // Zonder dummy-fallback zou dit notFound() worden en cachet ISR een 404.
-    // Gooien laat Next de vorige versie van de pagina blijven serveren.
-    if (!dummyServiceData[slug]) throw error;
-    console.error('❌ WordPress fetch failed, using dummy data');
   }
   
   // Fallback to dummy data
@@ -319,7 +344,8 @@ export default async function ServiceDetailPage({ params }) {
   }
 
   // Fetch homepage settings for logo slider data
-  const homepageSettings = await getHomepageSettings();
+  // (code-pagina's hebben geen logo slider of testimonials, dus geen WordPress-calls)
+  const homepageSettings = isCodeService ? null : await getHomepageSettings();
   
   // Prepare logo slider data (used when logo_slider section is in pageSections)
   const logoSliderData = homepageSettings?.logoSlider && homepageSettings.logoSlider.sliderEnabled ? {
@@ -334,7 +360,7 @@ export default async function ServiceDetailPage({ params }) {
   } : null;
 
   // Fetch testimonials (used when testimonials section is in pageSections)
-  const allTestimonials = await getTestimonials(100);
+  const allTestimonials = isCodeService ? [] : await getTestimonials(100);
 
   // Extract hero data (WordPress or dummy)
   let heroData;

@@ -116,9 +116,15 @@ export default async function sitemap() {
     priority: 0.7,
   }));
 
+  // Skills-pagina's met inhoud in de code: altijd in de sitemap, los van WordPress
+  const codeServiceSlugs = ['website-beveiliging'];
+
   // Dynamic service/skill pages (/skills/[slug])
-  const servicePages = services.map((service) => ({
-    url: `${siteUrl}/skills/${service.slug}`,
+  const servicePages = [
+    ...services.map((service) => service.slug).filter((slug) => !codeServiceSlugs.includes(slug)),
+    ...codeServiceSlugs,
+  ].map((slug) => ({
+    url: `${siteUrl}/skills/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.8,

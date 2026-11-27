@@ -86,7 +86,6 @@ export default function SkillsOverview({ services = [] }) {
     },
     {
       slug: 'website-beveiliging',
-      requiresWp: true,
       title: 'Website beveiliging',
       uri: '/skills/website-beveiliging',
       serviceDetails: {
@@ -113,11 +112,7 @@ export default function SkillsOverview({ services = [] }) {
           {/* LEFT COLUMN - SERVICES LIST */}
           <div className="lg:col-span-7">
             <div className="space-y-8">
-              {displayServices
-                // Kaarten met requiresWp alleen tonen als WordPress de dienst echt teruggeeft,
-                // zodat het overzicht nooit naar een pagina linkt die (nog) 404 geeft
-                .filter((service) => !service.requiresWp || services.some((s) => s.slug === service.slug))
-                .map((service) => {
+              {displayServices.map((service) => {
                 const info = serviceInfo[service.slug] || {
                   labName: 'Lab',
                   tagline: 'Online marketing expertise'
