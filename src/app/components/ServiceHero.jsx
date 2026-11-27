@@ -10,7 +10,8 @@ export default function ServiceHero({
   ctaUrl, 
   secondaryCtaText,
   secondaryCtaUrl,
-  serviceColor = 'green'
+  serviceColor = 'green',
+  plainEyebrow = false // true: subtitle als gewone <p>, zonder pill en vinkje
 }) {
   // REMOVED: useState + useEffect voor hydration-based reveal
   // Animaties zijn nu pure CSS - start direct bij page load
@@ -338,8 +339,15 @@ export default function ServiceHero({
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center relative">
           
+          {/* Eyebrow als platte tekst (alleen als plainEyebrow aan staat) */}
+          {subtitle && plainEyebrow && (
+            <p className="service-hero-reveal service-hero-reveal-0 text-[#2d5a94] font-semibold text-sm tracking-widest uppercase mb-8 lg:mb-6">
+              {subtitle}
+            </p>
+          )}
+
           {/* Badge */}
-          {subtitle && (
+          {subtitle && !plainEyebrow && (
             <div className="service-hero-reveal service-hero-reveal-0">
               <div 
                 className="badge-glow inline-flex items-center gap-2 px-4 py-2 rounded-full text-[#2d5a94] font-semibold text-sm tracking-widest uppercase mb-8 lg:mb-6"

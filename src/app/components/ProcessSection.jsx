@@ -4,6 +4,26 @@ import { useState } from 'react';
 
 // Service-specific content configurations
 const serviceContent = {
+  // Website beveiliging: tekst letterlijk uit content.md, bewust zonder stapnummers
+  'website-beveiliging': {
+    title: "Zo pakken we het aan.",
+    subtitle: "Geen black box. Je weet wat we vinden, wat we voorstellen en wat het oplevert.",
+    steps: [
+      {
+        title: 'Scannen.',
+        description: 'We scannen je site van buiten en, met toegang, van binnen. Je krijgt een cijfer en een rapport dat je kunt lezen.'
+      },
+      {
+        title: 'Eerst doen.',
+        description: 'Je krijgt een lijst op volgorde van belang. We mailen een voorstel, jij geeft akkoord en wij lossen het op.'
+      },
+      {
+        title: 'Blijven controleren.',
+        description: 'We scannen op vaste momenten opnieuw en laten het verschil met de vorige scan zien. Zo blijft het dicht.'
+      }
+    ]
+  },
+
   // GEO Optimalisatie specific content
   'geo-optimalisatie': {
     title: "GEO optimalisatie in 3 stappen",
@@ -243,7 +263,8 @@ export default function ProcessSection({
               onMouseLeave={() => setHoveredStep(null)}
               className="relative group"
             >
-              {/* Numbered circle with gradient ring */}
+              {/* Numbered circle with gradient ring (alleen als de stap een nummer heeft) */}
+              {step.number && (
               <div className="relative mb-6 inline-flex">
                 <div className={`absolute inset-0 rounded-full bg-gradient-to-br from-primary to-accent transition-all duration-500 ${
                   hoveredStep === index ? 'scale-110 opacity-100' : 'scale-100 opacity-60'
@@ -257,6 +278,7 @@ export default function ProcessSection({
                   </span>
                 </div>
               </div>
+              )}
 
               {/* Content */}
               <div>
@@ -269,7 +291,7 @@ export default function ProcessSection({
               </div>
 
               {/* Connector line (hidden on last item and on mobile) */}
-              {index < displaySteps.length - 1 && (
+              {step.number && index < displaySteps.length - 1 && (
                 <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-primary/30 to-transparent -z-10" />
               )}
             </div>

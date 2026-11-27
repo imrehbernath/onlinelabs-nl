@@ -23,7 +23,8 @@ export default function CTASection({
   secondaryButton = null,
   variant = 'primary',
   skill = null,
-  narrow = false
+  narrow = false,
+  showTrust = true // false: geen regel met vinkjes onder de knoppen
 }) {
   
   // Add skill parameter to URL if provided and URL is /contact
@@ -143,6 +144,7 @@ export default function CTASection({
           </div>
 
           {/* Trust indicators - iets groter */}
+          {showTrust && (
           <div className="mt-8 lg:mt-10 flex justify-center">
             <div className={`inline-flex flex-col lg:flex-row lg:flex-wrap lg:justify-center items-start lg:items-center gap-3 lg:gap-8 text-base ${trustIndicatorColors[variant]}`}>
               <div className="flex items-center gap-2">
@@ -165,6 +167,7 @@ export default function CTASection({
               </div>
             </div>
           </div>
+          )}
         </div>
       </div>
     </section>

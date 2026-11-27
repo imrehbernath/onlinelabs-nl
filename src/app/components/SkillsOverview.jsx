@@ -28,6 +28,10 @@ export default function SkillsOverview({ services = [] }) {
     'conversie-optimalisatie': {
       labName: 'CROLab',
       tagline: 'Data-driven conversie experts'
+    },
+    'website-beveiliging': {
+      labName: 'SecurityLab',
+      tagline: 'Scant van buiten en van binnen'
     }
   };
 
@@ -80,6 +84,16 @@ export default function SkillsOverview({ services = [] }) {
         description: 'Een snelle website is cruciaal voor gebruikerservaring én Google rankings. Wij optimaliseren eerst de bron, dan caching voor maximale snelheid.'
       }
     },
+    {
+      slug: 'website-beveiliging',
+      requiresWp: true,
+      title: 'Website beveiliging',
+      uri: '/skills/website-beveiliging',
+      serviceDetails: {
+        subtitle: 'Scannen, beveiligen en bewaken',
+        description: 'Bijna dagelijks worden websites gehackt, ook die van kleine bedrijven. We scannen je site, vinden de zwakke plekken en lossen ze op.'
+      }
+    },
     { 
       slug: 'conversie-optimalisatie-optimalisatie', 
       title: 'Conversie optimalisatie',
@@ -99,7 +113,11 @@ export default function SkillsOverview({ services = [] }) {
           {/* LEFT COLUMN - SERVICES LIST */}
           <div className="lg:col-span-7">
             <div className="space-y-8">
-              {displayServices.map((service) => {
+              {displayServices
+                // Kaarten met requiresWp alleen tonen als WordPress de dienst echt teruggeeft,
+                // zodat het overzicht nooit naar een pagina linkt die (nog) 404 geeft
+                .filter((service) => !service.requiresWp || services.some((s) => s.slug === service.slug))
+                .map((service) => {
                 const info = serviceInfo[service.slug] || {
                   labName: 'Lab',
                   tagline: 'Online marketing expertise'

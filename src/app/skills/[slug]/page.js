@@ -14,9 +14,33 @@ import AIresultsGallery from '@/app/components/AIresultsGallery';
 import WebsiteCalculator from '@/app/components/WebsiteCalculator';
 import { notFound } from 'next/navigation';
 import { getServiceBySlug, getHomepageSettings, getAllServices, getTestimonials } from '@/app/lib/wordpress';
+import he from 'he';
 
 const WP_URL = 'https://cdn.onlinelabs.nl';
 const SITE_URL = 'https://www.onlinelabs.nl';
+
+// Instellingen per pagina. Alleen slugs die hier staan krijgen dit gedrag;
+// alle andere skills-pagina's renderen precies zoals voorheen.
+// - plainEyebrow: subtitle in de hero als gewone <p>, zonder pill en vinkje
+// - anchors: id op een tekstsectie, op basis van de titel uit WordPress
+// - ogImageAlt: alt-tekst bij de Open Graph-afbeelding
+// - schemaGraph: alle JSON-LD in één @graph met verwijzingen naar Rank Math
+// - hideCtaTrust: geen regel met vinkjes onder de CTA-knop
+const PAGE_OPTIONS = {
+  'website-beveiliging': {
+    plainEyebrow: true,
+    hideCtaTrust: true,
+    anchors: { 'Wat we doen om je website te beveiligen.': 'wat-we-doen' },
+    ogImageAlt: 'Website beveiliging bij OnlineLabs: scannen, beveiligen en bewaken',
+    schemaGraph: true,
+  },
+};
+
+// HTML uit een ACF-veld naar platte tekst voor JSON-LD
+function toPlainText(html) {
+  if (!html) return '';
+  return he.decode(html.replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').trim();
+}
 
 // Helper: Replace WordPress URLs with production URLs
 function replaceWpUrls(str) {
@@ -195,8 +219,10 @@ export async function generateMetadata({ params }) {
       openGraph: {
         title: service.seo.openGraph?.title || service.seo.title || service.title,
         description: service.seo.openGraph?.description || service.seo.description,
-        images: service.seo.openGraph?.image?.url 
-          ? [service.seo.openGraph.image.url] 
+        images: service.seo.openGraph?.image?.url
+          ? [PAGE_OPTIONS[slug]?.ogImageAlt
+              ? { url: service.seo.openGraph.image.url, alt: PAGE_OPTIONS[slug].ogImageAlt }
+              : service.seo.openGraph.image.url]
           : [],
       },
     };
@@ -417,6 +443,57 @@ export default async function ServiceDetailPage({ params }) {
     "serviceType": heroData.title?.split('–')[0]?.trim() || heroData.title
   };
 
+  // Pagina's met schemaGraph: één @graph met WebPage, BreadcrumbList, Service en FAQPage,
+  // verwijzend naar de Organization en WebSite die Rank Math op de homepage uitgeeft.
+  const pageOptions = PAGE_OPTIONS[slug] || {};
+  const pageUrl = `${SITE_URL}/skills/${slug}`;
+  const serviceName = service.title || heroData.title;
+  const schemaGraph = pageOptions.schemaGraph ? {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        "url": pageUrl,
+        "name": service.seo?.title || serviceName,
+        "description": service.seo?.description || undefined,
+        "inLanguage": "nl-NL",
+        "isPartOf": { "@id": `${SITE_URL}/#website` },
+        "breadcrumb": { "@id": `${pageUrl}#breadcrumb` },
+        "mainEntity": { "@id": `${pageUrl}#service` }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
+          { "@type": "ListItem", "position": 2, "name": "Skills", "item": `${SITE_URL}/skills` },
+          { "@type": "ListItem", "position": 3, "name": serviceName, "item": pageUrl }
+        ]
+      },
+      {
+        "@type": "Service",
+        "@id": `${pageUrl}#service`,
+        "name": serviceName,
+        "serviceType": serviceName,
+        "description": toPlainText(service.serviceDetails?.description) || toPlainText(heroData.description),
+        "url": pageUrl,
+        "areaServed": { "@type": "Country", "name": "Nederland" },
+        "provider": { "@id": `${SITE_URL}/#organization` }
+      },
+      ...(faqSection?.faqItems?.length > 0 ? [{
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        "isPartOf": { "@id": `${pageUrl}#webpage` },
+        "mainEntity": faqSection.faqItems.map(faq => ({
+          "@type": "Question",
+          "name": toPlainText(faq.question),
+          "acceptedAnswer": { "@type": "Answer", "text": toPlainText(faq.answer) }
+        }))
+      }] : [])
+    ]
+  } : null;
+
   return (
     <div>
       {/* Hero Section */}
@@ -429,6 +506,7 @@ export default async function ServiceDetailPage({ params }) {
         secondaryCtaText={heroData.secondaryCtaText}
         secondaryCtaUrl={heroData.secondaryCtaUrl}
         serviceColor={heroData.serviceColor || "green"}
+        plainEyebrow={!!pageOptions.plainEyebrow}
       />
 
       {/* Flexible Content - Page Sections */}
@@ -444,6 +522,7 @@ export default async function ServiceDetailPage({ params }) {
             return (
               <TextImageSection
                 key={index}
+                id={pageOptions.anchors?.[section.title]}
                 layout={section.layout || 'image-left'}
                 subheading={section.subheading}
                 variant={section.variant || section.mediaVariant || 'photo'}
@@ -521,6 +600,7 @@ export default async function ServiceDetailPage({ params }) {
                   url: section.buttonUrl || '/contact' 
                 }}
                 variant={section.variant || 'primary'}
+                showTrust={!pageOptions.hideCtaTrust}
               />
             );
           }
@@ -670,24 +750,34 @@ export default async function ServiceDetailPage({ params }) {
         </section>
       )}
 
-      {/* BreadcrumbList Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-
-      {/* Service Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-
-      {/* FAQ Schema from ACF */}
-      {faqSchema && (
+      {schemaGraph ? (
+        /* Eén @graph voor pagina's met schemaGraph */
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
         />
+      ) : (
+        <>
+          {/* BreadcrumbList Schema */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+          />
+
+          {/* Service Schema */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+          />
+
+          {/* FAQ Schema from ACF */}
+          {faqSchema && (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+          )}
+        </>
       )}
     </div>
   );

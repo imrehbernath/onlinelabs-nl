@@ -5,7 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowDown } from 'lucide-react';
 
-export default function TextImageSection({ 
+export default function TextImageSection({
+  id = undefined, // optioneel anker, bijvoorbeeld voor een knop met #wat-we-doen
   layout = 'image-left',
   subheading = null,
   title, 
@@ -139,9 +140,10 @@ export default function TextImageSection({
             }
           }
         `}</style>
-        <section 
+        <section
+          id={id}
           ref={sectionRef}
-          className={`relative ${bgClass} py-12 lg:py-20 overflow-hidden`}
+          className={`relative ${bgClass} py-12 lg:py-20 overflow-hidden${id ? ' scroll-mt-24' : ''}`}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className={`text-reveal max-w-3xl mx-auto ${isVisible ? 'visible' : ''}`}>
@@ -298,9 +300,10 @@ export default function TextImageSection({
         }
       `}</style>
       
-      <section 
+      <section
+        id={id}
         ref={sectionRef}
-        className={`relative ${bgClass} py-12 lg:py-24 overflow-hidden`}
+        className={`relative ${bgClass} py-12 lg:py-24 overflow-hidden${id ? ' scroll-mt-24' : ''}`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
